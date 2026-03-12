@@ -47,7 +47,7 @@ function AppInner() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/nyai.github.io">
       <ScrollToTop />
       <AppInner />
     </Router>
