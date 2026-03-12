@@ -1,5 +1,8 @@
 name: Deploy to GitHub Pages
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true # Optional: explicitly set to current stable if needed
+
 on:
   push:
     branches:
