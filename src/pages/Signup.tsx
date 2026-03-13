@@ -30,7 +30,7 @@ const Signup: React.FC = () => {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6rem 1.5rem' }}>
-      <div style={{ width: '100%', maxWidth: '820px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center' }}>
+      <div className="responsive-grid-2" style={{ width: '100%', maxWidth: '820px', alignItems: 'center' }}>
         {/* Left side info */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
           <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1.35rem', marginBottom: '2.5rem' }}>

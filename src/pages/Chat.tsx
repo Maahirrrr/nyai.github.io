@@ -178,6 +178,7 @@ const Chat: React.FC = () => {
             animate={{ width: SIDEBAR_WIDTH, opacity: 1 }}
             exit={{ width: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="chat-sidebar"
             style={{
               height: '100vh',
               background: '#161616',
@@ -288,6 +289,21 @@ const Chat: React.FC = () => {
         )}
       </AnimatePresence>
 
+      {/* Mobile Sidebar Backdrop */}
+      {sidebarOpen && (
+        <div 
+          className="mobile-only"
+          onClick={() => setSidebarOpen(false)}
+          style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.5)',
+            zIndex: 40,
+            animation: 'fadeIn 0.2s ease-out'
+          }}
+        />
+      )}
+
       {/* ── MAIN CHAT AREA ── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
         {/* Hamburger toggle */}
@@ -380,7 +396,7 @@ const Chat: React.FC = () => {
         </div>
 
         {/* Input Area */}
-        <div style={{
+        <div className="chat-input-area" style={{
           position: 'fixed', bottom: 0, right: 0,
           width: sidebarOpen ? `calc(100% - ${SIDEBAR_WIDTH}px)` : '100%',
           background: 'linear-gradient(transparent, var(--background) 25%)',

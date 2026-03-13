@@ -221,7 +221,7 @@ const Home: React.FC = () => {
             </p>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
             {features.map((f, idx) => (
               <motion.div
                 key={idx}
@@ -266,7 +266,7 @@ const Home: React.FC = () => {
 
           <div style={{ maxWidth: '820px', margin: '0 auto', position: 'relative' }}>
             {/* Vertical connecting line */}
-            <div style={{
+            <div className="timeline-line" style={{
               position: 'absolute', left: '39px', top: '60px', bottom: '60px', width: '2px',
               background: 'linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
               zIndex: 0
@@ -301,11 +301,12 @@ const Home: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.65, delay: idx * 0.15 }}
+                className="timeline-item"
                 style={{ display: 'flex', gap: '2rem', marginBottom: idx < 2 ? '4rem' : '0', position: 'relative', zIndex: 1 }}
               >
                 {/* Step circle */}
                 <div style={{ flexShrink: 0 }}>
-                  <div style={{
+                  <div className="timeline-icon" style={{
                     width: '80px', height: '80px', borderRadius: '50%',
                     background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04))',
                     border: '2px solid rgba(255,255,255,0.2)',
@@ -319,7 +320,7 @@ const Home: React.FC = () => {
 
                 {/* Content */}
                 <div className="glass-card" style={{ flex: 1, padding: '2rem 2.25rem' }}>
-                  <div style={{
+                  <div className="timeline-step" style={{
                     fontSize: '4rem', fontWeight: 900,
                     color: 'rgba(255,255,255,0.05)',
                     lineHeight: 1, marginBottom: '-0.5rem',
@@ -356,7 +357,7 @@ const Home: React.FC = () => {
 
       {/* AI Demo */}
       <section style={{ padding: '8rem 0' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
+        <div className="container responsive-grid-2">
           <motion.div {...fadeInUp}>
             <div className="section-label">Live AI Demo</div>
             <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', fontWeight: 800, marginBottom: '1.5rem', lineHeight: 1.2, letterSpacing: '-0.02em' }}>
@@ -424,7 +425,7 @@ const Home: React.FC = () => {
             </h2>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
             {testimonials.map((t, idx) => (
               <motion.div key={idx} {...fadeInUp} transition={{ delay: idx * 0.1 }} className="glass-card" style={{ padding: '2rem' }}>
                 <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '1.25rem' }}>

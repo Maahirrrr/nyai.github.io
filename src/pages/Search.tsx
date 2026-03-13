@@ -173,7 +173,7 @@ const Search: React.FC = () => {
       </section>
 
       <section style={{ padding: '1.5rem 0 6rem' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: selected ? '1fr 1fr' : '1fr', gap: '1.5rem', alignItems: 'start' }}>
+        <div className="container search-layout" style={{ display: 'grid', gridTemplateColumns: selected ? '1fr 1fr' : '1fr', gap: '1.5rem', alignItems: 'start' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <AnimatePresence>
               {paginated.map((entry, idx) => (
@@ -255,7 +255,7 @@ const Search: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="glass-card"
+              className="glass-card search-detail-sticky"
               style={{ padding: '2rem', position: 'sticky', top: '100px' }}
             >
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', marginBottom: '0.25rem' }}>

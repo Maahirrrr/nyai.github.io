@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
   return (
     <footer style={{ background: 'rgba(0,0,0,0.2)', borderTop: '1px solid var(--border)', paddingTop: '5rem' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '3rem', marginBottom: '4rem' }}>
+        <div className="footer-grid">
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem', fontWeight: 800, fontSize: '1.2rem' }}>

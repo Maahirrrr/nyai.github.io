@@ -54,7 +54,7 @@ const About: React.FC = () => {
       {/* Mission & Vision */}
       <section style={{ padding: '6rem 0', background: 'rgba(0,0,0,0.15)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+          <div className="responsive-grid-2" style={{ alignItems: 'center' }}>
             <motion.div {...fadeInUp}>
               <div className="section-label">Our Mission</div>
               <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.75rem)', fontWeight: 800, marginBottom: '1.25rem', letterSpacing: '-0.02em' }}>
@@ -94,7 +94,7 @@ const About: React.FC = () => {
             </h2>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
             {values.map((v, idx) => (
               <motion.div key={idx} {...fadeInUp} transition={{ delay: idx * 0.08 }} className="glass-card" style={{ padding: '1.75rem' }}>
                 <div style={{ width: '50px', height: '50px', background: v.bg, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.1rem', border: `1px solid ${v.border}`, color: v.color }}>

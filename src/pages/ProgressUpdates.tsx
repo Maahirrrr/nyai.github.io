@@ -140,7 +140,7 @@ const ProgressUpdates: React.FC = () => {
                   </div>
 
                   <div className="glass-card" style={{ padding: '1.75rem 2rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem', gap: '1rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem', gap: '1rem', flexWrap: 'wrap' }}>
                       <div>
                         <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', marginBottom: '0.3rem' }}>
                           <h3 style={{ fontSize: '1.1rem', fontWeight: 700 }}>{update.title}</h3>
