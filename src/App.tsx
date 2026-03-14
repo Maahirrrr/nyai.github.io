@@ -20,7 +20,12 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
       initial={{ opacity: 0, y: 15, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -15, scale: 0.98 }}
-      transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
+      transition={{
+        type: "spring",
+        stiffness: 150,
+        damping: 25,
+        mass: 1
+      }}
     >
       {children}
     </motion.div>

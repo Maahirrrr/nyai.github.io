@@ -1,17 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap");
 
 :root {
-  --background: #0d0d12;        /* Mac dark mode base */
-  --foreground: #F5F5F7;        /* Crisp off-white */
-  --accent: #9CA3AF;
-  --accent-dim: rgba(156, 163, 175, 0.15);
-  --accent-blue: #9CA3AF;
-  --muted: rgba(255, 255, 255, 0.02); 
-  --muted-foreground: #86868b;  /* Mac gray */
-  --border: rgba(255, 255, 255, 0.06);
-  --glass: rgba(255, 255, 255, 0.015);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-highlight: rgba(255, 255, 255, 0.15);
+  --background: #0a0a0c;
+  --foreground: #ffffff;
+  --muted: #1c1c1e;
+  --muted-foreground: #a1a1aa;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(20, 20, 22, 0.2);
+  --glass-blur: blur(50px) saturate(240%);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  --specular-rim: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  --droplet-bg: rgba(255, 255, 255, 0.08);
+  --droplet-border: 1px solid rgba(255, 255, 255, 0.4);
   --success: #4ade80;
   --card-bg: rgba(25, 25, 28, 0.15); /* Extreme transparency for jelly look */
 
@@ -73,14 +76,25 @@ input, textarea {
 }
 
 .glass-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(40px) saturate(220%);
-  -webkit-backdrop-filter: blur(40px) saturate(220%);
-  border: 1px solid var(--glass-border);
-  border-radius: 2rem; /* Softer, no sharp edges */
-  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.5);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--specular-rim);
+  border-radius: 2rem;
   transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
   overflow: hidden;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
 .glass-card:hover {

@@ -41,20 +41,21 @@ const Navbar: React.FC = () => {
         width: "94%", /* More room on mobile */
         maxWidth: "1000px",
         zIndex: 1002,
-        transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
+        transition: "all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
       }}>
         <nav style={{
-          padding: "0.75rem 1.25rem",
-          background: scrolled ? "rgba(20, 20, 20, 0.2)" : "rgba(20, 20, 20, 0.05)",
-          backdropFilter: "blur(40px) saturate(220%)",
-          WebkitBackdropFilter: "blur(40px) saturate(220%)",
-          border: "1px solid rgba(255, 255, 255, 0.12)",
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0.6rem 2rem",
+          background: "rgba(255, 255, 255, 0.03)",
+          backdropFilter: "blur(50px) saturate(240%)",
+          WebkitBackdropFilter: "blur(50px) saturate(240%)",
           borderRadius: "999px",
-          boxShadow: scrolled ? "0 12px 36px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2), inset 0 -1px 1px rgba(0,0,0,0.5)" : "0 4px 24px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255, 255, 255, 0.1)",
+          border: "1px solid rgba(255, 255, 255, 0.08)",
+          boxShadow: "0 15px 35px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15)",
           transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
-          display: "flex", 
-          justifyContent: "space-between", 
-          alignItems: "center"
         }}>
           {/* Logo — Left */}
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.2rem", fontWeight: 800, letterSpacing: "-0.025em", color: "var(--foreground)", paddingLeft: "0.5rem" }}>
@@ -85,16 +86,22 @@ const Navbar: React.FC = () => {
                   {isActive && (
                     <motion.div
                       layoutId="nav-pill"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 150,
+                        damping: 25,
+                        restDelta: 0.001
+                      }}
                       style={{
                         position: "absolute",
-                        top: 0, left: 0, right: 0, bottom: 0,
-                        background: "rgba(255,255,255,0.12)",
-                        border: "1px solid rgba(255,255,255,0.15)",
-                        boxShadow: "inset 0 1px 1px rgba(255,255,255,0.1)",
+                        inset: "4px -4px",
+                        background: "rgba(255, 255, 255, 0.08)",
+                        backdropFilter: "blur(10px) saturate(300%)",
+                        WebkitBackdropFilter: "blur(10px) saturate(300%)",
                         borderRadius: "999px",
                         zIndex: -1,
+                        borderTop: "1.5px solid rgba(255, 255, 255, 0.45)",
+                        boxShadow: "inset 0 0 12px rgba(255, 255, 255, 0.15), 0 4px 12px rgba(0, 0, 0, 0.2)",
                       }}
                     />
                   )}
