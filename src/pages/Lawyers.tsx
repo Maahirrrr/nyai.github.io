@@ -281,7 +281,13 @@ const Lawyers: React.FC = () => {
               Our network of verified, experienced lawyers across India are ready to help you navigate your legal journey with confidence and clarity.
             </p>
             <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-              <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62}>
+              <GlassSurface 
+                borderRadius={999} 
+                displace={4} 
+                backgroundOpacity={0.4} 
+                brightness={62}
+                style={{ background: 'rgba(220, 38, 38, 0.3)' }}
+              >
                 <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   Get AI-Matched <ArrowRight size={16} />
                 </Link>
@@ -347,7 +353,14 @@ const Lawyers: React.FC = () => {
             <p style={{ color: 'var(--muted-foreground)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem', lineHeight: 1.7 }}>
               Describe your issue to NyAI and get instantly matched with verified lawyers specializing in your exact matter.
             </p>
-            <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62} className="mx-auto" style={{ margin: '0 auto', display: 'inline-flex' }}>
+            <GlassSurface 
+              borderRadius={999} 
+              displace={4} 
+              backgroundOpacity={0.4} 
+              brightness={62} 
+              className="mx-auto" 
+              style={{ margin: '0 auto', display: 'inline-flex', background: 'rgba(220, 38, 38, 0.3)' }}
+            >
               <Link to="/chat" style={{ fontSize: '1rem', padding: '1rem 2.25rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 Start with AI Lawbot <ArrowRight size={16} />
               </Link>

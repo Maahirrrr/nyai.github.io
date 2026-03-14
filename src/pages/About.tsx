@@ -45,7 +45,14 @@ const About: React.FC = () => {
             <p style={{ fontSize: '1.15rem', color: 'var(--muted-foreground)', maxWidth: '700px', margin: '0 auto 2.5rem', lineHeight: 1.7 }}>
               NyAI was born from a simple observation: most Indians don't know their legal rights and can't afford to find out. We set out to change that — with AI, transparency, and a relentless commitment to justice.
             </p>
-            <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62} className="mx-auto" style={{ margin: '0 auto', display: 'inline-flex' }}>
+            <GlassSurface 
+              borderRadius={999} 
+              displace={4} 
+              backgroundOpacity={0.4} 
+              brightness={62} 
+              className="mx-auto" 
+              style={{ margin: '0 auto', display: 'inline-flex', background: 'rgba(220, 38, 38, 0.3)' }}
+            >
               <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 Experience NyAI <ArrowRight size={16} />
               </Link>
@@ -157,7 +164,13 @@ const About: React.FC = () => {
               Join thousands fighting for their rights
             </h2>
             <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-              <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62}>
+              <GlassSurface 
+                borderRadius={999} 
+                displace={4} 
+                backgroundOpacity={0.4} 
+                brightness={62}
+                style={{ background: 'rgba(220, 38, 38, 0.3)' }}
+              >
                 <Link to="/register" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>
                   Get Started Free <ArrowRight size={16} />
                 </Link>
