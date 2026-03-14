@@ -50,7 +50,6 @@ function AppInner() {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'transparent' }}>
       <div className="plasma-container">
         <Plasma 
-          color="#ff6b35"
           speed={0.6}
           direction="forward"
           scale={1.1}

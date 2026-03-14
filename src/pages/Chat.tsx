@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, Sparkles, Menu, Plus, Pencil, Trash2, X, MessageSquare, Bot } from 'lucide-react';
 import { sendToGemini } from '../services/gemini';
+import GlassSurface from '../components/ui/GlassSurface';
 
 interface Message {
   id: string;
@@ -203,18 +204,25 @@ const Chat: React.FC = () => {
                   <X size={16} />
                 </button>
               </div>
-              <button
-                onClick={startNewChat}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%',
-                  padding: '0.6rem 0.75rem', borderRadius: '0.5rem',
-                  background: 'var(--muted)', border: '1px solid var(--border)',
-                  color: 'var(--foreground)', fontSize: '0.85rem', fontWeight: 600,
-                  cursor: 'pointer', transition: 'background 0.15s'
-                }}
+              <GlassSurface
+                borderRadius={12}
+                displace={2}
+                backgroundOpacity={0.1}
+                brightness={45}
+                style={{ width: '100%', background: 'rgba(255, 255, 255, 0.02)' }}
               >
-                <Plus size={16} /> New Chat
-              </button>
+                <button
+                  onClick={startNewChat}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%',
+                    padding: '0.6rem 0.75rem',
+                    color: 'var(--foreground)', fontSize: '0.85rem', fontWeight: 600,
+                    cursor: 'pointer', transition: 'background 0.15s'
+                  }}
+                >
+                  <Plus size={16} /> New Chat
+                </button>
+              </GlassSurface>
             </div>
 
             {/* Chat List */}
@@ -366,7 +374,7 @@ const Chat: React.FC = () => {
                         border: '1px solid rgba(255, 255, 255, 0.12)',
                         boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
                         lineHeight: 1.75,
-                        fontSize: '0.95rem',
+                        fontSize: 'clamp(0.85rem, 4vw, 0.95rem)',
                         color: 'var(--foreground)',
                       }}>
                       {msg.type === 'bot' ? (
@@ -443,7 +451,7 @@ const Chat: React.FC = () => {
           <div className="container" style={{ maxWidth: '800px' }}>
             {/* Suggested questions (shown at start) */}
             {messages.length <= 2 && (
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+              <div className="desktop-only" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
                 {suggestedQuestions.map((q, i) => (
                   <button
                     key={i}
@@ -505,7 +513,7 @@ const Chat: React.FC = () => {
                 <Send size={17} />
               </button>
             </div>
-            <p style={{ textAlign: 'center', marginTop: '0.5rem', color: 'var(--muted-foreground)', fontSize: '0.72rem' }}>
+            <p className="desktop-only" style={{ textAlign: 'center', marginTop: '0.5rem', color: 'var(--muted-foreground)', fontSize: '0.72rem' }}>
               NyAI provides general legal information. Consult a qualified lawyer for professional legal advice.
             </p>
           </div>

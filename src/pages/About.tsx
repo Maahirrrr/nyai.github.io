@@ -175,7 +175,14 @@ const About: React.FC = () => {
                   Get Started <ArrowRight size={16} />
                 </Link>
               </GlassSurface>
-              <GlassSurface borderRadius={999} displace={3} backgroundOpacity={0.1} brightness={45}>
+              <GlassSurface 
+                borderRadius={999} 
+                displace={3} 
+                mixBlendMode="screen"
+                backgroundOpacity={0.12} 
+                brightness={45}
+                style={{ background: 'rgba(255, 255, 255, 0.03)' }}
+              >
                 <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
                   Try the Lawbot
                 </Link>

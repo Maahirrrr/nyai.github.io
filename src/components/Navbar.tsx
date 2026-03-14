@@ -44,20 +44,26 @@ const Navbar: React.FC = () => {
         zIndex: 1002,
         transition: "all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
       }}>
-        <nav style={{
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0.5rem 2.5rem",
-          background: "rgba(255, 255, 255, 0.03)",
-          backdropFilter: "blur(50px) saturate(240%)",
-          WebkitBackdropFilter: "blur(50px) saturate(240%)",
-          borderRadius: "999px",
-          border: "1px solid rgba(255, 255, 255, 0.08)",
-          boxShadow: "0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15)",
-          transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
-        }}>
+        <GlassSurface
+          borderRadius={999}
+          displace={3}
+          mixBlendMode="screen"
+          backgroundOpacity={0.06}
+          brightness={40}
+          style={{
+            background: "rgba(255, 255, 255, 0.02)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+          }}
+        >
+          <nav style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0.5rem 2.5rem",
+            width: "100%",
+            transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
+          }}>
           {/* Logo — Left */}
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: "1rem", fontSize: "1.4rem", fontWeight: 700, letterSpacing: "-0.04em", color: "var(--foreground)", paddingLeft: "1rem" }}>
             <span>NyAI</span>
@@ -153,7 +159,8 @@ const Navbar: React.FC = () => {
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-        </nav>
+          </nav>
+        </GlassSurface>
       </div>
 
       {/* Mobile Menu Overlay */}

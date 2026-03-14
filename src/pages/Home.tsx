@@ -506,13 +506,38 @@ const Home: React.FC = () => {
             <p style={{ color: 'var(--muted-foreground)', marginBottom: '2.5rem', fontSize: '1.1rem', maxWidth: '500px', margin: '0 auto 2.5rem' }}>
               Join thousands of citizens who are using NyAI to navigate the Indian legal system with confidence.
             </p>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/register" className="btn-primary" style={{ fontSize: '1.05rem', padding: '1.1rem 2.25rem' }}>
-                Create Free Account <ArrowRight size={18} />
-              </Link>
-              <Link to="/about" className="btn-secondary" style={{ fontSize: '1.05rem', padding: '1.1rem 2.25rem' }}>
-                Learn More
-              </Link>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+              <GlassSurface 
+                borderRadius={999} 
+                displace={4} 
+                mixBlendMode="screen" 
+                backgroundOpacity={0.4} 
+                brightness={62}
+                style={{ 
+                  transition: 'transform 0.3s ease',
+                  background: 'rgba(220, 38, 38, 0.3)' 
+                }}
+              >
+                <Link to="/register" style={{ fontSize: '1.05rem', padding: '1.1rem 2.25rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  Create Free Account <ArrowRight size={18} />
+                </Link>
+              </GlassSurface>
+
+              <GlassSurface 
+                borderRadius={999} 
+                displace={3} 
+                mixBlendMode="screen" 
+                backgroundOpacity={0.12} 
+                brightness={45}
+                style={{ 
+                  transition: 'transform 0.3s ease',
+                  background: 'rgba(255, 255, 255, 0.03)' 
+                }}
+              >
+                <Link to="/about" style={{ fontSize: '1.05rem', padding: '1.1rem 2.25rem', fontWeight: 600, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  Learn More
+                </Link>
+              </GlassSurface>
             </div>
           </motion.div>
         </div>

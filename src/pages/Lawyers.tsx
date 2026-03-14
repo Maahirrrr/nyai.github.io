@@ -292,7 +292,14 @@ const Lawyers: React.FC = () => {
                   Get AI-Matched <ArrowRight size={16} />
                 </Link>
               </GlassSurface>
-              <GlassSurface borderRadius={999} displace={3} backgroundOpacity={0.1} brightness={45}>
+              <GlassSurface 
+                borderRadius={999} 
+                displace={3} 
+                mixBlendMode="screen"
+                backgroundOpacity={0.12} 
+                brightness={45}
+                style={{ background: 'rgba(255, 255, 255, 0.03)' }}
+              >
                 <Link to="/search" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
                   Search by Specialty
                 </Link>

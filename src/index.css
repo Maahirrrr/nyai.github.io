@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
 :root {
-  --background: #0a0a0c;
+  --background: #050b26; /* Deep blue background */
   --foreground: #ffffff;
   --muted: #1c1c1e;
   --muted-foreground: #a1a1aa;
@@ -17,6 +17,11 @@
   --droplet-border: 1px solid rgba(255, 255, 255, 0.4);
   --success: #4ade80;
   --card-bg: rgba(25, 25, 28, 0.15); /* Extreme transparency for jelly look */
+
+  /* New palette colors: Red and Blue transition */
+  --deep-blue: #0b1441;
+  --deep-red: #410712;
+  --neutral-gray: #2d2d2d;
 
   /* Psychological accent colors */
   --trust-blue: #3B82F6;
@@ -40,7 +45,12 @@ html {
 }
 
 body {
-  background-color: #030305;
+  background-color: var(--background);
+  background-image: 
+    radial-gradient(circle at 10% 10%, var(--deep-blue), transparent 60%),
+    radial-gradient(circle at 90% 90%, var(--deep-red), transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(11, 20, 65, 0.3), transparent 50%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: -apple-system, "Inter", BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   overflow-x: hidden;
@@ -171,12 +181,12 @@ input, textarea {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: url(#frosted) saturate(220%);
-  -webkit-backdrop-filter: url(#frosted) saturate(220%);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.4);
-  color: var(--foreground);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   padding: 0.85rem 1.75rem;
   border-radius: 999px;
   font-weight: 600;
