@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
         top: scrolled ? "0.8rem" : "1.5rem",
         left: "50%",
         transform: "translateX(-50%)",
-        width: scrolled ? "96%" : "90%",
+        width: scrolled ? "75%" : "90%",
         maxWidth: "1440px",
         zIndex: 1002,
         transition: "all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
