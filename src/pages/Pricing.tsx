@@ -259,7 +259,13 @@ const Pricing: React.FC = () => {
               Start with the free Basic plan — no credit card needed. Upgrade anytime as your needs grow. Our AI will always recommend the right plan based on your usage.
             </p>
             <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-              <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62}>
+              <GlassSurface 
+                borderRadius={999} 
+                displace={4} 
+                backgroundOpacity={0.4} 
+                brightness={62}
+                style={{ background: 'rgba(220, 38, 38, 0.3)' }}
+              >
                 <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   Ask NyAI <ArrowRight size={16} />
                 </Link>
