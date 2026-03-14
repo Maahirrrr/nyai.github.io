@@ -39,10 +39,12 @@ const Navbar: React.FC = () => {
         position: "fixed",
         top: scrolled ? "0.8rem" : "1.5rem",
         left: "50%",
-        transform: "translateX(-50%)",
+        transform: "translate3d(-50%, 0, 0)",
+        WebkitTransform: "translate3d(-50%, 0, 0)",
         width: scrolled ? "75%" : "90%",
         maxWidth: "1440px",
         zIndex: 1002,
+        willChange: "transform, top, width",
         transition: "all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
       }}>
         <div style={{

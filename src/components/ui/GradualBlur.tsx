@@ -158,6 +158,11 @@ function GradualBlur(props) {
         backdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
         WebkitBackdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
         opacity: config.opacity,
+        transform: 'translateZ(0)',
+        WebkitTransform: 'translateZ(0)',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        willChange: 'backdrop-filter, mask-image',
         transition:
           config.animated && config.animated !== 'scroll'
             ? `backdrop-filter ${config.duration} ${config.easing}`
@@ -179,6 +184,11 @@ function GradualBlur(props) {
       position: isPageTarget ? 'fixed' : 'absolute',
       pointerEvents: config.hoverIntensity ? 'auto' : 'none',
       opacity: isVisible ? 1 : 0,
+      transform: isPageTarget ? 'translate3d(0,0,0)' : 'translateZ(0)',
+      WebkitTransform: isPageTarget ? 'translate3d(0,0,0)' : 'translateZ(0)',
+      backfaceVisibility: 'hidden',
+      WebkitBackfaceVisibility: 'hidden',
+      willChange: config.animated ? 'opacity' : 'auto',
       transition: config.animated ? `opacity ${config.duration} ${config.easing}` : undefined,
       zIndex: isPageTarget ? config.zIndex + 100 : config.zIndex,
       ...config.style
