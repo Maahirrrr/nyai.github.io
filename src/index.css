@@ -41,12 +41,6 @@ html {
 
 body {
   background-color: #030305;
-  background-image: 
-    radial-gradient(circle at 20% 20%, rgba(30, 40, 60, 0.4), transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(40, 20, 40, 0.3), transparent 50%),
-    radial-gradient(circle at 50% 10%, rgba(220, 38, 38, 0.05), transparent 40%);
-  background-attachment: fixed;
-  animation: meshFlow 20s ease-infinite alternate;
   color: var(--foreground);
   font-family: -apple-system, "Inter", BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   overflow-x: hidden;
@@ -367,4 +361,16 @@ input::placeholder, textarea::placeholder {
   grid-template-columns: 1fr 1fr;
   gap: 6rem;
   align-items: center;
+}
+
+.plasma-container {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--background);
 }

@@ -12,6 +12,7 @@ import Search from './pages/Search';
 import Lawyers from './pages/Lawyers';
 import Pricing from './pages/Pricing';
 import Legal from './pages/Legal';
+import Plasma from './components/Plasma';
 
 // Page Transition Wrapper
 const PageWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -46,7 +47,17 @@ function AppInner() {
   const hideFooter = pathname === '/chat';
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--background)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'transparent' }}>
+      <div className="plasma-container">
+        <Plasma 
+          color="#ff6b35"
+          speed={0.6}
+          direction="forward"
+          scale={1.1}
+          opacity={0.8}
+          mouseInteractive={true}
+        />
+      </div>
       <Navbar />
       <main style={{ flex: 1 }}>
         <AnimatePresence mode="wait">

@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Scale, Search, Users, ShieldCheck, Star, BookOpen, Briefcase } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlassSurface from '../components/ui/GlassSurface';
+import LightRays from '../components/LightRays';
+import SpotlightCard from '../components/SpotlightCard';
 
 const Home: React.FC = () => {
   const fadeInUp = {
@@ -112,14 +114,33 @@ const Home: React.FC = () => {
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
           background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 70%)',
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          zIndex: 0
         }} />
+        
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }}>
+          <LightRays
+            raysOrigin="top-center"
+            raysColor="#ffffff"
+            raysSpeed={0.5}
+            lightSpread={2}
+            rayLength={3}
+            followMouse={true}
+            mouseInfluence={0.1}
+            noiseAmount={0.06}
+            distortion={0}
+            pulsating={false}
+            fadeDistance={1}
+            saturation={1}
+          />
+        </div>
         
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            style={{ position: 'relative', zIndex: 2 }}
           >
             <div className="section-label">AI-Powered Legal Platform for India</div>
             
@@ -255,24 +276,24 @@ const Home: React.FC = () => {
                 key={idx}
                 {...fadeInUp}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="glass-card"
-                style={{ padding: '2rem' }}
               >
-                <div style={{ 
-                  width: '56px', height: '56px', 
-                  background: f.iconBg,
-                  borderRadius: '14px', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  marginBottom: '1.25rem',
-                  border: `1px solid ${f.iconBorder}`,
-                  color: f.iconColor,
-                }}>
-                  {f.icon}
-                </div>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.6rem' }}>{f.title}</h3>
-                <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.65, fontSize: '0.95rem' }}>{f.desc}</p>
+                <SpotlightCard spotlightColor="rgba(255, 255, 255, 0.05)" className="glass-card" style={{ padding: '2rem', height: '100%' }}>
+                  <div style={{ 
+                    width: '56px', height: '56px', 
+                    background: f.iconBg,
+                    borderRadius: '14px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    marginBottom: '1.25rem',
+                    border: `1px solid ${f.iconBorder}`,
+                    color: f.iconColor,
+                  }}>
+                    {f.icon}
+                  </div>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.6rem' }}>{f.title}</h3>
+                  <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.65, fontSize: '0.95rem' }}>{f.desc}</p>
+                </SpotlightCard>
               </motion.div>
             ))}
           </div>
@@ -347,29 +368,31 @@ const Home: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <div className="glass-card" style={{ flex: 1, padding: '2rem 2.25rem' }}>
-                  <div className="timeline-step" style={{
-                    fontSize: '4rem', fontWeight: 900,
-                    color: 'rgba(255,255,255,0.05)',
-                    lineHeight: 1, marginBottom: '-0.5rem',
-                    letterSpacing: '-0.04em', userSelect: 'none'
-                  }}>
-                    {item.step}
-                  </div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.01em' }}>
-                    {item.title}
-                  </h3>
-                  <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.75, marginBottom: '1rem', fontSize: '0.97rem' }}>
-                    {item.desc}
-                  </p>
-                  <div style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                    background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
-                    borderRadius: '2rem', padding: '0.3rem 0.9rem',
-                    fontSize: '0.78rem', color: 'var(--accent-blue)', fontWeight: 600
-                  }}>
-                    {item.detail}
-                  </div>
+                <div style={{ flex: 1 }}>
+                  <SpotlightCard spotlightColor="rgba(255, 255, 255, 0.05)" className="glass-card" style={{ padding: '2rem 2.25rem' }}>
+                    <div className="timeline-step" style={{
+                      fontSize: '4rem', fontWeight: 900,
+                      color: 'rgba(255,255,255,0.05)',
+                      lineHeight: 1, marginBottom: '-0.5rem',
+                      letterSpacing: '-0.04em', userSelect: 'none'
+                    }}>
+                      {item.step}
+                    </div>
+                    <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.01em' }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.75, marginBottom: '1rem', fontSize: '0.97rem' }}>
+                      {item.desc}
+                    </p>
+                    <div style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                      background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
+                      borderRadius: '2rem', padding: '0.3rem 0.9rem',
+                      fontSize: '0.78rem', color: 'var(--accent-blue)', fontWeight: 600
+                    }}>
+                      {item.detail}
+                    </div>
+                  </SpotlightCard>
                 </div>
               </motion.div>
             ))}
