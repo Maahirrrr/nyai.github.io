@@ -133,9 +133,9 @@ const Navbar: React.FC = () => {
               borderRadius={999} 
               displace={4} 
               mixBlendMode="screen" 
-              backgroundOpacity={0.4} 
-              brightness={60}
-              style={{ background: 'rgba(220, 38, 38, 0.3)' }}
+              backgroundOpacity={0.12} 
+              brightness={45}
+              style={{ background: 'rgba(255, 255, 255, 0.03)' }}
               className="navbar-cta"
             >
               <Link to="/register" style={{ padding: "0.5rem 1.1rem", fontSize: "0.85rem", fontWeight: 700, color: "#fff", display: "inline-block" }}>

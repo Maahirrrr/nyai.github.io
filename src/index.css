@@ -40,10 +40,12 @@ html {
 }
 
 body {
-  background-color: var(--background);
+  background-color: #050507;
   background-image: 
-    radial-gradient(ellipse 60% 80% at -5% -5%, rgba(100, 50, 200, 0.15), transparent 60%),
-    radial-gradient(ellipse 60% 80% at 105% 105%, rgba(40, 110, 250, 0.15), transparent 60%);
+    radial-gradient(circle at 0% 0%, rgba(10, 15, 30, 0.8), transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(15, 10, 25, 0.6), transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(8, 8, 12, 1), transparent 100%),
+    linear-gradient(to bottom, #050507 0%, #0a0a0f 50%, #030305 100%);
   background-attachment: fixed;
   color: var(--foreground);
   font-family: -apple-system, "Inter", BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;

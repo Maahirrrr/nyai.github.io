@@ -219,9 +219,9 @@ const Pricing: React.FC = () => {
                 <GlassSurface 
                   borderRadius={999} 
                   displace={plan.highlight ? 5 : 3} 
-                  backgroundOpacity={plan.highlight ? 0.35 : 0.15} 
-                  brightness={plan.highlight ? 70 : 45}
-                  style={{ marginTop: '2rem', width: '100%' }}
+                  backgroundOpacity={plan.highlight ? 0.2 : 0.1} 
+                  brightness={plan.highlight ? 55 : 45}
+                  style={{ marginTop: '2rem', width: '100%', background: plan.highlight ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.02)' }}
                 >
                   <Link
                     to="/register"
@@ -262,9 +262,9 @@ const Pricing: React.FC = () => {
               <GlassSurface 
                 borderRadius={999} 
                 displace={4} 
-                backgroundOpacity={0.4} 
-                brightness={62}
-                style={{ background: 'rgba(220, 38, 38, 0.3)' }}
+                backgroundOpacity={0.12} 
+                brightness={45}
+                style={{ background: 'rgba(255, 255, 255, 0.03)' }}
               >
                 <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   Ask NyAI <ArrowRight size={16} />

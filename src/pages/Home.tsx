@@ -153,11 +153,11 @@ const Home: React.FC = () => {
                 borderRadius={999} 
                 displace={4} 
                 mixBlendMode="screen" 
-                backgroundOpacity={0.4} 
-                brightness={62}
+                backgroundOpacity={0.12} 
+                brightness={45}
                 style={{ 
                   transition: 'transform 0.3s ease',
-                  background: 'rgba(220, 38, 38, 0.3)' 
+                  background: 'rgba(255, 255, 255, 0.03)' 
                 }}
                 className="hero-cta-primary"
               >
@@ -170,9 +170,12 @@ const Home: React.FC = () => {
                 borderRadius={999} 
                 displace={3} 
                 mixBlendMode="screen" 
-                backgroundOpacity={0.1} 
+                backgroundOpacity={0.12} 
                 brightness={45}
-                style={{ transition: 'transform 0.3s ease' }}
+                style={{ 
+                  transition: 'transform 0.3s ease',
+                  background: 'rgba(255, 255, 255, 0.03)' 
+                }}
                 className="hero-cta-secondary"
               >
                 <Link to="/chat" style={{ fontSize: '1rem', padding: '1rem 2.2rem', fontWeight: 600, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
