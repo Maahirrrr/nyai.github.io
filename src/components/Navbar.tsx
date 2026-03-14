@@ -46,10 +46,11 @@ const Navbar: React.FC = () => {
       }}>
         <GlassSurface
           borderRadius={999}
-          displace={3}
-          mixBlendMode="screen"
-          backgroundOpacity={0.06}
-          brightness={40}
+          displace={1}
+          mixBlendMode="normal"
+          backgroundOpacity={0.12}
+          brightness={35}
+          blur={15}
           style={{
             background: "rgba(255, 255, 255, 0.02)",
             border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -106,9 +107,9 @@ const Navbar: React.FC = () => {
                       >
                         <GlassSurface 
                           borderRadius={999} 
-                          backgroundOpacity={0.15} 
-                          displace={3} 
-                          mixBlendMode="screen"
+                          backgroundOpacity={0.25} 
+                          displace={0.5} 
+                          mixBlendMode="normal"
                           width="100%"
                           height="100%"
                           style={{
