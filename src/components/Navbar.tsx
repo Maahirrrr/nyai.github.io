@@ -37,10 +37,12 @@ const Navbar: React.FC = () => {
         width: "100%",
         zIndex: 1002,
       padding: scrolled ? "0.875rem 0" : "1.25rem 0",
-      background: scrolled ? "rgba(17, 17, 17, 0.97)" : "rgba(17, 17, 17, 0.6)",
-      backdropFilter: "blur(16px)",
-      borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
-      transition: "all 0.3s ease",
+      background: scrolled ? "rgba(20, 20, 20, 0.15)" : "transparent",
+      backdropFilter: scrolled ? "blur(40px) saturate(220%)" : "none",
+      WebkitBackdropFilter: scrolled ? "blur(40px) saturate(220%)" : "none",
+      borderBottom: scrolled ? "1px solid rgba(255, 255, 255, 0.12)" : "1px solid transparent",
+      boxShadow: scrolled ? "0 12px 36px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2), inset 0 -1px 1px rgba(0,0,0,0.5)" : "none",
+      transition: "all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
     }}>
       <div className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative" }}>
         {/* Logo — Left */}

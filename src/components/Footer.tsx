@@ -4,7 +4,7 @@ import { Shield } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
-    <footer style={{ background: 'rgba(0,0,0,0.2)', borderTop: '1px solid var(--border)', paddingTop: '5rem' }}>
+    <footer style={{ background: 'rgba(25, 25, 28, 0.45)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', borderTop: '1px solid var(--border)', paddingTop: '5rem' }}>
       <div className="container">
         <div className="footer-grid">
           {/* Brand */}

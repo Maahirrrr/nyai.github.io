@@ -1,27 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap");
 
 :root {
-  --background: #111111;        /* near-black — warmer than pure black, less harsh */
-  --foreground: #EDEDED;        /* off-white — not blinding, premium feel */
+  --background: #0d0d12;        /* Mac dark mode base */
+  --foreground: #F5F5F7;        /* Crisp off-white */
   --accent: #9CA3AF;
   --accent-dim: rgba(156, 163, 175, 0.15);
   --accent-blue: #9CA3AF;
-  --muted: #1C1C1C;             /* section bg — distinct from background */
-  --muted-foreground: #6B7280;  /* secondary text — balanced contrast */
-  --border: #2A2A2A;            /* subtle separation */
-  --glass: rgba(255, 255, 255, 0.025);
-  --glass-border: rgba(255, 255, 255, 0.06);
+  --muted: rgba(255, 255, 255, 0.02); 
+  --muted-foreground: #86868b;  /* Mac gray */
+  --border: rgba(255, 255, 255, 0.06);
+  --glass: rgba(255, 255, 255, 0.015);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
   --success: #4ade80;
-  --card-bg: rgba(30, 30, 30, 0.75); /* cards — floats above section */
+  --card-bg: rgba(25, 25, 28, 0.15); /* Extreme transparency for jelly look */
 
   /* Psychological accent colors */
   --trust-blue: #3B82F6;
   --trust-blue-dim: rgba(59, 130, 246, 0.12);
-  --success-green: #22C55E;
-  --success-green-dim: rgba(34, 197, 94, 0.12);
-  --amber: #F59E0B;
-  --amber-dim: rgba(245, 158, 11, 0.12);
-  --ai-purple: #A855F7;
+  --success-green: #34d399;
+  --success-green-dim: rgba(52, 211, 153, 0.12);
+  --amber: #fbbf24;
+  --amber-dim: rgba(251, 191, 36, 0.12);
+  --ai-purple: #a855f7;
   --ai-purple-dim: rgba(168, 85, 247, 0.12);
 }
 
@@ -37,6 +38,10 @@ html {
 
 body {
   background-color: var(--background);
+  background-image: 
+    radial-gradient(ellipse 60% 80% at -5% -5%, rgba(100, 50, 200, 0.15), transparent 60%),
+    radial-gradient(ellipse 60% 80% at 105% 105%, rgba(40, 110, 250, 0.15), transparent 60%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
@@ -68,14 +73,20 @@ input, textarea {
 
 .glass-card {
   background: var(--card-bg);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(40px) saturate(220%);
+  -webkit-backdrop-filter: blur(40px) saturate(220%);
   border: 1px solid var(--glass-border);
-  border-radius: 1.25rem;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(45, 45, 50, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.6);
 }
 
 .section-label {
@@ -84,50 +95,96 @@ input, textarea {
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--trust-blue);
+  color: #60A5FA;
   margin-bottom: 1rem;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  padding: 0.3rem 0.85rem;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  padding: 0.35rem 0.95rem;
   border-radius: 2rem;
-  background: var(--trust-blue-dim);
+  background: rgba(96, 165, 250, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(96, 165, 250, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .btn-primary {
-  background: #DC2626;
+  background: rgba(220, 38, 38, 0.25); /* Much more transparent */
+  backdrop-filter: blur(32px) saturate(220%);
+  -webkit-backdrop-filter: blur(32px) saturate(220%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.5), inset 0 -1px 2px rgba(0, 0, 0, 0.5);
   color: #ffffff;
   padding: 0.85rem 1.75rem;
-  border-radius: 0.6rem;
+  border-radius: 999px; /* pill shape */
   font-weight: 700;
   font-size: 0.95rem;
   letter-spacing: 0.01em;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 50%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent);
+  border-radius: 999px 999px 0 0;
+  pointer-events: none;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.35);
+  transform: scale(1.02);
+  background: rgba(220, 38, 38, 0.35);
+  box-shadow: 0 12px 40px rgba(220, 38, 38, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.6), inset 0 -1px 2px rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-primary:active {
+  transform: scale(0.96);
+  transition: all 0.1s;
 }
 
 .btn-secondary {
-  border: 1.5px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(32px) saturate(220%);
+  -webkit-backdrop-filter: blur(32px) saturate(220%);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.4);
   color: var(--foreground);
   padding: 0.85rem 1.75rem;
-  border-radius: 0.6rem;
+  border-radius: 999px;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-secondary::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 50%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), transparent);
+  border-radius: 999px 999px 0 0;
+  pointer-events: none;
 }
 
 .btn-secondary:hover {
-  background: var(--muted);
-  border-color: var(--muted-foreground);
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.4), inset 0 -1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.btn-secondary:active {
+  transform: scale(0.96);
+  transition: all 0.1s;
 }
 
 /* Custom scrollbar */
