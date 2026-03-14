@@ -62,10 +62,12 @@ const Navbar: React.FC = () => {
             curve="bezier"
             exponential
             opacity={1}
+            zIndex={1}
             style={{ borderRadius: "999px" }}
           />
           <nav style={{
             position: "relative",
+            zIndex: 10,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
