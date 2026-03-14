@@ -8,14 +8,32 @@ import GradualBlur from "./ui/GradualBlur";
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const location = useLocation();
   const isChatPage = location.pathname === '/chat';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
+
+  const capsuleStyle: React.CSSProperties = {
+    position: "fixed",
+    top: scrolled ? "15px" : "20px",
+    left: (isChatPage && !isMobile) ? "calc(280px + (100% - 280px) / 2)" : "50%",
+    transform: "translateX(-50%)",
+    width: (isChatPage && !isMobile) ? "70%" : (scrolled ? "75%" : "90%"),
+    maxWidth: "1440px",
+    zIndex: 1002,
+    willChange: "transform, top, width, left",
+    transition: "all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
+  };
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -36,18 +54,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       {/* Floating Capsule Container */}
-      <div style={{
-        position: "fixed",
-        top: scrolled ? "0.8rem" : "1.5rem",
-        left: "50%",
-        transform: "translate3d(-50%, 0, 0)",
-        WebkitTransform: "translate3d(-50%, 0, 0)",
-        width: isChatPage ? "70%" : (scrolled ? "75%" : "90%"),
-        maxWidth: "1440px",
-        zIndex: 1002,
-        willChange: "transform, top, width",
-        transition: "all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
-      }}>
+      <div style={capsuleStyle}>
         <div style={{
           position: "relative",
           borderRadius: "999px",
@@ -145,26 +152,31 @@ const Navbar: React.FC = () => {
 
           {/* Auth Buttons — Right (Desktop) */}
           <div className="desktop-flex" style={{ gap: "0.5rem", alignItems: "center" }}>
-            <Link
-              to="/login"
-              style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--muted-foreground)", padding: "0.5rem 1rem", display: "flex", alignItems: "center", gap: "0.3rem", transition: "color 0.2s" }}
-            >
-              <User size={16} />
-              Sign In
-            </Link>
-            <GlassSurface 
-              blur={20} 
-              displace={4} 
-              mixBlendMode="normal" 
-              backgroundOpacity={1} 
-              brightness={120}
-              style={{ background: '#BD2020' }}
-              className="navbar-cta"
-            >
-              <Link to="/register" style={{ padding: "0.5rem 1.1rem", fontSize: "0.85rem", fontWeight: 700, color: "#fff", display: "inline-block" }}>
-                Get Started
-              </Link>
-            </GlassSurface>
+            {!isChatPage && (
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                <Link 
+                  to="/login" 
+                  className="navbar-link"
+                  style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--muted-foreground)", padding: "0.5rem 1rem", display: "flex", alignItems: "center", gap: "0.3rem", transition: "color 0.2s" }}
+                >
+                  <User size={16} />
+                  Sign In
+                </Link>
+                <GlassSurface 
+                  blur={20} 
+                  displace={4} 
+                  mixBlendMode="normal" 
+                  backgroundOpacity={1} 
+                  brightness={120}
+                  style={{ background: '#BD2020' }}
+                  className="navbar-cta"
+                >
+                  <Link to="/register" style={{ padding: "0.5rem 1.1rem", fontSize: "0.85rem", fontWeight: 700, color: "#fff", display: "inline-block" }}>
+                    Get Started
+                  </Link>
+                </GlassSurface>
+              </div>
+            )}
           </div>
 
         {/* Mobile Menu Toggle */}
