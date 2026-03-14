@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Shield, User, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -35,10 +35,10 @@ const Navbar: React.FC = () => {
       {/* Floating Capsule Container */}
       <div style={{
         position: "fixed",
-        top: scrolled ? "1rem" : "1.5rem",
+        top: scrolled ? "0.75rem" : "1.25rem",
         left: "50%",
         transform: "translateX(-50%)",
-        width: "90%",
+        width: "94%", /* More room on mobile */
         maxWidth: "1000px",
         zIndex: 1002,
         transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
@@ -131,55 +131,83 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(17, 17, 17, 0.95)",
-          backdropFilter: "blur(24px)",
-          WebkitBackdropFilter: "blur(24px)",
-          zIndex: 1001,
-          display: "flex",
-          flexDirection: "column",
-          padding: "6rem 1.5rem 2rem",
-          animation: "fadeIn 0.2s ease-out"
-        }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2rem" }}>
-            {navLinks.map(link => (
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, y: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -20 }}
+            transition={{ duration: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
+            style={{
+              position: "fixed",
+              top: "5.5rem",
+              left: "3%",
+              right: "3%",
+              maxHeight: "80vh",
+              background: "rgba(20, 20, 20, 0.2)",
+              backdropFilter: "blur(40px) saturate(220%)",
+              WebkitBackdropFilter: "blur(40px) saturate(220%)",
+              border: "1px solid rgba(255, 255, 255, 0.12)",
+              borderRadius: "2.5rem",
+              zIndex: 1001,
+              display: "flex",
+              flexDirection: "column",
+              padding: "2rem 1.5rem",
+              boxShadow: "0 24px 48px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2)",
+              overflow: "hidden"
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "2rem" }}>
+              {navLinks.map(link => {
+                const isActive = location.pathname === link.to;
+                return (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    style={{
+                      fontSize: "1.1rem",
+                      fontWeight: 600,
+                      color: isActive ? "#ffffff" : "var(--muted-foreground)",
+                      padding: "0.85rem 1.25rem",
+                      borderRadius: "999px",
+                      background: isActive ? "rgba(255,255,255,0.12)" : "transparent",
+                      transition: "all 0.2s",
+                      textAlign: "center"
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               <Link
-                key={link.to}
-                to={link.to}
-                style={{
-                  fontSize: "1.25rem",
-                  fontWeight: 600,
-                  color: location.pathname === link.to ? "var(--foreground)" : "var(--muted-foreground)",
-                  padding: "0.75rem 1rem",
-                  borderRadius: "0.5rem",
-                  background: location.pathname === link.to ? "rgba(255,255,255,0.08)" : "transparent",
+                to="/login"
+                style={{ 
+                  fontSize: "1rem", 
+                  fontWeight: 600, 
+                  color: "var(--foreground)", 
+                  padding: "0.85rem", 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "center", 
+                  gap: "0.5rem", 
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)", 
+                  borderRadius: "999px" 
                 }}
               >
-                {link.label}
+                <User size={18} />
+                Sign In
               </Link>
-            ))}
-          </div>
-          
-          <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <Link
-              to="/login"
-              style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--foreground)", padding: "1rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", border: "1.5px solid var(--border)", borderRadius: "0.75rem" }}
-            >
-              <User size={18} />
-              Sign In
-            </Link>
-            <Link to="/register" className="btn-primary" style={{ padding: "1rem", fontSize: "1.1rem" }}>
-              Get Started Free
-            </Link>
-          </div>
-        </div>
-      )}
+              <Link to="/register" className="btn-primary" style={{ padding: "0.85rem", fontSize: "1rem", justifyContent: "center" }}>
+                Get Started Free
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
