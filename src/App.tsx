@@ -36,7 +36,8 @@ function ScrollToTop() {
 }
 
 function AppInner() {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
   const hideFooter = pathname === '/chat';
 
   return (

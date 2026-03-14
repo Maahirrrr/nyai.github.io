@@ -14,7 +14,7 @@ const LawyerCard: React.FC<LawyerCardProps> = ({ lawyer }) => {
           <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.25rem' }}>{lawyer.name}</h3>
           <p style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>{lawyer.specialization.join(', ')}</p>
         </div>
-        <div style={{ background: 'var(--foreground)', color: 'var(--background)', padding: '0.25rem 0.5rem', borderRadius: '0.25rem', fontSize: '0.75rem', fontWeight: 700 }}>
+        <div style={{ background: 'var(--foreground)', color: 'var(--background)', padding: '0.3rem 0.6rem', borderRadius: '999px', fontSize: '0.7rem', fontWeight: 800 }}>
           {lawyer.experience} YRS EXP
         </div>
       </div>
