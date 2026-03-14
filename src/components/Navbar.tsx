@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
         }}>
           <GradualBlur
             target="parent"
-            position="bottom"
+            position="top"
             height="100%"
             strength={6}
             divCount={8}
