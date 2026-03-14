@@ -9,6 +9,7 @@ const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isChatPage = location.pathname === '/chat';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -41,7 +42,7 @@ const Navbar: React.FC = () => {
         left: "50%",
         transform: "translate3d(-50%, 0, 0)",
         WebkitTransform: "translate3d(-50%, 0, 0)",
-        width: scrolled ? "75%" : "90%",
+        width: isChatPage ? "70%" : (scrolled ? "75%" : "90%"),
         maxWidth: "1440px",
         zIndex: 1002,
         willChange: "transform, top, width",
