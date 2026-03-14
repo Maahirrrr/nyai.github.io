@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight, Sparkles, Zap, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import GlassSurface from '../components/ui/GlassSurface';
 
 interface Plan {
   name: string;
@@ -215,35 +216,31 @@ const Pricing: React.FC = () => {
                 </ul>
 
                 {/* CTA */}
-                <Link
-                  to="/register"
-                  className={plan.highlight ? 'btn-primary' : 'btn-secondary'}
-                  style={{
-                    marginTop: '2rem',
-                    textAlign: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.95rem',
-                    padding: '0.9rem 1.5rem',
-                    background: plan.highlight ? '#C9A227' : undefined,
-                    color: plan.highlight ? '#0F0F0F' : undefined,
-                    borderColor: !plan.highlight ? 'var(--border)' : undefined,
-                    transition: 'all 0.3s ease',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = '#C9A227';
-                    e.currentTarget.style.color = '#0F0F0F';
-                    e.currentTarget.style.borderColor = '#C9A227';
-                    e.currentTarget.style.boxShadow = '0 8px 28px rgba(201, 162, 39, 0.35)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = plan.highlight ? '#C9A227' : 'transparent';
-                    e.currentTarget.style.color = plan.highlight ? '#0F0F0F' : 'var(--foreground)';
-                    e.currentTarget.style.borderColor = plan.highlight ? '#C9A227' : 'var(--border)';
-                    e.currentTarget.style.boxShadow = plan.highlight ? '0 8px 28px rgba(201, 162, 39, 0.25)' : 'none';
-                  }}
+                <GlassSurface 
+                  borderRadius={999} 
+                  displace={plan.highlight ? 5 : 3} 
+                  backgroundOpacity={plan.highlight ? 0.35 : 0.15} 
+                  brightness={plan.highlight ? 70 : 45}
+                  style={{ marginTop: '2rem', width: '100%' }}
                 >
-                  {plan.cta} <ArrowRight size={16} />
-                </Link>
+                  <Link
+                    to="/register"
+                    style={{
+                      width: '100%',
+                      textAlign: 'center',
+                      justifyContent: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      fontSize: '0.95rem',
+                      fontWeight: 700,
+                      padding: '0.9rem 1.5rem',
+                      color: '#fff',
+                    }}
+                  >
+                    {plan.cta} <ArrowRight size={16} />
+                  </Link>
+                </GlassSurface>
               </motion.div>
             ))}
           </div>
@@ -261,13 +258,17 @@ const Pricing: React.FC = () => {
             <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.75, marginBottom: '2.5rem', fontSize: '1rem' }}>
               Start with the free Basic plan — no credit card needed. Upgrade anytime as your needs grow. Our AI will always recommend the right plan based on your usage.
             </p>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/chat" className="btn-primary">
-                Ask NyAI <ArrowRight size={16} />
-              </Link>
-              <Link to="/about" className="btn-secondary">
-                Contact Us
-              </Link>
+            <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+              <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62}>
+                <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  Ask NyAI <ArrowRight size={16} />
+                </Link>
+              </GlassSurface>
+              <GlassSurface borderRadius={999} displace={3} backgroundOpacity={0.1} brightness={45}>
+                <Link to="/about" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
+                  Contact Us
+                </Link>
+              </GlassSurface>
             </div>
           </motion.div>
         </div>

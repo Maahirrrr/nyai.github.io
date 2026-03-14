@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { User, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import GlassSurface from "./ui/GlassSurface";
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -83,26 +84,35 @@ const Navbar: React.FC = () => {
                   }}
                 >
                   {isActive && (
-                    <motion.div
-                      layoutId="nav-pill"
-                      transition={{
-                        type: "spring",
-                        stiffness: 150,
-                        damping: 25,
-                        restDelta: 0.001
-                      }}
-                      style={{
-                        position: "absolute",
-                        inset: "1px -8px",
-                        background: "rgba(255, 255, 255, 0.08)",
-                        backdropFilter: "blur(12px) saturate(300%)",
-                        WebkitBackdropFilter: "blur(12px) saturate(300%)",
-                        borderRadius: "999px",
-                        zIndex: -1,
-                        borderTop: "2px solid rgba(255, 255, 255, 0.6)",
-                        boxShadow: "inset 0 0 18px rgba(255, 255, 255, 0.25), 0 12px 24px rgba(0, 0, 0, 0.5)",
-                      }}
-                    />
+                      <motion.div
+                        layoutId="nav-pill"
+                        transition={{
+                          type: "spring",
+                          stiffness: 150,
+                          damping: 25,
+                          restDelta: 0.001
+                        }}
+                        style={{
+                          position: "absolute",
+                          inset: "1px -8px",
+                          zIndex: -1,
+                        }}
+                      >
+                        <GlassSurface 
+                          borderRadius={999} 
+                          backgroundOpacity={0.15} 
+                          displace={3} 
+                          mixBlendMode="screen"
+                          width="100%"
+                          height="100%"
+                          style={{
+                            borderTop: "2px solid rgba(255, 255, 255, 0.6)",
+                            boxShadow: "inset 0 0 18px rgba(255, 255, 255, 0.25), 0 12px 24px rgba(0, 0, 0, 0.5)",
+                          }}
+                        >
+                          <div style={{ width: "100%", height: "100%" }} />
+                        </GlassSurface>
+                      </motion.div>
                   )}
                   {link.label}
                 </Link>
@@ -119,9 +129,18 @@ const Navbar: React.FC = () => {
               <User size={16} />
               Sign In
             </Link>
-            <Link to="/register" className="btn-primary" style={{ padding: "0.5rem 1.1rem", fontSize: "0.85rem" }}>
-              Get Started
-            </Link>
+            <GlassSurface 
+              borderRadius={999} 
+              displace={4} 
+              mixBlendMode="screen" 
+              backgroundOpacity={0.2} 
+              brightness={60}
+              className="navbar-cta"
+            >
+              <Link to="/register" style={{ padding: "0.5rem 1.1rem", fontSize: "0.85rem", fontWeight: 700, color: "#fff", display: "inline-block" }}>
+                Get Started
+              </Link>
+            </GlassSurface>
           </div>
 
         {/* Mobile Menu Toggle */}

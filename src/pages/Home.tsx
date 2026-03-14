@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Scale, Search, Users, ShieldCheck, Star, BookOpen, Briefcase } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import GlassSurface from '../components/ui/GlassSurface';
 
 const Home: React.FC = () => {
   const fadeInUp = {
@@ -122,12 +123,12 @@ const Home: React.FC = () => {
           >
             <div className="section-label">AI-Powered Legal Platform for India</div>
             
-            <h1 style={{ 
-              fontSize: 'clamp(3rem, 12vw, 5rem)', 
+            <h1 className="hero-title" style={{ 
+              fontSize: 'clamp(3.5rem, 15vw, 5rem)', 
               fontWeight: 800, 
-              lineHeight: 1.1, 
-              letterSpacing: '-0.04em', 
-              marginBottom: '1.25rem',
+              lineHeight: 1.05, 
+              letterSpacing: '-0.045em', 
+              marginBottom: '1rem',
             }}>
               Justice Made <br />
               <span style={{ WebkitTextStroke: '1px var(--foreground)', color: 'transparent', opacity: 0.8 }}>
@@ -135,7 +136,7 @@ const Home: React.FC = () => {
               </span>
             </h1>
             
-            <p style={{ 
+            <p className="hero-description" style={{ 
               fontSize: 'clamp(0.9rem, 2vw + 0.4rem, 1.15rem)', 
               color: 'var(--muted-foreground)', 
               maxWidth: '680px', 
@@ -147,13 +148,34 @@ const Home: React.FC = () => {
               NyAI helps Indian citizens understand their legal rights, analyze cases with AI, and connect with verified lawyers — all in one platform.
             </p>
             
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/register" className="btn-primary" style={{ fontSize: '1rem', padding: '1rem 2rem' }}>
-                Get Started Free <ArrowRight size={18} />
-              </Link>
-              <Link to="/chat" className="btn-secondary" style={{ fontSize: '1rem', padding: '1rem 2rem' }}>
-                Try the Lawbot
-              </Link>
+            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+              <GlassSurface 
+                borderRadius={999} 
+                displace={4} 
+                mixBlendMode="screen" 
+                backgroundOpacity={0.25} 
+                brightness={62}
+                style={{ transition: 'transform 0.3s ease' }}
+                className="hero-cta-primary"
+              >
+                <Link to="/register" style={{ fontSize: '1rem', padding: '1rem 2.2rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  Get Started Free <ArrowRight size={18} />
+                </Link>
+              </GlassSurface>
+
+              <GlassSurface 
+                borderRadius={999} 
+                displace={3} 
+                mixBlendMode="screen" 
+                backgroundOpacity={0.1} 
+                brightness={45}
+                style={{ transition: 'transform 0.3s ease' }}
+                className="hero-cta-secondary"
+              >
+                <Link to="/chat" style={{ fontSize: '1rem', padding: '1rem 2.2rem', fontWeight: 600, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  Try the Lawbot
+                </Link>
+              </GlassSurface>
             </div>
 
             <p style={{ marginTop: '1.5rem', fontSize: '0.85rem', color: 'var(--muted-foreground)' }}>

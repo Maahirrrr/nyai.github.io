@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Target, Users, BookOpen, Shield, Award, Zap, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import GlassSurface from '../components/ui/GlassSurface';
 
 const About: React.FC = () => {
   const fadeInUp = {
@@ -44,9 +45,11 @@ const About: React.FC = () => {
             <p style={{ fontSize: '1.15rem', color: 'var(--muted-foreground)', maxWidth: '700px', margin: '0 auto 2.5rem', lineHeight: 1.7 }}>
               NyAI was born from a simple observation: most Indians don't know their legal rights and can't afford to find out. We set out to change that — with AI, transparency, and a relentless commitment to justice.
             </p>
-            <Link to="/chat" className="btn-primary">
-              Experience NyAI <ArrowRight size={16} />
-            </Link>
+            <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62} className="mx-auto" style={{ margin: '0 auto', display: 'inline-flex' }}>
+              <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                Experience NyAI <ArrowRight size={16} />
+              </Link>
+            </GlassSurface>
           </motion.div>
         </div>
       </section>
@@ -153,9 +156,17 @@ const About: React.FC = () => {
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>
               Join thousands fighting for their rights
             </h2>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/register" className="btn-primary">Get Started Free <ArrowRight size={16} /></Link>
-              <Link to="/chat" className="btn-secondary">Try the Lawbot</Link>
+            <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+              <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62}>
+                <Link to="/register" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>
+                  Get Started Free <ArrowRight size={16} />
+                </Link>
+              </GlassSurface>
+              <GlassSurface borderRadius={999} displace={3} backgroundOpacity={0.1} brightness={45}>
+                <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
+                  Try the Lawbot
+                </Link>
+              </GlassSurface>
             </div>
           </motion.div>
         </div>

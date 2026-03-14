@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, MapPin, Phone, Mail, Briefcase, Award, Clock, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import GlassSurface from '../components/ui/GlassSurface';
 
 interface Lawyer {
   id: string;
@@ -204,13 +205,17 @@ const LawyerCard: React.FC<{ lawyer: Lawyer; index: number }> = ({ lawyer, index
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <a href={`tel:${lawyer.phone}`} className="btn-secondary" style={{ padding: '0.6rem 1.25rem', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-              <Phone size={14} /> {lawyer.phone}
-            </a>
-            <a href={`mailto:${lawyer.email}`} className="btn-secondary" style={{ padding: '0.6rem 1.25rem', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-              <Mail size={14} /> Email
-            </a>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <GlassSurface borderRadius={999} displace={3} backgroundOpacity={0.15}>
+              <a href={`tel:${lawyer.phone}`} style={{ padding: '0.6rem 1.25rem', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#fff' }}>
+                <Phone size={14} /> {lawyer.phone}
+              </a>
+            </GlassSurface>
+            <GlassSurface borderRadius={999} displace={3} backgroundOpacity={0.15}>
+              <a href={`mailto:${lawyer.email}`} style={{ padding: '0.6rem 1.25rem', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#fff' }}>
+                <Mail size={14} /> Email
+              </a>
+            </GlassSurface>
           </div>
         </div>
       </motion.div>
@@ -275,13 +280,17 @@ const Lawyers: React.FC = () => {
             <p style={{ fontSize: '1.1rem', color: 'var(--muted-foreground)', maxWidth: '620px', margin: '0 auto 2.5rem', lineHeight: 1.75 }}>
               Our network of verified, experienced lawyers across India are ready to help you navigate your legal journey with confidence and clarity.
             </p>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/chat" className="btn-primary">
-                Get AI-Matched <ArrowRight size={16} />
-              </Link>
-              <Link to="/search" className="btn-secondary">
-                Search by Specialty
-              </Link>
+            <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+              <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62}>
+                <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  Get AI-Matched <ArrowRight size={16} />
+                </Link>
+              </GlassSurface>
+              <GlassSurface borderRadius={999} displace={3} backgroundOpacity={0.1} brightness={45}>
+                <Link to="/search" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
+                  Search by Specialty
+                </Link>
+              </GlassSurface>
             </div>
           </motion.div>
         </div>
@@ -338,9 +347,11 @@ const Lawyers: React.FC = () => {
             <p style={{ color: 'var(--muted-foreground)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem', lineHeight: 1.7 }}>
               Describe your issue to NyAI and get instantly matched with verified lawyers specializing in your exact matter.
             </p>
-            <Link to="/chat" className="btn-primary" style={{ fontSize: '1rem', padding: '1rem 2rem' }}>
-              Start with AI Lawbot <ArrowRight size={16} />
-            </Link>
+            <GlassSurface borderRadius={999} displace={4} backgroundOpacity={0.25} brightness={62} className="mx-auto" style={{ margin: '0 auto', display: 'inline-flex' }}>
+              <Link to="/chat" style={{ fontSize: '1rem', padding: '1rem 2.25rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                Start with AI Lawbot <ArrowRight size={16} />
+              </Link>
+            </GlassSurface>
           </motion.div>
         </div>
       </section>

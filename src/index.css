@@ -332,6 +332,11 @@ input::placeholder, textarea::placeholder {
   .timeline-step {
     font-size: 3rem !important;
   }
+
+  /* Hero Mobile Specifics */
+  .hero-description {
+    display: none !important;
+  }
 }
 
 @media (min-width: 1025px) {
