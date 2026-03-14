@@ -48,10 +48,10 @@ const About: React.FC = () => {
             <GlassSurface 
               borderRadius={999} 
               displace={4} 
-              backgroundOpacity={0.12} 
-              brightness={45} 
+              backgroundOpacity={0.4} 
+              brightness={62} 
               className="mx-auto" 
-              style={{ margin: '0 auto', display: 'inline-flex', background: 'rgba(255, 255, 255, 0.03)' }}
+              style={{ margin: '0 auto', display: 'inline-flex', background: 'rgba(220, 38, 38, 0.3)' }}
             >
               <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 Experience NyAI <ArrowRight size={16} />
@@ -167,12 +167,12 @@ const About: React.FC = () => {
               <GlassSurface 
                 borderRadius={999} 
                 displace={4} 
-                backgroundOpacity={0.12} 
-                brightness={45}
-                style={{ background: 'rgba(255, 255, 255, 0.03)' }}
+                backgroundOpacity={0.4} 
+                brightness={62}
+                style={{ background: 'rgba(220, 38, 38, 0.3)' }}
               >
                 <Link to="/register" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>
-                  Get Started Free <ArrowRight size={16} />
+                  Get Started <ArrowRight size={16} />
                 </Link>
               </GlassSurface>
               <GlassSurface borderRadius={999} displace={3} backgroundOpacity={0.1} brightness={45}>

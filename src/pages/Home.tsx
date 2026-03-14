@@ -153,16 +153,16 @@ const Home: React.FC = () => {
                 borderRadius={999} 
                 displace={4} 
                 mixBlendMode="screen" 
-                backgroundOpacity={0.12} 
-                brightness={45}
+                backgroundOpacity={0.4} 
+                brightness={62}
                 style={{ 
                   transition: 'transform 0.3s ease',
-                  background: 'rgba(255, 255, 255, 0.03)' 
+                  background: 'rgba(220, 38, 38, 0.3)' 
                 }}
                 className="hero-cta-primary"
               >
                 <Link to="/register" style={{ fontSize: '1rem', padding: '1rem 2.2rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  Get Started Free <ArrowRight size={18} />
+                  Get Started <ArrowRight size={18} />
                 </Link>
               </GlassSurface>
 
