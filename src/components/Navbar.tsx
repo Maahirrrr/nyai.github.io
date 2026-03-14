@@ -3,6 +3,7 @@ import { User, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import GlassSurface from "./ui/GlassSurface";
+import GradualBlur from "./ui/GradualBlur";
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -44,18 +45,25 @@ const Navbar: React.FC = () => {
         zIndex: 1002,
         transition: "all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
       }}>
-        <GlassSurface
-          borderRadius={999}
-          displace={4}
-          mixBlendMode="normal"
-          backgroundOpacity={0.15}
-          brightness={30}
-          blur={45}
-          style={{
-            background: "rgba(255, 255, 255, 0.02)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-          }}
-        >
+        <div style={{
+          position: "relative",
+          borderRadius: "999px",
+          overflow: "hidden",
+          border: "1px solid rgba(255, 255, 255, 0.12)",
+          background: "rgba(255, 255, 255, 0.03)",
+          boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
+        }}>
+          <GradualBlur
+            target="parent"
+            position="bottom"
+            height="100%"
+            strength={6}
+            divCount={8}
+            curve="bezier"
+            exponential
+            opacity={1}
+            style={{ borderRadius: "999px" }}
+          />
           <nav style={{
             position: "relative",
             display: "flex",
@@ -162,7 +170,7 @@ const Navbar: React.FC = () => {
           </button>
         </div>
           </nav>
-        </GlassSurface>
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}
