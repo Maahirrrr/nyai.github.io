@@ -153,12 +153,12 @@ const Navbar: React.FC = () => {
               Sign In
             </Link>
             <GlassSurface 
-              borderRadius={999} 
+              blur={20} 
               displace={4} 
-              mixBlendMode="screen" 
-              backgroundOpacity={0.4} 
-              brightness={60}
-              style={{ background: 'rgba(220, 38, 38, 0.3)' }}
+              mixBlendMode="normal" 
+              backgroundOpacity={0.8} 
+              brightness={120}
+              style={{ background: 'rgba(255, 30, 30, 0.9)' }}
               className="navbar-cta"
             >
               <Link to="/register" style={{ padding: "0.5rem 1.1rem", fontSize: "0.85rem", fontWeight: 700, color: "#fff", display: "inline-block" }}>
