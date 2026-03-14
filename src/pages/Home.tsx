@@ -123,26 +123,26 @@ const Home: React.FC = () => {
             <div className="section-label">AI-Powered Legal Platform for India</div>
             
             <h1 style={{ 
-              fontSize: 'clamp(2.8rem, 8vw, 5.5rem)', 
+              fontSize: 'clamp(2.5rem, 9vw, 5rem)', 
               fontWeight: 800, 
-              lineHeight: 1.05, 
-              letterSpacing: '-0.03em', 
-              marginBottom: '1.75rem',
-              fontFamily: '"Playfair Display", Georgia, serif'
+              lineHeight: 1.1, 
+              letterSpacing: '-0.04em', 
+              marginBottom: '1.5rem',
             }}>
               Justice Made <br />
-              <span style={{ WebkitTextStroke: '1.5px var(--foreground)', color: 'transparent' }}>
+              <span style={{ WebkitTextStroke: '1px var(--foreground)', color: 'transparent', opacity: 0.8 }}>
                 Accessible.
               </span>
             </h1>
             
             <p style={{ 
-              fontSize: '1.2rem', 
+              fontSize: 'clamp(1rem, 1.2vw + 0.5rem, 1.15rem)', 
               color: 'var(--muted-foreground)', 
-              maxWidth: '620px', 
+              maxWidth: '680px', 
               margin: '0 auto 2.5rem', 
-              lineHeight: 1.7,
-              fontWeight: 400
+              lineHeight: 1.6,
+              fontWeight: 400,
+              padding: '0 1.5rem'
             }}>
               NyAI helps Indian citizens understand their legal rights, analyze cases with AI, and connect with verified lawyers — all in one platform.
             </p>

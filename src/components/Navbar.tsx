@@ -35,11 +35,11 @@ const Navbar: React.FC = () => {
       {/* Floating Capsule Container */}
       <div style={{
         position: "fixed",
-        top: scrolled ? "1rem" : "1.5rem",
+        top: scrolled ? "0.8rem" : "1.5rem",
         left: "50%",
         transform: "translateX(-50%)",
-        width: scrolled ? "85%" : "90%",
-        maxWidth: "1400px",
+        width: scrolled ? "96%" : "90%",
+        maxWidth: "1440px",
         zIndex: 1002,
         transition: "all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
       }}>
@@ -58,7 +58,7 @@ const Navbar: React.FC = () => {
           transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
         }}>
           {/* Logo — Left */}
-          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "1rem", fontSize: "1.4rem", fontWeight: 800, letterSpacing: "-0.03em", color: "var(--foreground)", paddingLeft: "1rem" }}>
+          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "1rem", fontSize: "1.4rem", fontWeight: 700, letterSpacing: "-0.04em", color: "var(--foreground)", paddingLeft: "1rem" }}>
             <span>NyAI</span>
           </Link>
 
