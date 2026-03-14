@@ -31,6 +31,8 @@ jobs:
           cache: "npm"
 
       - name: Install and Build 🔧
+        env:
+          VITE_GROQ_API_KEY: ${{ secrets.VITE_GROQ_API_KEY }}
         run: |
           npm install
           npm run build
