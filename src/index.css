@@ -122,6 +122,13 @@ input, textarea {
   box-shadow: 0 4px 16px rgba(96, 165, 250, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
+@media (max-width: 640px) {
+  .section-label {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.75rem;
+  }
+}
+
 .btn-primary {
   background: rgba(220, 38, 38, 0.2);
   backdrop-filter: url(#frosted) saturate(220%);

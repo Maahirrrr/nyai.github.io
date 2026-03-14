@@ -123,11 +123,11 @@ const Home: React.FC = () => {
             <div className="section-label">AI-Powered Legal Platform for India</div>
             
             <h1 style={{ 
-              fontSize: 'clamp(2.5rem, 9vw, 5rem)', 
+              fontSize: 'clamp(3rem, 12vw, 5rem)', 
               fontWeight: 800, 
               lineHeight: 1.1, 
               letterSpacing: '-0.04em', 
-              marginBottom: '1.5rem',
+              marginBottom: '1.25rem',
             }}>
               Justice Made <br />
               <span style={{ WebkitTextStroke: '1px var(--foreground)', color: 'transparent', opacity: 0.8 }}>
@@ -136,11 +136,11 @@ const Home: React.FC = () => {
             </h1>
             
             <p style={{ 
-              fontSize: 'clamp(1rem, 1.2vw + 0.5rem, 1.15rem)', 
+              fontSize: 'clamp(0.9rem, 2vw + 0.4rem, 1.15rem)', 
               color: 'var(--muted-foreground)', 
               maxWidth: '680px', 
               margin: '0 auto 2.5rem', 
-              lineHeight: 1.6,
+              lineHeight: 1.5,
               fontWeight: 400,
               padding: '0 1.5rem'
             }}>
