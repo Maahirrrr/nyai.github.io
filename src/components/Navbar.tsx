@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Shield, User, Menu, X } from "lucide-react";
+import { User, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -35,11 +35,11 @@ const Navbar: React.FC = () => {
       {/* Floating Capsule Container */}
       <div style={{
         position: "fixed",
-        top: scrolled ? "0.75rem" : "1.25rem",
+        top: scrolled ? "1rem" : "1.5rem",
         left: "50%",
         transform: "translateX(-50%)",
-        width: "94%", /* More room on mobile */
-        maxWidth: "1000px",
+        width: scrolled ? "85%" : "90%",
+        maxWidth: "1400px",
         zIndex: 1002,
         transition: "all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)",
       }}>
@@ -48,18 +48,17 @@ const Navbar: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "0.6rem 2rem",
+          padding: "0.5rem 2.5rem",
           background: "rgba(255, 255, 255, 0.03)",
           backdropFilter: "blur(50px) saturate(240%)",
           WebkitBackdropFilter: "blur(50px) saturate(240%)",
           borderRadius: "999px",
           border: "1px solid rgba(255, 255, 255, 0.08)",
-          boxShadow: "0 15px 35px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15)",
+          boxShadow: "0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15)",
           transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
         }}>
           {/* Logo — Left */}
-          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1.2rem", fontWeight: 800, letterSpacing: "-0.025em", color: "var(--foreground)", paddingLeft: "0.5rem" }}>
-            <Shield size={22} style={{ color: "var(--trust-blue)" }} />
+          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "1rem", fontSize: "1.4rem", fontWeight: 800, letterSpacing: "-0.03em", color: "var(--foreground)", paddingLeft: "1rem" }}>
             <span>NyAI</span>
           </Link>
 
@@ -73,10 +72,10 @@ const Navbar: React.FC = () => {
                   to={link.to}
                   style={{
                     position: "relative",
-                    fontSize: "0.85rem",
+                    fontSize: "0.95rem",
                     fontWeight: 600,
                     color: isActive ? "#ffffff" : "var(--muted-foreground)",
-                    padding: "0.5rem 1rem",
+                    padding: "0.6rem 1.4rem",
                     borderRadius: "999px",
                     transition: "color 0.3s ease",
                     whiteSpace: "nowrap",
@@ -94,14 +93,14 @@ const Navbar: React.FC = () => {
                       }}
                       style={{
                         position: "absolute",
-                        inset: "4px -4px",
+                        inset: "1px -8px",
                         background: "rgba(255, 255, 255, 0.08)",
-                        backdropFilter: "blur(10px) saturate(300%)",
-                        WebkitBackdropFilter: "blur(10px) saturate(300%)",
+                        backdropFilter: "blur(12px) saturate(300%)",
+                        WebkitBackdropFilter: "blur(12px) saturate(300%)",
                         borderRadius: "999px",
                         zIndex: -1,
-                        borderTop: "1.5px solid rgba(255, 255, 255, 0.45)",
-                        boxShadow: "inset 0 0 12px rgba(255, 255, 255, 0.15), 0 4px 12px rgba(0, 0, 0, 0.2)",
+                        borderTop: "2px solid rgba(255, 255, 255, 0.6)",
+                        boxShadow: "inset 0 0 18px rgba(255, 255, 255, 0.25), 0 12px 24px rgba(0, 0, 0, 0.5)",
                       }}
                     />
                   )}

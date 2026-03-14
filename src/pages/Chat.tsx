@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, User, Bot, Sparkles, Menu, Plus, Pencil, Trash2, X, MessageSquare } from 'lucide-react';
+import { Send, User, Sparkles, Menu, Plus, Pencil, Trash2, X, MessageSquare, Bot } from 'lucide-react';
 import { sendToGemini } from '../services/gemini';
 
 interface Message {
@@ -181,13 +181,15 @@ const Chat: React.FC = () => {
             className="chat-sidebar"
             style={{
               height: '100vh',
-              background: '#161616',
-              borderRight: '1px solid var(--border)',
+              background: 'rgba(20, 20, 22, 0.4)',
+              backdropFilter: 'blur(50px) saturate(240%)',
+              borderRight: '1px solid rgba(255, 255, 255, 0.08)',
               display: 'flex',
               flexDirection: 'column',
               flexShrink: 0,
               overflow: 'hidden',
-              paddingTop: '70px',
+              paddingTop: '80px',
+              boxShadow: '10px 0 30px rgba(0,0,0,0.5)',
             }}
           >
             {/* Sidebar Header */}
@@ -334,22 +336,39 @@ const Chat: React.FC = () => {
                   style={{ display: 'flex', justifyContent: msg.type === 'user' ? 'flex-end' : 'flex-start', marginBottom: '1.5rem', gap: '0.75rem' }}
                 >
                   {msg.type === 'bot' && (
-                    <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--foreground)', color: 'var(--background)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                      <Bot size={20} />
+                    <div style={{ 
+                      width: '40px', height: '40px', borderRadius: '50%', 
+                      background: 'rgba(255,255,255,0.1)', 
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                      flexShrink: 0, marginTop: '2px', overflow: 'hidden',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                    }}>
+                      <Bot size={20} style={{ color: 'var(--foreground)' }} />
                     </div>
                   )}
 
-                  <div style={{ maxWidth: '80%', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <div style={{
-                      padding: '0.9rem 1.15rem',
-                      borderRadius: '1rem',
-                      borderTopLeftRadius: msg.type === 'bot' ? '0.25rem' : '1rem',
-                      borderTopRightRadius: msg.type === 'user' ? '0.25rem' : '1rem',
-                      background: msg.type === 'user' ? 'var(--muted)' : 'var(--glass)',
-                      border: msg.type === 'bot' ? '1px solid var(--glass-border)' : 'none',
-                      lineHeight: 1.65,
-                      fontSize: '0.93rem',
+                      maxWidth: '80%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.5rem',
+                      perspective: '1000px',
                     }}>
+                      <div style={{
+                        padding: '1rem 1.4rem',
+                        borderRadius: '1.5rem',
+                        borderTopLeftRadius: msg.type === 'bot' ? '0.3rem' : '1.5rem',
+                        borderTopRightRadius: msg.type === 'user' ? '0.3rem' : '1.5rem',
+                        background: msg.type === 'user' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.06)',
+                        backdropFilter: 'blur(30px) saturate(220%)',
+                        border: '1px solid rgba(255, 255, 255, 0.12)',
+                        boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
+                        lineHeight: 1.75,
+                        fontSize: '0.95rem',
+                        color: 'var(--foreground)',
+                      }}>
                       {msg.type === 'bot' ? (
                         <div
                           dangerouslySetInnerHTML={{
@@ -381,12 +400,29 @@ const Chat: React.FC = () => {
 
             {isTyping && (
               <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--foreground)', color: 'var(--background)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Bot size={20} />
+                <div style={{ 
+                  width: '40px', height: '40px', borderRadius: '50%', 
+                  background: 'rgba(255,255,255,0.1)', 
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                  flexShrink: 0, overflow: 'hidden' 
+                }}>
+                  <Sparkles size={20} style={{ color: 'var(--foreground)' }} />
                 </div>
-                <div style={{ padding: '0.9rem 1.15rem', background: 'var(--glass)', border: '1px solid var(--glass-border)', borderRadius: '1rem', borderTopLeftRadius: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <div style={{ 
+                  padding: '1rem 1.4rem', 
+                  background: 'rgba(255, 255, 255, 0.04)', 
+                  backdropFilter: 'blur(30px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)', 
+                  borderRadius: '1.5rem', 
+                  borderTopLeftRadius: '0.3rem', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.5rem' 
+                }}>
                   <Sparkles size={14} style={{ color: 'var(--muted-foreground)', opacity: 0.7 }} />
-                  <span style={{ color: 'var(--muted-foreground)', fontSize: '0.88rem' }}>NyAI is analyzing...</span>
+                  <span style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>NyAI is thinking...</span>
                 </div>
               </div>
             )}
@@ -439,26 +475,31 @@ const Chat: React.FC = () => {
                 placeholder={location ? 'Describe your legal situation...' : 'Enter your city/state to get started...'}
                 style={{
                   width: '100%',
-                  padding: '1.1rem 4rem 1.1rem 1.5rem',
-                  background: 'var(--muted)',
-                  border: '1.5px solid var(--border)',
-                  borderRadius: '0.75rem',
+                  padding: '1.25rem 4.5rem 1.25rem 1.75rem',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(40px) saturate(200%)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  borderRadius: '999px',
                   color: 'var(--foreground)',
-                  fontSize: '0.95rem',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                  fontSize: '1rem',
+                  boxShadow: '0 20px 50px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
+                  outline: 'none',
+                  transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
                 }}
               />
               <button
                 onClick={() => handleSend()}
                 disabled={!input.trim()}
                 style={{
-                  position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)',
-                  background: input.trim() ? 'var(--foreground)' : 'var(--border)',
+                  position: 'absolute', right: '0.6rem', top: '50%', transform: 'translateY(-50%)',
+                  background: input.trim() ? 'var(--foreground)' : 'rgba(255,255,255,0.05)',
                   color: input.trim() ? 'var(--background)' : 'var(--muted-foreground)',
-                  width: '38px', height: '38px', borderRadius: '0.5rem',
+                  width: '42px', height: '42px', borderRadius: '50%',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  transition: 'background 0.2s, color 0.2s',
-                  cursor: input.trim() ? 'pointer' : 'not-allowed'
+                  transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
+                  cursor: input.trim() ? 'pointer' : 'not-allowed',
+                  border: 'none',
+                  boxShadow: input.trim() ? '0 4px 12px rgba(255,255,255,0.2)' : 'none',
                 }}
               >
                 <Send size={17} />
