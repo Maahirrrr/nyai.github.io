@@ -174,11 +174,11 @@ const Home: React.FC = () => {
                 borderRadius={999} 
                 displace={4} 
                 mixBlendMode="screen" 
-                backgroundOpacity={0.4} 
+                backgroundOpacity={1} 
                 brightness={62}
                 style={{ 
                   transition: 'transform 0.3s ease',
-                  background: 'rgba(220, 38, 38, 0.3)' 
+                  background: '#BD2020' 
                 }}
                 className="hero-cta-primary"
               >

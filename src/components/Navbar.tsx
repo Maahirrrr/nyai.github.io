@@ -156,9 +156,9 @@ const Navbar: React.FC = () => {
               blur={20} 
               displace={4} 
               mixBlendMode="normal" 
-              backgroundOpacity={0.8} 
+              backgroundOpacity={1} 
               brightness={120}
-              style={{ background: 'rgba(255, 30, 30, 0.9)' }}
+              style={{ background: '#BD2020' }}
               className="navbar-cta"
             >
               <Link to="/register" style={{ padding: "0.5rem 1.1rem", fontSize: "0.85rem", fontWeight: 700, color: "#fff", display: "inline-block" }}>
