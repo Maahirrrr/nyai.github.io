@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, Sparkles, Menu, Plus, Pencil, Trash2, X, MessageSquare, Bot } from 'lucide-react';
 import { sendToGemini } from '../services/gemini';
-import GlassSurface from '../components/ui/GlassSurface';
+
 
 interface Message {
   id: string;
@@ -182,15 +182,13 @@ const Chat: React.FC = () => {
             className="chat-sidebar"
             style={{
               height: '100vh',
-              background: 'rgba(20, 20, 22, 0.4)',
-              backdropFilter: 'blur(50px) saturate(240%)',
-              borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+              background: '#0a0a0a',
+              borderRight: '1px solid var(--border)',
               display: 'flex',
               flexDirection: 'column',
               flexShrink: 0,
               overflow: 'hidden',
               paddingTop: '80px',
-              boxShadow: '10px 0 30px rgba(0,0,0,0.5)',
             }}
           >
             {/* Sidebar Header */}
@@ -204,25 +202,19 @@ const Chat: React.FC = () => {
                   <X size={16} />
                 </button>
               </div>
-              <GlassSurface
-                borderRadius={12}
-                displace={2}
-                backgroundOpacity={0.1}
-                brightness={45}
-                style={{ width: '100%', background: 'rgba(255, 255, 255, 0.02)' }}
+              <button
+                onClick={startNewChat}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%',
+                  padding: '0.6rem 0.75rem',
+                  color: '#fff', fontSize: '0.85rem', fontWeight: 600,
+                  cursor: 'pointer', transition: 'background 0.15s',
+                  background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border)',
+                  borderRadius: '0.5rem',
+                }}
               >
-                <button
-                  onClick={startNewChat}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%',
-                    padding: '0.6rem 0.75rem',
-                    color: 'var(--foreground)', fontSize: '0.85rem', fontWeight: 600,
-                    cursor: 'pointer', transition: 'background 0.15s'
-                  }}
-                >
-                  <Plus size={16} /> New Chat
-                </button>
-              </GlassSurface>
+                <Plus size={16} /> New Chat
+              </button>
             </div>
 
             {/* Chat List */}
@@ -345,15 +337,13 @@ const Chat: React.FC = () => {
                 >
                   {msg.type === 'bot' && (
                     <div style={{ 
-                      width: '40px', height: '40px', borderRadius: '50%', 
-                      background: 'rgba(255,255,255,0.1)', 
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255,255,255,0.2)',
+                      width: '36px', height: '36px', borderRadius: '50%', 
+                      background: '#111', 
+                      border: '1px solid var(--border)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                      flexShrink: 0, marginTop: '2px', overflow: 'hidden',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                      flexShrink: 0, marginTop: '2px',
                     }}>
-                      <Bot size={20} style={{ color: 'var(--foreground)' }} />
+                      <Bot size={18} style={{ color: '#fff' }} />
                     </div>
                   )}
 
@@ -365,25 +355,23 @@ const Chat: React.FC = () => {
                       perspective: '1000px',
                     }}>
                       <div style={{
-                        padding: '1rem 1.4rem',
-                        borderRadius: '1.5rem',
-                        borderTopLeftRadius: msg.type === 'bot' ? '0.3rem' : '1.5rem',
-                        borderTopRightRadius: msg.type === 'user' ? '0.3rem' : '1.5rem',
-                        background: msg.type === 'user' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.06)',
-                        backdropFilter: 'blur(30px) saturate(220%)',
-                        border: '1px solid rgba(255, 255, 255, 0.12)',
-                        boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
+                        padding: '1rem 1.25rem',
+                        borderRadius: '1rem',
+                        borderTopLeftRadius: msg.type === 'bot' ? '0.2rem' : '1rem',
+                        borderTopRightRadius: msg.type === 'user' ? '0.2rem' : '1rem',
+                        background: msg.type === 'user' ? '#1a1a1a' : '#111',
+                        border: '1px solid var(--border)',
                         lineHeight: 1.75,
-                        fontSize: 'clamp(0.85rem, 4vw, 0.95rem)',
-                        color: 'var(--foreground)',
+                        fontSize: 'clamp(0.85rem, 4vw, 0.92rem)',
+                        color: '#fff',
                       }}>
                       {msg.type === 'bot' ? (
                         <div
                           dangerouslySetInnerHTML={{
                             __html: msg.content
                               // 1. Color Sections Red
-                              .replace(/\*\*(Section\s+.*?)\*\*/gi, '<strong style="color: #ef4444">$1</strong>')
-                              // 2. Standard Bold for everything else (including lawyer details)
+                              .replace(/\*\*(Section\s+.*?)\*\*/gi, '<strong style="color: #fff">$1</strong>')
+                              // 2. Standard Bold
                               .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                               // 3. Line breaks and bullets
                               .replace(/\n/g, '<br />')
@@ -409,22 +397,20 @@ const Chat: React.FC = () => {
             {isTyping && (
               <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem' }}>
                 <div style={{ 
-                  width: '40px', height: '40px', borderRadius: '50%', 
-                  background: 'rgba(255,255,255,0.1)', 
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255,255,255,0.2)',
+                  width: '36px', height: '36px', borderRadius: '50%', 
+                  background: '#111', 
+                  border: '1px solid var(--border)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                  flexShrink: 0, overflow: 'hidden' 
+                  flexShrink: 0,
                 }}>
-                  <Sparkles size={20} style={{ color: 'var(--foreground)' }} />
+                  <Sparkles size={18} style={{ color: '#fff' }} />
                 </div>
                 <div style={{ 
-                  padding: '1rem 1.4rem', 
-                  background: 'rgba(255, 255, 255, 0.04)', 
-                  backdropFilter: 'blur(30px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)', 
-                  borderRadius: '1.5rem', 
-                  borderTopLeftRadius: '0.3rem', 
+                  padding: '0.85rem 1.2rem', 
+                  background: '#111', 
+                  border: '1px solid var(--border)', 
+                  borderRadius: '1rem', 
+                  borderTopLeftRadius: '0.2rem', 
                   display: 'flex', 
                   alignItems: 'center', 
                   gap: '0.5rem' 
@@ -457,8 +443,8 @@ const Chat: React.FC = () => {
                     key={i}
                     onClick={() => handleSend(q)}
                     style={{
-                      background: 'var(--glass)',
-                      border: '1px solid var(--glass-border)',
+                      background: 'transparent',
+                      border: '1px solid var(--border)',
                       color: 'var(--muted-foreground)',
                       padding: '0.4rem 0.85rem',
                       borderRadius: '2rem',
@@ -484,13 +470,11 @@ const Chat: React.FC = () => {
                 style={{
                   width: '100%',
                   padding: '1.25rem 4.5rem 1.25rem 1.75rem',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(40px) saturate(200%)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  background: '#111',
+                  border: '1px solid var(--border)',
                   borderRadius: '999px',
-                  color: 'var(--foreground)',
+                  color: '#fff',
                   fontSize: '1rem',
-                  boxShadow: '0 20px 50px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
                   outline: 'none',
                   transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
                 }}

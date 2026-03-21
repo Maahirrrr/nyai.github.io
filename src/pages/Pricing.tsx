@@ -1,8 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, ArrowRight, Sparkles, Zap, Crown } from 'lucide-react';
+import { Check, ArrowRight, Zap, Sparkles, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import GlassSurface from '../components/ui/GlassSurface';
 
 interface Plan {
   name: string;
@@ -22,7 +21,7 @@ const plans: Plan[] = [
     price: '₹0',
     period: 'Forever Free',
     desc: 'Perfect for individuals exploring their legal rights and getting started with AI assistance.',
-    icon: <Zap size={24} />,
+    icon: <Zap size={22} />,
     cta: 'Get Started Free',
     features: [
       '5 AI legal queries per day',
@@ -37,7 +36,7 @@ const plans: Plan[] = [
     price: '₹499',
     period: '/month',
     desc: 'Ideal for citizens who need regular legal guidance and want to connect with verified lawyers.',
-    icon: <Sparkles size={24} />,
+    icon: <Sparkles size={22} />,
     highlight: true,
     badge: 'Best for Most Cases',
     cta: 'Start 7-Day Free Trial',
@@ -56,7 +55,7 @@ const plans: Plan[] = [
     price: '₹1,499',
     period: '/month',
     desc: 'For professionals, businesses, and those handling complex legal matters requiring in-depth support.',
-    icon: <Crown size={24} />,
+    icon: <Crown size={22} />,
     cta: 'Contact Sales',
     features: [
       'Everything in Standard',
@@ -73,36 +72,27 @@ const plans: Plan[] = [
 
 const Pricing: React.FC = () => {
   const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
+    initial: { opacity: 0, y: 25 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true },
-    transition: { duration: 0.6 },
+    transition: { duration: 0.5 },
   };
 
   return (
     <div style={{ paddingTop: '80px' }}>
       {/* Hero */}
-      <section style={{ padding: '6rem 0 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
+      <section style={{ padding: '6rem 0 2rem', textAlign: 'center' }}>
         <div className="container">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <div className="section-label">Pricing</div>
             <h1 style={{
-              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-              fontWeight: 800, marginBottom: '1.5rem',
+              fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+              fontWeight: 700, marginBottom: '1.5rem',
               letterSpacing: '-0.03em', lineHeight: 1.1,
-              fontFamily: '"Playfair Display", Georgia, serif',
             }}>
-              Simple, Transparent<br />
-              <span style={{ WebkitTextStroke: '1.5px var(--foreground)', color: 'transparent' }}>
-                Pricing
-              </span>
+              Simple, Transparent<br />Pricing
             </h1>
-            <p style={{ fontSize: '1.1rem', color: 'var(--muted-foreground)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.75 }}>
+            <p style={{ fontSize: '1.05rem', color: 'var(--muted-foreground)', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>
               Choose the plan that fits your needs. No hidden fees, cancel anytime.
             </p>
           </motion.div>
@@ -115,48 +105,36 @@ const Pricing: React.FC = () => {
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '1.5rem',
+            gap: '1rem',
             alignItems: 'stretch',
           }}>
             {plans.map((plan, idx) => (
               <motion.div
                 key={plan.name}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: idx * 0.12 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="glass-card"
                 style={{
-                  padding: '2.5rem 2rem',
+                  padding: '2.25rem 2rem',
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'relative',
-                  overflow: 'hidden',
-                  border: plan.highlight ? '2px solid rgba(255,255,255,0.25)' : undefined,
-                  boxShadow: plan.highlight ? '0 0 60px rgba(255,255,255,0.06)' : undefined,
+                  border: plan.highlight ? '1px solid rgba(255,255,255,0.3)' : undefined,
                 }}
               >
-                {/* Highlight glow */}
-                {plan.highlight && (
-                  <div style={{
-                    position: 'absolute', top: 0, left: 0, right: 0, height: '200px',
-                    background: 'radial-gradient(ellipse 100% 100% at 50% -20%, rgba(255,255,255,0.08) 0%, transparent 70%)',
-                    pointerEvents: 'none',
-                  }} />
-                )}
-
                 {/* Badge */}
                 {plan.badge && (
                   <div style={{
                     position: 'absolute', top: '1.25rem', right: '1.25rem',
-                    background: 'var(--amber-dim)',
-                    border: '1px solid rgba(245, 158, 11, 0.35)',
-                    color: 'var(--amber)',
-                    padding: '0.3rem 0.85rem',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid var(--border)',
+                    color: '#fff',
+                    padding: '0.25rem 0.75rem',
                     borderRadius: '2rem',
-                    fontSize: '0.72rem',
-                    fontWeight: 700,
-                    letterSpacing: '0.02em',
+                    fontSize: '0.7rem',
+                    fontWeight: 600,
                   }}>
                     {plan.badge}
                   </div>
@@ -164,51 +142,48 @@ const Pricing: React.FC = () => {
 
                 {/* Icon */}
                 <div style={{
-                  width: '52px', height: '52px', borderRadius: '14px',
-                  background: plan.highlight ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
-                  border: `1px solid ${plan.highlight ? 'rgba(255,255,255,0.15)' : 'var(--glass-border)'}`,
+                  width: '48px', height: '48px', borderRadius: '12px',
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid var(--border)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   marginBottom: '1.5rem',
-                  color: plan.highlight ? 'var(--accent-blue)' : 'var(--foreground)',
+                  color: '#fff',
                 }}>
                   {plan.icon}
                 </div>
 
                 {/* Name */}
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.75rem' }}>{plan.name}</h3>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.75rem' }}>{plan.name}</h3>
 
                 {/* Price */}
                 <div style={{ marginBottom: '0.75rem', display: 'flex', alignItems: 'baseline', gap: '0.3rem' }}>
-                  <span style={{
-                    fontSize: '3rem', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1,
-                    color: 'var(--success-green)',
-                  }}>
+                  <span style={{ fontSize: '2.75rem', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1, color: '#fff' }}>
                     {plan.price}
                   </span>
-                  <span style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: 500 }}>
+                  <span style={{ color: 'var(--muted-foreground)', fontSize: '0.88rem', fontWeight: 400 }}>
                     {plan.period}
                   </span>
                 </div>
 
                 {/* Desc */}
-                <p style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', lineHeight: 1.7, marginBottom: '2rem' }}>
+                <p style={{ color: 'var(--muted-foreground)', fontSize: '0.88rem', lineHeight: 1.7, marginBottom: '1.75rem' }}>
                   {plan.desc}
                 </p>
 
                 {/* Divider */}
-                <div style={{ height: '1px', background: 'var(--border)', marginBottom: '1.75rem' }} />
+                <div style={{ height: '1px', background: 'var(--border)', marginBottom: '1.5rem' }} />
 
                 {/* Features */}
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.85rem', flex: 1 }}>
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1 }}>
                   {plan.features.map((feature, i) => (
-                    <li key={i} style={{ display: 'flex', gap: '0.7rem', alignItems: 'flex-start', fontSize: '0.9rem' }}>
+                    <li key={i} style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start', fontSize: '0.88rem' }}>
                       <div style={{
-                        width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, marginTop: '1px',
-                        background: plan.highlight ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
-                        border: `1px solid ${plan.highlight ? 'rgba(255,255,255,0.15)' : 'var(--glass-border)'}`,
+                        width: '18px', height: '18px', borderRadius: '50%', flexShrink: 0, marginTop: '1px',
+                        background: 'rgba(255,255,255,0.06)',
+                        border: '1px solid var(--border)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
-                        <Check size={12} strokeWidth={3} style={{ color: plan.highlight ? 'var(--accent-blue)' : 'var(--foreground)', opacity: 0.9 }} />
+                        <Check size={10} strokeWidth={3} style={{ color: '#fff' }} />
                       </div>
                       <span style={{ color: 'var(--muted-foreground)', lineHeight: 1.5 }}>{feature}</span>
                     </li>
@@ -216,31 +191,13 @@ const Pricing: React.FC = () => {
                 </ul>
 
                 {/* CTA */}
-                <GlassSurface 
-                  borderRadius={999} 
-                  displace={plan.highlight ? 5 : 3} 
-                  backgroundOpacity={plan.highlight ? 0.2 : 0.1} 
-                  brightness={plan.highlight ? 55 : 45}
-                  style={{ marginTop: '2rem', width: '100%', background: plan.highlight ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.02)' }}
+                <Link
+                  to="/register"
+                  className={plan.highlight ? 'btn-primary' : 'btn-secondary'}
+                  style={{ marginTop: '2rem', width: '100%', justifyContent: 'center', padding: '0.85rem 1.5rem', fontSize: '0.92rem' }}
                 >
-                  <Link
-                    to="/register"
-                    style={{
-                      width: '100%',
-                      textAlign: 'center',
-                      justifyContent: 'center',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      fontSize: '0.95rem',
-                      fontWeight: 700,
-                      padding: '0.9rem 1.5rem',
-                      color: '#fff',
-                    }}
-                  >
-                    {plan.cta} <ArrowRight size={16} />
-                  </Link>
-                </GlassSurface>
+                  {plan.cta} <ArrowRight size={14} />
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -248,33 +205,23 @@ const Pricing: React.FC = () => {
       </section>
 
       {/* FAQ-like bottom section */}
-      <section style={{ padding: '6rem 0', background: 'rgba(0,0,0,0.2)' }}>
-        <div className="container" style={{ maxWidth: '740px', textAlign: 'center' }}>
+      <section style={{ padding: '6rem 0', borderTop: '1px solid var(--border)' }}>
+        <div className="container" style={{ maxWidth: '680px', textAlign: 'center' }}>
           <motion.div {...fadeInUp}>
             <div className="section-label">Questions?</div>
-            <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', fontWeight: 800, marginBottom: '1.25rem', letterSpacing: '-0.02em' }}>
+            <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', fontWeight: 700, marginBottom: '1.25rem', letterSpacing: '-0.02em' }}>
               Not sure which plan is right?
             </h2>
-            <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.75, marginBottom: '2.5rem', fontSize: '1rem' }}>
-              Start with the free Basic plan — no credit card needed. Upgrade anytime as your needs grow. Our AI will always recommend the right plan based on your usage.
+            <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.75, marginBottom: '2.5rem', fontSize: '0.95rem' }}>
+              Start with the free Basic plan — no credit card needed. Upgrade anytime as your needs grow.
             </p>
-            <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-              <GlassSurface 
-                borderRadius={999} 
-                displace={4} 
-                backgroundOpacity={1} 
-                brightness={62}
-                style={{ background: '#BD2020' }}
-              >
-                <Link to="/chat" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  Ask NyAI <ArrowRight size={16} />
-                </Link>
-              </GlassSurface>
-              <GlassSurface borderRadius={999} displace={3} backgroundOpacity={0.1} brightness={45}>
-                <Link to="/about" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
-                  Contact Us
-                </Link>
-              </GlassSurface>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+              <Link to="/chat" className="btn-primary" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem' }}>
+                Ask NyAI <ArrowRight size={16} />
+              </Link>
+              <Link to="/about" className="btn-secondary" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem' }}>
+                Contact Us
+              </Link>
             </div>
           </motion.div>
         </div>

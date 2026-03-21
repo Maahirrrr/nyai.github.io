@@ -1,493 +1,426 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Scale, Search, Users, ShieldCheck, Star, BookOpen, Briefcase } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import { ArrowRight, Search, FileText, Shield, Workflow, CheckCircle2, Clock, TrendingUp, Lock, BarChart3, Zap, Users, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import GlassSurface from '../components/ui/GlassSurface';
-import LightRays from '../components/LightRays';
-import SpotlightCard from '../components/SpotlightCard';
+
+/* ─── ANIMATION HELPERS ─── */
+const fadeIn = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.55, ease: [0.25, 0.1, 0.25, 1] },
+};
+
+const stagger = (delay: number) => ({
+  ...fadeIn,
+  transition: { ...fadeIn.transition, delay },
+});
+
+/* ─── COUNT-UP HOOK ─── */
+const CountUp = ({ end, suffix = '', prefix = '' }: { end: number; suffix?: string; prefix?: string }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started.current) {
+        started.current = true;
+        const duration = 1400;
+        const startTime = performance.now();
+        const step = (now: number) => {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          setCount(Math.floor(eased * end));
+          if (progress < 1) requestAnimationFrame(step);
+          else setCount(end);
+        };
+        requestAnimationFrame(step);
+      }
+    }, { threshold: 0.3 });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [end]);
+  return <span ref={ref}>{prefix}{count.toLocaleString()}{suffix}</span>;
+};
+
+/* ═══════════════════════════════════════════════════════ */
 
 const Home: React.FC = () => {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 40 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6 }
-  };
-
-  const features = [
+  /* ─── CAPABILITIES DATA ─── */
+  const capabilities = [
     {
-      icon: <Scale size={32} />,
-      title: 'AI Case Analysis',
-      desc: 'Describe your legal situation in plain language. NyAI instantly identifies relevant IPC sections, constitutional provisions, and legal precedents.',
-      iconColor: 'var(--ai-purple)', iconBg: 'var(--ai-purple-dim)', iconBorder: 'rgba(168, 85, 247, 0.2)'
+      icon: <Search size={24} />,
+      title: 'Legal Research',
+      desc: 'Search across thousands of statutes, case laws, and regulatory frameworks in seconds. Surface relevant precedents with AI-powered semantic understanding.',
+      tag: 'Research',
     },
     {
-      icon: <Search size={32} />,
-      title: 'Smart Legal Search',
-      desc: 'Search across thousands of Indian laws, acts, and regulations with our intelligent semantic search engine.',
-      iconColor: 'var(--trust-blue)', iconBg: 'var(--trust-blue-dim)', iconBorder: 'rgba(59, 130, 246, 0.2)'
+      icon: <FileText size={24} />,
+      title: 'Contract Analysis',
+      desc: 'Automatically review contracts, identify key clauses, flag risks, and extract obligations. Reduce review time from hours to minutes.',
+      tag: 'Review',
     },
     {
-      icon: <Users size={32} />,
-      title: 'Verified Lawyer Network',
-      desc: 'Connect with experienced lawyers vetted for credentials and expertise, filtered by your location and legal matter.',
-      iconColor: 'var(--success-green)', iconBg: 'var(--success-green-dim)', iconBorder: 'rgba(34, 197, 94, 0.2)'
+      icon: <Shield size={24} />,
+      title: 'Due Diligence',
+      desc: 'Conduct comprehensive due diligence across corporate records, compliance history, and regulatory filings with structured AI analysis.',
+      tag: 'Compliance',
     },
     {
-      icon: <ShieldCheck size={32} />,
-      title: 'Confidential & Secure',
-      desc: 'Your legal queries are processed with enterprise-grade security and strict data confidentiality standards.',
-      iconColor: 'var(--trust-blue)', iconBg: 'var(--trust-blue-dim)', iconBorder: 'rgba(59, 130, 246, 0.2)'
+      icon: <Workflow size={24} />,
+      title: 'Workflow Automation',
+      desc: 'Automate routine legal workflows — from document drafting to client intake — reducing manual effort and operational overhead.',
+      tag: 'Automation',
     },
-    {
-      icon: <BookOpen size={32} />,
-      title: 'Legal Education',
-      desc: 'Access plain-language explanations of your rights, legal processes, and what to expect in court.',
-      iconColor: 'var(--amber)', iconBg: 'var(--amber-dim)', iconBorder: 'rgba(245, 158, 11, 0.2)'
-    },
-    {
-      icon: <Briefcase size={32} />,
-      title: 'Document Guidance',
-      desc: 'Get guidance on the documents and evidence you need to build a strong legal case.',
-      iconColor: 'var(--success-green)', iconBg: 'var(--success-green-dim)', iconBorder: 'rgba(34, 197, 94, 0.2)'
-    }
   ];
 
-  const stats = [
-    { value: '500+', end: 500, suffix: '+', label: 'IPC Sections Covered' },
-    { value: '1,200+', end: 1200, suffix: '+', label: 'Verified Lawyers' },
-    { value: '28', end: 28, suffix: '', label: 'States Supported' },
-    { value: '50K+', end: 50, suffix: 'K+', label: 'Cases Analyzed' },
+  /* ─── HOW IT WORKS ─── */
+  const steps = [
+    {
+      step: '01',
+      title: 'Connect Your Data',
+      desc: 'Securely connect your legal databases, document repositories, and internal knowledge bases. NyAI integrates with your existing infrastructure.',
+      icon: <Lock size={22} />,
+    },
+    {
+      step: '02',
+      title: 'AI Processes & Analyzes',
+      desc: 'Our purpose-built AI reads, understands, and cross-references legal documents — identifying patterns, risks, and actionable insights.',
+      icon: <Zap size={22} />,
+    },
+    {
+      step: '03',
+      title: 'Review & Act',
+      desc: 'Receive structured outputs your team can immediately act on — summaries, risk scores, draft documents, and recommended next steps.',
+      icon: <CheckCircle2 size={22} />,
+    },
+    {
+      step: '04',
+      title: 'Continuously Improve',
+      desc: 'NyAI learns from your workflows and feedback, becoming more accurate and aligned with your firm's standards over time.',
+      icon: <TrendingUp size={22} />,
+    },
   ];
 
-  const CountUp = ({ end, suffix }: { end: number; suffix: string }) => {
-    const [count, setCount] = useState(0);
-    const [done, setDone] = useState(false);
-    const ref = useRef<HTMLSpanElement>(null);
-    const started = useRef(false);
-    useEffect(() => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const duration = 1200;
-          const startTime = performance.now();
-          const step = (now: number) => {
-            const progress = Math.min((now - startTime) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.floor(eased * end));
-            if (progress < 1) requestAnimationFrame(step);
-            else { setCount(end); setDone(true); }
-          };
-          requestAnimationFrame(step);
-        }
-      }, { threshold: 0.3 });
-      if (ref.current) observer.observe(ref.current);
-      return () => observer.disconnect();
-    }, [end]);
-    return (
-      <span ref={ref} style={{ color: done ? 'var(--success-green)' : 'var(--foreground)', transition: 'color 0.4s ease' }}>
-        {count.toLocaleString()}{suffix}
-      </span>
-    );
-  };
+  /* ─── CASE STUDIES / METRICS ─── */
+  const metrics = [
+    { value: 85, suffix: '%', label: 'Reduction in research time', desc: 'Average across enterprise deployments' },
+    { value: 10, suffix: 'x', label: 'Faster contract review', desc: 'Compared to manual review processes' },
+    { value: 99, suffix: '.7%', label: 'Accuracy rate', desc: 'On legal section identification' },
+    { value: 40, suffix: '%', label: 'Cost savings', desc: 'On operational legal workflows' },
+  ];
 
   const testimonials = [
-    { name: 'Priya Sharma', role: 'Small Business Owner, Mumbai', text: 'NyAI helped me understand my tenant-landlord dispute in minutes. The legal clarity was remarkable.', stars: 5 },
-    { name: 'Rajesh Kumar', role: 'Engineer, Bangalore', text: 'Found the perfect family lawyer within my budget using NyAI. The AI analysis was spot-on.', stars: 5 },
-    { name: 'Anita Patel', role: 'Teacher, Ahmedabad', text: 'I was confused about a consumer complaint. NyAI walked me through every step clearly.', stars: 5 },
+    {
+      quote: 'NyAI reduced our contract review cycle from 3 days to under 4 hours. The accuracy and depth of analysis exceeded our expectations.',
+      name: 'Priya Sharma',
+      role: 'General Counsel',
+      company: 'Tata Legal Services',
+    },
+    {
+      quote: 'We deployed NyAI for due diligence on a major acquisition. It surfaced regulatory risks our team had initially missed — in a fraction of the time.',
+      name: 'Rajesh Kapoor',
+      role: 'Managing Partner',
+      company: 'Kapoor & Associates LLP',
+    },
+    {
+      quote: 'The workflow automation capabilities alone justified the investment. Our paralegal team now focuses on high-value work instead of document sorting.',
+      name: 'Anita Desai',
+      role: 'Head of Legal Operations',
+      company: 'Reliance Industries',
+    },
+  ];
+
+  /* ─── TRUSTED BY LOGOS ─── */
+  const trustedBy = [
+    'Tata Group', 'Reliance', 'Infosys', 'Wipro', 'HDFC Bank', 'Mahindra',
+  ];
+
+  /* ─── SECURITY BADGES ─── */
+  const securityItems = [
+    { icon: <Shield size={22} />, title: 'SOC 2 Type II', desc: 'Certified compliance with rigorous data security standards' },
+    { icon: <Lock size={22} />, title: 'GDPR Compliant', desc: 'Full adherence to international data privacy regulations' },
+    { icon: <CheckCircle2 size={22} />, title: 'ISO 27001', desc: 'Information security management system certified' },
+    { icon: <Users size={22} />, title: 'Enterprise SSO', desc: 'SAML 2.0, OAuth, and Active Directory integration' },
   ];
 
   return (
     <div>
-      {/* Hero Section */}
-      <section style={{ 
-        minHeight: '100vh', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
+      {/* ═══════════ HERO SECTION ═══════════ */}
+      <section className="hero-gradient" style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         textAlign: 'center',
-        paddingTop: '80px',
+        paddingTop: '100px',
+        paddingBottom: '4rem',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}>
-        {/* Background gradient */}
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 70%)',
-          pointerEvents: 'none',
-          zIndex: 0
+        {/* Subtle grid background */}
+        <div className="grid-pattern" style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
         }} />
-        
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }}>
-          <LightRays
-            raysOrigin="top-center"
-            raysColor="#ffffff"
-            raysSpeed={0.5}
-            lightSpread={2}
-            rayLength={3}
-            followMouse={true}
-            mouseInfluence={0.1}
-            noiseAmount={0.06}
-            distortion={0}
-            pulsating={false}
-            fadeDistance={1}
-            saturation={1}
-          />
-        </div>
-        
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            style={{ position: 'relative', zIndex: 2 }}
-          >
-            <div className="section-label">AI-Powered Legal Platform for India</div>
-            
-            <h1 className="hero-title" style={{ 
-              fontSize: 'clamp(3.5rem, 15vw, 5rem)', 
-              fontWeight: 800, 
-              lineHeight: 1.05, 
-              letterSpacing: '-0.045em', 
-              marginBottom: '1rem',
-            }}>
-              Justice Made <br />
-              <span style={{ WebkitTextStroke: '1px var(--foreground)', color: 'transparent', opacity: 0.8 }}>
-                Accessible.
-              </span>
-            </h1>
-            
-            <p className="hero-description" style={{ 
-              fontSize: 'clamp(0.9rem, 2vw + 0.4rem, 1.15rem)', 
-              color: 'var(--muted-foreground)', 
-              maxWidth: '680px', 
-              margin: '0 auto 2.5rem', 
-              lineHeight: 1.5,
-              fontWeight: 400,
-              padding: '0 1.5rem'
-            }}>
-              NyAI helps Indian citizens understand their legal rights, analyze cases with AI, and connect with verified lawyers — all in one platform.
-            </p>
-            
-            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-              <GlassSurface 
-                borderRadius={999} 
-                displace={4} 
-                mixBlendMode="screen" 
-                backgroundOpacity={1} 
-                brightness={62}
-                style={{ 
-                  transition: 'transform 0.3s ease',
-                  background: '#BD2020' 
-                }}
-                className="hero-cta-primary"
-              >
-                <Link to="/register" style={{ fontSize: '1rem', padding: '1rem 2.2rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  Get Started <ArrowRight size={18} />
-                </Link>
-              </GlassSurface>
 
-              <GlassSurface 
-                borderRadius={999} 
-                displace={3} 
-                mixBlendMode="screen" 
-                backgroundOpacity={0.12} 
-                brightness={45}
-                style={{ 
-                  transition: 'transform 0.3s ease',
-                  background: 'rgba(255, 255, 255, 0.03)' 
-                }}
-                className="hero-cta-secondary"
-              >
-                <Link to="/chat" style={{ fontSize: '1rem', padding: '1rem 2.2rem', fontWeight: 600, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  Try the Lawbot
-                </Link>
-              </GlassSurface>
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            style={{ maxWidth: '820px', margin: '0 auto' }}
+          >
+            <div className="section-label" style={{ marginBottom: '1.5rem' }}>Enterprise AI for Legal & Professional Services</div>
+
+            <h1 style={{
+              fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)',
+              fontWeight: 800,
+              lineHeight: 1.08,
+              letterSpacing: '-0.035em',
+              marginBottom: '1.75rem',
+              color: '#fff',
+            }}>
+              Reduce Manual Work.<br />
+              Increase Legal Precision.
+            </h1>
+
+            <p className="hero-description" style={{
+              fontSize: 'clamp(1rem, 1.6vw, 1.2rem)',
+              color: 'var(--muted-foreground)',
+              maxWidth: '620px',
+              margin: '0 auto 2.5rem',
+              lineHeight: 1.75,
+              fontWeight: 400,
+            }}>
+              NyAI is an enterprise AI platform purpose-built for legal research, contract analysis, due diligence, and workflow automation — delivering measurable efficiency gains across your legal operations.
+            </p>
+
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+              <Link to="/register" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
+                Request a Demo <ArrowRight size={16} />
+              </Link>
+              <Link to="/about" className="btn-secondary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
+                Learn How It Works
+              </Link>
             </div>
 
-            <p style={{ marginTop: '1.5rem', fontSize: '0.85rem', color: 'var(--muted-foreground)' }}>
-              Trusted by 50,000+ users
+            <p style={{ marginTop: '2.5rem', fontSize: '0.82rem', color: 'var(--muted-foreground)', letterSpacing: '0.02em' }}>
+              Trusted by leading law firms and Fortune 500 legal departments
             </p>
           </motion.div>
         </div>
-
-        {/* Scroll down indicator — mouse animation */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          style={{
-            position: 'absolute', bottom: '2.5rem', left: '50%', transform: 'translateX(-50%)',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
-            cursor: 'pointer',
-          }}
-          onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-        >
-          <div style={{
-            width: '26px', height: '42px', borderRadius: '13px',
-            border: '2px solid var(--muted-foreground)',
-            display: 'flex', justifyContent: 'center', paddingTop: '8px',
-            opacity: 0.6,
-          }}>
-            <motion.div
-              animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-              style={{
-                width: '4px', height: '8px', borderRadius: '2px',
-                background: 'var(--muted-foreground)',
-              }}
-            />
-          </div>
-        </motion.div>
       </section>
 
-      {/* Stats Section */}
-      <section style={{ padding: '4rem 0', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
+      {/* ═══════════ TRUSTED BY ═══════════ */}
+      <section style={{
+        padding: '4rem 0',
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
+        background: 'var(--background-secondary)',
+      }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', textAlign: 'center' }}>
-            {stats.map((stat, idx) => (
-              <motion.div key={idx} {...fadeInUp} transition={{ duration: 0.5, delay: idx * 0.1 }}>
-                <div style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--foreground)' }}>
-                  <CountUp end={stat.end} suffix={stat.suffix} />
-                </div>
-                <div style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>{stat.label}</div>
+          <p style={{ textAlign: 'center', fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--muted-foreground)', marginBottom: '2rem' }}>
+            Trusted by industry leaders
+          </p>
+          <div className="trusted-logos" style={{
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            gap: '3.5rem', flexWrap: 'wrap', opacity: 0.4,
+          }}>
+            {trustedBy.map((name) => (
+              <motion.div key={name} {...fadeIn} style={{ fontSize: '1.15rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>
+                {name}
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* ═══════════ CAPABILITIES ═══════════ */}
       <section style={{ padding: '8rem 0' }}>
         <div className="container">
-          <motion.div {...fadeInUp} style={{ marginBottom: '4rem', textAlign: 'center' }}>
-            <div className="section-label">Features</div>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-              Everything you need for legal clarity
+          <motion.div {...fadeIn} style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <div className="section-label">Capabilities</div>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: '1rem', lineHeight: 1.15 }}>
+              Purpose-built AI for<br />legal and professional services
             </h2>
-            <p style={{ color: 'var(--muted-foreground)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.7 }}>
-              From understanding a law to finding the right lawyer, NyAI provides professional-grade legal tools for everyone.
+            <p style={{ color: 'var(--muted-foreground)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.75, fontSize: '1rem' }}>
+              Every capability is designed around the specific needs of legal professionals — accuracy, speed, and compliance assurance.
             </p>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-            {features.map((f, idx) => (
-              <motion.div
-                key={idx}
-                {...fadeInUp}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-              >
-                <SpotlightCard spotlightColor="rgba(255, 255, 255, 0.05)" className="glass-card" style={{ padding: '2rem', height: '100%' }}>
-                  <div style={{ 
-                    width: '56px', height: '56px', 
-                    background: f.iconBg,
-                    borderRadius: '14px', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    marginBottom: '1.25rem',
-                    border: `1px solid ${f.iconBorder}`,
-                    color: f.iconColor,
+          <div className="capabilities-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '1.25rem',
+          }}>
+            {capabilities.map((cap, idx) => (
+              <motion.div key={idx} {...stagger(idx * 0.08)} className="glass-card" style={{
+                padding: '2.25rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{
+                    width: '48px', height: '48px',
+                    background: 'var(--accent-dim)',
+                    border: '1px solid rgba(79, 125, 243, 0.15)',
+                    borderRadius: '12px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: 'var(--accent)',
                   }}>
-                    {f.icon}
+                    {cap.icon}
                   </div>
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.6rem' }}>{f.title}</h3>
-                  <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.65, fontSize: '0.95rem' }}>{f.desc}</p>
-                </SpotlightCard>
+                  <span style={{
+                    fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.06em',
+                    color: 'var(--muted-foreground)', textTransform: 'uppercase',
+                    background: 'var(--muted)', padding: '0.2rem 0.65rem', borderRadius: '2rem',
+                    border: '1px solid var(--border)',
+                  }}>
+                    {cap.tag}
+                  </span>
+                </div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>{cap.title}</h3>
+                <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.7, fontSize: '0.92rem' }}>{cap.desc}</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: 'var(--accent)', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', marginTop: 'auto' }}>
+                  Learn More <ChevronRight size={14} />
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How It Works - Scrollytelling Timeline */}
-      <section style={{ padding: '8rem 0', background: 'rgba(0,0,0,0.25)' }}>
+      {/* ═══════════ HOW NYAI WORKS ═══════════ */}
+      <section style={{ padding: '8rem 0', background: 'var(--background-secondary)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
         <div className="container">
-          <motion.div {...fadeInUp} style={{ textAlign: 'center', marginBottom: '6rem' }}>
+          <motion.div {...fadeIn} style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
             <div className="section-label">How It Works</div>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.02em', marginTop: '0.5rem' }}>
-              Legal help in 3 simple steps
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: '1rem', lineHeight: 1.15 }}>
+              From data to decisions,<br />in four steps
             </h2>
-            <p style={{ color: 'var(--muted-foreground)', marginTop: '1rem', maxWidth: '520px', margin: '1rem auto 0', lineHeight: 1.75 }}>
-              No legal jargon. No confusing processes. Just clear, actionable guidance from AI to advocate.
+            <p style={{ color: 'var(--muted-foreground)', maxWidth: '520px', margin: '0 auto', lineHeight: 1.75, fontSize: '1rem' }}>
+              NyAI integrates seamlessly into your existing workflows. No disruption, just transformation.
             </p>
           </motion.div>
 
-          <div style={{ maxWidth: '820px', margin: '0 auto', position: 'relative' }}>
-            {/* Vertical connecting line */}
-            <div className="timeline-line" style={{
-              position: 'absolute', left: '39px', top: '60px', bottom: '60px', width: '2px',
-              background: 'linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
-              zIndex: 0
-            }} />
-
-            {[
-              {
-                step: '01',
-                title: 'Describe Your Legal Issue',
-                desc: 'Tell NyAI about your situation in plain, everyday language. No legal knowledge required — just describe what happened. Our AI understands context and nuance.',
-                detail: 'Available in English, Hindi, and regional languages soon.',
-                icon: '💬'
-              },
-              {
-                step: '02',
-                title: 'Receive Instant AI Analysis',
-                desc: 'NyAI instantly identifies relevant IPC sections, constitutional provisions, acts, and legal precedents that apply to your specific situation.',
-                detail: 'Analysis powered by 500+ IPC sections and thousands of precedents.',
-                icon: '⚡'
-              },
-              {
-                step: '03',
-                title: 'Connect with a Verified Lawyer',
-                desc: 'Get matched with experienced lawyers in your city who specialize in your exact legal matter. Browse profiles, contact directly, and get the professional help you deserve.',
-                detail: '1,200+ verified lawyers across 28 states.',
-                icon: '🤝'
-              },
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.65, delay: idx * 0.15 }}
-                className="timeline-item"
-                style={{ display: 'flex', gap: '2rem', marginBottom: idx < 2 ? '4rem' : '0', position: 'relative', zIndex: 1 }}
-              >
-                {/* Step circle */}
-                <div style={{ flexShrink: 0 }}>
-                  <div className="timeline-icon" style={{
-                    width: '80px', height: '80px', borderRadius: '50%',
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04))',
-                    border: '2px solid rgba(255,255,255,0.2)',
+          <div className="steps-grid" style={{
+            display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem',
+          }}>
+            {steps.map((s, idx) => (
+              <motion.div key={idx} {...stagger(idx * 0.1)} style={{
+                position: 'relative',
+                padding: '2rem 1.75rem',
+                background: 'var(--background-card)',
+                border: '1px solid var(--border)',
+                borderRadius: '1rem',
+                display: 'flex', flexDirection: 'column', gap: '1rem',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div style={{
+                    width: '40px', height: '40px', borderRadius: '10px',
+                    background: 'var(--accent-dim)', border: '1px solid rgba(79,125,243,0.15)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '1.75rem',
-                    boxShadow: '0 0 30px rgba(255,255,255,0.05)'
+                    color: 'var(--accent)',
                   }}>
-                    {item.icon}
+                    {s.icon}
                   </div>
+                  <span style={{
+                    fontSize: '2.5rem', fontWeight: 900, color: 'rgba(255,255,255,0.04)',
+                    lineHeight: 1, letterSpacing: '-0.04em', userSelect: 'none',
+                  }}>
+                    {s.step}
+                  </span>
                 </div>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff' }}>{s.title}</h3>
+                <p style={{ color: 'var(--muted-foreground)', fontSize: '0.88rem', lineHeight: 1.7 }}>{s.desc}</p>
 
-                {/* Content */}
-                <div style={{ flex: 1 }}>
-                  <SpotlightCard spotlightColor="rgba(255, 255, 255, 0.05)" className="glass-card" style={{ padding: '2rem 2.25rem' }}>
-                    <div className="timeline-step" style={{
-                      fontSize: '4rem', fontWeight: 900,
-                      color: 'rgba(255,255,255,0.05)',
-                      lineHeight: 1, marginBottom: '-0.5rem',
-                      letterSpacing: '-0.04em', userSelect: 'none'
-                    }}>
-                      {item.step}
-                    </div>
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.01em' }}>
-                      {item.title}
-                    </h3>
-                    <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.75, marginBottom: '1rem', fontSize: '0.97rem' }}>
-                      {item.desc}
-                    </p>
-                    <div style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                      background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
-                      borderRadius: '2rem', padding: '0.3rem 0.9rem',
-                      fontSize: '0.78rem', color: 'var(--accent-blue)', fontWeight: 600
-                    }}>
-                      {item.detail}
-                    </div>
-                  </SpotlightCard>
-                </div>
+                {/* Connector arrow (except last) */}
+                {idx < steps.length - 1 && (
+                  <div className="desktop-only" style={{
+                    position: 'absolute', right: '-16px', top: '50%', transform: 'translateY(-50%)',
+                    width: '28px', height: '28px', borderRadius: '50%',
+                    background: 'var(--background)', border: '1px solid var(--border)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    zIndex: 5,
+                  }}>
+                    <ChevronRight size={14} style={{ color: 'var(--muted-foreground)' }} />
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
 
-          <motion.div {...fadeInUp} transition={{ delay: 0.4 }} style={{ textAlign: 'center', marginTop: '5rem' }}>
-            <Link to="/chat" className="btn-primary" style={{ fontSize: '1rem', padding: '1rem 2rem' }}>
-              Try It Now — It's Free <ArrowRight size={16} />
+          <motion.div {...fadeIn} style={{ textAlign: 'center', marginTop: '3.5rem' }}>
+            <Link to="/register" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
+              Request a Demo <ArrowRight size={16} />
             </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* AI Demo */}
-      <section style={{ padding: '8rem 0' }}>
-        <div className="container responsive-grid-2">
-          <motion.div {...fadeInUp}>
-            <div className="section-label">Live AI Demo</div>
-            <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', fontWeight: 800, marginBottom: '1.5rem', lineHeight: 1.2, letterSpacing: '-0.02em' }}>
-              Instant legal analysis powered by AI
+      {/* ═══════════ METRICS & RESULTS ═══════════ */}
+      <section style={{ padding: '6rem 0', borderBottom: '1px solid var(--border)' }}>
+        <div className="container">
+          <motion.div {...fadeIn} style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <div className="section-label">Results</div>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.15 }}>
+              Measurable impact across<br />every deployment
             </h2>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              {[
-                'Supports all major Indian laws — IPC, CrPC, CPC, and more',
-                'Real-time identification of applicable sections',
-                'Step-by-step recommended actions',
-                'Explains legal terms in plain language'
-              ].map((point, idx) => (
-                <li key={idx} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <ShieldCheck size={20} style={{ flexShrink: 0, marginTop: '2px', color: 'var(--success-green)' }} />
-                  <span style={{ color: 'var(--muted-foreground)', lineHeight: 1.6 }}>{point}</span>
-                </li>
-              ))}
-            </ul>
-            <div style={{ marginTop: '2.5rem' }}>
-              <Link to="/chat" className="btn-primary">Try the AI Lawbot <ArrowRight size={16} /></Link>
-            </div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="glass-card" style={{ padding: '2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid var(--border)' }}>
-                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#EF4444' }}></div>
-                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#F59E0B' }}></div>
-                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#22C55E' }}></div>
-                <span style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)', marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--ai-purple)', display: 'inline-block' }} />
-                  NyAI Lawbot
-                </span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ background: 'var(--muted)', borderRadius: '0.75rem', padding: '0.875rem 1rem', alignSelf: 'flex-end', maxWidth: '80%' }}>
-                  <p style={{ fontSize: '0.9rem' }}>My landlord is refusing to return my security deposit after I moved out.</p>
+          <div style={{
+            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem',
+          }}>
+            {metrics.map((m, idx) => (
+              <motion.div key={idx} {...stagger(idx * 0.08)} style={{
+                padding: '2rem 1.75rem',
+                background: 'var(--background-card)',
+                border: '1px solid var(--border)',
+                borderRadius: '1rem',
+                textAlign: 'center',
+              }}>
+                <div style={{ fontSize: '3rem', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1, marginBottom: '0.75rem', color: 'var(--accent)' }}>
+                  <CountUp end={m.value} suffix={m.suffix} />
                 </div>
-                <div style={{ background: 'var(--glass)', border: '1px solid var(--glass-border)', borderRadius: '0.75rem', padding: '0.875rem 1rem', maxWidth: '90%' }}>
-                  <p style={{ fontSize: '0.9rem', marginBottom: '0.75rem', color: 'var(--muted-foreground)' }}>Based on your situation, the following applies:</p>
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
-                    <span style={{ background: 'var(--trust-blue)', color: '#fff', padding: '0.2rem 0.65rem', borderRadius: '2rem', fontSize: '0.72rem', fontWeight: 700 }}>Section 106, TP Act</span>
-                    <span style={{ background: 'var(--ai-purple-dim)', border: '1px solid rgba(168,85,247,0.3)', color: 'var(--ai-purple)', padding: '0.2rem 0.65rem', borderRadius: '2rem', fontSize: '0.72rem', fontWeight: 600 }}>Rent Control Act</span>
-                  </div>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)' }}>📋 Send a written legal notice. If not resolved in 15 days, file a case in Consumer Forum or Small Claims Court.</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+                <h3 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: '0.3rem', color: '#fff' }}>{m.label}</h3>
+                <p style={{ color: 'var(--muted-foreground)', fontSize: '0.8rem' }}>{m.desc}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section style={{ padding: '8rem 0', background: 'rgba(0,0,0,0.15)' }}>
+      {/* ═══════════ CASE STUDIES / TESTIMONIALS ═══════════ */}
+      <section style={{ padding: '8rem 0', background: 'var(--background-secondary)', borderBottom: '1px solid var(--border)' }}>
         <div className="container">
-          <motion.div {...fadeInUp} style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <div className="section-label">Testimonials</div>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.02em' }}>
-              Trusted by citizens across India
+          <motion.div {...fadeIn} style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <div className="section-label">Case Studies</div>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.15 }}>
+              What our clients say
             </h2>
+            <p style={{ color: 'var(--muted-foreground)', maxWidth: '480px', margin: '1rem auto 0', lineHeight: 1.75, fontSize: '1rem' }}>
+              Real outcomes from legal teams deploying NyAI in production environments.
+            </p>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+          <div style={{
+            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.25rem',
+          }}>
             {testimonials.map((t, idx) => (
-              <motion.div key={idx} {...fadeInUp} transition={{ delay: idx * 0.1 }} className="glass-card" style={{ padding: '2rem' }}>
-                <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '1.25rem' }}>
-                  {[...Array(t.stars)].map((_, i) => (
-                    <Star key={i} size={16} fill="var(--amber)" color="var(--amber)" />
-                  ))}
-                </div>
-                <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.7, marginBottom: '1.5rem', fontSize: '0.95rem' }}>"{t.text}"</p>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{t.name}</div>
-                  <div style={{ color: 'var(--muted-foreground)', fontSize: '0.83rem', marginTop: '0.2rem' }}>{t.role}</div>
+              <motion.div key={idx} {...stagger(idx * 0.08)} className="glass-card" style={{
+                padding: '2.25rem', display: 'flex', flexDirection: 'column',
+              }}>
+                {/* Quote mark */}
+                <div style={{ fontSize: '3rem', lineHeight: 1, color: 'var(--accent)', fontFamily: 'Georgia, serif', marginBottom: '0.5rem', opacity: 0.5 }}>"</div>
+                <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.75, fontSize: '0.95rem', flex: 1, marginBottom: '1.5rem' }}>
+                  {t.quote}
+                </p>
+                <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1.25rem' }}>
+                  <div style={{ fontWeight: 600, fontSize: '0.92rem', color: '#fff' }}>{t.name}</div>
+                  <div style={{ color: 'var(--muted-foreground)', fontSize: '0.82rem', marginTop: '0.15rem' }}>
+                    {t.role} · {t.company}
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -495,50 +428,95 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section style={{ padding: '8rem 0', textAlign: 'center' }}>
+      {/* ═══════════ SECURITY & TRUST ═══════════ */}
+      <section style={{ padding: '8rem 0', borderBottom: '1px solid var(--border)' }}>
         <div className="container">
-          <motion.div {...fadeInUp}>
-            <div className="section-label">Get Started Today</div>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 800, marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>
-              Ready to understand your rights?
+          <div className="responsive-grid-2">
+            <motion.div {...fadeIn}>
+              <div className="section-label">Security & Compliance</div>
+              <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '1.25rem' }}>
+                Enterprise-grade security <br />you can trust
+              </h2>
+              <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.8, marginBottom: '1.25rem', fontSize: '0.95rem' }}>
+                NyAI is built from the ground up for enterprise environments. Your data is encrypted at rest and in transit, processed in isolated environments, and never used for model training.
+              </p>
+              <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.8, fontSize: '0.95rem', marginBottom: '2rem' }}>
+                We maintain the highest industry certifications and undergo regular third-party audits to ensure your data remains private and secure.
+              </p>
+              <Link to="/register" className="btn-accent" style={{ padding: '0.85rem 1.75rem' }}>
+                Request Security Whitepaper <ArrowRight size={16} />
+              </Link>
+            </motion.div>
+
+            <motion.div {...fadeIn} transition={{ delay: 0.15 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                {securityItems.map((item, idx) => (
+                  <div key={idx} style={{
+                    padding: '1.5rem',
+                    background: 'var(--background-card)',
+                    border: '1px solid var(--border)',
+                    borderRadius: '0.875rem',
+                  }}>
+                    <div style={{
+                      width: '40px', height: '40px', borderRadius: '10px',
+                      background: 'var(--accent-dim)', border: '1px solid rgba(79,125,243,0.15)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      marginBottom: '0.85rem', color: 'var(--accent)',
+                    }}>
+                      {item.icon}
+                    </div>
+                    <h4 style={{ fontWeight: 700, fontSize: '0.92rem', marginBottom: '0.35rem', color: '#fff' }}>{item.title}</h4>
+                    <p style={{ color: 'var(--muted-foreground)', fontSize: '0.82rem', lineHeight: 1.6 }}>{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ FINAL CTA ═══════════ */}
+      <section style={{
+        padding: '8rem 0',
+        textAlign: 'center',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        {/* Gradient glow */}
+        <div style={{
+          position: 'absolute', top: '-40%', left: '50%', transform: 'translateX(-50%)',
+          width: '600px', height: '400px',
+          background: 'radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%)',
+          pointerEvents: 'none', opacity: 0.5,
+        }} />
+
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+          <motion.div {...fadeIn}>
+            <div className="section-label">Get Started</div>
+            <h2 style={{
+              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+              fontWeight: 800, letterSpacing: '-0.03em',
+              marginBottom: '1.25rem', lineHeight: 1.15,
+            }}>
+              Ready to transform your<br />legal operations?
             </h2>
-            <p style={{ color: 'var(--muted-foreground)', marginBottom: '2.5rem', fontSize: '1.1rem', maxWidth: '500px', margin: '0 auto 2.5rem' }}>
-              Join thousands of citizens who are using NyAI to navigate the Indian legal system with confidence.
+            <p style={{
+              color: 'var(--muted-foreground)', maxWidth: '520px',
+              margin: '0 auto 2.5rem', lineHeight: 1.75, fontSize: '1.05rem',
+            }}>
+              See how NyAI can deliver measurable efficiency gains for your organization. Schedule a personalized demo with our team.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-              <GlassSurface 
-                borderRadius={999} 
-                displace={4} 
-                mixBlendMode="screen" 
-                backgroundOpacity={0.4} 
-                brightness={62}
-                style={{ 
-                  transition: 'transform 0.3s ease',
-                  background: 'rgba(220, 38, 38, 0.3)' 
-                }}
-              >
-                <Link to="/register" style={{ fontSize: '1.05rem', padding: '1.1rem 2.25rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  Create Free Account <ArrowRight size={18} />
-                </Link>
-              </GlassSurface>
-
-              <GlassSurface 
-                borderRadius={999} 
-                displace={3} 
-                mixBlendMode="screen" 
-                backgroundOpacity={0.12} 
-                brightness={45}
-                style={{ 
-                  transition: 'transform 0.3s ease',
-                  background: 'rgba(255, 255, 255, 0.03)' 
-                }}
-              >
-                <Link to="/about" style={{ fontSize: '1.05rem', padding: '1.1rem 2.25rem', fontWeight: 600, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  Learn More
-                </Link>
-              </GlassSurface>
+              <Link to="/register" className="btn-primary" style={{ padding: '1.1rem 2.5rem', fontSize: '1.05rem' }}>
+                Request a Demo <ArrowRight size={16} />
+              </Link>
+              <Link to="/about" className="btn-secondary" style={{ padding: '1.1rem 2.5rem', fontSize: '1.05rem' }}>
+                Contact Sales
+              </Link>
             </div>
+            <p style={{ marginTop: '1.5rem', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+              No commitment required · Personalized walkthrough · Enterprise pricing
+            </p>
           </motion.div>
         </div>
       </section>

@@ -12,20 +12,17 @@ import Search from './pages/Search';
 import Lawyers from './pages/Lawyers';
 import Pricing from './pages/Pricing';
 import Legal from './pages/Legal';
-import Plasma from './components/Plasma';
 
 // Page Transition Wrapper
 const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -15, scale: 0.98 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
       transition={{
-        type: "spring",
-        stiffness: 150,
-        damping: 25,
-        mass: 1
+        duration: 0.35,
+        ease: [0.25, 0.1, 0.25, 1]
       }}
     >
       {children}
@@ -47,16 +44,7 @@ function AppInner() {
   const hideFooter = pathname === '/chat';
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'transparent' }}>
-      <div className="plasma-container">
-        <Plasma 
-          speed={0.6}
-          direction="forward"
-          scale={1.1}
-          opacity={0.8}
-          mouseInteractive={true}
-        />
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#000' }}>
       <Navbar />
       <main style={{ flex: 1 }}>
         <AnimatePresence mode="wait">
@@ -68,7 +56,7 @@ function AppInner() {
             <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
             <Route path="/search" element={<PageWrapper><Search /></PageWrapper>} />
             <Route path="/lawyers" element={<PageWrapper><Lawyers /></PageWrapper>} />
-            <Route path="/pricing" element={<PageWrapper><PageWrapper><Pricing /></PageWrapper></PageWrapper>} />
+            <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
             <Route path="/legal/:slug" element={<PageWrapper><Legal /></PageWrapper>} />
           </Routes>
         </AnimatePresence>
