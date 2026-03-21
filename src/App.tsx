@@ -68,7 +68,7 @@ function AppInner() {
 
 function App() {
   return (
-    <Router basename="/nyai.github.io">
+    <Router basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <AppInner />
     </Router>

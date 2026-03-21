@@ -1,0 +1,49 @@
+﻿node.exe : ProcessError: remote: error: GH013: Repository rule violations 
+found for refs/heads/gh-pages.        
+At C:\Program Files\nodejs\npx.ps1:29 char:3
++   & $NODE_EXE $NPX_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ProcessError: r...-pages.      
+      :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+remote: 
+remote: - GITHUB PUSH PROTECTION        
+remote:   ΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇö
+ΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇö        
+remote:     Resolve the following violations before pushing again        
+remote: 
+remote:     - Push cannot contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn how to resolve a blocked push        
+remote:      https://docs.github.com/code-security/secret-scanning/working-w
+ith-secret-scanning-and-push-protection/working-with-push-protection-from-th
+e-command-line#resolving-a-blocked-push        
+remote:             
+remote:             
+remote:       ΓÇöΓÇö Groq API Key ΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇö
+ΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇöΓÇö    
+    
+remote:        locations:        
+remote:          - commit: 5bfdf1ab48dd44ed46fad9441b01d8488819c48a        
+remote:            path: assets/index-CabYOmy6.js:19        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL 
+to allow the secret.        
+remote:        https://github.com/Maahirrrr/nyai.github.io/security/secret-s
+canning/unblock-secret/3BFSMOBH2Q6OtRNBsZdyrYxwqT2        
+remote:             
+remote: 
+remote: 
+To https://github.com/Maahirrrr/nyai.github.io.git
+ ! [remote rejected] gh-pages -> gh-pages (push declined due to repository 
+rule violations)
+error: failed to push some refs to 
+'https://github.com/Maahirrrr/nyai.github.io.git'
+
+    at ChildProcess.<anonymous> (C:\Users\MAHIR\Desktop\Final 
+NyAI\node_modules\gh-pages\lib\git.js:42:16)
+    at ChildProcess.emit (node:events:518:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)

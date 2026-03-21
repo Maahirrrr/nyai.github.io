@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Search, FileText, Shield, Workflow, CheckCircle2, Clock, TrendingUp, Lock, BarChart3, Zap, Users, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Search, FileText, Shield, Workflow, CheckCircle2, TrendingUp, Lock, Zap, Users, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 /* ─── ANIMATION HELPERS ─── */
@@ -8,7 +8,7 @@ const fadeIn = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-60px' },
-  transition: { duration: 0.55, ease: [0.25, 0.1, 0.25, 1] },
+  transition: { duration: 0.55 },
 };
 
 const stagger = (delay: number) => ({
@@ -97,7 +97,7 @@ const Home: React.FC = () => {
     {
       step: '04',
       title: 'Continuously Improve',
-      desc: 'NyAI learns from your workflows and feedback, becoming more accurate and aligned with your firm's standards over time.',
+      desc: 'NyAI learns from your workflows and feedback, becoming more accurate and aligned with your firm\'s standards over time.',
       icon: <TrendingUp size={22} />,
     },
   ];
