@@ -40,9 +40,8 @@ button{cursor:pointer;font-family:var(--sans);border:none;background:none}
 ::-webkit-scrollbar-thumb{background:var(--cream3)}
 
 /* ── NAV ── */
-#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);transition:var(--t)}
-#nav.bg{background:rgba(10,9,8,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-#nav.bg{background:rgba(10,9,8,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);transition:var(--t);background:var(--black);border-bottom:1px solid var(--border)}
+#nav.bg{background:rgba(10,9,8,0.98);backdrop-filter:blur(20px)}
 .nav-inner{max-width:1440px;margin:0 auto;padding:0 2.5rem;width:100%;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h)}
 .nav-logo{font-family:var(--serif);font-size:1.375rem;font-weight:500;letter-spacing:0.02em;transition:var(--t);color:var(--cream)}
 .nav-links{display:flex;align-items:center;gap:2rem}
@@ -302,6 +301,11 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
   .hamburger{display:flex}
   .nav-links,.nav-right{display:none}
   .hero-h1{font-size:3.5rem}
+  .leadership-grid{grid-template-columns:1fr !important;gap:2rem !important}
+  .leader-card{text-align:center;display:flex;flex-direction:column;align-items:center}
+  .phi{padding:0 1.5rem}
+  .container{padding:0 1.5rem}
+  .p-h1-dark, .p-h1-light{font-size:2.5rem}
 }
 </style>
 </head>
@@ -310,7 +314,10 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
-    <a class="nav-logo" href="#" onclick="showPage('home')">NyAI</a>
+    <a class="nav-logo" href="#" onclick="showPage('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;vertical-align:middle"><path d="M12 3V21M12 3L7 5M12 3L17 5M5 9H19M7 9C7 11.5 5 13.5 5 13.5C5 13.5 3 11.5 3 9M17 9C17 11.5 19 13.5 19 13.5C19 13.5 21 11.5 21 9"/></svg>
+      NyAI
+    </a>
     <div class="nav-links">
       <a href="#" onclick="showPage('platform')">Platform</a>
       <a href="#" onclick="showPage('pricing')">Pricing</a>
@@ -645,17 +652,52 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 <!-- =================== PRICING =================== -->
 <div id="page-pricing" class="page">
   <div class="page-hero-white">
-    <div class="phi" style="text-align:center;max-width:640px;margin:0 auto;padding-top:10rem;padding-bottom:5rem">
-      <div class="p-label-light">Pricing</div>
-      <h1 class="p-h1-light">Transparent pricing for every practice</h1>
-      <p class="p-sub-light" style="margin:1rem auto 0">No hidden fees. Cancel anytime. All plans include full Indian law corpus access.</p>
+    <div class="phi" style="text-align:center;max-width:800px;margin:0 auto;padding-top:10rem;padding-bottom:5rem">
+      <div class="p-label-light">Subscription Plans</div>
+      <h1 class="p-h1-light">Digital Intelligence for Every Indian Practice</h1>
+      <p class="p-sub-light" style="margin:1rem auto 0">Transparent pricing designed for independent advocates, growing chambers, and national law firms.</p>
     </div>
   </div>
   <div class="section-dark"><div class="container">
     <div class="pricing-grid">
-      <div class="pc"><div class="pc-plan">Starter</div><div class="pc-amt">₹2,499</div><div class="pc-per">per user / month</div><button class="pc-btn pc-btn-outline" onclick="showPage('chat')">Start Free Trial</button></div>
-      <div class="pc pop"><div class="pc-plan">Professional <span class="pc-popular">Most Popular</span></div><div class="pc-amt">₹7,999</div><div class="pc-per">per user / month</div><button class="pc-btn pc-btn-light" onclick="showPage('chat')">Start Free Trial</button></div>
-      <div class="pc"><div class="pc-plan">Enterprise</div><div class="pc-amt" style="font-size:2rem;padding-top:.5rem">Custom</div><div class="pc-per">volume pricing available</div><button class="pc-btn pc-btn-outline" onclick="alert('Contact sales@nyai.in')">Contact Sales</button></div>
+      <div class="pc">
+        <div class="pc-plan">Individual Advocate</div>
+        <div class="pc-amt">₹1,999</div>
+        <div class="pc-per">per month (Billed Yearly)</div>
+        <ul style="list-style:none;padding:0;margin-bottom:2rem;color:var(--cream3);font-size:0.875rem;flex:1">
+          <li style="margin-bottom:0.75rem">✓ Unlimited SCI & HC Research</li>
+          <li style="margin-bottom:0.75rem">✓ BNS/BNSS/BSA Cross-Reference</li>
+          <li style="margin-bottom:0.75rem">✓ 5 Contract Reviews / Month</li>
+          <li>✓ Single User Access</li>
+        </ul>
+        <button class="pc-btn pc-btn-outline" onclick="showPage('chat')">Start Free Trial</button>
+      </div>
+      <div class="pc pop">
+        <div class="pc-plan">Professional Chambers <span class="pc-popular">Top Choice</span></div>
+        <div class="pc-amt">₹4,999</div>
+        <div class="pc-per">per month (Billed Yearly)</div>
+        <ul style="list-style:none;padding:0;margin-bottom:2rem;color:var(--cream3);font-size:0.8125rem;flex:1">
+          <li style="margin-bottom:0.75rem">✓ Everything in Individual</li>
+          <li style="margin-bottom:0.75rem">✓ Unlimited Contract Discovery</li>
+          <li style="margin-bottom:0.75rem">✓ AI-Drafting Templates (SLPs, Writs)</li>
+          <li style="margin-bottom:0.75rem">✓ Shared Workspace for 5 Users</li>
+          <li>✓ Case Management Integration</li>
+        </ul>
+        <button class="pc-btn pc-btn-light" onclick="showPage('chat')">Start Free Trial</button>
+      </div>
+      <div class="pc">
+        <div class="pc-plan">National Firm</div>
+        <div class="pc-amt" style="font-size:2rem;padding-top:.5rem">Custom</div>
+        <div class="pc-per">Tailored firm-wide solutions</div>
+        <ul style="list-style:none;padding:0;margin-bottom:2rem;color:var(--cream3);font-size:0.875rem;flex:1">
+          <li style="margin-bottom:0.75rem">✓ Private MeitY-Empanelled Cloud</li>
+          <li style="margin-bottom:0.75rem">✓ SSO & Advanced IAM Controls</li>
+          <li style="margin-bottom:0.75rem">✓ Custom Knowledge Base Integration</li>
+          <li style="margin-bottom:0.75rem">✓ 24/7 Dedicated Relationship Manager</li>
+          <li>✓ SOC-2 Compliance Reporting</li>
+        </ul>
+        <button class="pc-btn pc-btn-outline" onclick="alert('Contact sales@nyai.in')">Contact Sales</button>
+      </div>
     </div>
   </div></div>
 </div>
@@ -666,14 +708,36 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     <div class="phi">
       <div class="p-label">About NyAI</div>
       <h1 class="p-h1-dark">Building the future of<br>Indian jurisprudence</h1>
-      <p class="p-sub-dark">NyAI is a mission-driven technology company dedicated to advancing legal expertise through professional-class AI.</p>
+      <p class="p-sub-dark">NyAI is a mission-driven technology company dedicated to advancing legal expertise through professional-class AI, built natively for the unique complexities of the Indian legal system.</p>
     </div>
   </div>
-  <div class="section-dark"><div class="container" style="max-width:800px;color:var(--cream3);line-height:1.8">
-    <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Our Mission</h2>
-    <p style="margin-bottom:2rem">The Indian legal system is one of the most complex and data-rich environments in the world. We believe that by providing lawyers with the best possible tools, we can help them deliver better outcomes for their clients and the justice system as a whole.</p>
-    <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Built for India</h2>
-    <p>Unlike global AI models, NyAI is trained specifically on the nuances of Indian law — from the intricacies of the IBC and Companies Act to the specific procedural requirements of various High Courts and Tribunals.</p>
+  <div class="section-dark"><div class="container" style="max-width:1000px">
+    <div style="margin-bottom:6rem">
+      <h2 style="font-family:var(--serif);font-size:2.5rem;color:var(--white);margin-bottom:1.5rem">Our Leadership</h2>
+      <div class="leadership-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:3rem">
+        <div class="leader-card">
+          <div style="width:100px;height:100px;background:var(--dark3);border-radius:50%;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-family:var(--serif);color:var(--accent)">MK</div>
+          <h3 style="color:var(--white);font-size:1.25rem;margin-bottom:0.25rem">Mahir Kadia</h3>
+          <p style="color:var(--accent2);font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:600">Chief Executive Officer</p>
+        </div>
+        <div class="leader-card">
+          <div style="width:100px;height:100px;background:var(--dark3);border-radius:50%;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-family:var(--serif);color:var(--accent)">MM</div>
+          <h3 style="color:var(--white);font-size:1.25rem;margin-bottom:0.25rem">Mahek Maradiya</h3>
+          <p style="color:var(--accent2);font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:600">Founder & CFO</p>
+        </div>
+        <div class="leader-card">
+          <div style="width:100px;height:100px;background:var(--dark3);border-radius:50%;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-family:var(--serif);color:var(--accent)">TN</div>
+          <h3 style="color:var(--white);font-size:1.25rem;margin-bottom:0.25rem">Tirth Nagar</h3>
+          <p style="color:var(--accent2);font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;font-weight:600">Co-Founder</p>
+        </div>
+      </div>
+    </div>
+    <div style="color:var(--cream3);line-height:1.8">
+      <h2 style="font-family:var(--serif);font-size:2.25rem;color:var(--white);margin-bottom:1.5rem">Our Mission</h2>
+      <p style="margin-bottom:2rem">The Indian legal system, with its 50 million pending cases and ancient yet evolving statutes, requires more than just generic AI. We believe that by providing Indian lawyers with tools tuned to the Bharatiya Nyaya Sanhita (BNS), the Civil Procedure Code, and local High Court rules, we can accelerate the delivery of justice.</p>
+      <h2 style="font-family:var(--serif);font-size:2.25rem;color:var(--white);margin-bottom:1.5rem">Why India First?</h2>
+      <p>While global models struggle with the nuances of Indian "boiler-plate" or the hierarchical precedent of 25 different High Courts, NyAI is trained specifically on this data. We don't just translate law; we understand the Indian courtroom context.</p>
+    </div>
   </div></div>
 </div>
 
@@ -695,8 +759,10 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     <div style="max-width:800px;margin:0 auto;color:var(--cream3);line-height:1.8">
       <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Zero Retention Policy</h2>
       <p style="margin-bottom:2rem">By default, NyAI does not store your prompts or resulting data. Once your session ends, the data is purged from our systems. We do not use your proprietary work product to train our models.</p>
+      <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Advocate-Client Privilege</h2>
+      <p style="margin-bottom:2rem">NyAI is built to respect the professional secrecy requirements under Section 126 of the Indian Evidence Act (now reflected in the Bharatiya Sakshya Adhiniyam). Our 'Privileged Vault' ensures that drafting for litigation is never stored or used in a way that waives this privilege.</p>
       <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Indian Data Residency</h2>
-      <p>All data processing for our Indian enterprise clients occurs within MeitY-empanelled data centers within the territory of India.</p>
+      <p>All data processing for our Indian enterprise clients occurs within MeitY-empanelled data centers within the territory of India, ensuring absolute sovereignty over legal data.</p>
     </div>
   </div></div>
 </div>
@@ -736,6 +802,22 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
           <p style="font-size:.875rem;color:var(--cream3);margin-top:.5rem">NyAI now understands the context of insolvency proceedings better than ever.</p>
         </div>
       </div>
+      <div class="case-card">
+        <div class="case-card-img"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop" alt="Supreme Court"/></div>
+        <div class="case-card-body">
+          <div class="case-card-label">Legal Tech</div>
+          <h3 style="color:var(--white)">Digitizing the Chambers of Senior Advocates</h3>
+          <p style="font-size:.875rem;color:var(--cream3);margin-top:.5rem">How AI is helping traditional offices transition to the paperless e-court era.</p>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-card-img"><img src="https://images.unsplash.com/photo-1521791136064-7986c2959213?w=800&q=80&auto=format&fit=crop" alt="Signature"/></div>
+        <div class="case-card-body">
+          <div class="case-card-label">Update</div>
+          <h3 style="color:var(--white)">BNS vs IPC: The Ultimate Comparative Guide</h3>
+          <p style="font-size:.875rem;color:var(--cream3);margin-top:.5rem">A comprehensive mapping of section changes for the new criminal laws.</p>
+        </div>
+      </div>
     </div>
   </div></div>
 </div>
@@ -750,8 +832,14 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     </div>
   </div>
   <div class="section-white"><div class="container" style="max-width:800px;color:var(--lightmuted);line-height:1.75;font-size:0.95rem">
-    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--black);margin-bottom:1rem">1. Data Sovereignty</h3><p style="margin-bottom:2rem">NyAI processes all query data in RAM. We do not store your proprietary legal prompts or sensitive client documents unless you explicitly opt-in to conversation history features. Your data is used only to generate your response and is purged upon session termination.</p>
-    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--black);margin-bottom:1rem">2. Training Policy</h3><p style="margin-bottom:2rem">We do not use your data or the interactions you have with NyAI to train our core foundation models. Your professional expertise and client privilege remain exclusively yours.</p>
+    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--black);margin-bottom:1rem">1. Data Fiduciary Responsibility</h3>
+    <p style="margin-bottom:2rem">NyAI acts as a 'Data Processor' on behalf of the individual advocate or law firm (the 'Data Fiduciary'). In accordance with the Digital Personal Data Protection Act 2023, we process personal data only for providing legal research and drafting services.</p>
+    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--black);margin-bottom:1rem">2. Right to Erasure & Correction</h3>
+    <p style="margin-bottom:2rem">Users have the right to request erasure of their research history and correction of any personal information. Our 'Zero Retention' mode ensures that no data persists beyond the active session.</p>
+    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--black);margin-bottom:1rem">3. Data Residency</h3>
+    <p style="margin-bottom:2rem">All data is processed within the sovereign territory of India, utilizing MeitY-empanelled cloud infrastructure (Mumbai/Pune zones), ensuring compliance with Section 16 of the DPDP Act regarding cross-border transfers.</p>
+    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--black);margin-bottom:1rem">4. Information Security</h3>
+    <p>We implement technical and organizational measures including AES-256 encryption at rest and TLS 1.3 in transit to prevent unauthorized access or disclosure of privileged legal information.</p>
   </div></div>
 </div>
 
@@ -764,7 +852,12 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     </div>
   </div>
   <div class="section-dark"><div class="container" style="max-width:800px;color:var(--cream3);line-height:1.75;font-size:0.95rem">
-    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--white);margin-bottom:1rem">1. User Responsibility</h3><p style="margin-bottom:2rem">NyAI is a research tool. While we strive for absolute accuracy in citing Indian statutes and case law, the output does not constitute legal advice. Qualified practitioners must verify all citations before filing or reliance.</p>
+    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--white);margin-bottom:1rem">1. Professional Responsibility</h3>
+    <p style="margin-bottom:2rem">NyAI is a technological aid for legal professionals. It does not replace the requirement for an advocate's independent verification. Users must verify all citations against official Gazette notifications or SCC/Manupatra records before use in any court of law.</p>
+    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--white);margin-bottom:1rem">2. No Attorney-Client Relationship</h3>
+    <p style="margin-bottom:2rem">Use of NyAI does not create an attorney-client relationship between the user and the platform providers. Our role is strictly limited to providing a research and drafting interface.</p>
+    <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--white);margin-bottom:1rem">3. Subscription & Usage</h3>
+    <p>Access is provided on a subscription basis. Misuse of the platform for generating bulk litigation or non-legal content may result in immediate suspension without refund, in line with Bar Council of India standards of professional conduct.</p>
   </div></div>
 </div>
 <!-- =================== CHAT =================== -->
