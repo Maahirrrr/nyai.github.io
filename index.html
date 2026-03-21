@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>NyAI — Legal AI for India</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -25,8 +25,8 @@
   --lighttext:#3A3632;
   --lightmuted:#7A7470;
   --serif:'EB Garamond',Georgia,serif;
-  --sans:'Geist','Inter',system-ui,sans-serif;
-  --mono:'Geist Mono',monospace;
+  --sans:'Inter','Outfit',system-ui,sans-serif;
+  --mono:'JetBrains Mono','Geist Mono',monospace;
   --nav-h:64px;
   --t:.22s ease;
 }
@@ -315,7 +315,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 <nav id="nav">
   <div class="nav-inner">
     <a class="nav-logo" href="#" onclick="showPage('home')">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px;vertical-align:middle"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.5,10.5V15.5C16.5,17.43 14.93,19 13,19H12C10.07,19 8.5,17.43 8.5,15.5V15H7V10H8.5V8.5C8.5,6.57 10.07,5 12,5H13C14.93,5 16.5,6.57 16.5,8.5V10.5M10.5,14C10.78,14 11,13.78 11,13.5V9.5C11,9.22 10.78,9 10.5,9C10.22,9 10,9.22 10,9.5V13.5C10,13.78 10.22,14 10.5,14M12.5,14C12.78,14 13,13.78 13,13.5V9.5C13,9.22 12.78,9 12.5,9C12.22,9 12,9.22 12,9.5V13.5C12,13.78 12.22,14 12.5,14"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px;vertical-align:middle"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V10H13V17ZM13 9H11V7H13V9Z" /><path d="M12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16,10C16,8.89543 15.1046,8 14,8C12.8954,8 12,8.89543 12,10V14H16V10Z" fill="currentColor"/><path d="M11,10C11,8.89543 10.1046,8 9,8C7.89543,8 7,8.89543 7,10V14H11V10Z" fill="currentColor"/><path d="M12,14V17C12,18.1046 11.1046,19 10,19H9C7.89543,19 7,18.1046 7,17V14H12Z" fill="currentColor"/></svg>
       NyAI
     </a>
     <div class="nav-links">
@@ -517,9 +517,10 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       <button onclick="showPage('chat')">Request Demo →</button>
     </div>
   </section>
+</div>
 
 <!-- ── FOOTER ── -->
-<footer>
+<footer style="display:block">
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-col">
@@ -562,9 +563,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
           <a href="#" onclick="showPage('chat')">Contact</a>
         </div>
       </div>
-    </div>
-  </footer>
-</div>
+  </div>
+</footer>
 <!-- =================== SIGN IN =================== -->
 <div id="page-signin" class="page">
   <button class="signin-back" onclick="showPage('home')">← Back</button>
@@ -583,11 +583,11 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
         <h2>Welcome back</h2>
         <p>Sign in to your NyAI account to continue your legal research.</p>
         <div class="form-group">
-          <label>Email Address</label>
+          <label for="signin-email">Email Address</label>
           <input type="email" placeholder="you@firm.com" id="signin-email"/>
         </div>
         <div class="form-group">
-          <label>Password</label>
+          <label for="signin-pass">Password</label>
           <input type="password" placeholder="••••••••" id="signin-pass"/>
         </div>
         <button class="signin-btn" onclick="handleSignin()">Sign in →</button>
@@ -925,6 +925,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       <div class="chat-input-area">
         <div class="chat-disc">Professional-grade research engine. Always verify citations.</div>
         <div class="chat-ir">
+          <label for="chat-input" style="display:none">Chat input</label>
           <textarea class="chat-ta" id="chat-input" placeholder="Ask anything about Indian law..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
           <button class="chat-sb" id="chat-send" onclick="sendMsg()">↑</button>
         </div>
@@ -1004,7 +1005,7 @@ function addMsg(text, role) {
 function addTyping() { const id = 'ty-'+Date.now(); const d = document.createElement('div'); d.id = id; d.className = 'msg ai'; d.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>'; document.getElementById('chat-msgs').appendChild(d); return id; }
 function removeTyping(id) { const el = document.getElementById(id); if (el) el.remove(); }
 
-updateNav('home');
+showPage('home');
 document.getElementById('nav').classList.add('bg');
 </script>
 </body>
