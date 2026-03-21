@@ -315,7 +315,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 <nav id="nav">
   <div class="nav-inner">
     <a class="nav-logo" href="#" onclick="showPage('home')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;vertical-align:middle"><path d="M12 3V21M12 3L7 5M12 3L17 5M5 9H19M7 9C7 11.5 5 13.5 5 13.5C5 13.5 3 11.5 3 9M17 9C17 11.5 19 13.5 19 13.5C19 13.5 21 11.5 21 9"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px;vertical-align:middle"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.5,10.5V15.5C16.5,17.43 14.93,19 13,19H12C10.07,19 8.5,17.43 8.5,15.5V15H7V10H8.5V8.5C8.5,6.57 10.07,5 12,5H13C14.93,5 16.5,6.57 16.5,8.5V10.5M10.5,14C10.78,14 11,13.78 11,13.5V9.5C11,9.22 10.78,9 10.5,9C10.22,9 10,9.22 10,9.5V13.5C10,13.78 10.22,14 10.5,14M12.5,14C12.78,14 13,13.78 13,13.5V9.5C13,9.22 12.78,9 12.5,9C12.22,9 12,9.22 12,9.5V13.5C12,13.78 12.22,14 12.5,14"/></svg>
       NyAI
     </a>
     <div class="nav-links">
@@ -518,23 +518,27 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     </div>
   </section>
 
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div>
-          <div class="footer-logo">NyAI</div>
-          <p class="footer-tagline">AI designed for legal and professional services. Built natively for the Indian legal system.</p>
-        </div>
-        <div class="footer-col"><h4>Platform</h4><ul>
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-logo">NyAI</div>
+        <p class="footer-tagline">AI designed for legal and professional services. Built natively for the Indian legal system.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
           <li><a href="#" onclick="showPage('platform')">Research</a></li>
           <li><a href="#" onclick="showPage('platform')">Contracts</a></li>
           <li><a href="#" onclick="showPage('platform')">Due Diligence</a></li>
           <li><a href="#" onclick="showPage('platform')">Compliance</a></li>
-        </ul></div>
-        <div class="footer-col"><h4>Company</h4><ul>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
           <li><a href="#" onclick="showPage('about')">About</a></li>
-          <li><a href="#" onclick="showPage('resources')">Blog</a></li>
-          <li><a href="#" onclick="showPage('about')">Careers</a></li>
           <li><a href="#" onclick="showPage('resources')">Press</a></li>
         </ul></div>
         <div class="footer-col"><h4>Resources</h4><ul>
@@ -588,9 +592,6 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
         </div>
         <button class="signin-btn" onclick="handleSignin()">Sign in →</button>
         <div style="text-align:right;margin-top:.875rem">
-          <a href="#" onclick="alert('Password reset link sent to your email.')" style="font-size:.8125rem;color:var(--lightmuted);text-decoration:underline;text-underline-offset:3px">Forgot password?</a>
-        </div>
-        <div class="signin-divider">or</div>
         <button class="signin-google" onclick="alert('Google SSO — Available for Enterprise plans. Contact your administrator.')">
           <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 6.293C4.672 4.169 6.656 3.58 9 3.58z"/></svg>
           Continue with Google
@@ -607,8 +608,6 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 <div id="page-platform" class="page">
   <div class="page-hero-dark">
     <div class="phi">
-      <div class="p-label">Platform</div>
-      <h1 class="p-h1-dark">The complete AI platform<br>for Indian legal practice</h1>
       <p class="p-sub-dark">Built from the ground up for the Indian legal system — trained on every court, statute, and regulatory body that matters to your practice.</p>
     </div>
   </div>
@@ -665,38 +664,41 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
         <div class="pc-amt">₹1,999</div>
         <div class="pc-per">per month (Billed Yearly)</div>
         <ul style="list-style:none;padding:0;margin-bottom:2rem;color:var(--cream3);font-size:0.875rem;flex:1">
-          <li style="margin-bottom:0.75rem">✓ Unlimited SCI & HC Research</li>
-          <li style="margin-bottom:0.75rem">✓ BNS/BNSS/BSA Cross-Reference</li>
-          <li style="margin-bottom:0.75rem">✓ 5 Contract Reviews / Month</li>
-          <li>✓ Single User Access</li>
+          <li style="margin-bottom:0.75rem">✓ Bharat-Search: All SC & HC Judgments</li>
+          <li style="margin-bottom:0.75rem">✓ BNS/BNSS/BSA Comparative Engine</li>
+          <li style="margin-bottom:0.75rem">✓ AI Gavel: Professional Research assistant</li>
+          <li style="margin-bottom:0.75rem">✓ 5 Intelligent Contract Analysis / Month</li>
+          <li>✓ MeitY-Approved Data Residency</li>
         </ul>
-        <button class="pc-btn pc-btn-outline" onclick="showPage('chat')">Start Free Trial</button>
+        <button class="pc-btn pc-btn-outline" onclick="showPage('chat')">Start Trial</button>
       </div>
       <div class="pc pop">
-        <div class="pc-plan">Professional Chambers <span class="pc-popular">Top Choice</span></div>
+        <div class="pc-popular" style="position:absolute;top:0;right:0;margin:1rem">Most Popular</div>
+        <div class="pc-plan">Professional Chambers</div>
         <div class="pc-amt">₹4,999</div>
         <div class="pc-per">per month (Billed Yearly)</div>
         <ul style="list-style:none;padding:0;margin-bottom:2rem;color:var(--cream3);font-size:0.8125rem;flex:1">
-          <li style="margin-bottom:0.75rem">✓ Everything in Individual</li>
-          <li style="margin-bottom:0.75rem">✓ Unlimited Contract Discovery</li>
-          <li style="margin-bottom:0.75rem">✓ AI-Drafting Templates (SLPs, Writs)</li>
-          <li style="margin-bottom:0.75rem">✓ Shared Workspace for 5 Users</li>
-          <li>✓ Case Management Integration</li>
+          <li style="margin-bottom:0.75rem">✓ Everything in Individual Plan</li>
+          <li style="margin-bottom:0.75rem">✓ Unlimited Contract Review & Redlining</li>
+          <li style="margin-bottom:0.75rem">✓ Supreme Court Writ/SLP Drafting AI</li>
+          <li style="margin-bottom:0.75rem">✓ Legal Entity Risk Extraction from MCA</li>
+          <li style="margin-bottom:0.75rem">✓ Multi-User Workspace (Up to 5 seats)</li>
+          <li>✓ Case Status & Cause List Tracking</li>
         </ul>
-        <button class="pc-btn pc-btn-light" onclick="showPage('chat')">Start Free Trial</button>
+        <button class="pc-btn pc-btn-light" onclick="showPage('chat')">Start Trial</button>
       </div>
       <div class="pc">
-        <div class="pc-plan">National Firm</div>
-        <div class="pc-amt" style="font-size:2rem;padding-top:.5rem">Custom</div>
-        <div class="pc-per">Tailored firm-wide solutions</div>
+        <div class="pc-plan">National Firm / Corporate</div>
+        <div class="pc-amt" style="font-size:1.5rem;padding-top:.5rem">Custom Enterprise</div>
+        <div class="pc-per">Enterprise-wide deployment</div>
         <ul style="list-style:none;padding:0;margin-bottom:2rem;color:var(--cream3);font-size:0.875rem;flex:1">
-          <li style="margin-bottom:0.75rem">✓ Private MeitY-Empanelled Cloud</li>
-          <li style="margin-bottom:0.75rem">✓ SSO & Advanced IAM Controls</li>
-          <li style="margin-bottom:0.75rem">✓ Custom Knowledge Base Integration</li>
-          <li style="margin-bottom:0.75rem">✓ 24/7 Dedicated Relationship Manager</li>
-          <li>✓ SOC-2 Compliance Reporting</li>
+          <li style="margin-bottom:0.75rem">✓ Private Dedicated VPC Architecture</li>
+          <li style="margin-bottom:0.75rem">✓ SCC/Manupatra Internal Integration</li>
+          <li style="margin-bottom:0.75rem">✓ SSO, IAM & Full Governance Audit</li>
+          <li style="margin-bottom:0.75rem">✓ Custom Fine-tuned LLM for Firm Styles</li>
+          <li>✓ 24/7 Priority HNI Relationship Manager</li>
         </ul>
-        <button class="pc-btn pc-btn-outline" onclick="alert('Contact sales@nyai.in')">Contact Sales</button>
+        <button class="pc-btn pc-btn-outline" onclick="alert('Contact sales@nyai.in for Enterprise Customization')">Contact Sales</button>
       </div>
     </div>
   </div></div>
@@ -732,8 +734,25 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
         </div>
       </div>
     </div>
+    <div style="margin-bottom:6rem">
+      <h2 style="font-family:var(--serif);font-size:2.5rem;color:var(--white);margin-bottom:1.5rem">Our Core DNA</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:2rem">
+        <div>
+          <h4 style="color:var(--white);font-size:1.125rem;margin-bottom:.5rem">Liberty</h4>
+          <p style="font-size:.875rem;color:var(--cream3)">Protecting the rights of every citizen through accessible and precise legal intelligence.</p>
+        </div>
+        <div>
+          <h4 style="color:var(--white);font-size:1.125rem;margin-bottom:.5rem">Justice</h4>
+          <p style="font-size:.875rem;color:var(--cream3)">Accelerating the speed of the Indian judiciary by empowering practitioners with better tools.</p>
+        </div>
+        <div>
+          <h4 style="color:var(--white);font-size:1.125rem;margin-bottom:.5rem">Precision</h4>
+          <p style="font-size:.875rem;color:var(--cream3)">Absolute accuracy in citation and statutory cross-referencing is our non-negotiable standard.</p>
+        </div>
+      </div>
+    </div>
     <div style="color:var(--cream3);line-height:1.8">
-      <h2 style="font-family:var(--serif);font-size:2.25rem;color:var(--white);margin-bottom:1.5rem">Our Mission</h2>
+      <h2 style="font-family:var(--serif);font-size:2.25rem;color:var(--white);margin-bottom:1.5rem">Our Story</h2>
       <p style="margin-bottom:2rem">The Indian legal system, with its 50 million pending cases and ancient yet evolving statutes, requires more than just generic AI. We believe that by providing Indian lawyers with tools tuned to the Bharatiya Nyaya Sanhita (BNS), the Civil Procedure Code, and local High Court rules, we can accelerate the delivery of justice.</p>
       <h2 style="font-family:var(--serif);font-size:2.25rem;color:var(--white);margin-bottom:1.5rem">Why India First?</h2>
       <p>While global models struggle with the nuances of Indian "boiler-plate" or the hierarchical precedent of 25 different High Courts, NyAI is trained specifically on this data. We don't just translate law; we understand the Indian courtroom context.</p>
@@ -756,13 +775,23 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       <div class="cert-item"><div class="cert-icon" style="font-size:2rem">🔐</div><h3 style="color:var(--white);margin:1rem 0 .5rem">ISO 27001</h3><p style="font-size:.875rem;color:var(--cream3)">Certified information security management system.</p></div>
       <div class="cert-item"><div class="cert-icon" style="font-size:2rem">🇮🇳</div><h3 style="color:var(--white);margin:1rem 0 .5rem">DPDP Act</h3><p style="font-size:.875rem;color:var(--cream3)">Fully compliant with India's Digital Personal Data Protection Act.</p></div>
     </div>
-    <div style="max-width:800px;margin:0 auto;color:var(--cream3);line-height:1.8">
-      <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Zero Retention Policy</h2>
-      <p style="margin-bottom:2rem">By default, NyAI does not store your prompts or resulting data. Once your session ends, the data is purged from our systems. We do not use your proprietary work product to train our models.</p>
-      <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Advocate-Client Privilege</h2>
-      <p style="margin-bottom:2rem">NyAI is built to respect the professional secrecy requirements under Section 126 of the Indian Evidence Act (now reflected in the Bharatiya Sakshya Adhiniyam). Our 'Privileged Vault' ensures that drafting for litigation is never stored or used in a way that waives this privilege.</p>
-      <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Indian Data Residency</h2>
-      <p>All data processing for our Indian enterprise clients occurs within MeitY-empanelled data centers within the territory of India, ensuring absolute sovereignty over legal data.</p>
+    <div style="max-width:800px;margin:3rem auto 0;color:var(--cream3);line-height:1.8">
+      <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Enterprise Architecture</h2>
+      <p style="margin-bottom:2rem">Every NyAI Enterprise deployment is isolated within its own Virtual Private Cloud (VPC). We employ AES-256 for encryption at rest and TLS 1.3 for data in transit. Our models are hosted internally; no third-party APIs (like OpenAI) are ever used to process your sensitive litigation data.</p>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:3rem">
+        <div style="background:var(--dark3);padding:1.5rem;border-radius:4px">
+          <h4 style="color:var(--white);margin-bottom:.5rem">ISO 27017/18</h4>
+          <p style="font-size:.8125rem">Cloud specific privacy controls for legal data hosting.</p>
+        </div>
+        <div style="background:var(--dark3);padding:1.5rem;border-radius:4px">
+          <h4 style="color:var(--white);margin-bottom:.5rem">SOC 2 Type II</h4>
+          <p style="font-size:.8125rem">Annual independent audit for security and availability.</p>
+        </div>
+      </div>
+
+      <h2 style="font-family:var(--serif);font-size:2rem;color:var(--white);margin-bottom:1.5rem">Advocate-Client Privilege (BSA/Evidence Act)</h2>
+      <p style="margin-bottom:2rem">Built with respect for Section 126 of the Evidence Act (reflected in the new BSA), our Zero-History mode ensures that sensitive drafting and research into 'Strategy of Case' never leaves your session memory.</p>
     </div>
   </div></div>
 </div>
@@ -816,6 +845,22 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
           <div class="case-card-label">Update</div>
           <h3 style="color:var(--white)">BNS vs IPC: The Ultimate Comparative Guide</h3>
           <p style="font-size:.875rem;color:var(--cream3);margin-top:.5rem">A comprehensive mapping of section changes for the new criminal laws.</p>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-card-img"><img src="https://images.unsplash.com/photo-1542435503-956c469947f6?w=800&q=80&auto=format&fit=crop" alt="Webinar"/></div>
+        <div class="case-card-body">
+          <div class="case-card-label">Webinar</div>
+          <h3 style="color:var(--white)">The Future of Generative AI in Litigation</h3>
+          <p style="font-size:.875rem;color:var(--cream3);margin-top:.5rem">On-demand recording of our session with Senior Advocates of the Supreme Court.</p>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-card-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&auto=format&fit=crop" alt="Report"/></div>
+        <div class="case-card-body">
+          <div class="case-card-label">Industry Report</div>
+          <h3 style="color:var(--white)">India Legal Tech Report 2026</h3>
+          <p style="font-size:.875rem;color:var(--cream3);margin-top:.5rem">Our deep-dive into the adoption of LLMs across Tier-1 and Tier-2 Indian firms.</p>
         </div>
       </div>
     </div>
@@ -902,6 +947,11 @@ function showPage(n) {
   const t = document.getElementById('page-' + n);
   if (t) { t.classList.add('active'); window.scrollTo(0, 0); }
   updateNav(n);
+  const footer = document.querySelector('footer');
+  if (footer) {
+    if (['signin', 'chat'].includes(n)) footer.style.display = 'none';
+    else footer.style.display = 'block';
+  }
   checkReveal();
   closeMob();
 }
