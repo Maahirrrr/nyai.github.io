@@ -199,8 +199,9 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 
 /* ── PLATFORM ── */
 .platform-feature{display:grid;grid-template-columns:1fr 1fr;min-height:480px;border-bottom:1px solid var(--border)}
-.platform-feature:nth-child(even){direction:rtl}
-.platform-feature:nth-child(even)>*{direction:ltr}
+.platform-feature.flip{display:grid;grid-template-columns:1fr 1fr}
+.platform-feature.flip .pf-text{order:2}
+.platform-feature.flip .pf-img{order:1}
 .pf-text{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;background:var(--dark)}
 .pf-num{font-size:0.68rem;font-family:var(--mono);color:var(--accent2);letter-spacing:0.08em;margin-bottom:1.5rem;text-transform:uppercase}
 .pf-h{font-family:var(--serif);font-size:clamp(1.75rem,2.5vw,2.375rem);font-weight:500;line-height:1.2;color:var(--cream);margin-bottom:1.25rem}
@@ -208,8 +209,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 .pf-list{list-style:none;display:flex;flex-direction:column;gap:0.75rem}
 .pf-list li{font-size:0.875rem;color:var(--cream2);display:flex;gap:0.75rem;align-items:flex-start;font-weight:300}
 .pf-list li::before{content:'→';color:var(--accent2);flex-shrink:0;margin-top:1px}
-.pf-img{overflow:hidden;position:relative;background:var(--dark2)}
-.pf-img img{width:100%;height:100%;object-fit:cover;opacity:0.7;transition:opacity 0.4s ease,transform 0.6s ease}
+.pf-img{overflow:hidden;position:relative;background:var(--dark2);min-height:300px}
+.pf-img img{width:100%;height:100%;min-height:300px;object-fit:cover;opacity:0.7;transition:opacity 0.4s ease,transform 0.6s ease;display:block}
 .platform-feature:hover .pf-img img{opacity:0.85;transform:scale(1.02)}
 .pf-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,9,8,0.4) 0%,transparent 60%)}
 
@@ -453,26 +454,221 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 .careers-cta-box h3{font-family:var(--serif);font-size:1.875rem;font-weight:500;color:var(--cream);margin-bottom:0.75rem}
 .careers-cta-box p{font-size:0.875rem;color:var(--cream3);font-weight:300;max-width:440px;margin:0 auto 2rem;line-height:1.7}
 
-/* RESPONSIVE */
+/* ── RESPONSIVE ── */
+
+/* Tablet: 768px – 1024px */
 @media(max-width:1024px){
-  .intro-inner,.cap-inner,.quote-inner,.stats-inner,.sec-layout,.sec-arch-grid,.about-story-grid{grid-template-columns:1fr;gap:3rem}
-  .cases-grid,.resources-grid,.pricing-grid,.sec-features-grid,.team-grid,.values-grid,.plat-cap-grid,.careers-values,.perks-grid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr;gap:2rem}
+  /* Grids → single column */
+  .intro-inner,.cap-inner,.quote-inner,.stats-inner,
+  .sec-layout,.sec-arch-grid,.about-story-grid{grid-template-columns:1fr;gap:3rem}
+  .cases-grid,.resources-grid,.pricing-grid,.sec-features-grid,
+  .team-grid,.values-grid,.plat-cap-grid,.careers-values{grid-template-columns:repeat(2,1fr)}
+  .perks-grid{grid-template-columns:repeat(2,1fr)}
+  /* Nav */
+  .nav-links,.nav-right{display:none}
+  .hamburger{display:flex}
+  /* Footer */
+  .footer-top{grid-template-columns:repeat(2,1fr);gap:2rem}
+  /* Sign in */
   .signin-wrap{grid-template-columns:1fr}.signin-left{display:none}
-  .platform-feature,.platform-feature:nth-child(even){grid-template-columns:1fr;direction:ltr}
-  .pf-img{height:280px}
-  .nav-links,.nav-right{display:none}.hamburger{display:flex}
+  /* Platform */
+  .platform-feature,.platform-feature.flip{grid-template-columns:1fr}
+  .pf-img{height:300px;min-height:300px}
+  /* Chat */
   .chat-sidebar{display:none}
-  .stat-row{grid-template-columns:1fr;gap:0.375rem}
+  /* Stats */
+  .stat-row{grid-template-columns:180px 1fr;gap:1rem}
+  /* Milestones */
   .milestone{grid-template-columns:80px 1fr;gap:1.5rem}
-  .role-card{grid-template-columns:1fr;gap:1rem}
-  .role-apply{opacity:1;transform:none;width:fit-content}
+  /* Roles */
+  .role-card{grid-template-columns:1fr;gap:1.25rem}
+  .role-apply{opacity:1;transform:none;width:auto;align-self:flex-start}
+  /* Sections */
+  .section-dark,.section-dark2,.section-white,.section-off{padding:5rem 0}
+  .page-hero-dark,.page-hero-white{padding:7rem 0 3.5rem}
+  /* Intro/about images */
+  .intro-img{aspect-ratio:16/9}
+  .about-story-img{height:320px}
+  .stats-img{height:280px}
+  .cap-inner{grid-template-columns:1fr;gap:3rem}
+  .cap-heading{max-width:100%}
 }
+
+/* Mobile: ≤ 640px */
 @media(max-width:640px){
-  .footer-top{grid-template-columns:1fr}
+  /* Container padding */
+  .container{padding:0 1.25rem}
+  .phi{padding:0 1.25rem}
+  /* Nav */
+  .nav-inner{padding:0 1.25rem}
+  .mobile-menu{padding:1.5rem 1.25rem}
+  /* Hero */
+  #hero{min-height:100svh}
+  .hero-inner{padding:0 1.25rem 3.5rem}
+  .hero-h1{letter-spacing:-0.5px;margin-bottom:1rem}
+  .hero-sub{font-size:0.9375rem;max-width:100%;margin-bottom:1.75rem}
+  /* Page heroes */
+  .page-hero-dark,.page-hero-white{padding:5.5rem 0 3rem}
+  .p-h1-dark,.p-h1-light{font-size:clamp(1.875rem,6vw,2.5rem);letter-spacing:-0.25px}
+  .p-sub-dark,.p-sub-light{font-size:0.9rem;max-width:100%}
+  /* All section padding */
+  .section-dark,.section-dark2,.section-white,.section-off,
+  #intro,#capabilities,#quote-section,#cases,#stats,
+  #sec-strip,#final-cta{padding:4rem 0}
+  /* Grids → full single col */
+  .cases-grid,.resources-grid,.pricing-grid,.sec-features-grid,
+  .team-grid,.values-grid,.plat-cap-grid,.careers-values,
+  .perks-grid{grid-template-columns:1fr}
+  /* Cert grid 2 col on mobile */
   .cert-grid{grid-template-columns:repeat(2,1fr)}
-  .cases-grid{grid-template-columns:1fr}
-  .careers-stats-row{gap:2rem}
+  /* Footer */
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:0.75rem}
+  .footer-bottom-links{flex-wrap:wrap;gap:1rem}
+  /* Intro */
+  .intro-inner{gap:2rem}
+  .intro-img{aspect-ratio:4/3;border-radius:3px}
+  /* Quote */
+  .quote-inner{grid-template-columns:1fr;gap:1.5rem}
+  .quote-photo{width:120px;height:150px}
+  .quote-content blockquote{font-size:1.125rem}
+  /* Stats */
+  .stats-inner{gap:2.5rem}
+  .stats-img{height:220px;margin-top:1.5rem}
+  .stat-row{grid-template-columns:1fr;gap:0.25rem;padding:1.25rem 0}
+  .stat-num{font-size:2.5rem}
+  /* Security strip */
+  .sec-layout{gap:2.5rem}
+  /* Capabilities */
+  .cap-inner{padding:0 1.25rem;gap:2.5rem}
+  .cap-item{padding:1rem 0}
+  .cap-item-name{font-size:1.5rem}
+  .cap-item-btn{display:none}
+  .cap-item.active .cap-item-btn,.cap-item:hover .cap-item-btn{display:inline-block;opacity:1}
+  /* Cases */
+  .cases-header{flex-direction:column;align-items:flex-start;gap:1rem;margin-bottom:2rem}
+  .case-card-img{height:180px}
+  .case-card-body{padding:1.5rem}
+  /* Platform */
+  .platform-feature{min-height:auto}
+  .pf-text{padding:2.5rem 1.25rem}
+  .pf-img{height:220px}
+  .pf-h{font-size:1.5rem}
+  /* Pricing */
+  .pricing-wrap{padding:0}
+  .pc{padding:2rem 1.5rem}
+  .pc-amt{font-size:2.25rem}
+  .compare-wrap{display:none}
+  .pricing-faq{margin-top:3rem;padding:0 0.25rem}
+  /* Resources */
+  .resources-filter{gap:0.375rem}
+  .rf-btn{font-size:0.72rem;padding:0.35rem 0.75rem}
+  .rc-img{height:170px}
+  .rc-body{padding:1.5rem}
+  .newsletter-box{padding:2rem 1.5rem}
+  /* Security page */
+  .sec-arch-grid{gap:2rem}
+  .sec-arch-img{height:220px}
+  .privilege-box,.sec-cta-box,.careers-cta-box{padding:2rem 1.5rem}
+  .sec-features-grid{grid-template-columns:1fr}
+  /* About */
+  .about-hero{height:50vh;min-height:360px}
+  .about-hero-inner{padding:0 1.25rem 3rem}
+  .about-hero-inner blockquote{font-size:1.25rem}
+  .about-story-grid{gap:2rem}
+  .about-story-img{height:240px}
+  .milestones{gap:0}
+  .milestone{grid-template-columns:64px 1fr;gap:1rem;padding:1.25rem 0}
+  .ms-year{font-size:1.125rem}
+  /* Careers */
+  .careers-hero{padding:6rem 0 3.5rem}
+  .careers-stats-row{gap:1.75rem 2.5rem}
+  .cs-num{font-size:1.5rem}
+  .role-card{padding:1.5rem}
+  .role-title{font-size:1.125rem}
+  .role-desc{font-size:0.8125rem}
+  .careers-cta-box h3{font-size:1.375rem}
+  /* Sign in */
+  .signin-right{padding:2rem 1.25rem;align-items:flex-start;padding-top:5rem}
+  .signin-form-wrap{max-width:100%}
+  /* Chat */
+  #page-chat.active{height:100svh}
+  .chat-input-area{padding:0.75rem 1rem 1rem}
+  .chat-msgs{padding:1.5rem 1rem}
+  .chat-topbar{padding:0.75rem 1rem}
+  .chat-disc{font-size:0.62rem}
+  .chat-ta{font-size:0.9375rem}
+  /* Final CTA */
+  .final-cta-inner h2{font-size:clamp(1.75rem,5vw,2.75rem)}
+  .final-cta-inner{padding:0 1.25rem}
+}
+
+/* Very small: ≤ 380px */
+@media(max-width:380px){
+  .hero-h1{font-size:2.5rem}
+  .p-h1-dark,.p-h1-light{font-size:1.75rem}
+  .cap-item-name{font-size:1.25rem}
+  .cert-grid{grid-template-columns:1fr}
+}
+
+/* ── MOBILE TOUCH & SCROLL IMPROVEMENTS ── */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-overflow-scrolling:touch}
+button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+
+/* Ensure tap targets are at least 44px */
+.nav-cta,.nav-signin,.hamburger,.hero-btn,.chat-sb,.chat-sugg,
+.cap-item-btn,.pc-btn,.rf-btn,.role-apply,.signin-btn,.signin-google{
+  min-height:44px;display:inline-flex;align-items:center;justify-content:center
+}
+.hamburger{min-height:44px;min-width:44px}
+.chat-sb{min-height:44px;min-width:44px;width:44px;height:44px}
+
+/* Safe area insets for notched phones */
+#nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+.nav-inner{padding-left:max(1.25rem,env(safe-area-inset-left));padding-right:max(1.25rem,env(safe-area-inset-right))}
+.chat-input-area{padding-bottom:max(1rem,env(safe-area-inset-bottom))}
+.mobile-menu{padding-bottom:max(2rem,env(safe-area-inset-bottom))}
+
+/* Smooth scroll on iOS */
+.chat-msgs,.mobile-menu,.chat-hist{-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+
+/* Fix 100vh on mobile browsers (address bar) */
+#hero{height:100svh;min-height:600px}
+#page-chat.active{height:100svh}
+
+/* Fix platform feature images on mobile */
+@media(max-width:640px){
+  .pf-img img{object-position:center center}
+  /* Prevent text overflow on very small screens */
+  .hero-h1,.p-h1-dark,.p-h1-light,.s-h2,.s-h2-light{word-break:break-word;overflow-wrap:break-word}
+  /* Role cards on mobile */
+  .role-apply{min-height:40px}
+  /* Chat textarea mobile */
+  .chat-ta{font-size:16px}/* Prevent iOS zoom on input focus */
+  /* Fix quote photo layout on mobile */
+  .quote-inner{grid-template-columns:1fr}
+  .quote-photo{width:100px;height:120px}
+  /* Ensure images don't overflow */
+  img{max-width:100%;height:auto}
+  .about-hero-inner blockquote{font-size:1.2rem;line-height:1.45}
+  /* Better milestone layout */
+  .milestone{padding:1rem 0}
+  /* Careers stats wrap nicely */
+  .careers-stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+  /* Pricing cards full width */
+  .pricing-grid{grid-template-columns:1fr}
+  .pc.pop{transform:none}
+  /* Footer spacing */
+  footer{padding:3rem 0 1.5rem}
+  .footer-top{padding-bottom:2rem}
+  /* Section headings */
+  .s-h2,.s-h2-light{font-size:1.625rem}
+  /* Final CTA padding */
+  #final-cta{padding:4rem 0}
+  .final-cta-inner button{width:100%;padding:.875rem 1rem}
+  /* Capabilities better on mobile */
+  .cap-item-right .cap-arrow{display:block;opacity:1;color:var(--cream3)}
 }
 </style>
 </head>
@@ -536,7 +732,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 <div id="page-home" class="page active">
   <section id="hero">
     <div class="hero-bg">
-      <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1920&q=85&auto=format&fit=crop&crop=top" alt="Legal professional"/>
+      <img loading="eager" decoding="async" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1920&q=85&auto=format&fit=crop&crop=top" alt="Legal professional" style="object-position:center top;"/>
     </div>
     <div class="hero-inner">
       <h1 class="hero-h1">Intelligence<br>Meets the Law</h1>
@@ -553,7 +749,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
         <p style="margin-top:1rem">From solo advocates in Tier-3 cities to India's largest law firms — NyAI is the professional-class AI built for how Indian lawyers actually work.</p>
       </div>
       <div class="intro-img reveal">
-        <img src="https://images.unsplash.com/photo-1521791055366-0d553872952f?w=900&q=85&auto=format&fit=crop" alt="Legal documents"/>
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1521791055366-0d553872952f?w=900&q=85&auto=format&fit=crop" alt="Legal documents" onerror="this.style.opacity='0'"/>
       </div>
     </div>
   </section>
@@ -597,7 +793,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     <div class="quote-inner reveal">
       <div>
         <div class="quote-photo">
-          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=85&auto=format&fit=crop" alt="Rahul Sharma"/>
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=85&auto=format&fit=crop" alt="Rahul Sharma" onerror="this.style.opacity='0'"/>
         </div>
       </div>
       <div class="quote-content">
@@ -620,7 +816,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       </div>
       <div class="cases-grid reveal">
         <div class="case-card" onclick="showPage('resources')">
-          <div class="case-card-img"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop" alt="M&A"/></div>
+          <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop" alt="M&A" onerror="this.style.opacity='0'"/></div>
           <div class="case-card-body">
             <div class="case-card-label">Due Diligence</div>
             <h3>NyAI drives greater efficiency for Khaitan & Co. transforming their M&A practice</h3>
@@ -628,7 +824,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
           </div>
         </div>
         <div class="case-card" onclick="showPage('resources')">
-          <div class="case-card-img"><img src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=800&q=80&auto=format&fit=crop" alt="Research"/></div>
+          <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=800&q=80&auto=format&fit=crop" alt="Research" onerror="this.style.opacity='0'"/></div>
           <div class="case-card-body">
             <div class="case-card-label">Legal Research</div>
             <h3>How Trilegal cut research turnaround time by 60% using NyAI's SCI corpus</h3>
@@ -636,7 +832,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
           </div>
         </div>
         <div class="case-card" onclick="showPage('resources')">
-          <div class="case-card-img"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format&fit=crop" alt="Compliance"/></div>
+          <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format&fit=crop" alt="Compliance" onerror="this.style.opacity='0'"/></div>
           <div class="case-card-body">
             <div class="case-card-label">Compliance</div>
             <h3>Cyril Amarchand uses NyAI to automate SEBI regulatory monitoring at scale</h3>
@@ -652,7 +848,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       <div class="reveal">
         <h2 class="s-h2-light">Helping teams stay focused and see measurable results</h2>
         <div class="stats-img">
-          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85&auto=format&fit=crop" alt="Law firm team"/>
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85&auto=format&fit=crop" alt="Law firm team" onerror="this.style.opacity='0'"/>
         </div>
       </div>
       <div class="stats-grid reveal">
@@ -716,12 +912,12 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       </ul>
     </div>
     <div class="pf-img">
-      <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=900&q=80&auto=format&fit=crop" alt="Legal research"/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=900&q=80&auto=format&fit=crop" alt="Legal research" onerror="this.style.opacity='0'"/>
       <div class="pf-img-overlay"></div>
     </div>
   </div>
 
-  <div class="platform-feature reveal">
+  <div class="platform-feature flip reveal">
     <div class="pf-text">
       <div class="pf-num">02 — Contract Intelligence</div>
       <h2 class="pf-h">Contract Review for Indian Boilerplate</h2>
@@ -735,7 +931,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       </ul>
     </div>
     <div class="pf-img">
-      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80&auto=format&fit=crop" alt="Contracts"/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80&auto=format&fit=crop" alt="Contracts" onerror="this.style.opacity='0'"/>
       <div class="pf-img-overlay"></div>
     </div>
   </div>
@@ -754,12 +950,12 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       </ul>
     </div>
     <div class="pf-img">
-      <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=900&q=80&auto=format&fit=crop" alt="Due diligence"/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=900&q=80&auto=format&fit=crop" alt="Due diligence" onerror="this.style.opacity='0'"/>
       <div class="pf-img-overlay"></div>
     </div>
   </div>
 
-  <div class="platform-feature reveal">
+  <div class="platform-feature flip reveal">
     <div class="pf-text">
       <div class="pf-num">04 — Regulatory Compliance</div>
       <h2 class="pf-h">Stay Ahead of Every Change</h2>
@@ -773,7 +969,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       </ul>
     </div>
     <div class="pf-img">
-      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80&auto=format&fit=crop" alt="Compliance"/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80&auto=format&fit=crop" alt="Compliance" onerror="this.style.opacity='0'"/>
       <div class="pf-img-overlay"></div>
     </div>
   </div>
@@ -947,39 +1143,39 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       </div>
       <div class="resources-grid reveal" id="resources-grid">
         <div class="rc" data-cat="case-study">
-          <div class="rc-img"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&q=80&auto=format&fit=crop" alt="M&A"/></div>
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&q=80&auto=format&fit=crop" alt="M&A" onerror="this.style.opacity='0'"/></div>
           <div class="rc-body"><div class="rc-cat">Case Study</div><div class="rc-date">MARCH 14, 2026</div><h3>How Khaitan & Co. reduced M&A due diligence time by 70% with NyAI</h3><p class="rc-excerpt">Deep-dive into how one of India's premier firms overhauled their data room review process, cutting turnaround from three weeks to four days.</p><span class="rc-read">Read Case Study →</span></div>
         </div>
         <div class="rc" data-cat="insights">
-          <div class="rc-img"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80&auto=format&fit=crop" alt="SEBI"/></div>
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80&auto=format&fit=crop" alt="SEBI" onerror="this.style.opacity='0'"/></div>
           <div class="rc-body"><div class="rc-cat">Insights</div><div class="rc-date">MARCH 8, 2026</div><h3>The impact of AI on DPDP Act compliance for legal teams</h3><p class="rc-excerpt">How automated monitoring is reshaping how in-house counsel manages data protection obligations under India's new privacy framework.</p><span class="rc-read">Read Article →</span></div>
         </div>
         <div class="rc" data-cat="product">
-          <div class="rc-img"><img src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=700&q=80&auto=format&fit=crop" alt="IBC"/></div>
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=700&q=80&auto=format&fit=crop" alt="IBC" onerror="this.style.opacity='0'"/></div>
           <div class="rc-body"><div class="rc-cat">Product Update</div><div class="rc-date">FEB 28, 2026</div><h3>Introducing Semantic Search for IBC matters</h3><p class="rc-excerpt">NyAI's insolvency module now understands resolution plan context, CoC dynamics, and conflicting NCLAT bench decisions better than ever before.</p><span class="rc-read">Read Update →</span></div>
         </div>
         <div class="rc" data-cat="legal-tech">
-          <div class="rc-img"><img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=700&q=80&auto=format&fit=crop" alt="Courts"/></div>
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=700&q=80&auto=format&fit=crop" alt="Courts" onerror="this.style.opacity='0'"/></div>
           <div class="rc-body"><div class="rc-cat">Legal Tech</div><div class="rc-date">FEB 19, 2026</div><h3>Digitizing the chambers of Senior Advocates</h3><p class="rc-excerpt">How AI tools are helping traditional legal offices transition to the paperless e-Court era — without losing the institutional knowledge that defines great advocacy.</p><span class="rc-read">Read Article →</span></div>
         </div>
         <div class="rc" data-cat="insights">
-          <div class="rc-img"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=700&q=80&auto=format&fit=crop" alt="Contracts"/></div>
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=700&q=80&auto=format&fit=crop" alt="Contracts" onerror="this.style.opacity='0'"/></div>
           <div class="rc-body"><div class="rc-cat">Insights</div><div class="rc-date">FEB 11, 2026</div><h3>BNS vs IPC: The complete comparative guide for practitioners</h3><p class="rc-excerpt">A comprehensive section-by-section mapping of the Bharatiya Nyaya Sanhita against the Indian Penal Code, with key changes highlighted for immediate practical use.</p><span class="rc-read">Read Article →</span></div>
         </div>
         <div class="rc" data-cat="webinar">
-          <div class="rc-img"><img src="https://images.unsplash.com/photo-1542435503-956c469947f6?w=700&q=80&auto=format&fit=crop" alt="Webinar"/></div>
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542435503-956c469947f6?w=700&q=80&auto=format&fit=crop" alt="Webinar" onerror="this.style.opacity='0'"/></div>
           <div class="rc-body"><div class="rc-cat">Webinar</div><div class="rc-date">JAN 30, 2026</div><h3>The future of generative AI in Indian litigation</h3><p class="rc-excerpt">On-demand recording of our panel with Senior Advocates of the Supreme Court on professional responsibility, hallucination risk, and the ethics of AI-assisted advocacy.</p><span class="rc-read">Watch Recording →</span></div>
         </div>
         <div class="rc" data-cat="case-study">
-          <div class="rc-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&auto=format&fit=crop" alt="Report"/></div>
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&auto=format&fit=crop" alt="Report" onerror="this.style.opacity='0'"/></div>
           <div class="rc-body"><div class="rc-cat">Industry Report</div><div class="rc-date">JAN 15, 2026</div><h3>India Legal Tech Report 2026: AI adoption across Indian law firms</h3><p class="rc-excerpt">Our deep-dive into LLM adoption rates, ROI data, and implementation challenges across Tier-1, Tier-2, and corporate legal teams in India.</p><span class="rc-read">Download Report →</span></div>
         </div>
         <div class="rc" data-cat="legal-tech">
-          <div class="rc-img"><img src="https://images.unsplash.com/photo-1521791136064-7986c2959213?w=700&q=80&auto=format&fit=crop" alt="Signature"/></div>
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1521791136064-7986c2959213?w=700&q=80&auto=format&fit=crop" alt="Signature" onerror="this.style.opacity='0'"/></div>
           <div class="rc-body"><div class="rc-cat">Legal Tech</div><div class="rc-date">DEC 20, 2025</div><h3>Bar Council of India rules & AI tools: What advocates need to know</h3><p class="rc-excerpt">Using AI for legal research doesn't breach BCI professional conduct rules — but there are important considerations around verification, attribution, and client disclosure.</p><span class="rc-read">Read Article →</span></div>
         </div>
         <div class="rc" data-cat="product">
-          <div class="rc-img"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=700&q=80&auto=format&fit=crop" alt="Documents"/></div>
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=700&q=80&auto=format&fit=crop" alt="Documents" onerror="this.style.opacity='0'"/></div>
           <div class="rc-body"><div class="rc-cat">Product Update</div><div class="rc-date">DEC 5, 2025</div><h3>NyAI Enterprise: Private VPC deployment now available in India</h3><p class="rc-excerpt">Enterprise clients can now deploy NyAI entirely within their own AWS India or Azure India tenancy, with no data ever touching shared infrastructure.</p><span class="rc-read">Read Update →</span></div>
         </div>
       </div>
@@ -1008,7 +1204,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 
   <!-- Hero Image -->
   <div style="overflow:hidden;max-height:320px">
-    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1440&q=80&auto=format&fit=crop" alt="Security infrastructure" class="sec-page-hero-img"/>
+    <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1440&q=80&auto=format&fit=crop" alt="Security infrastructure" class="sec-page-hero-img" onerror="this.style.opacity='0'"/>
   </div>
 
   <div class="section-dark">
@@ -1041,7 +1237,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
           <p>Annual red-team penetration testing is conducted by CERT-In empanelled security firms. We operate a responsible disclosure programme with a 48-hour response SLA for critical vulnerabilities.</p>
         </div>
         <div class="sec-arch-img">
-          <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=900&q=80&auto=format&fit=crop" alt="Server infrastructure"/>
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=900&q=80&auto=format&fit=crop" alt="Server infrastructure" onerror="this.style.opacity='0'"/>
         </div>
       </div>
 
@@ -1073,7 +1269,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 <div id="page-about" class="page">
   <div class="about-hero">
     <div class="about-hero-bg">
-      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1800&q=85&auto=format&fit=crop" alt="Law firm"/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1800&q=85&auto=format&fit=crop" alt="Law firm" onerror="this.style.opacity='0'"/>
     </div>
     <div class="about-hero-inner">
       <blockquote>"Access to quality legal intelligence should not be a privilege reserved for the largest firms. NyAI exists to democratise professional-class AI for every Indian practitioner."</blockquote>
@@ -1093,7 +1289,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
           <p style="color:var(--lightmuted);line-height:1.85;font-size:0.9375rem;font-weight:300;margin-top:1.125rem">NyAI was founded in 2024 by lawyers, AI researchers, and product builders from Ahmedabad who set out to change this. We built from first principles — curating Indian law datasets, training models on Indian legal reasoning, and designing workflows around how Indian practitioners actually work.</p>
         </div>
         <div class="about-story-img">
-          <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=900&q=85&auto=format&fit=crop" alt="NyAI office"/>
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=900&q=85&auto=format&fit=crop" alt="NyAI office" onerror="this.style.opacity='0'"/>
         </div>
       </div>
     </div>
@@ -1163,7 +1359,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
   <div class="signin-wrap">
     <div class="signin-left">
       <div class="signin-left-bg">
-        <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=900&q=85&auto=format&fit=crop" alt="Legal background"/>
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=900&q=85&auto=format&fit=crop" alt="Legal background" onerror="this.style.opacity='0'"/>
       </div>
       <div class="signin-left-inner">
         <span class="signin-logo">NyAI</span>
