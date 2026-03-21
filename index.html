@@ -466,7 +466,6 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
   .perks-grid{grid-template-columns:repeat(2,1fr)}
   /* Nav */
   .nav-links,.nav-right{display:none}
-  .hamburger{display:flex}
   /* Footer */
   .footer-top{grid-template-columns:repeat(2,1fr);gap:2rem}
   /* Sign in */
@@ -616,12 +615,16 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{-webkit-overflow-scrolling:touch}
 button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 
-/* Ensure tap targets are at least 44px */
-.nav-cta,.nav-signin,.hamburger,.hero-btn,.chat-sb,.chat-sugg,
+/* Ensure tap targets are at least 44px — hamburger excluded (hidden on desktop) */
+.nav-cta,.nav-signin,.hero-btn,.chat-sb,.chat-sugg,
 .cap-item-btn,.pc-btn,.rf-btn,.role-apply,.signin-btn,.signin-google{
   min-height:44px;display:inline-flex;align-items:center;justify-content:center
 }
-.hamburger{min-height:44px;min-width:44px}
+/* hamburger: hidden on desktop, shown only inside mobile media query */
+.hamburger{display:none !important}
+@media(max-width:1024px){
+  .hamburger{display:flex !important;min-height:44px;min-width:44px;align-items:center;justify-content:center}
+}
 .chat-sb{min-height:44px;min-width:44px;width:44px;height:44px}
 
 /* Safe area insets for notched phones */
