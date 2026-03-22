@@ -497,6 +497,12 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
 .chat-input-area{padding-bottom:max(1rem,env(safe-area-inset-bottom))}
 .mobile-menu{padding-bottom:max(2rem,env(safe-area-inset-bottom))}
 
+/* Move Signin Back Button on Mobile */
+@media(max-width:1024px){
+  .signin-back{top:5.5rem;left:1.25rem}
+  #global-footer.hide-on-phone{display:none !important}
+}
+
 /* Smooth scroll on iOS */
 .chat-msgs,.mobile-menu,.chat-hist{-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
 
@@ -1811,13 +1817,23 @@ window.showPage = function(pageId) {
       }
     } catch(hashErr) {}
 
-    // 6. Footer (Always visible)
+    // 6. Footer & Nav Behavior
     var footer = document.getElementById('global-footer');
-    if (footer) footer.style.display = 'block';
+    if (footer) {
+        // Hide footer on chat specifically for phone users as requested
+        if (targetId === 'chat' && window.innerWidth < 768) {
+            footer.classList.add('hide-on-phone');
+        } else {
+            footer.classList.remove('hide-on-phone');
+        }
+        footer.style.display = 'block';
+    }
     
-    // Ensure Navbar structure remains exactly the same
+    // Ensure Navbar buttons follow desktop/mobile visibility rules
     var navRight = document.querySelector('.nav-right');
     if (navRight) {
+        // Reset local style to let CSS media queries take over
+        navRight.style.display = '';
         navRight.style.opacity = '1';
         navRight.style.pointerEvents = 'auto';
     }
