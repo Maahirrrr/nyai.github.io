@@ -1755,7 +1755,7 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
 
 // ── VALID PAGES ──
 var PAGES = ['home','platform','pricing','resources','security','about','signin','chat','privacy','terms','careers','bar-council','cookies'];
-var noFooterPages = ['chat','signin'];
+var noFooterPages = [];
 
 // ── ROUTING: hash-based so refresh stays on current page ──
 window.showPage = function(pageId) {
@@ -1811,23 +1811,15 @@ window.showPage = function(pageId) {
       }
     } catch(hashErr) {}
 
-    // 6. UI Toggles (Footer Visibility - Nav remains consistent)
+    // 6. Footer (Always visible)
     var footer = document.getElementById('global-footer');
-    var isChatOrSignin = (targetId === 'chat' || targetId === 'signin');
-    if (footer) footer.style.display = isChatOrSignin ? 'none' : 'block';
+    if (footer) footer.style.display = 'block';
     
-    // Ensure Navbar structure remains exactly the same to prevent shifts
+    // Ensure Navbar structure remains exactly the same
     var navRight = document.querySelector('.nav-right');
     if (navRight) {
-        // We keep it visible or hidden via opacity/pointer-events instead of display:none
-        // to prevent the centered nav-links from shifting horizontally.
-        if (targetId === 'chat' || targetId === 'signin') {
-            navRight.style.opacity = '0';
-            navRight.style.pointerEvents = 'none';
-        } else {
-            navRight.style.opacity = '1';
-            navRight.style.pointerEvents = 'auto';
-        }
+        navRight.style.opacity = '1';
+        navRight.style.pointerEvents = 'auto';
     }
 
     // 7. Nav Links Active State
