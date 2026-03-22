@@ -6,14 +6,686 @@
 <title>NyAI — Legal AI for India</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0A0908;
+  --dark:#111010;
+  --dark2:#181614;
+  --dark3:#201E1C;
+  --border:#2A2724;
+  --cream:#F0EBE3;
+  --cream2:#C8BFB5;
+  --cream3:#7A7470;
+  --accent:#C84B2F;
+  --accent2:#E05535;
+  --white:#FFFFFF;
+  --offwhite:#F7F5F2;
+  --lightborder:#E8E4DF;
+  --lighttext:#3A3632;
+  --lightmuted:#7A7470;
+  --serif:'EB Garamond',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --nav-h:64px;
+  --t:.22s ease;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--black);color:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:var(--sans);border:none;background:none}
+::selection{background:var(--accent);color:var(--white)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--dark)}
+::-webkit-scrollbar-thumb{background:var(--cream3)}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);background:rgba(10,9,8,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:var(--t)}
+.nav-inner{max-width:1440px;margin:0 auto;padding:0 2.5rem;width:100%;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h)}
+.nav-logo{font-family:var(--serif);font-size:1.375rem;font-weight:500;color:var(--cream);letter-spacing:0.02em;display:flex;align-items:center;gap:0.5rem}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-size:0.8125rem;color:var(--cream3);letter-spacing:0.03em;transition:var(--t)}
+.nav-links a:hover,.nav-links a.active{color:var(--cream)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-signin{font-size:0.8125rem;color:var(--cream3);transition:var(--t);cursor:pointer;background:none;border:none;font-family:var(--sans)}
+.nav-signin:hover{color:var(--cream)}
+.nav-cta{background:var(--cream);color:var(--black);padding:0.5rem 1.25rem;border-radius:2rem;font-size:0.8125rem;font-weight:500;transition:var(--t);cursor:pointer;border:none;font-family:var(--sans)}
+.nav-cta:hover{background:var(--white);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.hamburger span{width:20px;height:1.5px;background:var(--cream);display:block;border-radius:2px}
+.mobile-menu{display:none;position:fixed;inset:var(--nav-h) 0 0 0;background:var(--black);z-index:199;padding:2rem 2.5rem;flex-direction:column;border-top:1px solid var(--border);overflow-y:auto}
+.mobile-menu a{color:var(--cream2);font-size:1.125rem;padding:1rem 0;border-bottom:1px solid var(--border);display:block}
+.mobile-menu.open{display:flex}
+
+/* PAGES */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+#page-chat.active{display:flex;flex-direction:column;height:100vh;min-height:0;padding-top:var(--nav-h)}
+#page-signin.active{display:flex;flex-direction:column;min-height:100vh}
+
+/* SHARED */
+.container{max-width:1440px;margin:0 auto;padding:0 2.5rem;width:100%}
+.s-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--cream3);margin-bottom:1.25rem;display:block}
+.s-label-light{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--lightmuted);margin-bottom:1.25rem;display:block}
+.s-h2{font-family:var(--serif);font-size:clamp(1.875rem,3.5vw,2.875rem);font-weight:500;line-height:1.2;letter-spacing:-0.25px;color:var(--cream)}
+.s-h2-light{font-family:var(--serif);font-size:clamp(1.875rem,3.5vw,2.875rem);font-weight:500;line-height:1.2;letter-spacing:-0.25px;color:var(--lighttext)}
+.section-dark{padding:7rem 0;background:var(--black)}
+.section-dark2{padding:7rem 0;background:var(--dark)}
+.section-white{padding:7rem 0;background:var(--white)}
+.section-off{padding:7rem 0;background:var(--offwhite);border-top:1px solid var(--lightborder)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* PAGE HEROES */
+.page-hero-dark{padding:9rem 0 5rem;background:var(--black);border-bottom:1px solid var(--border)}
+.page-hero-white{padding:9rem 0 5rem;background:var(--white);border-bottom:1px solid var(--lightborder)}
+.phi{max-width:1440px;margin:0 auto;padding:0 2.5rem}
+.p-h1-dark{font-family:var(--serif);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:500;line-height:1.08;letter-spacing:-0.75px;color:var(--cream);margin-bottom:1.25rem}
+.p-h1-light{font-family:var(--serif);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:500;line-height:1.08;letter-spacing:-0.75px;color:var(--lighttext);margin-bottom:1.25rem}
+.p-sub-dark{font-size:1rem;color:var(--cream3);line-height:1.75;font-weight:300;max-width:580px}
+.p-sub-light{font-size:1rem;color:var(--lightmuted);line-height:1.75;font-weight:300;max-width:580px}
+
+/* HERO */
+#hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:flex-end;overflow:hidden;padding-top:var(--nav-h)}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,9,8,0.1) 0%,rgba(10,9,8,0.05) 30%,rgba(10,9,8,0.55) 65%,rgba(10,9,8,1) 100%)}
+.hero-inner{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:0 2.5rem 5.5rem;width:100%}
+.hero-h1{font-family:var(--serif);font-size:clamp(3.25rem,6.5vw,6rem);font-weight:500;line-height:1.0;letter-spacing:-1px;color:var(--white);margin-bottom:1.375rem;animation:fadeUp .8s ease both;max-width:700px}
+.hero-sub{font-size:1rem;color:rgba(240,235,227,0.75);max-width:460px;line-height:1.72;font-weight:300;margin-bottom:2.25rem;animation:fadeUp .8s .12s ease both}
+.hero-btn{display:inline-flex;align-items:center;gap:0.5rem;background:var(--white);color:var(--black);padding:0.75rem 1.75rem;border-radius:2rem;font-size:0.875rem;font-weight:500;transition:var(--t);animation:fadeUp .8s .22s ease both;cursor:pointer;border:none;font-family:var(--sans)}
+.hero-btn:hover{background:var(--cream);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.35)}
+
+/* INTRO */
+#intro{background:var(--white);padding:8rem 0}
+.intro-inner{max-width:1440px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center}
+.intro-text h2{font-family:var(--serif);font-size:clamp(1.625rem,2.75vw,2.375rem);font-weight:500;line-height:1.35;color:var(--lighttext)}
+.intro-text h2 strong{color:var(--black)}
+.intro-text p{font-size:0.9375rem;color:var(--lightmuted);line-height:1.8;font-weight:300;margin-top:1.375rem}
+.intro-img{border-radius:4px;overflow:hidden;aspect-ratio:4/3}
+.intro-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease}
+.intro-img:hover img{transform:scale(1.02)}
+
+/* CAPABILITIES */
+#capabilities{padding:7rem 0;background:var(--black)}
+.cap-inner{max-width:1440px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:300px 1fr;gap:6rem;align-items:start}
+.cap-heading{font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--cream2);line-height:1.45;max-width:240px}
+.cap-list{display:flex;flex-direction:column}
+.cap-item{display:flex;align-items:center;justify-content:space-between;padding:1.375rem 0;border-bottom:1px solid var(--border);cursor:pointer;transition:var(--t);gap:2rem}
+.cap-item:first-child{border-top:1px solid var(--border)}
+.cap-item-name{font-family:var(--serif);font-size:clamp(1.375rem,2.5vw,2.375rem);font-weight:500;color:var(--cream3);transition:var(--t);line-height:1}
+.cap-item:hover .cap-item-name,.cap-item.active .cap-item-name{color:var(--white)}
+.cap-item-right{display:flex;align-items:center;gap:1rem;flex-shrink:0}
+.cap-item-btn{font-size:0.75rem;font-weight:500;color:var(--cream3);background:transparent;border:1px solid var(--border);padding:0.375rem 0.875rem;border-radius:2rem;transition:var(--t);cursor:pointer;font-family:var(--sans);opacity:0}
+.cap-item.active .cap-item-btn,.cap-item:hover .cap-item-btn{opacity:1}
+.cap-item-btn:hover{color:var(--cream);border-color:var(--cream3)}
+.cap-arrow{color:var(--cream3);font-size:0.875rem;transition:var(--t);opacity:0}
+.cap-item:hover .cap-arrow,.cap-item.active .cap-arrow{opacity:1;color:var(--cream)}
+
+/* QUOTE */
+#quote-section{background:var(--offwhite);padding:8rem 0;border-top:1px solid var(--lightborder)}
+.quote-inner{max-width:1440px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:240px 1fr;gap:6rem;align-items:center}
+.quote-photo{border-radius:3px;overflow:hidden;width:180px;height:220px}
+.quote-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(15%)}
+.quote-content blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.25vw,1.875rem);font-style:italic;line-height:1.55;color:var(--lighttext);margin-bottom:2rem}
+.quote-attr strong{color:var(--lighttext);font-size:0.875rem;font-weight:600;display:block;margin-bottom:0.2rem}
+.quote-attr span{font-size:0.8125rem;color:var(--lightmuted)}
+.quote-attr em{font-family:var(--serif);font-size:0.9375rem;color:var(--lightmuted);font-style:italic;display:block;margin-top:0.25rem}
+.quote-cta{display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.5rem;font-size:0.8125rem;color:var(--lightmuted);border-bottom:1px solid var(--lightborder);padding-bottom:2px;transition:var(--t);cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--sans)}
+.quote-cta:hover{color:var(--lighttext);border-color:var(--lightmuted)}
+
+/* CASES */
+#cases{padding:6rem 0;background:var(--dark)}
+.cases-inner{max-width:1440px;margin:0 auto;padding:0 2.5rem}
+.cases-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem}
+.cases-more{font-size:0.8125rem;color:var(--cream3);border-bottom:1px solid var(--border);padding-bottom:1px;transition:var(--t);cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--sans)}
+.cases-more:hover{color:var(--cream);border-color:var(--cream3)}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.case-card{background:var(--dark);cursor:pointer;transition:var(--t);overflow:hidden}
+.case-card:hover{background:var(--dark2)}
+.case-card-img{height:220px;overflow:hidden}
+.case-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;filter:brightness(0.75) grayscale(20%)}
+.case-card:hover .case-card-img img{transform:scale(1.04)}
+.case-card-body{padding:2rem}
+.case-card-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent2);margin-bottom:1rem;font-weight:500}
+.case-card h3{font-family:var(--serif);font-size:1.2rem;font-weight:500;line-height:1.45;color:var(--cream);margin-bottom:1rem}
+.case-card-firm{font-size:0.8125rem;color:var(--cream3);font-style:italic;font-family:var(--serif)}
+
+/* STATS */
+#stats{padding:8rem 0;background:var(--white);border-top:1px solid var(--lightborder)}
+.stats-inner{max-width:1440px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}
+.stats-img{border-radius:3px;overflow:hidden;height:360px;margin-top:2.5rem}
+.stats-img img{width:100%;height:100%;object-fit:cover}
+.stats-grid{display:flex;flex-direction:column}
+.stat-row{display:grid;grid-template-columns:240px 1fr;align-items:center;padding:1.625rem 0;border-bottom:1px solid var(--lightborder)}
+.stat-row:first-child{border-top:1px solid var(--lightborder)}
+.stat-label{font-size:0.8125rem;color:var(--lightmuted);line-height:1.5;font-weight:300}
+.stat-num{font-family:var(--serif);font-size:clamp(2.25rem,4.5vw,3.75rem);font-weight:500;color:var(--black);line-height:1;letter-spacing:-1px}
+.stat-num sup{font-size:0.45em;vertical-align:super;margin-left:2px}
+
+/* SECURITY STRIP */
+#sec-strip{padding:8rem 0;background:var(--dark2)}
+.sec-layout{max-width:1440px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}
+.sec-link{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.8125rem;color:var(--cream2);border-bottom:1px solid var(--border);padding-bottom:2px;transition:var(--t);cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--sans);margin-top:1.75rem}
+.sec-link:hover{color:var(--cream);border-color:var(--cream3)}
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.cert-item{background:var(--dark2);padding:1.5rem;transition:var(--t)}
+.cert-item:hover{background:var(--dark3)}
+.cert-icon{font-size:1.375rem;margin-bottom:0.875rem}
+.cert-name{font-size:0.875rem;font-weight:500;color:var(--cream);margin-bottom:0.3rem}
+.cert-status{font-size:0.7rem;color:var(--accent2);font-family:var(--mono);letter-spacing:0.04em;text-transform:uppercase}
+
+/* FINAL CTA */
+#final-cta{padding:9rem 0;background:var(--offwhite);border-top:1px solid var(--lightborder);text-align:center}
+.final-cta-inner h2{font-family:var(--serif);font-size:clamp(2rem,5vw,3.75rem);font-weight:500;line-height:1.1;color:var(--lighttext);letter-spacing:-0.5px;margin-bottom:2.5rem}
+.final-cta-inner button{background:var(--black);color:var(--white);padding:0.875rem 2.25rem;border-radius:2rem;font-size:0.9375rem;font-weight:500;transition:var(--t);cursor:pointer;font-family:var(--sans);border:none}
+.final-cta-inner button:hover{background:var(--dark3);transform:translateY(-2px);box-shadow:0 8px 40px rgba(0,0,0,0.15)}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0 2rem}
+.footer-inner{max-width:1440px;margin:0 auto;padding:0 2.5rem}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.footer-logo{font-family:var(--serif);font-size:1.375rem;font-weight:500;color:var(--cream);margin-bottom:0.875rem}
+.footer-tagline{font-size:0.8125rem;color:var(--cream3);line-height:1.7;max-width:240px;font-weight:300}
+.footer-col h4{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--cream3);margin-bottom:1.25rem;font-weight:500}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.6rem}
+.footer-col a,.footer-col button{font-size:0.8125rem;color:var(--cream3);transition:var(--t);font-weight:300;background:none;border:none;cursor:pointer;font-family:var(--sans);text-align:left;padding:0}
+.footer-col a:hover,.footer-col button:hover{color:var(--cream)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:2rem;font-size:0.75rem;color:var(--cream3);flex-wrap:wrap;gap:1rem}
+.footer-bottom-links{display:flex;gap:1.5rem}
+.footer-bottom-links button{background:none;border:none;cursor:pointer;font-size:0.75rem;color:var(--cream3);font-family:var(--sans);transition:var(--t)}
+.footer-bottom-links button:hover{color:var(--cream2)}
+
+/* ── PLATFORM ── */
+.platform-feature{display:grid;grid-template-columns:1fr 1fr;min-height:480px;border-bottom:1px solid var(--border)}
+.platform-feature.flip{display:grid;grid-template-columns:1fr 1fr}
+.platform-feature.flip .pf-text{order:2}
+.platform-feature.flip .pf-img{order:1}
+.pf-text{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;background:var(--dark)}
+.pf-num{font-size:0.68rem;font-family:var(--mono);color:var(--accent2);letter-spacing:0.08em;margin-bottom:1.5rem;text-transform:uppercase}
+.pf-h{font-family:var(--serif);font-size:clamp(1.75rem,2.5vw,2.375rem);font-weight:500;line-height:1.2;color:var(--cream);margin-bottom:1.25rem}
+.pf-p{font-size:0.9rem;color:var(--cream3);line-height:1.8;font-weight:300;margin-bottom:2rem}
+.pf-list{list-style:none;display:flex;flex-direction:column;gap:0.75rem}
+.pf-list li{font-size:0.875rem;color:var(--cream2);display:flex;gap:0.75rem;align-items:flex-start;font-weight:300}
+.pf-list li::before{content:'→';color:var(--accent2);flex-shrink:0;margin-top:1px}
+.pf-img{overflow:hidden;position:relative;background:var(--dark2);min-height:300px}
+.pf-img img{width:100%;height:100%;min-height:300px;object-fit:cover;opacity:0.7;transition:opacity 0.4s ease,transform 0.6s ease;display:block}
+.platform-feature:hover .pf-img img{opacity:0.85;transform:scale(1.02)}
+.pf-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,9,8,0.4) 0%,transparent 60%)}
+
+/* PLATFORM CAPABILITIES GRID */
+.plat-cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:4rem}
+.plat-cap-item{background:var(--dark);padding:2.5rem;transition:var(--t)}
+.plat-cap-item:hover{background:var(--dark2)}
+.pci-icon{font-size:1.5rem;margin-bottom:1.25rem}
+.pci-h{font-family:var(--serif);font-size:1.125rem;font-weight:500;color:var(--cream);margin-bottom:0.625rem}
+.pci-p{font-size:0.84rem;color:var(--cream3);line-height:1.7;font-weight:300}
+
+/* ── PRICING ── */
+.pricing-wrap{max-width:1100px;margin:0 auto}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.pc{background:var(--dark);padding:2.75rem;transition:var(--t);display:flex;flex-direction:column;position:relative}
+.pc.pop{background:var(--dark2)}
+.pc:hover{background:var(--dark2)}
+.pc.pop:hover{background:var(--dark3)}
+.pc-tag{position:absolute;top:1.5rem;right:1.5rem;font-size:0.62rem;background:var(--accent);color:var(--white);padding:0.25rem 0.6rem;border-radius:2rem;text-transform:uppercase;letter-spacing:0.06em;font-weight:600}
+.pc-plan{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--cream3);margin-bottom:1.125rem;font-weight:500}
+.pc-amt{font-family:var(--serif);font-size:2.875rem;font-weight:500;color:var(--white);line-height:1}
+.pc-per{font-size:0.78rem;color:var(--cream3);margin-top:0.25rem;margin-bottom:1.5rem}
+.pc-desc{font-size:0.84rem;color:var(--cream3);line-height:1.65;padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;font-weight:300}
+.pc-feats{list-style:none;display:flex;flex-direction:column;gap:0.7rem;flex:1;margin-bottom:2rem}
+.pc-feats li{font-size:0.84rem;color:var(--cream3);display:flex;gap:0.625rem;font-weight:300}
+.pc-feats li::before{content:'✓';color:var(--accent2);font-weight:500;flex-shrink:0}
+.pc-btn{width:100%;padding:0.875rem;border-radius:3px;font-size:0.875rem;font-weight:500;transition:var(--t);cursor:pointer;font-family:var(--sans);letter-spacing:0.02em}
+.pc-btn-light{background:var(--cream);color:var(--black);border:none}.pc-btn-light:hover{background:var(--white)}
+.pc-btn-outline{background:transparent;border:1px solid var(--border);color:var(--cream)}.pc-btn-outline:hover{border-color:var(--cream3);color:var(--white)}
+.compare-wrap{margin-top:5rem;overflow-x:auto}
+.compare-wrap h3{font-family:var(--serif);font-size:2rem;font-weight:500;color:var(--cream);text-align:center;margin-bottom:2.5rem}
+.compare-wrap table{width:100%;border-collapse:collapse;font-size:0.875rem}
+.compare-wrap th{padding:1rem;text-align:left;border-bottom:1px solid var(--border);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--cream3);font-weight:500}
+.compare-wrap td{padding:1rem;border-bottom:1px solid rgba(42,39,36,0.5);color:var(--cream3);font-weight:300}
+.compare-wrap tr:hover td{background:var(--dark2)}
+.cky{color:var(--accent2)}.ckn{color:var(--border)}
+.pricing-faq{max-width:800px;margin:5rem auto 0}
+.faq-item{border-bottom:1px solid var(--border);padding:1.5rem 0;cursor:pointer}
+.faq-q{display:flex;align-items:center;justify-content:space-between;font-size:0.9375rem;color:var(--cream2);font-weight:400}
+.faq-a{font-size:0.875rem;color:var(--cream3);line-height:1.75;margin-top:1rem;font-weight:300;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-icon{transition:var(--t);font-size:1.25rem;color:var(--cream3)}
+
+/* ── RESOURCES ── */
+.resources-filter{display:flex;gap:0.5rem;margin-bottom:3rem;flex-wrap:wrap}
+.rf-btn{font-size:0.78rem;padding:0.4rem 1rem;border-radius:2rem;border:1px solid var(--border);color:var(--cream3);background:transparent;cursor:pointer;font-family:var(--sans);transition:var(--t)}
+.rf-btn:hover,.rf-btn.active{border-color:var(--cream3);color:var(--cream);background:var(--dark3)}
+.resources-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.rc{background:var(--dark);cursor:pointer;transition:var(--t);overflow:hidden;display:flex;flex-direction:column}
+.rc:hover{background:var(--dark2)}
+.rc-img{height:200px;overflow:hidden}
+.rc-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.7);transition:transform .5s ease}
+.rc:hover .rc-img img{transform:scale(1.05)}
+.rc-body{padding:2rem;flex:1;display:flex;flex-direction:column}
+.rc-cat{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent2);margin-bottom:0.875rem;font-weight:500}
+.rc-date{font-size:0.7rem;color:var(--cream3);font-family:var(--mono);margin-bottom:0.625rem}
+.rc h3{font-family:var(--serif);font-size:1.2rem;font-weight:500;line-height:1.45;color:var(--cream);flex:1;margin-bottom:1.25rem}
+.rc-excerpt{font-size:0.84rem;color:var(--cream3);line-height:1.65;font-weight:300;margin-bottom:1.25rem}
+.rc-read{font-size:0.78rem;color:var(--cream3);transition:var(--t);display:inline-flex;align-items:center;gap:0.3rem}
+.rc:hover .rc-read{color:var(--cream)}
+.newsletter-box{margin-top:5rem;border:1px solid var(--border);padding:3.5rem;text-align:center;background:var(--dark2)}
+.newsletter-box h3{font-family:var(--serif);font-size:1.875rem;font-weight:500;color:var(--cream);margin-bottom:0.75rem}
+.newsletter-box p{font-size:0.875rem;color:var(--cream3);font-weight:300;margin-bottom:2rem}
+.newsletter-row{display:flex;gap:0.75rem;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.newsletter-row input{flex:1;min-width:200px;padding:0.75rem 1rem;background:var(--dark3);border:1px solid var(--border);border-radius:3px;color:var(--cream);font-family:var(--sans);font-size:0.875rem;outline:none}
+.newsletter-row input:focus{border-color:var(--cream3)}
+.newsletter-row input::placeholder{color:var(--cream3)}
+.newsletter-row button{background:var(--cream);color:var(--black);padding:0.75rem 1.5rem;border-radius:3px;font-size:0.875rem;font-weight:500;border:none;cursor:pointer;font-family:var(--sans);transition:var(--t);white-space:nowrap}
+.newsletter-row button:hover{background:var(--white)}
+
+/* ── ABOUT ── */
+.about-hero{position:relative;height:65vh;min-height:440px;overflow:hidden;display:flex;align-items:flex-end}
+.about-hero-bg{position:absolute;inset:0}
+.about-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(0.4)}
+.about-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--black) 100%)}
+.about-hero-inner{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:0 2.5rem 5rem;width:100%}
+.about-hero-inner blockquote{font-family:var(--serif);font-size:clamp(1.5rem,3.5vw,2.5rem);font-style:italic;line-height:1.4;color:var(--white);max-width:800px}
+.about-hero-inner cite{display:block;margin-top:1.5rem;font-style:normal;font-size:0.8125rem;color:rgba(240,235,227,0.45);letter-spacing:0.06em;text-transform:uppercase}
+.about-story-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.about-story-img{border-radius:3px;overflow:hidden;height:420px}
+.about-story-img img{width:100%;height:100%;object-fit:cover}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:3rem}
+.tc{background:var(--dark);padding:2.5rem;transition:var(--t)}
+.tc:hover{background:var(--dark2)}
+.tc-av{width:56px;height:56px;border-radius:50%;background:var(--dark3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--cream2);margin-bottom:1.25rem}
+.tc-name{font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--cream);margin-bottom:0.2rem}
+.tc-role{font-size:0.72rem;color:var(--accent2);margin-bottom:0.875rem;font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+.tc-bio{font-size:0.8125rem;color:var(--cream3);line-height:1.65;font-weight:300}
+.values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--lightborder);margin-top:3rem}
+.vc{background:var(--white);padding:2.5rem;transition:var(--t)}
+.vc:hover{background:var(--offwhite)}
+.vc-icon{font-size:1.5rem;margin-bottom:1.25rem}
+.vc-h{font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--lighttext);margin-bottom:0.625rem}
+.vc-p{font-size:0.84rem;color:var(--lightmuted);line-height:1.7;font-weight:300}
+.milestones{display:flex;flex-direction:column;gap:0}
+.milestone{display:grid;grid-template-columns:120px 1fr;gap:2.5rem;padding:2rem 0;border-bottom:1px solid var(--border)}
+.milestone:first-child{border-top:1px solid var(--border)}
+.ms-year{font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--cream2)}
+.ms-text h4{font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--cream);margin-bottom:0.4rem}
+.ms-text p{font-size:0.84rem;color:var(--cream3);line-height:1.65;font-weight:300}
+
+/* ── SECURITY PAGE ── */
+.sec-page-hero-img{width:100%;height:320px;object-fit:cover;filter:brightness(0.35) grayscale(30%);display:block}
+.sec-features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:3rem}
+.sfc{background:var(--dark);padding:2.5rem;transition:var(--t)}
+.sfc:hover{background:var(--dark2)}
+.sfc-icon{font-size:1.5rem;margin-bottom:1.25rem}
+.sfc-h{font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--cream);margin-bottom:0.625rem}
+.sfc-p{font-size:0.84rem;color:var(--cream3);line-height:1.7;font-weight:300}
+.sec-arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.sec-arch-text p{font-size:0.9rem;color:var(--cream3);line-height:1.8;font-weight:300;margin-top:1rem}
+.sec-arch-text p+p{margin-top:1rem}
+.sec-arch-img{border-radius:3px;overflow:hidden;height:380px}
+.sec-arch-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.55)}
+.privilege-box{border:1px solid var(--border);padding:3rem;margin-top:4rem;background:var(--dark2)}
+.privilege-box h3{font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--cream);margin-bottom:1rem}
+.privilege-box p{font-size:0.875rem;color:var(--cream3);line-height:1.8;font-weight:300}
+.sec-cta-box{border:1px solid var(--border);padding:3.5rem;text-align:center;background:var(--dark2);margin-top:4rem}
+.sec-cta-box h3{font-family:var(--serif);font-size:1.875rem;font-weight:500;color:var(--cream);margin-bottom:0.75rem}
+.sec-cta-box p{font-size:0.875rem;color:var(--cream3);font-weight:300;margin-bottom:2rem;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.7}
+.sec-cta-box button{background:var(--cream);color:var(--black);padding:0.875rem 2.25rem;border-radius:3px;font-size:0.875rem;font-weight:500;cursor:pointer;font-family:var(--sans);border:none;transition:var(--t)}
+.sec-cta-box button:hover{background:var(--white)}
+
+/* ── SIGN IN ── */
+.signin-back{position:fixed;top:1.25rem;left:2.5rem;z-index:201;font-size:0.875rem;color:var(--cream3);transition:var(--t);background:none;border:none;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;gap:0.4rem}
+.signin-back:hover{color:var(--cream)}
+.signin-wrap{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+.signin-left{position:relative;background:var(--black);display:flex;align-items:center;padding:6rem 5rem}
+.signin-left-bg{position:absolute;inset:0}
+.signin-left-bg img{width:100%;height:100%;object-fit:cover;opacity:0.35}
+.signin-left-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,9,8,0.85) 0%,rgba(10,9,8,0.3) 100%)}
+.signin-left-inner{position:relative;z-index:1;max-width:380px}
+.signin-logo{font-family:var(--serif);font-size:1.5rem;color:var(--white);margin-bottom:2.5rem;display:block}
+.signin-tagline{font-family:var(--serif);font-size:1.625rem;font-style:italic;color:var(--cream2);line-height:1.4;margin-bottom:2rem}
+.signin-quote-attr{font-size:0.8125rem;color:var(--cream3)}
+.signin-quote-attr strong{color:var(--cream2);display:block;margin-bottom:0.2rem}
+.signin-right{display:flex;align-items:center;justify-content:center;background:var(--white);padding:3rem}
+.signin-form-wrap{max-width:360px;width:100%}
+.signin-form-wrap h2{font-family:var(--serif);font-size:2rem;font-weight:500;color:var(--lighttext);margin-bottom:0.5rem}
+.signin-form-wrap .signin-sub{font-size:0.875rem;color:var(--lightmuted);margin-bottom:2.5rem;font-weight:300}
+.form-group{margin-bottom:1.25rem}
+.form-group label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--lightmuted);display:block;margin-bottom:0.5rem;font-weight:500}
+.form-group input{width:100%;background:var(--offwhite);border:1px solid var(--lightborder);padding:0.75rem 1rem;border-radius:3px;font-family:var(--sans);font-size:0.9375rem;color:var(--lighttext);transition:var(--t);outline:none}
+.form-group input:focus{border-color:var(--lighttext);background:var(--white)}
+.form-group input::placeholder{color:#C0BAB4}
+.signin-forgot{text-align:right;margin-top:0.5rem}
+.signin-forgot button{font-size:0.78rem;color:var(--lightmuted);background:none;border:none;cursor:pointer;font-family:var(--sans);transition:var(--t)}
+.signin-forgot button:hover{color:var(--lighttext)}
+.signin-btn{width:100%;background:var(--black);color:var(--white);padding:0.875rem;border-radius:3px;font-size:0.9375rem;font-weight:500;cursor:pointer;font-family:var(--sans);border:none;transition:var(--t);margin-top:1.25rem}
+.signin-btn:hover{background:var(--dark3)}
+.signin-divider{text-align:center;position:relative;margin:1.75rem 0;font-size:0.75rem;color:var(--lightmuted)}
+.signin-divider::before,.signin-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--lightborder)}
+.signin-divider::before{left:0}.signin-divider::after{right:0}
+.signin-google{width:100%;border:1px solid var(--lightborder);padding:0.8rem;border-radius:3px;display:flex;align-items:center;justify-content:center;gap:0.75rem;font-size:0.9rem;font-weight:500;color:var(--lighttext);background:var(--white);cursor:pointer;transition:var(--t);font-family:var(--sans)}
+.signin-google:hover{background:var(--offwhite)}
+.signin-footer-text{margin-top:2rem;text-align:center;font-size:0.8125rem;color:var(--lightmuted)}
+.signin-footer-text button{color:var(--black);font-weight:600;background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:0.8125rem}
+
+/* ── CHAT ── */
+.chat-layout{display:flex;flex:1;overflow:hidden}
+.chat-sidebar{width:256px;background:var(--dark);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.25rem;flex-shrink:0}
+.chat-new-btn{background:var(--dark3);color:var(--cream);border:1px solid var(--border);padding:0.55rem 1rem;border-radius:3px;font-size:0.8rem;font-weight:500;cursor:pointer;width:100%;margin-bottom:1.5rem;font-family:var(--sans);transition:var(--t);text-align:left}
+.chat-new-btn:hover{border-color:var(--cream3);color:var(--white)}
+.chat-sl{font-size:0.67rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--cream3);margin-bottom:0.6rem}
+.chat-hist{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:1px}
+.chi{padding:0.625rem 0.75rem;border-radius:3px;cursor:pointer;font-size:0.8rem;color:var(--cream3);transition:var(--t);display:flex;align-items:center;justify-content:space-between;gap:0.5rem;}
+.chi-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;}
+.chi-actions{display:flex;gap:0.25rem;opacity:0;transition:var(--t);}
+.chi:hover .chi-actions,.chi.active .chi-actions{opacity:1;}
+.chi-btn{background:none;border:none;color:var(--cream3);cursor:pointer;padding:0.2rem;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:var(--t);}
+.chi-btn:hover{color:var(--white);transform:scale(1.1);}
+.chi:hover,.chi.active{background:var(--dark2);color:var(--cream)}
+.chat-sf{padding-top:1rem;border-top:1px solid var(--border);font-size:0.7rem;color:var(--cream3);line-height:1.6;font-weight:300}
+.chat-main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--black);min-width:0}
+.chat-topbar{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.chat-topbar h2{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--cream)}
+.chat-mb{background:var(--dark3);border:1px solid var(--border);padding:0.25rem 0.75rem;border-radius:2rem;font-size:0.67rem;font-family:var(--mono);color:var(--cream3)}
+.chat-msgs{flex:1;overflow-y:auto;padding:2.5rem 2rem;display:flex;flex-direction:column;gap:1.5rem}
+.chat-welcome{text-align:center;padding:4rem 2rem;max-width:500px;margin:0 auto}
+.cwl{font-family:var(--serif);font-size:2.5rem;font-weight:500;color:var(--cream);margin-bottom:0.75rem}
+.chat-welcome p{color:var(--cream3);font-size:0.9rem;line-height:1.65;margin-bottom:2.5rem;font-weight:300}
+.chat-sugg-wrap{display:flex;flex-direction:column;gap:0.5rem}
+.chat-sugg{background:var(--dark);border:1px solid var(--border);border-radius:3px;padding:0.75rem 1rem;font-size:0.84rem;color:var(--cream3);cursor:pointer;transition:var(--t);text-align:left;font-family:var(--sans)}
+.chat-sugg:hover{border-color:var(--cream3);color:var(--cream);background:var(--dark2)}
+.msg{display:flex;gap:0.75rem;max-width:780px}
+.msg.user{align-self:flex-end;flex-direction:row-reverse;max-width:620px}
+.msg-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.67rem;font-weight:500;border:1px solid var(--border)}
+.msg-av.ai{background:var(--dark2);color:var(--cream2);font-family:var(--serif)}
+.msg-av.user{background:var(--dark3);color:var(--cream3)}
+.msg-bubble{padding:0.875rem 1.125rem;border-radius:4px;font-size:0.875rem;line-height:1.75;font-weight:300}
+.msg-bubble.ai{background:var(--dark);border:1px solid var(--border);color:var(--cream2)}
+.msg-bubble.user{background:var(--dark2);border:1px solid var(--border);color:var(--cream)}
+.msg-bubble strong{font-weight:600}
+.msg-bubble h3{font-family:var(--serif);font-size:1.05rem;font-weight:500;margin:0.875rem 0 0.3rem;color:var(--cream)}
+.typing-dots{display:flex;gap:4px;padding:1rem 1.125rem}
+.typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--cream3);animation:dot 1.2s infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chat-input-area{padding:1rem 1.5rem 1.5rem;border-top:1px solid var(--border);background:var(--dark);flex-shrink:0}
+.chat-disc{font-size:0.67rem;color:var(--cream3);text-align:center;margin-bottom:0.75rem;font-family:var(--mono);opacity:0.7}
+.chat-ir{display:flex;gap:0.75rem;align-items:flex-end}
+.chat-ta{flex:1;resize:none;background:var(--dark2);border:1px solid var(--border);border-radius:3px;padding:0.8rem 1rem;font-family:var(--sans);font-size:0.875rem;color:var(--cream);outline:none;transition:var(--t);max-height:140px;min-height:44px;line-height:1.5;font-weight:300}
+.chat-ta:focus{border-color:var(--cream3)}
+.chat-ta::placeholder{color:var(--cream3)}
+.chat-sb{width:40px;height:40px;border-radius:3px;background:var(--cream);color:var(--black);border:none;cursor:pointer;font-size:1rem;transition:var(--t);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chat-sb:hover{background:var(--white)}
+.chat-sb:disabled{background:var(--dark3);color:var(--cream3);cursor:not-allowed}
+
+/* LEGAL PAGES */
+.legal-wrap{max-width:800px;margin:0 auto;color:var(--lightmuted);line-height:1.8;font-size:0.9375rem}
+.legal-wrap h3{font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--lighttext);margin-bottom:1rem;margin-top:2.5rem}
+.legal-wrap h3:first-child{margin-top:0}
+.legal-wrap p{margin-bottom:1.5rem}
+
+/* ── CAREERS ── */
+.careers-hero{position:relative;padding:9rem 0 5rem;background:var(--black);border-bottom:1px solid var(--border);overflow:hidden}
+.careers-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 65% 50%,rgba(200,75,47,0.07) 0%,transparent 65%);pointer-events:none}
+.careers-stats-row{display:flex;gap:3.5rem;margin-top:3rem;flex-wrap:wrap}
+.cs-num{font-family:var(--serif);font-size:2.125rem;font-weight:500;color:var(--cream);line-height:1;display:block}
+.cs-label{font-size:0.75rem;color:var(--cream3);font-weight:300;margin-top:0.25rem;display:block}
+.careers-values{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:4rem}
+.cv-item{background:var(--dark);padding:2.25rem;transition:var(--t)}
+.cv-item:hover{background:var(--dark2)}
+.cv-icon{font-size:1.375rem;margin-bottom:1rem}
+.cv-h{font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--cream);margin-bottom:0.5rem}
+.cv-p{font-size:0.84rem;color:var(--cream3);line-height:1.7;font-weight:300}
+.roles-grid{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+.role-card{background:var(--dark);padding:2rem 2.5rem;transition:var(--t);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center}
+.role-card:hover{background:var(--dark2)}
+.role-card:hover .role-apply{opacity:1;transform:translateX(0)}
+.role-dept{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent2);margin-bottom:0.55rem;font-weight:500}
+.role-title{font-family:var(--serif);font-size:1.375rem;font-weight:500;color:var(--cream);margin-bottom:0.5rem;line-height:1.3}
+.role-desc{font-size:0.84rem;color:var(--cream3);font-weight:300;line-height:1.6;margin-bottom:0.875rem;max-width:680px}
+.role-meta{display:flex;gap:0.75rem;flex-wrap:wrap}
+.role-tag{font-size:0.72rem;color:var(--cream3);background:var(--dark3);border:1px solid var(--border);padding:0.25rem 0.75rem;border-radius:2rem}
+.role-apply{background:var(--cream);color:var(--black);padding:0.625rem 1.5rem;border-radius:3px;font-size:0.8125rem;font-weight:500;border:none;cursor:pointer;font-family:var(--sans);transition:var(--t);opacity:0;transform:translateX(8px);white-space:nowrap;flex-shrink:0}
+.role-apply:hover{background:var(--white)}
+.perks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--lightborder)}
+.perk-item{background:var(--white);padding:2rem;transition:var(--t)}
+.perk-item:hover{background:var(--offwhite)}
+.perk-icon{font-size:1.5rem;margin-bottom:1rem}
+.perk-h{font-size:0.875rem;font-weight:600;color:var(--lighttext);margin-bottom:0.375rem}
+.perk-p{font-size:0.8125rem;color:var(--lightmuted);line-height:1.65;font-weight:300}
+.careers-cta-box{background:var(--dark2);border:1px solid var(--border);padding:3.5rem;text-align:center}
+.careers-cta-box h3{font-family:var(--serif);font-size:1.875rem;font-weight:500;color:var(--cream);margin-bottom:0.75rem}
+.careers-cta-box p{font-size:0.875rem;color:var(--cream3);font-weight:300;max-width:440px;margin:0 auto 2rem;line-height:1.7}
+
+/* ── RESPONSIVE ── */
+
+/* Tablet: 768px – 1024px */
+@media(max-width:1024px){
+  /* Grids → single column */
+  .intro-inner,.cap-inner,.quote-inner,.stats-inner,
+  .sec-layout,.sec-arch-grid,.about-story-grid{grid-template-columns:1fr;gap:3rem}
+  .cases-grid,.resources-grid,.pricing-grid,.sec-features-grid,
+  .team-grid,.values-grid,.plat-cap-grid,.careers-values{grid-template-columns:repeat(2,1fr)}
+  .perks-grid{grid-template-columns:repeat(2,1fr)}
+  /* Nav */
+  .nav-links,.nav-right{display:none}
+  /* Footer */
+  .footer-top{grid-template-columns:repeat(2,1fr);gap:2rem}
+  /* Sign in */
+  .signin-wrap{grid-template-columns:1fr}.signin-left{display:none}
+  /* Platform */
+  .platform-feature,.platform-feature.flip{grid-template-columns:1fr}
+  .pf-img{height:300px;min-height:300px}
+  /* Chat */
+  .chat-sidebar{display:none}
+  /* Stats */
+  .stat-row{grid-template-columns:180px 1fr;gap:1rem}
+  /* Milestones */
+  .milestone{grid-template-columns:80px 1fr;gap:1.5rem}
+  /* Roles */
+  .role-card{grid-template-columns:1fr;gap:1.25rem}
+  .role-apply{opacity:1;transform:none;width:auto;align-self:flex-start}
+  /* Sections */
+  .section-dark,.section-dark2,.section-white,.section-off{padding:5rem 0}
+  .page-hero-dark,.page-hero-white{padding:7rem 0 3.5rem}
+  /* Intro/about images */
+  .intro-img{aspect-ratio:16/9}
+  .about-story-img{height:320px}
+  .stats-img{height:280px}
+  .cap-inner{grid-template-columns:1fr;gap:3rem}
+  .cap-heading{max-width:100%}
+}
+
+/* Mobile: ≤ 640px */
+@media(max-width:640px){
+  /* Container padding */
+  .container{padding:0 1.25rem}
+  .phi{padding:0 1.25rem}
+  /* Nav */
+  .nav-inner{padding:0 1.25rem}
+  .mobile-menu{padding:1.5rem 1.25rem}
+  /* Hero */
+  #hero{min-height:100svh}
+  .hero-inner{padding:0 1.25rem 3.5rem}
+  .hero-h1{letter-spacing:-0.5px;margin-bottom:1rem}
+  .hero-sub{font-size:0.9375rem;max-width:100%;margin-bottom:1.75rem}
+  /* Page heroes */
+  .page-hero-dark,.page-hero-white{padding:5.5rem 0 3rem}
+  .p-h1-dark,.p-h1-light{font-size:clamp(1.875rem,6vw,2.5rem);letter-spacing:-0.25px}
+  .p-sub-dark,.p-sub-light{font-size:0.9rem;max-width:100%}
+  /* All section padding */
+  .section-dark,.section-dark2,.section-white,.section-off,
+  #intro,#capabilities,#quote-section,#cases,#stats,
+  #sec-strip,#final-cta{padding:4rem 0}
+  /* Grids → full single col */
+  .cases-grid,.resources-grid,.pricing-grid,.sec-features-grid,
+  .team-grid,.values-grid,.plat-cap-grid,.careers-values,
+  .perks-grid{grid-template-columns:1fr}
+  /* Cert grid 2 col on mobile */
+  .cert-grid{grid-template-columns:repeat(2,1fr)}
+  /* Footer */
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:0.75rem}
+  .footer-bottom-links{flex-wrap:wrap;gap:1rem}
+  /* Intro */
+  .intro-inner{gap:2rem}
+  .intro-img{aspect-ratio:4/3;border-radius:3px}
+  /* Quote */
+  .quote-inner{grid-template-columns:1fr;gap:1.5rem}
+  .quote-photo{width:120px;height:150px}
+  .quote-content blockquote{font-size:1.125rem}
+  /* Stats */
+  .stats-inner{gap:2.5rem}
+  .stats-img{height:220px;margin-top:1.5rem}
+  .stat-row{grid-template-columns:1fr;gap:0.25rem;padding:1.25rem 0}
+  .stat-num{font-size:2.5rem}
+  /* Security strip */
+  .sec-layout{gap:2.5rem}
+  /* Capabilities */
+  .cap-inner{padding:0 1.25rem;gap:2.5rem}
+  .cap-item{padding:1rem 0}
+  .cap-item-name{font-size:1.5rem}
+  .cap-item-btn{display:none}
+  .cap-item.active .cap-item-btn,.cap-item:hover .cap-item-btn{display:inline-block;opacity:1}
+  /* Cases */
+  .cases-header{flex-direction:column;align-items:flex-start;gap:1rem;margin-bottom:2rem}
+  .case-card-img{height:180px}
+  .case-card-body{padding:1.5rem}
+  /* Platform */
+  .platform-feature{min-height:auto}
+  .pf-text{padding:2.5rem 1.25rem}
+  .pf-img{height:220px}
+  .pf-h{font-size:1.5rem}
+  /* Pricing */
+  .pricing-wrap{padding:0}
+  .pc{padding:2rem 1.5rem}
+  .pc-amt{font-size:2.25rem}
+  .compare-wrap{display:none}
+  .pricing-faq{margin-top:3rem;padding:0 0.25rem}
+  /* Resources */
+  .resources-filter{gap:0.375rem}
+  .rf-btn{font-size:0.72rem;padding:0.35rem 0.75rem}
+  .rc-img{height:170px}
+  .rc-body{padding:1.5rem}
+  .newsletter-box{padding:2rem 1.5rem}
+  /* Security page */
+  .sec-arch-grid{gap:2rem}
+  .sec-arch-img{height:220px}
+  .privilege-box,.sec-cta-box,.careers-cta-box{padding:2rem 1.5rem}
+  .sec-features-grid{grid-template-columns:1fr}
+  /* About */
+  .about-hero{height:50vh;min-height:360px}
+  .about-hero-inner{padding:0 1.25rem 3rem}
+  .about-hero-inner blockquote{font-size:1.25rem}
+  .about-story-grid{gap:2rem}
+  .about-story-img{height:240px}
+  .milestones{gap:0}
+  .milestone{grid-template-columns:64px 1fr;gap:1rem;padding:1.25rem 0}
+  .ms-year{font-size:1.125rem}
+  /* Careers */
+  .careers-hero{padding:6rem 0 3.5rem}
+  .careers-stats-row{gap:1.75rem 2.5rem}
+  .cs-num{font-size:1.5rem}
+  .role-card{padding:1.5rem}
+  .role-title{font-size:1.125rem}
+  .role-desc{font-size:0.8125rem}
+  .careers-cta-box h3{font-size:1.375rem}
+  /* Sign in */
+  .signin-right{padding:2rem 1.25rem;align-items:flex-start;padding-top:5rem}
+  .signin-form-wrap{max-width:100%}
+  /* Chat */
+  #page-chat.active{height:100svh}
+  .chat-input-area{padding:0.75rem 1rem 1rem}
+  .chat-msgs{padding:1.5rem 1rem}
+  .chat-topbar{padding:0.75rem 1rem}
+  .chat-disc{font-size:0.62rem}
+  .chat-ta{font-size:0.9375rem}
+  /* Final CTA */
+  .final-cta-inner h2{font-size:clamp(1.75rem,5vw,2.75rem)}
+  .final-cta-inner{padding:0 1.25rem}
+}
+
+/* Very small: ≤ 380px */
+@media(max-width:380px){
+  .hero-h1{font-size:2.5rem}
+  .p-h1-dark,.p-h1-light{font-size:1.75rem}
+  .cap-item-name{font-size:1.25rem}
+  .cert-grid{grid-template-columns:1fr}
+}
+
+/* ── MOBILE TOUCH & SCROLL IMPROVEMENTS ── */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-overflow-scrolling:touch}
+button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+
+/* Ensure tap targets are at least 44px — hamburger excluded (hidden on desktop) */
+.nav-cta,.nav-signin,.hero-btn,.chat-sb,.chat-sugg,
+.cap-item-btn,.pc-btn,.rf-btn,.role-apply,.signin-btn,.signin-google{
+  min-height:44px;display:inline-flex;align-items:center;justify-content:center
+}
+/* hamburger: hidden on desktop, shown only inside mobile media query */
+.hamburger{display:none !important}
+@media(max-width:1024px){
+  .hamburger{display:flex !important;min-height:44px;min-width:44px;align-items:center;justify-content:center}
+}
+.chat-sb{min-height:44px;min-width:44px;width:44px;height:44px}
+
+/* Safe area insets for notched phones */
+#nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+.nav-inner{padding-left:max(1.25rem,env(safe-area-inset-left));padding-right:max(1.25rem,env(safe-area-inset-right))}
+.chat-input-area{padding-bottom:max(1rem,env(safe-area-inset-bottom))}
+.mobile-menu{padding-bottom:max(2rem,env(safe-area-inset-bottom))}
+
+/* Smooth scroll on iOS */
+.chat-msgs,.mobile-menu,.chat-hist{-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+
+/* Fix 100vh on mobile browsers (address bar) */
+#hero{height:100svh;min-height:600px}
+#page-chat.active{height:100svh}
+
+/* Fix platform feature images on mobile */
+@media(max-width:640px){
+  .pf-img img{object-position:center center}
+  /* Prevent text overflow on very small screens */
+  .hero-h1,.p-h1-dark,.p-h1-light,.s-h2,.s-h2-light{word-break:break-word;overflow-wrap:break-word}
+  /* Role cards on mobile */
+  .role-apply{min-height:40px}
+  /* Chat textarea mobile */
+  .chat-ta{font-size:16px}/* Prevent iOS zoom on input focus */
+  /* Fix quote photo layout on mobile */
+  .quote-inner{grid-template-columns:1fr}
+  .quote-photo{width:100px;height:120px}
+  /* Ensure images don't overflow */
+  img{max-width:100%;height:auto}
+  .about-hero-inner blockquote{font-size:1.2rem;line-height:1.45}
+  /* Better milestone layout */
+  .milestone{padding:1rem 0}
+  /* Careers stats wrap nicely */
+  .careers-stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+  /* Pricing cards full width */
+  .pricing-grid{grid-template-columns:1fr}
+  .pc.pop{transform:none}
+  /* Footer spacing */
+  footer{padding:3rem 0 1.5rem}
+  .footer-top{padding-bottom:2rem}
+  /* Section headings */
+  .s-h2,.s-h2-light{font-size:1.625rem}
+  /* Final CTA padding */
+  #final-cta{padding:4rem 0}
+  .final-cta-inner button{width:100%;padding:.875rem 1rem}
+  /* Capabilities better on mobile */
+  .cap-item-right .cap-arrow{display:block;opacity:1;color:var(--cream3)}
+}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
-    <a class="nav-logo" href="index.html">
+    <a class="nav-logo" href="#" onclick="showPage('home')">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
         <!-- Pillar/column top -->
         <rect x="11" y="2" width="2" height="2" fill="currentColor" rx="0.5"/>
@@ -40,33 +712,32 @@
       NyAI
     </a>
     <div class="nav-links" id="nav-links">
-      <a href="platform.html" id="nav-platform">Platform</a>
-      <a href="pricing.html" id="nav-pricing">Pricing</a>
-      <a href="resources.html" id="nav-resources">Resources</a>
-      <a href="security.html" id="nav-security">Security</a>
-      <a href="about.html" id="nav-about">About</a>
+      <a href="#" onclick="showPage('platform')" id="nav-platform">Platform</a>
+      <a href="#" onclick="showPage('pricing')" id="nav-pricing">Pricing</a>
+      <a href="#" onclick="showPage('resources')" id="nav-resources">Resources</a>
+      <a href="#" onclick="showPage('security')" id="nav-security">Security</a>
+      <a href="#" onclick="showPage('about')" id="nav-about">About</a>
     </div>
     <div class="nav-right">
-      <button class="nav-signin" onclick="window.location.href='signin.html'">Sign in</button>
-      <button class="nav-cta" onclick="window.location.href='chat.html'">Request Demo</button>
+      <button class="nav-signin" onclick="showPage('signin')">Sign in</button>
+      <button class="nav-cta" onclick="showPage('chat')">Request Demo</button>
     </div>
     <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="mobile-menu" id="mobile-menu">
-  <a href="index.html" onclick="closeMob()">Home</a>
-  <a href="platform.html" onclick="closeMob()">Platform</a>
-  <a href="pricing.html" onclick="closeMob()">Pricing</a>
-  <a href="resources.html" onclick="closeMob()">Resources</a>
-  <a href="security.html" onclick="closeMob()">Security</a>
-  <a href="about.html" onclick="closeMob()">About</a>
-  <a href="signin.html" onclick="closeMob()">Sign in</a>
-  <a href="chat.html" onclick="closeMob()" style="color:var(--cream2)">Request Demo →</a>
+  <a href="#" onclick="showPage('home');closeMob()">Home</a>
+  <a href="#" onclick="showPage('platform');closeMob()">Platform</a>
+  <a href="#" onclick="showPage('pricing');closeMob()">Pricing</a>
+  <a href="#" onclick="showPage('resources');closeMob()">Resources</a>
+  <a href="#" onclick="showPage('security');closeMob()">Security</a>
+  <a href="#" onclick="showPage('about');closeMob()">About</a>
+  <a href="#" onclick="showPage('signin');closeMob()">Sign in</a>
+  <a href="#" onclick="showPage('chat');closeMob()" style="color:var(--cream2)">Request Demo →</a>
 </div>
 
 <!-- =================== HOME =================== -->
 <div id="page-home" class="page active">
-
   <section id="hero">
     <div class="hero-bg">
       <img loading="eager" decoding="async" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1920&q=85&auto=format&fit=crop&crop=top" alt="Legal professional" style="object-position:center top;"/>
@@ -74,7 +745,7 @@
     <div class="hero-inner">
       <h1 class="hero-h1">Intelligence<br>Meets the Law</h1>
       <p class="hero-sub">NyAI acts as a force multiplier for India's top law firms and in-house teams — advancing your expertise on a secure platform that lets you focus on high-value work.</p>
-      <button class="hero-btn" onclick="window.location.href='chat.html'">Request a Demo →</button>
+      <button class="hero-btn" onclick="showPage('chat')">Request a Demo →</button>
     </div>
   </section>
 
@@ -100,27 +771,27 @@
       <div class="cap-list reveal">
         <div class="cap-item active">
           <span class="cap-item-name">Legal Research</span>
-          <div class="cap-item-right"><button class="cap-item-btn" onclick="window.location.href='platform.html'">Learn more</button><span class="cap-arrow">→</span></div>
+          <div class="cap-item-right"><button class="cap-item-btn" onclick="showPage('platform')">Learn more</button><span class="cap-arrow">→</span></div>
         </div>
         <div class="cap-item active">
           <span class="cap-item-name">Deal Management</span>
-          <div class="cap-item-right"><button class="cap-item-btn" onclick="window.location.href='platform.html'">Learn more</button><span class="cap-arrow">→</span></div>
+          <div class="cap-item-right"><button class="cap-item-btn" onclick="showPage('platform')">Learn more</button><span class="cap-arrow">→</span></div>
         </div>
         <div class="cap-item active">
           <span class="cap-item-name">Due Diligence</span>
-          <div class="cap-item-right"><button class="cap-item-btn" onclick="window.location.href='platform.html'">Learn more</button><span class="cap-arrow">→</span></div>
+          <div class="cap-item-right"><button class="cap-item-btn" onclick="showPage('platform')">Learn more</button><span class="cap-arrow">→</span></div>
         </div>
         <div class="cap-item active">
           <span class="cap-item-name">Fund Formation</span>
-          <div class="cap-item-right"><button class="cap-item-btn" onclick="window.location.href='platform.html'">Learn more</button><span class="cap-arrow">→</span></div>
+          <div class="cap-item-right"><button class="cap-item-btn" onclick="showPage('platform')">Learn more</button><span class="cap-arrow">→</span></div>
         </div>
         <div class="cap-item active">
           <span class="cap-item-name">Contract Analysis</span>
-          <div class="cap-item-right"><button class="cap-item-btn" onclick="window.location.href='platform.html'">Learn more</button><span class="cap-arrow">→</span></div>
+          <div class="cap-item-right"><button class="cap-item-btn" onclick="showPage('platform')">Learn more</button><span class="cap-arrow">→</span></div>
         </div>
         <div class="cap-item active">
           <span class="cap-item-name">Compliance Review</span>
-          <div class="cap-item-right"><button class="cap-item-btn" onclick="window.location.href='platform.html'">Learn more</button><span class="cap-arrow">→</span></div>
+          <div class="cap-item-right"><button class="cap-item-btn" onclick="showPage('platform')">Learn more</button><span class="cap-arrow">→</span></div>
         </div>
       </div>
     </div>
@@ -140,7 +811,7 @@
           <span>Senior Partner</span>
           <em>AZB & Partners</em>
         </div>
-        <button class="quote-cta" onclick="window.location.href='resources.html'">Read the case study →</button>
+        <button class="quote-cta" onclick="showPage('resources')">Read the case study →</button>
       </div>
     </div>
   </section>
@@ -149,10 +820,10 @@
     <div class="cases-inner">
       <div class="cases-header reveal">
         <h2 class="s-h2">Real impact for real clients</h2>
-        <button class="cases-more" onclick="window.location.href='resources.html'">Read more stories</button>
+        <button class="cases-more" onclick="showPage('resources')">Read more stories</button>
       </div>
       <div class="cases-grid reveal">
-        <div class="case-card" onclick="window.location.href='resources.html'">
+        <div class="case-card" onclick="showPage('resources')">
           <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop" alt="M&A" onerror="this.style.opacity='0'"/></div>
           <div class="case-card-body">
             <div class="case-card-label">Due Diligence</div>
@@ -160,7 +831,7 @@
             <div class="case-card-firm">Khaitan & Co.</div>
           </div>
         </div>
-        <div class="case-card" onclick="window.location.href='resources.html'">
+        <div class="case-card" onclick="showPage('resources')">
           <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=800&q=80&auto=format&fit=crop" alt="Research" onerror="this.style.opacity='0'"/></div>
           <div class="case-card-body">
             <div class="case-card-label">Legal Research</div>
@@ -168,7 +839,7 @@
             <div class="case-card-firm">Trilegal</div>
           </div>
         </div>
-        <div class="case-card" onclick="window.location.href='resources.html'">
+        <div class="case-card" onclick="showPage('resources')">
           <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format&fit=crop" alt="Compliance" onerror="this.style.opacity='0'"/></div>
           <div class="case-card-body">
             <div class="case-card-label">Compliance</div>
@@ -202,7 +873,7 @@
       <div class="reveal">
         <h2 class="s-h2">Enterprise-grade security and controls</h2>
         <p style="margin-top:1.25rem;color:var(--cream3);font-size:.9rem;line-height:1.8;font-weight:300;max-width:420px">NyAI meets the most stringent regulatory requirements. SOC 2 Type II certified, ISO 27001 certified, GDPR and DPDP Act compliant, MeitY empanelled. Indian data residency available.</p>
-        <button class="sec-link" onclick="window.location.href='security.html'">View all security details →</button>
+        <button class="sec-link" onclick="showPage('security')">View all security details →</button>
       </div>
       <div class="cert-grid reveal">
         <div class="cert-item"><div class="cert-icon">🛡️</div><div class="cert-name">SOC 2 Type II</div><div class="cert-status">Certified</div></div>
@@ -218,9 +889,795 @@
   <section id="final-cta">
     <div class="final-cta-inner reveal">
       <h2>Unlock Professional Class AI<br>for Your Firm</h2>
-      <button onclick="window.location.href='chat.html'">Request Demo →</button>
+      <button onclick="showPage('chat')">Request Demo →</button>
     </div>
   </section>
+</div>
+
+<!-- =================== PLATFORM =================== -->
+<div id="page-platform" class="page">
+  <div class="page-hero-dark">
+    <div class="phi">
+      <span class="s-label">Platform</span>
+      <h1 class="p-h1-dark">The complete AI platform<br>for Indian legal practice</h1>
+      <p class="p-sub-dark">Purpose-built for the Indian legal system — trained on every court, statute, and regulatory body that matters. Not adapted. Not translated. Built from the ground up.</p>
+    </div>
+  </div>
+
+  <!-- Feature Blocks -->
+  <div class="platform-feature reveal">
+    <div class="pf-text">
+      <div class="pf-num">01 — Legal Research</div>
+      <h2 class="pf-h">Research That Cites Its Sources</h2>
+      <p class="pf-p">Trained on the complete corpus of Supreme Court judgments, all 25 High Courts, NCLAT, SAT, ITAT, NCLT, and major regulatory bodies. Every answer is fully traceable.</p>
+      <ul class="pf-list">
+        <li>Semantic search across SC, HCs, tribunals, and statutes</li>
+        <li>Automatic case law mapping and precedent hierarchy</li>
+        <li>Statutory cross-references including amendments and notifications</li>
+        <li>Conflicting bench detection and reconciliation summaries</li>
+        <li>Export citations in Bluebook, SCC, and AIR formats</li>
+      </ul>
+    </div>
+    <div class="pf-img">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=900&q=80&auto=format&fit=crop" alt="Legal research" onerror="this.style.opacity='0'"/>
+      <div class="pf-img-overlay"></div>
+    </div>
+  </div>
+
+  <div class="platform-feature flip reveal">
+    <div class="pf-text">
+      <div class="pf-num">02 — Contract Intelligence</div>
+      <h2 class="pf-h">Contract Review for Indian Boilerplate</h2>
+      <p class="pf-p">Upload any agreement and NyAI reviews it against Indian law standards — flagging non-compliant clauses, missing protections, and negotiation leverage points automatically.</p>
+      <ul class="pf-list">
+        <li>One-click risk scoring with clause-level explanations</li>
+        <li>Redline suggestions with track-changes export</li>
+        <li>FEMA, IT Act, and Companies Act compliance checks</li>
+        <li>Comparison against your firm's fallback positions</li>
+        <li>SHA, SPA, MoU, NDA, employment contract templates</li>
+      </ul>
+    </div>
+    <div class="pf-img">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80&auto=format&fit=crop" alt="Contracts" onerror="this.style.opacity='0'"/>
+      <div class="pf-img-overlay"></div>
+    </div>
+  </div>
+
+  <div class="platform-feature reveal">
+    <div class="pf-text">
+      <div class="pf-num">03 — Due Diligence</div>
+      <h2 class="pf-h">M&A Due Diligence at Machine Speed</h2>
+      <p class="pf-p">Upload data room documents and NyAI creates a structured DD report in minutes — identifying risk across corporate, tax, employment, IP, and regulatory dimensions.</p>
+      <ul class="pf-list">
+        <li>Automated document classification and indexing</li>
+        <li>Issue-by-issue risk flagging with severity ratings</li>
+        <li>Indian M&A and PE deal-specific checklists</li>
+        <li>Cross-document inconsistency detection</li>
+        <li>One-click DD report generation in client-ready format</li>
+      </ul>
+    </div>
+    <div class="pf-img">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=900&q=80&auto=format&fit=crop" alt="Due diligence" onerror="this.style.opacity='0'"/>
+      <div class="pf-img-overlay"></div>
+    </div>
+  </div>
+
+  <div class="platform-feature flip reveal">
+    <div class="pf-text">
+      <div class="pf-num">04 — Regulatory Compliance</div>
+      <h2 class="pf-h">Stay Ahead of Every Change</h2>
+      <p class="pf-p">Real-time monitoring across SEBI, RBI, MCA, IRDAI, and CCI. Automated alerts, compliance gap analysis, and structured summaries — delivered before your clients ask.</p>
+      <ul class="pf-list">
+        <li>Real-time regulatory circular and notification monitoring</li>
+        <li>Automated impact analysis for your practice areas</li>
+        <li>DPDP Act, FEMA, and Companies Act compliance coverage</li>
+        <li>BNS/BNSS/BSA comparative mapping for criminal law changes</li>
+        <li>Scheduled digests and custom alert thresholds</li>
+      </ul>
+    </div>
+    <div class="pf-img">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80&auto=format&fit=crop" alt="Compliance" onerror="this.style.opacity='0'"/>
+      <div class="pf-img-overlay"></div>
+    </div>
+  </div>
+
+  <!-- Additional capabilities -->
+  <div class="section-dark2">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:1rem">
+        <span class="s-label" style="display:inline-block">More Capabilities</span>
+        <h2 class="s-h2">Everything you need in one platform</h2>
+      </div>
+      <div class="plat-cap-grid reveal">
+        <div class="plat-cap-item"><div class="pci-icon">⚖️</div><h3 class="pci-h">Pleadings & Drafting</h3><p class="pci-p">Generate Supreme Court writs, SLPs, and High Court applications with AI-assisted drafting calibrated to specific court formats and practices.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">📊</div><h3 class="pci-h">IBC & Insolvency</h3><p class="pci-p">Dedicated module for CIRP timelines, Section 29A eligibility checks, resolution plan analysis, and NCLAT precedent mapping.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">💼</div><h3 class="pci-h">Fund Formation</h3><p class="pci-p">SEBI AIF regulatory checklists, LPA and subscription agreement templates, and category-specific compliance analysis for fund launches.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">🔍</div><h3 class="pci-h">Entity Intelligence</h3><p class="pci-p">Pull MCA filings, ROC records, and corporate history automatically. Identify connected persons, UBOs, and related-party structures instantly.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">📅</div><h3 class="pci-h">Case Tracking</h3><p class="pci-p">Monitor case status across e-Courts, cause lists, and tribunal portals. Never miss a hearing date with automated calendar integration.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">🤝</div><h3 class="pci-h">Team Workspace</h3><p class="pci-p">Matter-level workspaces with role-based access, shared research libraries, and collaboration tools designed for how law firms operate.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-off" style="text-align:center">
+    <div class="container">
+      <h2 class="s-h2-light" style="margin-bottom:2rem">Ready to see NyAI in action?</h2>
+      <button onclick="showPage('chat')" style="background:var(--black);color:var(--white);padding:.875rem 2.25rem;border-radius:3px;font-size:.9375rem;font-weight:500;cursor:pointer;font-family:var(--sans);border:none;transition:var(--t)">Request Demo →</button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== PRICING =================== -->
+<div id="page-pricing" class="page">
+  <div class="page-hero-white">
+    <div class="phi" style="text-align:center;max-width:680px;margin:0 auto">
+      <span class="s-label-light" style="display:inline-block">Pricing</span>
+      <h1 class="p-h1-light">Professional AI for every Indian practice</h1>
+      <p class="p-sub-light" style="margin:1rem auto 0">Transparent pricing designed for independent advocates, growing chambers, and national law firms. Cancel anytime.</p>
+    </div>
+  </div>
+
+  <div class="section-dark">
+    <div class="container">
+      <div class="pricing-wrap">
+        <div class="pricing-grid reveal">
+          <div class="pc">
+            <div class="pc-plan">Individual Advocate</div>
+            <div class="pc-amt">₹1,999</div>
+            <div class="pc-per">per month · billed yearly (₹23,988/yr)</div>
+            <p class="pc-desc">For solo practitioners getting started with AI-powered research and basic contract tools.</p>
+            <ul class="pc-feats">
+              <li>Bharat-Search: All SC & HC Judgments</li>
+              <li>BNS / BNSS / BSA Comparative Engine</li>
+              <li>AI Gavel: Professional Research Assistant</li>
+              <li>5 Contract Analysis documents per month</li>
+              <li>NyAI Chat — unlimited queries</li>
+              <li>PDF citation export</li>
+              <li>MeitY-approved Indian data residency</li>
+            </ul>
+            <button class="pc-btn pc-btn-outline" onclick="showPage('chat')">Start Free Trial</button>
+          </div>
+          <div class="pc pop">
+            <div class="pc-tag">Most Popular</div>
+            <div class="pc-plan">Professional Chambers</div>
+            <div class="pc-amt">₹4,999</div>
+            <div class="pc-per">per month · billed yearly (₹59,988/yr)</div>
+            <p class="pc-desc">For growing practices needing full research depth, contract automation, and team collaboration.</p>
+            <ul class="pc-feats">
+              <li>Everything in Individual plan</li>
+              <li>Unlimited contract review & redlining</li>
+              <li>SC Writ / SLP drafting AI</li>
+              <li>Legal entity risk extraction from MCA</li>
+              <li>Multi-user workspace (up to 5 seats)</li>
+              <li>Case status & cause list tracking</li>
+              <li>Regulatory alerts (SEBI, RBI, MCA)</li>
+              <li>Priority support & onboarding</li>
+            </ul>
+            <button class="pc-btn pc-btn-light" onclick="showPage('chat')">Start Free Trial</button>
+          </div>
+          <div class="pc">
+            <div class="pc-plan">National Firm / Corporate</div>
+            <div class="pc-amt" style="font-size:2rem;line-height:1.2;padding-top:.375rem">Custom<br>Enterprise</div>
+            <div class="pc-per">volume pricing · dedicated deployment</div>
+            <p class="pc-desc">For large law firms and in-house teams requiring enterprise security, custom integrations, and dedicated infrastructure.</p>
+            <ul class="pc-feats">
+              <li>Everything in Professional plan</li>
+              <li>Private dedicated VPC architecture</li>
+              <li>SCC / Manupatra internal integration</li>
+              <li>SSO, IAM & full governance audit logs</li>
+              <li>Custom fine-tuned LLM for firm styles</li>
+              <li>API access for workflow automation</li>
+              <li>24/7 dedicated relationship manager</li>
+            </ul>
+            <button class="pc-btn pc-btn-outline" onclick="alert('Contact our enterprise team: sales@nyai.in\n\nWe\'ll schedule a scoping call within 24 hours.')">Contact Sales</button>
+          </div>
+        </div>
+
+        <div class="compare-wrap reveal">
+          <h3>Compare plans</h3>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:38%">Feature</th>
+                <th style="text-align:center">Individual</th>
+                <th style="text-align:center">Professional</th>
+                <th style="text-align:center">Enterprise</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>NyAI Chat queries</td><td style="text-align:center">Unlimited</td><td style="text-align:center">Unlimited</td><td style="text-align:center">Unlimited</td></tr>
+              <tr><td>SC + all 25 HC corpus</td><td style="text-align:center" class="cky">✓</td><td style="text-align:center" class="cky">✓</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>Contract review</td><td style="text-align:center">5/month</td><td style="text-align:center" class="cky">✓ Unlimited</td><td style="text-align:center" class="cky">✓ Unlimited</td></tr>
+              <tr><td>Due diligence workflows</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>Team workspace</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center">5 seats</td><td style="text-align:center">Unlimited</td></tr>
+              <tr><td>Regulatory alerts</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>SCC / Manupatra integration</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>API access</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>Private VPC deployment</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>Custom LLM fine-tuning</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- FAQs -->
+        <div class="pricing-faq reveal">
+          <h3 style="font-family:var(--serif);font-size:1.875rem;font-weight:500;color:var(--cream);text-align:center;margin-bottom:2.5rem">Frequently Asked Questions</h3>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>Is there a free trial available?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">Yes — all plans include a 14-day free trial with full access, no credit card required. You can upgrade, downgrade or cancel at any time during the trial.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>Is my client data safe with NyAI?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">Absolutely. NyAI operates under a Zero Retention policy by default — your queries and documents are processed in memory and never stored. All data is hosted on MeitY-empanelled infrastructure within India. Enterprise clients get their own private VPC with no data ever touching shared infrastructure.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>Can I use NyAI for citations in court filings?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">NyAI's citations should always be verified against official SCC, Manupatra, or Gazette records before use in any court filing. NyAI is a research aid that significantly accelerates the process — but independent verification remains the advocate's responsibility under BCI professional conduct rules.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>What Indian courts and statutes are covered?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">NyAI covers all Supreme Court judgments, all 25 High Courts, NCLAT, NCLT, SAT, ITAT, TDSAT, and major tribunals. Statutes include all Central Acts, the BNS/BNSS/BSA, Companies Act, IBC, Income Tax Act, GST laws, FEMA, SEBI regulations, and more. The corpus is updated weekly.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>How does billing work for teams?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">Professional Chambers is billed per workspace (up to 5 users) at a flat monthly rate. Enterprise pricing is custom and based on number of seats, deployment type, and integration requirements. All plans can be billed monthly or annually (annual saves 20%).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== RESOURCES =================== -->
+<div id="page-resources" class="page">
+  <div class="page-hero-dark">
+    <div class="phi">
+      <span class="s-label">Resources</span>
+      <h1 class="p-h1-dark">Insights for the modern<br>Indian lawyer</h1>
+      <p class="p-sub-dark">Case studies, legal analysis, product updates, and deep dives at the intersection of law and AI — curated for Indian legal professionals.</p>
+    </div>
+  </div>
+
+  <div class="section-dark">
+    <div class="container">
+      <div class="resources-filter reveal" id="res-filter">
+        <button class="rf-btn active" onclick="filterRes('all',this)">All</button>
+        <button class="rf-btn" onclick="filterRes('case-study',this)">Case Studies</button>
+        <button class="rf-btn" onclick="filterRes('insights',this)">Insights</button>
+        <button class="rf-btn" onclick="filterRes('legal-tech',this)">Legal Tech</button>
+        <button class="rf-btn" onclick="filterRes('product',this)">Product</button>
+        <button class="rf-btn" onclick="filterRes('webinar',this)">Webinars</button>
+      </div>
+      <div class="resources-grid reveal" id="resources-grid">
+        <div class="rc" data-cat="case-study">
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&q=80&auto=format&fit=crop" alt="M&A" onerror="this.style.opacity='0'"/></div>
+          <div class="rc-body"><div class="rc-cat">Case Study</div><div class="rc-date">MARCH 14, 2026</div><h3>How Khaitan & Co. reduced M&A due diligence time by 70% with NyAI</h3><p class="rc-excerpt">Deep-dive into how one of India's premier firms overhauled their data room review process, cutting turnaround from three weeks to four days.</p><span class="rc-read">Read Case Study →</span></div>
+        </div>
+        <div class="rc" data-cat="insights">
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80&auto=format&fit=crop" alt="SEBI" onerror="this.style.opacity='0'"/></div>
+          <div class="rc-body"><div class="rc-cat">Insights</div><div class="rc-date">MARCH 8, 2026</div><h3>The impact of AI on DPDP Act compliance for legal teams</h3><p class="rc-excerpt">How automated monitoring is reshaping how in-house counsel manages data protection obligations under India's new privacy framework.</p><span class="rc-read">Read Article →</span></div>
+        </div>
+        <div class="rc" data-cat="product">
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=700&q=80&auto=format&fit=crop" alt="IBC" onerror="this.style.opacity='0'"/></div>
+          <div class="rc-body"><div class="rc-cat">Product Update</div><div class="rc-date">FEB 28, 2026</div><h3>Introducing Semantic Search for IBC matters</h3><p class="rc-excerpt">NyAI's insolvency module now understands resolution plan context, CoC dynamics, and conflicting NCLAT bench decisions better than ever before.</p><span class="rc-read">Read Update →</span></div>
+        </div>
+        <div class="rc" data-cat="legal-tech">
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=700&q=80&auto=format&fit=crop" alt="Courts" onerror="this.style.opacity='0'"/></div>
+          <div class="rc-body"><div class="rc-cat">Legal Tech</div><div class="rc-date">FEB 19, 2026</div><h3>Digitizing the chambers of Senior Advocates</h3><p class="rc-excerpt">How AI tools are helping traditional legal offices transition to the paperless e-Court era — without losing the institutional knowledge that defines great advocacy.</p><span class="rc-read">Read Article →</span></div>
+        </div>
+        <div class="rc" data-cat="insights">
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=700&q=80&auto=format&fit=crop" alt="Contracts" onerror="this.style.opacity='0'"/></div>
+          <div class="rc-body"><div class="rc-cat">Insights</div><div class="rc-date">FEB 11, 2026</div><h3>BNS vs IPC: The complete comparative guide for practitioners</h3><p class="rc-excerpt">A comprehensive section-by-section mapping of the Bharatiya Nyaya Sanhita against the Indian Penal Code, with key changes highlighted for immediate practical use.</p><span class="rc-read">Read Article →</span></div>
+        </div>
+        <div class="rc" data-cat="webinar">
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542435503-956c469947f6?w=700&q=80&auto=format&fit=crop" alt="Webinar" onerror="this.style.opacity='0'"/></div>
+          <div class="rc-body"><div class="rc-cat">Webinar</div><div class="rc-date">JAN 30, 2026</div><h3>The future of generative AI in Indian litigation</h3><p class="rc-excerpt">On-demand recording of our panel with Senior Advocates of the Supreme Court on professional responsibility, hallucination risk, and the ethics of AI-assisted advocacy.</p><span class="rc-read">Watch Recording →</span></div>
+        </div>
+        <div class="rc" data-cat="case-study">
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&auto=format&fit=crop" alt="Report" onerror="this.style.opacity='0'"/></div>
+          <div class="rc-body"><div class="rc-cat">Industry Report</div><div class="rc-date">JAN 15, 2026</div><h3>India Legal Tech Report 2026: AI adoption across Indian law firms</h3><p class="rc-excerpt">Our deep-dive into LLM adoption rates, ROI data, and implementation challenges across Tier-1, Tier-2, and corporate legal teams in India.</p><span class="rc-read">Download Report →</span></div>
+        </div>
+        <div class="rc" data-cat="legal-tech">
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1521791136064-7986c2959213?w=700&q=80&auto=format&fit=crop" alt="Signature" onerror="this.style.opacity='0'"/></div>
+          <div class="rc-body"><div class="rc-cat">Legal Tech</div><div class="rc-date">DEC 20, 2025</div><h3>Bar Council of India rules & AI tools: What advocates need to know</h3><p class="rc-excerpt">Using AI for legal research doesn't breach BCI professional conduct rules — but there are important considerations around verification, attribution, and client disclosure.</p><span class="rc-read">Read Article →</span></div>
+        </div>
+        <div class="rc" data-cat="product">
+          <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=700&q=80&auto=format&fit=crop" alt="Documents" onerror="this.style.opacity='0'"/></div>
+          <div class="rc-body"><div class="rc-cat">Product Update</div><div class="rc-date">DEC 5, 2025</div><h3>NyAI Enterprise: Private VPC deployment now available in India</h3><p class="rc-excerpt">Enterprise clients can now deploy NyAI entirely within their own AWS India or Azure India tenancy, with no data ever touching shared infrastructure.</p><span class="rc-read">Read Update →</span></div>
+        </div>
+      </div>
+
+      <div class="newsletter-box reveal">
+        <h3>Stay current with Indian law</h3>
+        <p>Weekly legal intelligence — case law updates, regulatory alerts, and AI insights. Free for legal professionals.</p>
+        <div class="newsletter-row">
+          <input type="email" placeholder="you@firm.com" id="newsletter-email"/>
+          <button onclick="subscribeNewsletter()">Subscribe Free</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== SECURITY =================== -->
+<div id="page-security" class="page">
+  <div class="page-hero-dark">
+    <div class="phi">
+      <span class="s-label">Security & Trust</span>
+      <h1 class="p-h1-dark">Your data belongs to you.<br>Full stop.</h1>
+      <p class="p-sub-dark">Enterprise-grade security is not a feature at NyAI — it is the foundation. Every architectural decision was made with attorney-client privilege and professional secrecy obligations at its core.</p>
+    </div>
+  </div>
+
+  <!-- Hero Image -->
+  <div style="overflow:hidden;max-height:320px">
+    <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1440&q=80&auto=format&fit=crop" alt="Security infrastructure" class="sec-page-hero-img" onerror="this.style.opacity='0'"/>
+  </div>
+
+  <div class="section-dark">
+    <div class="container">
+      <!-- Cert grid -->
+      <div class="reveal" style="text-align:center;margin-bottom:3rem">
+        <span class="s-label" style="display:inline-block">Certifications & Compliance</span>
+        <h2 class="s-h2">Meeting the highest standards</h2>
+      </div>
+      <div class="cert-grid reveal" style="grid-template-columns:repeat(3,1fr)">
+        <div class="cert-item" style="padding:2rem"><div class="cert-icon" style="font-size:2rem">🛡️</div><h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:500;color:var(--cream);margin-bottom:0.5rem">SOC 2 Type II</h3><p style="font-size:0.84rem;color:var(--cream3);line-height:1.65;font-weight:300">Independently audited annually for security, availability, processing integrity, confidentiality, and privacy. Full audit report available to enterprise prospects under NDA.</p></div>
+        <div class="cert-item" style="padding:2rem"><div class="cert-icon" style="font-size:2rem">🔐</div><h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:500;color:var(--cream);margin-bottom:0.5rem">ISO 27001:2022</h3><p style="font-size:0.84rem;color:var(--cream3);line-height:1.65;font-weight:300">Certified information security management system. Our ISMS covers all aspects of data processing, access control, incident response, and business continuity.</p></div>
+        <div class="cert-item" style="padding:2rem"><div class="cert-icon" style="font-size:2rem">🇮🇳</div><h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:500;color:var(--cream);margin-bottom:0.5rem">DPDP Act 2023</h3><p style="font-size:0.84rem;color:var(--cream3);line-height:1.65;font-weight:300">Fully compliant with India's Digital Personal Data Protection Act. We operate as a Data Processor. Users retain full rights to access, correction, and erasure of their data.</p></div>
+        <div class="cert-item" style="padding:2rem"><div class="cert-icon" style="font-size:2rem">🌍</div><h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:500;color:var(--cream);margin-bottom:0.5rem">GDPR</h3><p style="font-size:0.84rem;color:var(--cream3);line-height:1.65;font-weight:300">Article 27 representative appointed for EU users. Standard Contractual Clauses in place for any cross-border data transfers, though all Indian user data stays in India.</p></div>
+        <div class="cert-item" style="padding:2rem"><div class="cert-icon" style="font-size:2rem">☁️</div><h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:500;color:var(--cream);margin-bottom:0.5rem">MeitY Empanelled</h3><p style="font-size:0.84rem;color:var(--cream3);line-height:1.65;font-weight:300">Cloud infrastructure empanelled by the Ministry of Electronics and Information Technology. All data is processed within sovereign Indian territory on Mumbai/Pune zone servers.</p></div>
+        <div class="cert-item" style="padding:2rem"><div class="cert-icon" style="font-size:2rem">🔒</div><h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:500;color:var(--cream);margin-bottom:0.5rem">Zero Retention Default</h3><p style="font-size:0.84rem;color:var(--cream3);line-height:1.65;font-weight:300">By default, no query, document, or session data is retained after a session ends. Conversation history is only stored if you explicitly enable it in your account settings.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-dark2">
+    <div class="container">
+      <div class="sec-arch-grid reveal">
+        <div class="sec-arch-text">
+          <span class="s-label">Technical Architecture</span>
+          <h2 class="s-h2">Built for the sensitivity of legal data</h2>
+          <p>Every NyAI Enterprise deployment runs in an isolated Virtual Private Cloud. No shared infrastructure, no shared models, no shared logs. Your data never touches another client's environment.</p>
+          <p>We use AES-256 encryption for all data at rest and TLS 1.3 for all data in transit. Encryption keys are managed in dedicated Hardware Security Modules and rotated quarterly. Access to production systems requires hardware MFA and is logged immutably.</p>
+          <p>Our models are hosted entirely on internal infrastructure. We do not route sensitive legal queries through any third-party AI provider including OpenAI, Anthropic, or Google. All inference happens within our controlled environment.</p>
+          <p>Annual red-team penetration testing is conducted by CERT-In empanelled security firms. We operate a responsible disclosure programme with a 48-hour response SLA for critical vulnerabilities.</p>
+        </div>
+        <div class="sec-arch-img">
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=900&q=80&auto=format&fit=crop" alt="Server infrastructure" onerror="this.style.opacity='0'"/>
+        </div>
+      </div>
+
+      <div class="sec-features-grid reveal" style="margin-top:4rem">
+        <div class="sfc"><div class="sfc-icon">🏗️</div><h3 class="sfc-h">Private VPC Deployment</h3><p class="sfc-p">Enterprise clients deploy NyAI entirely within their own AWS India or Azure India tenancy. Full network isolation, customer-managed encryption keys, and dedicated compute.</p></div>
+        <div class="sfc"><div class="sfc-icon">👤</div><h3 class="sfc-h">Role-Based Access Control</h3><p class="sfc-p">Granular permissions by matter, client, practice group, and user role. Full SSO and SAML 2.0 integration. Every user action is logged with timestamp and IP address.</p></div>
+        <div class="sfc"><div class="sfc-icon">📋</div><h3 class="sfc-h">Immutable Audit Logs</h3><p class="sfc-p">Every query, document access, export, and configuration change is logged in a write-once, tamper-proof audit trail. Logs are available for internal review and regulatory inspection.</p></div>
+        <div class="sfc"><div class="sfc-icon">🔄</div><h3 class="sfc-h">Disaster Recovery</h3><p class="sfc-p">99.9% uptime SLA with multi-AZ deployment and automated failover. Recovery Point Objective (RPO) of 1 hour and Recovery Time Objective (RTO) of 4 hours for enterprise clients.</p></div>
+        <div class="sfc"><div class="sfc-icon">🧪</div><h3 class="sfc-h">Penetration Testing</h3><p class="sfc-p">Annual third-party red-team exercises by CERT-In empanelled firms. Responsible disclosure programme with public security advisories for all resolved vulnerabilities.</p></div>
+        <div class="sfc"><div class="sfc-icon">🤝</div><h3 class="sfc-h">Contractual Protections</h3><p class="sfc-p">Data Processing Agreements available for all plans. Enterprise clients receive custom DPAs with specific SLAs, breach notification timelines (72-hour default), and audit rights.</p></div>
+      </div>
+
+      <div class="privilege-box reveal">
+        <h3>Advocate-Client Privilege & Professional Secrecy</h3>
+        <p>NyAI is built in full recognition of Section 126 of the Indian Evidence Act (now reflected in the Bharatiya Sakshya Adhiniyam). Our Zero-History mode ensures that sensitive strategy discussions, draft pleadings, and client instructions never leave your session memory — maintaining the confidentiality obligations that are fundamental to legal practice.</p>
+        <p style="margin-top:1rem">We will never comply with requests for client data without a valid court order, and we notify affected clients promptly (to the extent legally permitted) when any such request is received.</p>
+      </div>
+
+      <div class="sec-cta-box reveal">
+        <h3>Questions about security?</h3>
+        <p>Our security team provides full documentation — including SOC 2 Type II reports, ISO certificates, DPA templates, and architecture diagrams — to enterprise prospects under NDA.</p>
+        <button onclick="alert('Security documentation request submitted.\n\nOur team will contact you within 24 business hours.\n\nFor urgent queries: security@nyai.in')">Request Security Documentation →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== ABOUT =================== -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <div class="about-hero-bg">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1800&q=85&auto=format&fit=crop" alt="Law firm" onerror="this.style.opacity='0'"/>
+    </div>
+    <div class="about-hero-inner">
+      <blockquote>"Access to quality legal intelligence should not be a privilege reserved for the largest firms. NyAI exists to democratise professional-class AI for every Indian practitioner."</blockquote>
+      <cite>— Founders, NyAI Technologies · Ahmedabad, India · 2024</cite>
+    </div>
+  </div>
+
+  <!-- White: Story -->
+  <div class="section-white">
+    <div class="container">
+      <div class="about-story-grid reveal">
+        <div>
+          <span class="s-label-light">Our Story</span>
+          <h2 class="s-h2-light">Why we built NyAI</h2>
+          <p style="color:var(--lightmuted);line-height:1.85;font-size:0.9375rem;font-weight:300;margin-top:1.375rem">India has over 1.7 million advocates and thousands of in-house legal teams. Yet the tools available to them were never designed for the unique complexity of Indian law — foreign-built software adapted for a system it fundamentally doesn't understand.</p>
+          <p style="color:var(--lightmuted);line-height:1.85;font-size:0.9375rem;font-weight:300;margin-top:1.125rem">The Indian legal system is vast and deeply layered: 25 High Courts with distinct practices and local rules, a Supreme Court corpus spanning decades, hundreds of specialised tribunals, and a constantly evolving regulatory framework across SEBI, RBI, MCA, IRDAI, CCI, and more. International AI products simply don't understand this landscape.</p>
+          <p style="color:var(--lightmuted);line-height:1.85;font-size:0.9375rem;font-weight:300;margin-top:1.125rem">NyAI was founded in 2024 by lawyers, AI researchers, and product builders from Ahmedabad who set out to change this. We built from first principles — curating Indian law datasets, training models on Indian legal reasoning, and designing workflows around how Indian practitioners actually work.</p>
+        </div>
+        <div class="about-story-img">
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=900&q=85&auto=format&fit=crop" alt="NyAI office" onerror="this.style.opacity='0'"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark: Team -->
+  <div class="section-dark2">
+    <div class="container">
+      <div class="reveal" style="margin-bottom:3rem">
+        <span class="s-label">Leadership</span>
+        <h2 class="s-h2">Built by lawyers and engineers</h2>
+      </div>
+      <div class="team-grid reveal">
+        <div class="tc"><div class="tc-av">MK</div><div class="tc-name">Mahir Kadia</div><div class="tc-role">Co-Founder & CEO</div><div class="tc-bio">Drives product vision and growth strategy. Previously in venture-backed startups and legal technology. Deep interest in AI for access to justice.</div></div>
+        <div class="tc"><div class="tc-av">MM</div><div class="tc-name">Mahek Maradiya</div><div class="tc-role">Co-Founder & CFO</div><div class="tc-bio">Manages operations, finance, and enterprise partnerships. Background in corporate finance and technology sector growth.</div></div>
+        <div class="tc"><div class="tc-av">TN</div><div class="tc-name">Tirth Nagar</div><div class="tc-role">Co-Founder</div><div class="tc-bio">Leads technical architecture and AI model development. Expertise in LLMs, information retrieval, and building scalable AI systems for professional applications.</div></div>
+        <div class="tc"><div class="tc-av">NK</div><div class="tc-name">Neha Kapoor</div><div class="tc-role">Head of Legal Products</div><div class="tc-bio">Former advocate, High Court of Gujarat. Ensures NyAI's outputs meet the standards of actual Indian legal practice. LLM, University of Cambridge.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- White: Values -->
+  <div class="section-white">
+    <div class="container">
+      <div class="reveal text-center" style="margin-bottom:3rem;text-align:center">
+        <span class="s-label-light" style="display:inline-block">Values</span>
+        <h2 class="s-h2-light">What we stand for</h2>
+      </div>
+      <div class="values-grid reveal">
+        <div class="vc"><div class="vc-icon">⚖️</div><h3 class="vc-h">Legal Accuracy First</h3><p class="vc-p">Every answer is cited. We'd rather acknowledge uncertainty than hallucinate a judgment. Accuracy is non-negotiable when the stakes are someone's liberty or livelihood.</p></div>
+        <div class="vc"><div class="vc-icon">🇮🇳</div><h3 class="vc-h">Built for India</h3><p class="vc-p">Not adapted. Not translated. Purpose-built. We think in Indian legal categories, BNS provisions, HC local rules, and the regulatory language of SEBI and RBI circulars.</p></div>
+        <div class="vc"><div class="vc-icon">🔒</div><h3 class="vc-h">Client Confidentiality</h3><p class="vc-p">Advocate-client privilege is sacred. Zero retention by default. You control what NyAI remembers — and you can delete it all in one click at any time.</p></div>
+        <div class="vc"><div class="vc-icon">🌐</div><h3 class="vc-h">Access for All</h3><p class="vc-p">From solo advocates in Ahmedabad to national firms in Mumbai — every Indian legal professional deserves tools as powerful as those used by the largest firms.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark: Milestones -->
+  <div class="section-dark">
+    <div class="container" style="max-width:800px">
+      <div class="reveal" style="margin-bottom:3rem">
+        <span class="s-label">Timeline</span>
+        <h2 class="s-h2">Our milestones</h2>
+      </div>
+      <div class="milestones reveal">
+        <div class="milestone"><div class="ms-year">2024</div><div class="ms-text"><h4>Founded in Ahmedabad</h4><p>NyAI Technologies incorporated. Initial team of 6 begins building the Indian law corpus and training the first research model.</p></div></div>
+        <div class="milestone"><div class="ms-year">2024</div><div class="ms-text"><h4>First 100 Users</h4><p>Beta launch with invitation-only access to advocates in Gujarat and Maharashtra. First paying customers within 3 months of launch.</p></div></div>
+        <div class="milestone"><div class="ms-year">2025</div><div class="ms-text"><h4>Series A Funding</h4><p>Raised ₹22 crore from leading Indian venture funds to accelerate corpus expansion, enterprise features, and team growth.</p></div></div>
+        <div class="milestone"><div class="ms-year">2025</div><div class="ms-text"><h4>Enterprise Launch</h4><p>First national law firm deployments. Private VPC architecture launched. SOC 2 Type II certification achieved. 1,000+ active users.</p></div></div>
+        <div class="milestone"><div class="ms-year">2026</div><div class="ms-text"><h4>Scale & Expansion</h4><p>100,000+ professionals, 1,000+ firms. BNS/BNSS/BSA modules launched. NyAI named India's leading legal AI platform by multiple industry publications.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-off" style="text-align:center">
+    <div class="container">
+      <h2 class="s-h2-light" style="margin-bottom:0.875rem">We're building the future of Indian jurisprudence</h2>
+      <p style="color:var(--lightmuted);margin-bottom:2rem;font-size:0.9rem;font-weight:300">Join a team on a genuine mission. Open roles in AI engineering, legal research, and product.</p>
+      <button onclick="showPage('careers')" style="background:var(--black);color:var(--white);padding:.875rem 2.25rem;border-radius:3px;font-size:.9375rem;font-weight:500;cursor:pointer;font-family:var(--sans);border:none;transition:var(--t)">View Open Roles →</button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== SIGN IN =================== -->
+<div id="page-signin" class="page">
+  <button class="signin-back" onclick="showPage('home')">← Back</button>
+  <div class="signin-wrap">
+    <div class="signin-left">
+      <div class="signin-left-bg">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=900&q=85&auto=format&fit=crop" alt="Legal background" onerror="this.style.opacity='0'"/>
+      </div>
+      <div class="signin-left-inner">
+        <span class="signin-logo">NyAI</span>
+        <p class="signin-tagline">"The most successful firm technology adoption story I have ever been a part of."</p>
+        <div class="signin-quote-attr">
+          <strong>Rahul Sharma</strong>
+          <span>Senior Partner, AZB & Partners</span>
+        </div>
+      </div>
+    </div>
+    <div class="signin-right">
+      <div class="signin-form-wrap">
+        <h2>Welcome back</h2>
+        <p class="signin-sub">Sign in to your NyAI account to continue your legal research.</p>
+        <div class="form-group">
+          <label for="signin-email">Email address</label>
+          <input type="email" id="signin-email" placeholder="you@firm.com" autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label for="signin-pass">Password</label>
+          <input type="password" id="signin-pass" placeholder="••••••••" autocomplete="current-password"/>
+        </div>
+        <div class="signin-forgot">
+          <button onclick="alert('Password reset link sent to your email address.')">Forgot password?</button>
+        </div>
+        <button class="signin-btn" onclick="handleSignin()">Sign in →</button>
+        <div class="signin-divider">or</div>
+        <button class="signin-google" onclick="alert('Google SSO is available for Professional and Enterprise plans.\n\nContact your firm administrator to enable.')">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 6.293C4.672 4.169 6.656 3.58 9 3.58z"/></svg>
+          Continue with Google
+        </button>
+        <div class="signin-footer-text">
+          Don't have an account? <button onclick="showPage('pricing')">View pricing →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== CHAT =================== -->
+<div id="page-chat" class="page">
+  <div class="chat-layout">
+    <div class="chat-sidebar">
+      <button class="chat-new-btn" onclick="clearChat()">+ New Conversation</button>
+      <div class="chat-sl">Recent</div>
+      <div class="chat-hist" id="chat-hist">
+        <div class="chi active"><span class="chi-text">IBC Section 29A eligibility...</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+        <div class="chi"><span class="chi-text">SEBI AIF Category II compliance</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+        <div class="chi"><span class="chi-text">SHA drag-along clause review</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+        <div class="chi"><span class="chi-text">Income Tax s56(2)(x) analysis</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+        <div class="chi"><span class="chi-text">BNS vs IPC — Section comparison</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+      </div>
+      <div class="chat-sf">NyAI · Indian Law AI<br>Responses are for informational purposes only and do not constitute legal advice. Always verify citations.</div>
+    </div>
+    <div class="chat-main">
+      <div class="chat-topbar">
+        <h2>NyAI Legal Assistant</h2>
+        <span class="chat-mb">Indian Law Corpus v3.2</span>
+      </div>
+      <div class="chat-msgs" id="chat-msgs">
+        <div class="chat-welcome" id="chat-welcome">
+          <div class="cwl">NyAI</div>
+          <p>Your AI legal research assistant for Indian law. Ask about judgments, statutes, regulations, contracts, or any legal question — I'll give you a cited, reasoned answer.</p>
+          <div class="chat-sugg-wrap">
+            <button class="chat-sugg" onclick="sendSugg(this)">What are the Section 29A eligibility criteria under IBC?</button>
+            <button class="chat-sugg" onclick="sendSugg(this)">Explain SEBI's insider trading regulations under PIT Regulations 2015</button>
+            <button class="chat-sugg" onclick="sendSugg(this)">Key issues when drafting a drag-along clause in an Indian SHA</button>
+            <button class="chat-sugg" onclick="sendSugg(this)">Summarise the Supreme Court judgment in Vijay Madanlal Choudhary v. Union of India</button>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="chat-disc">Professional-grade research engine · Always verify citations before filing</div>
+        <div class="chat-ir">
+          <textarea class="chat-ta" id="chat-input" placeholder="Ask anything about Indian law..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="chat-sb" id="chat-send" onclick="sendMsg()">↑</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== PRIVACY =================== -->
+<div id="page-privacy" class="page">
+  <div class="page-hero-white">
+    <div class="phi"><span class="s-label-light">Legal</span><h1 class="p-h1-light">Privacy Policy</h1><p class="p-sub-light">Last updated: March 2026</p></div>
+  </div>
+  <div class="section-white"><div class="container"><div class="legal-wrap">
+    <h3>1. Data Fiduciary Responsibility</h3>
+    <p>NyAI acts as a Data Processor on behalf of the individual advocate or law firm (the Data Fiduciary). In accordance with the Digital Personal Data Protection Act 2023, we process personal data only for providing legal research and drafting services as instructed by you.</p>
+    <h3>2. Zero Retention Default</h3>
+    <p>By default, no query, document, or response is retained after your session ends. Conversation history is only stored if you explicitly enable it in Settings. You may delete all stored data at any time.</p>
+    <h3>3. Indian Data Residency</h3>
+    <p>All data is processed within the sovereign territory of India on MeitY-empanelled cloud infrastructure (Mumbai/Pune AZs), ensuring compliance with Section 16 of the DPDP Act regarding cross-border transfer restrictions.</p>
+    <h3>4. Your Rights</h3>
+    <p>You have the right to access, correct, and erase any personal data we hold. Submit requests to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8d8dac1dec9cbd1e8c6d1c9c186c1c6">[email&#160;protected]</a>. We respond within 72 hours for standard requests and 24 hours for urgent matters.</p>
+    <h3>5. Information Security</h3>
+    <p>We implement AES-256 encryption at rest, TLS 1.3 in transit, hardware MFA for all production access, and immutable audit logs. We hold SOC 2 Type II and ISO 27001:2022 certifications.</p>
+    <h3>6. Contact</h3>
+    <p>Data Protection Officer: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f296829db29c8b939bdc9b9c">[email&#160;protected]</a> · NyAI Technologies Pvt. Ltd. · Ahmedabad, Gujarat · CIN: U72200GJ2024PTC000001</p>
+  </div></div></div>
+</div>
+
+<!-- =================== TERMS =================== -->
+<div id="page-terms" class="page">
+  <div class="page-hero-dark">
+    <div class="phi"><span class="s-label">Legal</span><h1 class="p-h1-dark">Terms of Service</h1><p class="p-sub-dark">Last updated: March 2026</p></div>
+  </div>
+  <div class="section-dark"><div class="container"><div class="legal-wrap" style="color:var(--cream3)">
+    <h3 style="color:var(--cream)">1. Professional Responsibility</h3>
+    <p>NyAI is a technological aid for legal professionals. It does not replace the requirement for independent verification. All citations must be verified against official SCC, Manupatra, or Gazette records before use in any court filing or legal opinion. You remain solely responsible for the accuracy of any legal work product produced using NyAI.</p>
+    <h3 style="color:var(--cream)">2. No Attorney-Client Relationship</h3>
+    <p>Use of NyAI does not create an attorney-client relationship between you and NyAI Technologies Pvt. Ltd. Our role is strictly limited to providing a research and drafting interface. Nothing in NyAI's outputs constitutes legal advice.</p>
+    <h3 style="color:var(--cream)">3. Bar Council of India Compliance</h3>
+    <p>Users who are enrolled advocates are responsible for ensuring their use of NyAI complies with the Bar Council of India Rules of Professional Conduct and Etiquette. NyAI is a research tool only and may not be used to solicit clients or misrepresent AI-generated content as independent legal work.</p>
+    <h3 style="color:var(--cream)">4. Subscription & Permitted Use</h3>
+    <p>Access is granted on a subscription basis for your lawful professional use. Accounts may not be shared across firms. Misuse for generating bulk content, scraping the corpus, or any non-legal purpose will result in immediate termination without refund.</p>
+    <h3 style="color:var(--cream)">5. Governing Law</h3>
+    <p>These terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts at Ahmedabad, Gujarat.</p>
+  </div></div></div>
+</div>
+
+<!-- =================== CAREERS =================== -->
+<div id="page-careers" class="page">
+
+  <!-- Hero -->
+  <div class="careers-hero">
+    <div class="container">
+      <span class="s-label">Careers</span>
+      <h1 class="p-h1-dark" style="max-width:700px">Build the future of Indian legal practice with us</h1>
+      <p class="p-sub-dark" style="max-width:560px">We're a small, mission-driven team in Ahmedabad building professional-class AI for India's 1.7 million advocates and thousands of in-house legal teams. Join us.</p>
+      <div class="careers-stats-row reveal">
+        <div><span class="cs-num">40+</span><span class="cs-label">Team members</span></div>
+        <div><span class="cs-num">Ahmedabad</span><span class="cs-label">Headquarters</span></div>
+        <div><span class="cs-num">2024</span><span class="cs-label">Founded</span></div>
+        <div><span class="cs-num">Series A</span><span class="cs-label">Stage · ₹22Cr raised</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why NyAI -->
+  <div class="section-dark2">
+    <div class="container">
+      <div class="reveal" style="max-width:760px;margin:0 auto;text-align:center;margin-bottom:3rem">
+        <span class="s-label" style="display:inline-block">Why NyAI</span>
+        <h2 class="s-h2">A genuine mission, not just a job</h2>
+      </div>
+      <div class="careers-values reveal">
+        <div class="cv-item"><div class="cv-icon">⚖️</div><h3 class="cv-h">Work that matters</h3><p class="cv-p">Every feature we ship has a direct impact on how Indian advocates research law, draft arguments, and serve their clients. The stakes are real.</p></div>
+        <div class="cv-item"><div class="cv-icon">🧠</div><h3 class="cv-h">Hard problems</h3><p class="cv-p">Building accurate, hallucination-resistant AI for a domain where errors have serious consequences. We work on genuinely difficult ML, search, and product problems.</p></div>
+        <div class="cv-item"><div class="cv-icon">🚀</div><h3 class="cv-h">Ownership & velocity</h3><p class="cv-p">Small team, big surface area. You'll own large pieces of the product and see your decisions in production within days, not quarters.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Open Roles -->
+  <div class="section-dark">
+    <div class="container">
+      <div class="reveal" style="margin-bottom:2.5rem">
+        <span class="s-label">Open Positions</span>
+        <h2 class="s-h2">7 open roles · Ahmedabad (Hybrid)</h2>
+      </div>
+      <div class="roles-grid reveal">
+
+        <!-- Role 1 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Engineering — AI / ML</div>
+            <div class="role-title">Senior AI/ML Engineer</div>
+            <div class="role-desc">Own the core inference pipeline and Indian law corpus training. Work on retrieval-augmented generation, citation grounding, and reducing hallucination rates in high-stakes legal contexts.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹30–55 LPA</span>
+              <span class="role-tag">4+ yrs exp</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Senior AI/ML Engineer')">Apply →</button>
+        </div>
+
+        <!-- Role 2 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Engineering — Backend</div>
+            <div class="role-title">Backend Engineer — Platform & Infra</div>
+            <div class="role-desc">Build and scale the APIs, data pipelines, and VPC deployment infrastructure that power NyAI for enterprise clients. Own reliability, performance, and security at the infrastructure layer.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹22–40 LPA</span>
+              <span class="role-tag">3+ yrs exp</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Backend Engineer')">Apply →</button>
+        </div>
+
+        <!-- Role 3 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Product</div>
+            <div class="role-title">Product Manager — Legal AI</div>
+            <div class="role-desc">Define and drive the roadmap for NyAI's core research and drafting products. Partner with engineers, legal experts, and enterprise clients to identify the highest-impact features and ship them fast.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹20–38 LPA</span>
+              <span class="role-tag">3+ yrs exp</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Product Manager')">Apply →</button>
+        </div>
+
+        <!-- Role 4 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Legal — Research & Quality</div>
+            <div class="role-title">Legal Research Lead</div>
+            <div class="role-desc">The quality bar for every NyAI output is set by lawyers, not engineers. Own accuracy QA, corpus curation, and work directly with the AI team to improve citation grounding across SC, HC, and tribunal judgments.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹12–22 LPA</span>
+              <span class="role-tag">LLB required</span>
+              <span class="role-tag">2+ yrs practice</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Legal Research Lead')">Apply →</button>
+        </div>
+
+        <!-- Role 5 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Sales & Partnerships</div>
+            <div class="role-title">Enterprise Account Executive</div>
+            <div class="role-desc">Own the full sales cycle for national law firms and large in-house legal teams. You'll be building relationships with senior partners and GCs, running technical evaluations, and closing high-value enterprise contracts.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad / Mumbai</span>
+              <span class="role-tag">₹15–28 LPA + commission</span>
+              <span class="role-tag">B2B SaaS exp preferred</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Enterprise Account Executive')">Apply →</button>
+        </div>
+
+        <!-- Role 6 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Customer Success</div>
+            <div class="role-title">Customer Success Manager</div>
+            <div class="role-desc">Ensure every NyAI client — from solo advocates to large firm teams — gets maximum value from the platform. Own onboarding, retention, expansion, and be the voice of the customer inside the product team.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹10–18 LPA</span>
+              <span class="role-tag">Legal or SaaS background</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Customer Success Manager')">Apply →</button>
+        </div>
+
+        <!-- Role 7 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Design</div>
+            <div class="role-title">Product Designer</div>
+            <div class="role-desc">Design the interfaces that India's top advocates use every day. Own end-to-end UX for new features — from first sketch to shipped product. Deep interest in how professionals work is more important than a portfolio of SaaS dashboards.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹14–26 LPA</span>
+              <span class="role-tag">2+ yrs product design</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Product Designer')">Apply →</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Perks — White section -->
+  <div class="section-white">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:3rem">
+        <span class="s-label-light" style="display:inline-block">Benefits</span>
+        <h2 class="s-h2-light">What we offer</h2>
+      </div>
+      <div class="perks-grid reveal">
+        <div class="perk-item"><div class="perk-icon">💰</div><h4 class="perk-h">Competitive Compensation</h4><p class="perk-p">Market-rate salaries with meaningful equity. We benchmark against Bangalore and Mumbai tech compensation.</p></div>
+        <div class="perk-item"><div class="perk-icon">🏥</div><h4 class="perk-h">Health Insurance</h4><p class="perk-p">Comprehensive health coverage for you and your immediate family. Dental and vision included.</p></div>
+        <div class="perk-item"><div class="perk-icon">📚</div><h4 class="perk-h">Learning Budget</h4><p class="perk-p">₹75,000/year for courses, conferences, and books. We fund bar exam prep and LLM applications for legal team members.</p></div>
+        <div class="perk-item"><div class="perk-icon">🏠</div><h4 class="perk-h">Flexible Work</h4><p class="perk-p">Hybrid-first culture. 3 days in office (Ahmedabad), rest is yours. No rigid 9-to-5. We care about output, not hours.</p></div>
+        <div class="perk-item"><div class="perk-icon">🌴</div><h4 class="perk-h">Unlimited PTO</h4><p class="perk-p">Generous leave policy with a minimum 15 days off per year, national holidays, and additional personal days.</p></div>
+        <div class="perk-item"><div class="perk-icon">⚡</div><h4 class="perk-h">Top-tier Equipment</h4><p class="perk-p">MacBook Pro, external monitor, and any tools you need to do your best work. Home office setup budget included.</p></div>
+        <div class="perk-item"><div class="perk-icon">🚀</div><h4 class="perk-h">Early Equity</h4><p class="perk-p">ESOP participation for all full-time employees. We're Series A — meaningful equity is still on the table.</p></div>
+        <div class="perk-item"><div class="perk-icon">🍱</div><h4 class="perk-h">Daily Meals</h4><p class="perk-p">Free lunch and snacks in the Ahmedabad office. Quarterly team offsite and regular team dinners.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Open application CTA -->
+  <div class="section-dark">
+    <div class="container">
+      <div class="careers-cta-box reveal">
+        <h3>Don't see a role that fits?</h3>
+        <p>We're always interested in exceptional people — lawyers, engineers, and product thinkers who believe in what we're building. Send us a note.</p>
+        <button id="careers-email-btn" style="background:var(--cream);color:var(--black);padding:0.875rem 2.25rem;border-radius:3px;font-size:0.9375rem;font-weight:500;cursor:pointer;font-family:var(--sans);border:none;transition:var(--t)">careers&#64;nyai.in &#8594;</button>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -233,26 +1690,26 @@
         <p class="footer-tagline">AI designed for legal and professional services. Built natively for the Indian legal system.</p>
       </div>
       <div class="footer-col"><h4>Platform</h4><ul>
-        <li><a href="platform.html">Research</a></li>
-        <li><a href="platform.html">Contracts</a></li>
-        <li><a href="platform.html">Due Diligence</a></li>
-        <li><a href="platform.html">Compliance</a></li>
+        <li><a href="#" onclick="showPage('platform')">Research</a></li>
+        <li><a href="#" onclick="showPage('platform')">Contracts</a></li>
+        <li><a href="#" onclick="showPage('platform')">Due Diligence</a></li>
+        <li><a href="#" onclick="showPage('platform')">Compliance</a></li>
       </ul></div>
       <div class="footer-col"><h4>Company</h4><ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="resources.html">Blog</a></li>
-        <li><button onclick="window.location.href='careers.html'">Careers</button></li>
+        <li><a href="#" onclick="showPage('about')">About</a></li>
+        <li><a href="#" onclick="showPage('resources')">Blog</a></li>
+        <li><button onclick="showPage('careers')">Careers</button></li>
         <li><button onclick="alert('Press enquiries: press@nyai.in')">Press</button></li>
       </ul></div>
       <div class="footer-col"><h4>Resources</h4><ul>
-        <li><a href="resources.html">Case Studies</a></li>
-        <li><a href="resources.html">Insights</a></li>
-        <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="security.html">Security</a></li>
+        <li><a href="#" onclick="showPage('resources')">Case Studies</a></li>
+        <li><a href="#" onclick="showPage('resources')">Insights</a></li>
+        <li><a href="#" onclick="showPage('pricing')">Pricing</a></li>
+        <li><a href="#" onclick="showPage('security')">Security</a></li>
       </ul></div>
       <div class="footer-col"><h4>Legal</h4><ul>
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="#" onclick="showPage('privacy')">Privacy Policy</a></li>
+        <li><a href="#" onclick="showPage('terms')">Terms of Service</a></li>
         <li><button onclick="alert('Bar Council of India Notice:\n\nNyAI is a legal research and drafting tool. It does not constitute legal advice and does not create an advocate-client relationship. All outputs must be independently verified before use in any court proceeding or legal opinion.')">Bar Council Notice</button></li>
         <li><button onclick="alert('Cookie Policy: NyAI uses only essential session cookies. No tracking or advertising cookies are used.')">Cookie Policy</button></li>
       </ul></div>
@@ -262,13 +1719,250 @@
       <div class="footer-bottom-links">
         <button onclick="alert('Follow @NyAI_India on Twitter / X')">Twitter / X</button>
         <button onclick="alert('Connect with NyAI on LinkedIn: linkedin.com/company/nyai-india')">LinkedIn</button>
-        <button onclick="window.location.href='chat.html'">Contact</button>
+        <button onclick="showPage('chat')">Contact</button>
       </div>
     </div>
   </div>
 </footer>
 
 
-<script src="app.js"></script>
+<script>
+(function() {
+'use strict';
+
+// ── All functions on window so inline handlers and dynamic HTML can call them ──
+
+var chatHistory = [];
+var isLoading = false;
+var tc = 0;
+
+var noFooterPages = ['chat', 'signin'];
+
+window.showPage = function(n) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  var t = document.getElementById('page-' + n);
+  if (!t) return;
+  t.classList.add('active');
+  window.scrollTo(0, 0);
+  var footer = document.getElementById('global-footer');
+  if (footer) footer.style.display = noFooterPages.indexOf(n) !== -1 ? 'none' : 'block';
+  document.querySelectorAll('.nav-links a').forEach(function(a) { a.classList.remove('active'); });
+  var navEl = document.getElementById('nav-' + n);
+  if (navEl) navEl.classList.add('active');
+  if (n === 'chat') setTimeout(function() { var inp = document.getElementById('chat-input'); if (inp) inp.focus(); }, 100);
+  checkReveal();
+  closeMob();
+  if (window.location.hash !== '#' + n) {
+    window.location.hash = n;
+  }
+};
+
+window.addEventListener('hashchange', function() {
+  var p = window.location.hash.substring(1) || 'home';
+  if (document.getElementById('page-' + p)) {
+    showPage(p);
+  }
+});
+
+window.toggleMobile = function() { document.getElementById('mobile-menu').classList.toggle('open'); };
+window.closeMob = function() { document.getElementById('mobile-menu').classList.remove('open'); };
+
+window.checkReveal = function() {
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    if (el.getBoundingClientRect().top < window.innerHeight - 60) el.classList.add('visible');
+  });
+};
+
+window.setActive = function(el) {
+  document.querySelectorAll('.cap-item').forEach(function(i) { i.classList.remove('active'); });
+  el.classList.add('active');
+};
+
+window.toggleFaq = function(el) {
+  var wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(f) { f.classList.remove('open'); });
+  if (!wasOpen) el.classList.add('open');
+};
+
+window.filterRes = function(cat, btn) {
+  document.querySelectorAll('.rf-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.rc').forEach(function(card) {
+    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+  });
+};
+
+window.subscribeNewsletter = function() {
+  var email = document.getElementById('newsletter-email').value.trim();
+  if (!email || email.indexOf('@') === -1) { alert('Please enter a valid email address.'); return; }
+  alert('Subscribed! You\'ll receive your first NyAI weekly digest next Monday.\n\nEmail: ' + email);
+  document.getElementById('newsletter-email').value = '';
+};
+
+window.applyRole = function(role) {
+  var email = prompt('Apply for: ' + role + '\n\nEnter your email address to receive the application form:');
+  if (!email) return;
+  if (email.indexOf('@') === -1) { alert('Please enter a valid email address.'); return; }
+  alert('Application received!\n\nRole: ' + role + '\nEmail: ' + email + '\n\nOur team will be in touch within 3 business days.\n\n— NyAI Talent Team');
+};
+
+window.handleSignin = function() {
+  var email = document.getElementById('signin-email').value.trim();
+  var pass = document.getElementById('signin-pass').value;
+  if (!email || email.indexOf('@') === -1) { alert('Please enter a valid email address.'); return; }
+  if (!pass || pass.length < 6) { alert('Please enter your password (min 6 characters).'); return; }
+  showPage('chat');
+};
+
+window.autoResize = function(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+};
+
+window.handleKey = function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+};
+
+window.sendSugg = function(btn) {
+  document.getElementById('chat-input').value = btn.textContent.trim();
+  sendMsg();
+};
+
+window.clearChat = function() {
+  chatHistory = [];
+  var msgs = document.getElementById('chat-msgs');
+  if (!msgs) return;
+  msgs.innerHTML = '<div class="chat-welcome" id="chat-welcome">' +
+    '<div class="cwl">NyAI</div>' +
+    '<p>Your AI legal research assistant for Indian law. Ask about judgments, statutes, regulations, contracts, or any legal question.</p>' +
+    '<div class="chat-sugg-wrap">' +
+    '<button class="chat-sugg" onclick="sendSugg(this)">What are the Section 29A eligibility criteria under IBC?</button>' +
+    '<button class="chat-sugg" onclick="sendSugg(this)">Explain SEBI insider trading regulations under PIT Regulations 2015</button>' +
+    '<button class="chat-sugg" onclick="sendSugg(this)">Key issues drafting a drag-along clause in an Indian SHA</button>' +
+    '</div></div>';
+};
+
+window.sendMsg = async function() {
+  if (isLoading) return;
+  var input = document.getElementById('chat-input');
+  var text = input.value.trim();
+  if (!text) return;
+  var w = document.getElementById('chat-welcome');
+  if (w) w.remove();
+  input.value = '';
+  input.style.height = 'auto';
+  addMsg(text, 'user');
+  chatHistory.push({ role: 'user', content: text });
+  isLoading = true;
+  document.getElementById('chat-send').disabled = true;
+  var tid = addTyping();
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'You are NyAI, an expert Indian legal research and drafting assistant. You are deeply knowledgeable about Indian statutes (Companies Act 2013, IBC 2016, IT Act 2000, SEBI regulations, FEMA, Income Tax Act, GST laws, CPC, CrPC, BNS, BNSS, BSA, Contract Act, Transfer of Property Act), Indian courts (Supreme Court of India, all 25 High Courts, NCLAT, SAT, ITAT, NCLT, TDSAT), and Indian regulatory bodies (SEBI, RBI, MCA, IRDAI, CCI, TRAI). Be precise, cite specific section numbers and case names, use **bold** for key references, structure complex answers with ## headings, flag risks, and remind users to verify citations before court use.',
+        messages: chatHistory
+      })
+    });
+    var data = await res.json();
+    removeTyping(tid);
+    if (data.content && data.content[0]) {
+      var reply = data.content[0].text;
+      chatHistory.push({ role: 'assistant', content: reply });
+      addMsg(reply, 'ai');
+    } else {
+      addMsg('I apologise — I encountered an issue. Please try again.', 'ai');
+    }
+  } catch(e) {
+    removeTyping(tid);
+    addMsg('Connection error — please try again.', 'ai');
+  }
+  isLoading = false;
+  document.getElementById('chat-send').disabled = false;
+};
+
+function addMsg(text, role) {
+  var msgs = document.getElementById('chat-msgs');
+  var d = document.createElement('div');
+  d.className = 'msg ' + role;
+  var av = document.createElement('div');
+  av.className = 'msg-av ' + role;
+  av.textContent = role === 'ai' ? 'N' : 'U';
+  var b = document.createElement('div');
+  b.className = 'msg-bubble ' + role;
+  b.innerHTML = text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/^### (.+)$/gm, '<h3 style="font-family:var(--serif);font-size:1.05rem;font-weight:500;margin:.75rem 0 .3rem;color:var(--cream)">$1</h3>')
+    .replace(/^## (.+)$/gm, '<h3 style="font-family:var(--serif);font-size:1.1rem;font-weight:500;margin:.875rem 0 .3rem;color:var(--cream)">$1</h3>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+  d.appendChild(av);
+  d.appendChild(b);
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addTyping() {
+  var id = 'ty-' + (++tc);
+  var msgs = document.getElementById('chat-msgs');
+  var d = document.createElement('div');
+  d.className = 'msg ai';
+  d.id = id;
+  d.innerHTML = '<div class="msg-av ai">N</div><div class="msg-bubble ai" style="padding:0"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  var el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+window.renameChat = function(btn, e) {
+  e.stopPropagation();
+  var chiText = btn.closest('.chi').querySelector('.chi-text');
+  var newName = prompt('Rename conversation:', chiText.textContent);
+  if (newName !== null && newName.trim() !== '') {
+    chiText.textContent = newName.trim();
+  }
+};
+
+window.deleteChat = function(btn, e) {
+  e.stopPropagation();
+  if (confirm('Delete this conversation?')) {
+    btn.closest('.chi').remove();
+  }
+};
+
+// ── INIT after DOM ready ──
+document.addEventListener('DOMContentLoaded', function() {
+  window.scrollTo(0, 0);
+  window.addEventListener('scroll', checkReveal);
+  setTimeout(checkReveal, 100);
+
+  // Careers email button
+  var ceb = document.getElementById('careers-email-btn');
+  if (ceb) {
+    ceb.addEventListener('click', function() {
+      window.location.href = 'mai' + 'lto:careers' + '@nyai.in';
+    });
+  }
+
+  // Initialize from hash or default to home
+  var initialPage = window.location.hash.substring(1) || 'home';
+  if (document.getElementById('page-' + initialPage)) {
+    showPage(initialPage);
+  } else {
+    showPage('home');
+  }
+});
+
+})();
+</script>
 </body>
 </html>
