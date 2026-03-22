@@ -30,7 +30,7 @@
   --nav-h:64px;
   --t:.22s ease;
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scrollbar-gutter:stable}
 body{font-family:var(--sans);background:var(--black);color:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button{cursor:pointer;font-family:var(--sans);border:none;background:none}
@@ -1488,6 +1488,30 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
   </div></div></div>
 </div>
 
+<!-- =================== BAR COUNCIL NOTICE =================== -->
+<div id="page-bar-council" class="page">
+  <div class="page-hero-dark">
+    <div class="phi"><span class="s-label">Compliance</span><h1 class="p-h1-dark">Bar Council of India<br>Legal Notice</h1><p class="p-sub-dark">Compliance under Rule 36 of the BCI Rules</p></div>
+  </div>
+  <div class="section-dark"><div class="container"><div class="legal-wrap" style="color:var(--cream3)">
+    <h3 style="color:var(--cream)">Compliance with BCI Rules</h3>
+    <p>NyAI is a technological research tool designed to assist legal professionals. In compliance with Rule 36 of the Bar Council of India Rules, which prohibits advocates from advertising or soliciting work, this platform is not intended to solicit clients or advertise the services of any specific legal practitioner.</p>
+    <p>Legal practitioners using NyAI are reminded of their obligation to ensure that AI-generated content is not used in a manner that violates BCI guidelines regarding professional conduct and etiquette. NyAI does not provide legal representation and is not a law firm.</p>
+  </div></div></div>
+</div>
+
+<!-- =================== COOKIES =================== -->
+<div id="page-cookies" class="page">
+  <div class="page-hero-white">
+    <div class="phi"><span class="s-label-light">Privacy</span><h1 class="p-h1-light">Cookie Policy</h1><p class="p-sub-light">Transparency regarding our data collection</p></div>
+  </div>
+  <div class="section-white"><div class="container"><div class="legal-wrap">
+    <h3>Essential Cookies Only</h3>
+    <p>NyAI uses only essential technical cookies necessary for the secure operation of our platform. We do not use third-party tracking, advertising, or behavioral profiling cookies.</p>
+    <p>Your session data and authentication tokens are stored locally to maintain your secure connection to our Indian data centers. By using this platform, you agree to the storage of these functional cookies.</p>
+  </div></div></div>
+</div>
+
 <!-- =================== CAREERS =================== -->
 <div id="page-careers" class="page">
 
@@ -1707,10 +1731,10 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
         <li><a href="#" onclick="showPage('security')">Security</a></li>
       </ul></div>
       <div class="footer-col"><h4>Legal</h4><ul>
-        <li><a href="#" onclick="showPage('privacy')">Privacy Policy</a></li>
-        <li><a href="#" onclick="showPage('terms')">Terms of Service</a></li>
-        <li><button onclick="alert('Bar Council of India Notice:\n\nNyAI is a legal research and drafting tool. It does not constitute legal advice and does not create an advocate-client relationship. All outputs must be independently verified before use in any court proceeding or legal opinion.')">Bar Council Notice</button></li>
-        <li><button onclick="alert('Cookie Policy: NyAI uses only essential session cookies. No tracking or advertising cookies are used.')">Cookie Policy</button></li>
+        <li><a href="javascript:void(0)" onclick="showPage('privacy')">Privacy Policy</a></li>
+        <li><a href="javascript:void(0)" onclick="showPage('terms')">Terms of Service</a></li>
+        <li><a href="javascript:void(0)" onclick="showPage('bar-council')">Bar Council Notice</a></li>
+        <li><a href="javascript:void(0)" onclick="showPage('cookies')">Cookie Policy</a></li>
       </ul></div>
     </div>
     <div class="footer-bottom">
@@ -1730,7 +1754,7 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
 'use strict';
 
 // ── VALID PAGES ──
-var PAGES = ['home','platform','pricing','resources','security','about','careers','signin','chat','privacy','terms'];
+var PAGES = ['home','platform','pricing','resources','security','about','signin','chat','privacy','terms','careers','bar-council','cookies'];
 var noFooterPages = ['chat','signin'];
 
 // ── ROUTING: hash-based so refresh stays on current page ──
@@ -1738,7 +1762,7 @@ window.showPage = function(pageId) {
   console.log('Navigating to:', pageId);
   try {
     // Basic validation
-    var validPages = ['home','platform','pricing','resources','security','about','careers','signin','chat','privacy','terms'];
+    var validPages = ['home','platform','pricing','resources','security','about','careers','signin','chat','privacy','terms','bar-council','cookies'];
     var targetId = pageId;
     if (validPages.indexOf(targetId) === -1) targetId = 'home';
     
@@ -1774,7 +1798,9 @@ window.showPage = function(pageId) {
       'signin': 'Sign In — NyAI',
       'chat': 'Chat Assistant — NyAI',
       'privacy': 'Privacy Policy — NyAI',
-      'terms': 'Terms of Service — NyAI'
+      'terms': 'Terms of Service — NyAI',
+      'bar-council': 'Bar Council Notice — NyAI',
+      'cookies': 'Cookie Policy — NyAI'
     };
     document.title = pageTitles[targetId] || 'NyAI';
 
@@ -1785,13 +1811,24 @@ window.showPage = function(pageId) {
       }
     } catch(hashErr) {}
 
-    // 6. UI Toggles (Footer, Nav Right)
+    // 6. UI Toggles (Footer Visibility - Nav remains consistent)
     var footer = document.getElementById('global-footer');
     var isChatOrSignin = (targetId === 'chat' || targetId === 'signin');
     if (footer) footer.style.display = isChatOrSignin ? 'none' : 'block';
     
+    // Ensure Navbar structure remains exactly the same to prevent shifts
     var navRight = document.querySelector('.nav-right');
-    if (navRight) navRight.style.display = isChatOrSignin ? 'none' : 'flex';
+    if (navRight) {
+        // We keep it visible or hidden via opacity/pointer-events instead of display:none
+        // to prevent the centered nav-links from shifting horizontally.
+        if (targetId === 'chat' || targetId === 'signin') {
+            navRight.style.opacity = '0';
+            navRight.style.pointerEvents = 'none';
+        } else {
+            navRight.style.opacity = '1';
+            navRight.style.pointerEvents = 'auto';
+        }
+    }
 
     // 7. Nav Links Active State
     document.querySelectorAll('.nav-links a').forEach(function(a) { 
