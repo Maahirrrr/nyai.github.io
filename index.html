@@ -117,11 +117,10 @@ button{cursor:pointer;font-family:var(--sans);border:none;background:none}
 .cap-item-name{font-family:var(--serif);font-size:clamp(1.375rem,2.5vw,2.375rem);font-weight:500;color:var(--cream3);transition:var(--t);line-height:1}
 .cap-item:hover .cap-item-name,.cap-item.active .cap-item-name{color:var(--white)}
 .cap-item-right{display:flex;align-items:center;gap:1rem;flex-shrink:0}
-.cap-item-btn{font-size:0.75rem;font-weight:500;color:var(--cream3);background:transparent;border:1px solid var(--border);padding:0.375rem 0.875rem;border-radius:2rem;transition:var(--t);cursor:pointer;font-family:var(--sans);opacity:0}
-.cap-item.active .cap-item-btn,.cap-item:hover .cap-item-btn{opacity:1}
-.cap-item-btn:hover{color:var(--cream);border-color:var(--cream3)}
-.cap-arrow{color:var(--cream3);font-size:0.875rem;transition:var(--t);opacity:0}
-.cap-item:hover .cap-arrow,.cap-item.active .cap-arrow{opacity:1;color:var(--cream)}
+.cap-item-btn{font-size:0.75rem;font-weight:500;color:var(--cream3);background:transparent;border:1px solid var(--border);padding:0.375rem 0.875rem;border-radius:2rem;transition:var(--t);cursor:pointer;font-family:var(--sans);opacity:1}
+.cap-item.active .cap-item-btn,.cap-item:hover .cap-item-btn{border-color:var(--cream3);color:var(--cream)}
+.cap-arrow{color:var(--cream3);font-size:0.875rem;transition:var(--t);opacity:1}
+.cap-item:hover .cap-arrow,.cap-item.active .cap-arrow{color:var(--cream)}
 
 /* QUOTE */
 #quote-section{background:var(--offwhite);padding:8rem 0;border-top:1px solid var(--lightborder)}
@@ -1741,20 +1740,46 @@ window.showPage = function(n) {
   var t = document.getElementById('page-' + n);
   if (!t) return;
   t.classList.add('active');
-  window.scrollTo(0, 0);
-  // Update URL hash - wrapped in try/catch for sandboxed iframe environments
+  
+  // Instant scroll to top for page changes
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Update Document Title
+  var titleMap = {
+    'home': 'NyAI — Legal AI for India',
+    'platform': 'Platform — NyAI',
+    'pricing': 'Pricing — NyAI',
+    'resources': 'Resources — NyAI',
+    'security': 'Security — NyAI',
+    'about': 'About — NyAI',
+    'careers': 'Careers — NyAI',
+    'signin': 'Sign In — NyAI',
+    'chat': 'Chat Assistant — NyAI',
+    'privacy': 'Privacy Policy — NyAI',
+    'terms': 'Terms of Service — NyAI'
+  };
+  document.title = titleMap[n] || 'NyAI';
+
+  // Update URL hash
   try {
     if (window.location.hash !== '#' + n) {
       history.pushState(null, '', '#' + n);
     }
-  } catch(e) {
-    // Silently ignore SecurityError in sandboxed iframes (e.g. preview environments)
-  }
+  } catch(e) {}
+
+  // Footer & Nav Visibility
   var footer = document.getElementById('global-footer');
   if (footer) footer.style.display = noFooterPages.indexOf(n) !== -1 ? 'none' : 'block';
+  
+  var navRight = document.querySelector('.nav-right');
+  if (navRight) {
+    navRight.style.display = (n === 'chat' || n === 'signin') ? 'none' : 'flex';
+  }
+
   document.querySelectorAll('.nav-links a').forEach(function(a) { a.classList.remove('active'); });
   var navEl = document.getElementById('nav-' + n);
   if (navEl) navEl.classList.add('active');
+  
   if (n === 'chat') setTimeout(function() { var inp = document.getElementById('chat-input'); if (inp) inp.focus(); }, 100);
   checkReveal();
   closeMob();
