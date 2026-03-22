@@ -464,8 +464,52 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 /* ── RESPONSIVE ── */
 
 /* Tablet: 768px – 1024px */
+
+
+/* Mobile: ≤ 640px */
+
+
+/* Very small: ≤ 380px */
+@media(max-width:380px){
+  .hero-h1{font-size:2.5rem}
+  .p-h1-dark,.p-h1-light{font-size:1.75rem}
+  .cap-item-name{font-size:1.25rem}
+  .cert-grid{grid-template-columns:1fr}
+}
+
+/* ── MOBILE TOUCH & SCROLL IMPROVEMENTS ── */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-overflow-scrolling:touch}
+button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+
+/* Ensure tap targets are at least 44px — hamburger excluded (hidden on desktop) */
+.nav-cta,.nav-signin,.hero-btn,.chat-sb,.chat-sugg,
+.cap-item-btn,.pc-btn,.rf-btn,.role-apply,.signin-btn,.signin-google{
+  min-height:44px;display:inline-flex;align-items:center;justify-content:center
+}
+/* hamburger: hidden on desktop, shown only inside mobile media query */
+.hamburger{display:none !important}
+
+.chat-sb{min-height:44px;min-width:44px;width:44px;height:44px}
+
+/* Safe area insets for notched phones */
+#nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+.nav-inner{padding-left:max(1.25rem,env(safe-area-inset-left));padding-right:max(1.25rem,env(safe-area-inset-right))}
+.chat-input-area{padding-bottom:max(1rem,env(safe-area-inset-bottom))}
+.mobile-menu{padding-bottom:max(2rem,env(safe-area-inset-bottom))}
+
+/* Smooth scroll on iOS */
+.chat-msgs,.mobile-menu,.chat-hist{-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+
+/* Fix 100vh on mobile browsers (address bar) */
+#hero{height:100svh;min-height:600px}
+#page-chat.active{height:100svh}
+
+/* Fix platform feature images on mobile */
+
+
 @media(max-width:1024px){
-  /* Grids → single column */
+/* Grids → single column */
   .intro-inner,.cap-inner,.quote-inner,.stats-inner,
   .sec-layout,.sec-arch-grid,.about-story-grid{grid-template-columns:1fr;gap:3rem}
   .cases-grid,.resources-grid,.pricing-grid,.sec-features-grid,
@@ -498,11 +542,11 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
   .stats-img{height:280px}
   .cap-inner{grid-template-columns:1fr;gap:3rem}
   .cap-heading{max-width:100%}
+.hamburger{display:flex !important;min-height:44px;min-width:44px;align-items:center;justify-content:center}
 }
 
-/* Mobile: ≤ 640px */
 @media(max-width:640px){
-  /* Container padding */
+/* Container padding */
   .container{padding:0 1.25rem}
   .phi{padding:0 1.25rem}
   /* Nav */
@@ -607,49 +651,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
   /* Final CTA */
   .final-cta-inner h2{font-size:clamp(1.75rem,5vw,2.75rem)}
   .final-cta-inner{padding:0 1.25rem}
-}
-
-/* Very small: ≤ 380px */
-@media(max-width:380px){
-  .hero-h1{font-size:2.5rem}
-  .p-h1-dark,.p-h1-light{font-size:1.75rem}
-  .cap-item-name{font-size:1.25rem}
-  .cert-grid{grid-template-columns:1fr}
-}
-
-/* ── MOBILE TOUCH & SCROLL IMPROVEMENTS ── */
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{-webkit-overflow-scrolling:touch}
-button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-
-/* Ensure tap targets are at least 44px — hamburger excluded (hidden on desktop) */
-.nav-cta,.nav-signin,.hero-btn,.chat-sb,.chat-sugg,
-.cap-item-btn,.pc-btn,.rf-btn,.role-apply,.signin-btn,.signin-google{
-  min-height:44px;display:inline-flex;align-items:center;justify-content:center
-}
-/* hamburger: hidden on desktop, shown only inside mobile media query */
-.hamburger{display:none !important}
-@media(max-width:1024px){
-  .hamburger{display:flex !important;min-height:44px;min-width:44px;align-items:center;justify-content:center}
-}
-.chat-sb{min-height:44px;min-width:44px;width:44px;height:44px}
-
-/* Safe area insets for notched phones */
-#nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
-.nav-inner{padding-left:max(1.25rem,env(safe-area-inset-left));padding-right:max(1.25rem,env(safe-area-inset-right))}
-.chat-input-area{padding-bottom:max(1rem,env(safe-area-inset-bottom))}
-.mobile-menu{padding-bottom:max(2rem,env(safe-area-inset-bottom))}
-
-/* Smooth scroll on iOS */
-.chat-msgs,.mobile-menu,.chat-hist{-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
-
-/* Fix 100vh on mobile browsers (address bar) */
-#hero{height:100svh;min-height:600px}
-#page-chat.active{height:100svh}
-
-/* Fix platform feature images on mobile */
-@media(max-width:640px){
-  .pf-img img{object-position:center center}
+.pf-img img{object-position:center center}
   /* Prevent text overflow on very small screens */
   .hero-h1,.p-h1-dark,.p-h1-light,.s-h2,.s-h2-light{word-break:break-word;overflow-wrap:break-word}
   /* Role cards on mobile */
@@ -1071,7 +1073,7 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
               <li>API access for workflow automation</li>
               <li>24/7 dedicated relationship manager</li>
             </ul>
-            <button class="pc-btn pc-btn-outline" onclick="alert('Contact our enterprise team: sales@nyai.in\n\nWe\'ll schedule a scoping call within 24 hours.')">Contact Sales</button>
+            <button class="pc-btn pc-btn-outline" onclick="alert('Contact our enterprise team: sales@nyai.in\n\nWe will schedule a scoping call within 24 hours.')">Contact Sales</button>
           </div>
         </div>
 
@@ -1460,11 +1462,11 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
     <h3>3. Indian Data Residency</h3>
     <p>All data is processed within the sovereign territory of India on MeitY-empanelled cloud infrastructure (Mumbai/Pune AZs), ensuring compliance with Section 16 of the DPDP Act regarding cross-border transfer restrictions.</p>
     <h3>4. Your Rights</h3>
-    <p>You have the right to access, correct, and erase any personal data we hold. Submit requests to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8d8dac1dec9cbd1e8c6d1c9c186c1c6">[email&#160;protected]</a>. We respond within 72 hours for standard requests and 24 hours for urgent matters.</p>
+    <p>You have the right to access, correct, and erase any personal data we hold. Submit requests to <span>privacy&#64;nyai.in</span>. We respond within 72 hours for standard requests and 24 hours for urgent matters.</p>
     <h3>5. Information Security</h3>
     <p>We implement AES-256 encryption at rest, TLS 1.3 in transit, hardware MFA for all production access, and immutable audit logs. We hold SOC 2 Type II and ISO 27001:2022 certifications.</p>
     <h3>6. Contact</h3>
-    <p>Data Protection Officer: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f296829db29c8b939bdc9b9c">[email&#160;protected]</a> · NyAI Technologies Pvt. Ltd. · Ahmedabad, Gujarat · CIN: U72200GJ2024PTC000001</p>
+    <p>Data Protection Officer: <span>dpo&#64;nyai.in</span> · NyAI Technologies Pvt. Ltd. · Ahmedabad, Gujarat · CIN: U72200GJ2024PTC000001</p>
   </div></div></div>
 </div>
 
@@ -1824,7 +1826,9 @@ var isLoading = false;
 var tc = 0;
 
 // Conversations stored as array: [{id, title, messages:[]}]
-var conversations = JSON.parse(localStorage.getItem('nyai_convs') || '[]');
+var conversations;
+try { conversations = JSON.parse(localStorage.getItem('nyai_convs') || '[]'); }
+catch(e) { conversations = []; }
 var activeConvId = null;
 
 // Seed sample conversations if none exist
@@ -1839,7 +1843,8 @@ if (conversations.length === 0) {
 }
 
 function saveConvs() {
-  localStorage.setItem('nyai_convs', JSON.stringify(conversations));
+  try { localStorage.setItem('nyai_convs', JSON.stringify(conversations)); }
+  catch(e) { /* private browsing or storage full */ }
 }
 
 function getConv(id) {
@@ -2016,7 +2021,7 @@ window.sendMsg = async function() {
   if (activeConvId) {
     var conv = getConv(activeConvId);
     if (conv && (conv.title === 'New conversation' || conv.title === '')) {
-      conv.title = text.length > 42 ? text.slice(0, 42) + '…' : text;
+      conv.title = text.length > 42 ? text.slice(0, 42) + '...' : text;
       saveConvs();
       renderSidebar();
     }
