@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NyAI — Legal AI for India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pillar/column top -->
+        <rect x="11" y="2" width="2" height="2" fill="currentColor" rx="0.5"/>
+        <!-- Horizontal beam -->
+        <rect x="3" y="4" width="18" height="1.5" fill="currentColor" rx="0.75"/>
+        <!-- Center pole -->
+        <rect x="11.25" y="4" width="1.5" height="13" fill="currentColor"/>
+        <!-- Left scale chain -->
+        <line x1="6" y1="5.5" x2="6" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right scale chain -->
+        <line x1="18" y1="5.5" x2="18" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Left pan -->
+        <path d="M3.5 10 Q6 13.5 8.5 10" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Right pan (slightly lower to suggest weighing) -->
+        <path d="M15.5 11 Q18 14.5 20.5 11" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Left arm -->
+        <line x1="6" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right arm -->
+        <line x1="12" y1="5.5" x2="18" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Base -->
+        <rect x="9" y="17" width="6" height="1.25" fill="currentColor" rx="0.5"/>
+        <rect x="7.5" y="18.25" width="9" height="1.5" fill="currentColor" rx="0.75"/>
+      </svg>
+      NyAI
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="platform.html" id="nav-platform">Platform</a>
+      <a href="pricing.html" id="nav-pricing">Pricing</a>
+      <a href="resources.html" id="nav-resources">Resources</a>
+      <a href="security.html" id="nav-security">Security</a>
+      <a href="about.html" id="nav-about" class="active">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-signin" onclick="window.location.href='signin.html'">Sign in</button>
+      <button class="nav-cta" onclick="window.location.href='chat.html'">Request Demo</button>
+    </div>
+    <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="platform.html" onclick="closeMob()">Platform</a>
+  <a href="pricing.html" onclick="closeMob()">Pricing</a>
+  <a href="resources.html" onclick="closeMob()">Resources</a>
+  <a href="security.html" onclick="closeMob()">Security</a>
+  <a href="about.html" onclick="closeMob()">About</a>
+  <a href="signin.html" onclick="closeMob()">Sign in</a>
+  <a href="chat.html" onclick="closeMob()" style="color:var(--cream2)">Request Demo →</a>
+</div>
+
+<!-- =================== ABOUT =================== -->
+<div id="page-about" class="page active">
+
+  <div class="about-hero">
+    <div class="about-hero-bg">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1800&q=85&auto=format&fit=crop" alt="Law firm" onerror="this.style.opacity='0'"/>
+    </div>
+    <div class="about-hero-inner">
+      <blockquote>"Access to quality legal intelligence should not be a privilege reserved for the largest firms. NyAI exists to democratise professional-class AI for every Indian practitioner."</blockquote>
+      <cite>— Founders, NyAI Technologies · Ahmedabad, India · 2024</cite>
+    </div>
+  </div>
+
+  <!-- White: Story -->
+  <div class="section-white">
+    <div class="container">
+      <div class="about-story-grid reveal">
+        <div>
+          <span class="s-label-light">Our Story</span>
+          <h2 class="s-h2-light">Why we built NyAI</h2>
+          <p style="color:var(--lightmuted);line-height:1.85;font-size:0.9375rem;font-weight:300;margin-top:1.375rem">India has over 1.7 million advocates and thousands of in-house legal teams. Yet the tools available to them were never designed for the unique complexity of Indian law — foreign-built software adapted for a system it fundamentally doesn't understand.</p>
+          <p style="color:var(--lightmuted);line-height:1.85;font-size:0.9375rem;font-weight:300;margin-top:1.125rem">The Indian legal system is vast and deeply layered: 25 High Courts with distinct practices and local rules, a Supreme Court corpus spanning decades, hundreds of specialised tribunals, and a constantly evolving regulatory framework across SEBI, RBI, MCA, IRDAI, CCI, and more. International AI products simply don't understand this landscape.</p>
+          <p style="color:var(--lightmuted);line-height:1.85;font-size:0.9375rem;font-weight:300;margin-top:1.125rem">NyAI was founded in 2024 by lawyers, AI researchers, and product builders from Ahmedabad who set out to change this. We built from first principles — curating Indian law datasets, training models on Indian legal reasoning, and designing workflows around how Indian practitioners actually work.</p>
+        </div>
+        <div class="about-story-img">
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=900&q=85&auto=format&fit=crop" alt="NyAI office" onerror="this.style.opacity='0'"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark: Team -->
+  <div class="section-dark2">
+    <div class="container">
+      <div class="reveal" style="margin-bottom:3rem">
+        <span class="s-label">Leadership</span>
+        <h2 class="s-h2">Built by lawyers and engineers</h2>
+      </div>
+      <div class="team-grid reveal">
+        <div class="tc"><div class="tc-av">MK</div><div class="tc-name">Mahir Kadia</div><div class="tc-role">Co-Founder & CEO</div><div class="tc-bio">Drives product vision and growth strategy. Previously in venture-backed startups and legal technology. Deep interest in AI for access to justice.</div></div>
+        <div class="tc"><div class="tc-av">MM</div><div class="tc-name">Mahek Maradiya</div><div class="tc-role">Co-Founder & CFO</div><div class="tc-bio">Manages operations, finance, and enterprise partnerships. Background in corporate finance and technology sector growth.</div></div>
+        <div class="tc"><div class="tc-av">TN</div><div class="tc-name">Tirth Nagar</div><div class="tc-role">Co-Founder</div><div class="tc-bio">Leads technical architecture and AI model development. Expertise in LLMs, information retrieval, and building scalable AI systems for professional applications.</div></div>
+        <div class="tc"><div class="tc-av">NK</div><div class="tc-name">Neha Kapoor</div><div class="tc-role">Head of Legal Products</div><div class="tc-bio">Former advocate, High Court of Gujarat. Ensures NyAI's outputs meet the standards of actual Indian legal practice. LLM, University of Cambridge.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- White: Values -->
+  <div class="section-white">
+    <div class="container">
+      <div class="reveal text-center" style="margin-bottom:3rem;text-align:center">
+        <span class="s-label-light" style="display:inline-block">Values</span>
+        <h2 class="s-h2-light">What we stand for</h2>
+      </div>
+      <div class="values-grid reveal">
+        <div class="vc"><div class="vc-icon">⚖️</div><h3 class="vc-h">Legal Accuracy First</h3><p class="vc-p">Every answer is cited. We'd rather acknowledge uncertainty than hallucinate a judgment. Accuracy is non-negotiable when the stakes are someone's liberty or livelihood.</p></div>
+        <div class="vc"><div class="vc-icon">🇮🇳</div><h3 class="vc-h">Built for India</h3><p class="vc-p">Not adapted. Not translated. Purpose-built. We think in Indian legal categories, BNS provisions, HC local rules, and the regulatory language of SEBI and RBI circulars.</p></div>
+        <div class="vc"><div class="vc-icon">🔒</div><h3 class="vc-h">Client Confidentiality</h3><p class="vc-p">Advocate-client privilege is sacred. Zero retention by default. You control what NyAI remembers — and you can delete it all in one click at any time.</p></div>
+        <div class="vc"><div class="vc-icon">🌐</div><h3 class="vc-h">Access for All</h3><p class="vc-p">From solo advocates in Ahmedabad to national firms in Mumbai — every Indian legal professional deserves tools as powerful as those used by the largest firms.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark: Milestones -->
+  <div class="section-dark">
+    <div class="container" style="max-width:800px">
+      <div class="reveal" style="margin-bottom:3rem">
+        <span class="s-label">Timeline</span>
+        <h2 class="s-h2">Our milestones</h2>
+      </div>
+      <div class="milestones reveal">
+        <div class="milestone"><div class="ms-year">2024</div><div class="ms-text"><h4>Founded in Ahmedabad</h4><p>NyAI Technologies incorporated. Initial team of 6 begins building the Indian law corpus and training the first research model.</p></div></div>
+        <div class="milestone"><div class="ms-year">2024</div><div class="ms-text"><h4>First 100 Users</h4><p>Beta launch with invitation-only access to advocates in Gujarat and Maharashtra. First paying customers within 3 months of launch.</p></div></div>
+        <div class="milestone"><div class="ms-year">2025</div><div class="ms-text"><h4>Series A Funding</h4><p>Raised ₹22 crore from leading Indian venture funds to accelerate corpus expansion, enterprise features, and team growth.</p></div></div>
+        <div class="milestone"><div class="ms-year">2025</div><div class="ms-text"><h4>Enterprise Launch</h4><p>First national law firm deployments. Private VPC architecture launched. SOC 2 Type II certification achieved. 1,000+ active users.</p></div></div>
+        <div class="milestone"><div class="ms-year">2026</div><div class="ms-text"><h4>Scale & Expansion</h4><p>100,000+ professionals, 1,000+ firms. BNS/BNSS/BSA modules launched. NyAI named India's leading legal AI platform by multiple industry publications.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-off" style="text-align:center">
+    <div class="container">
+      <h2 class="s-h2-light" style="margin-bottom:0.875rem">We're building the future of Indian jurisprudence</h2>
+      <p style="color:var(--lightmuted);margin-bottom:2rem;font-size:0.9rem;font-weight:300">Join a team on a genuine mission. Open roles in AI engineering, legal research, and product.</p>
+      <button onclick="window.location.href='careers.html'" style="background:var(--black);color:var(--white);padding:.875rem 2.25rem;border-radius:3px;font-size:.9375rem;font-weight:500;cursor:pointer;font-family:var(--sans);border:none;transition:var(--t)">View Open Roles →</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- GLOBAL FOOTER -->
+<footer id="global-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">NyAI</div>
+        <p class="footer-tagline">AI designed for legal and professional services. Built natively for the Indian legal system.</p>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul>
+        <li><a href="platform.html">Research</a></li>
+        <li><a href="platform.html">Contracts</a></li>
+        <li><a href="platform.html">Due Diligence</a></li>
+        <li><a href="platform.html">Compliance</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resources.html">Blog</a></li>
+        <li><button onclick="window.location.href='careers.html'">Careers</button></li>
+        <li><button onclick="alert('Press enquiries: press@nyai.in')">Press</button></li>
+      </ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul>
+        <li><a href="resources.html">Case Studies</a></li>
+        <li><a href="resources.html">Insights</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><button onclick="alert('Bar Council of India Notice:\n\nNyAI is a legal research and drafting tool. It does not constitute legal advice and does not create an advocate-client relationship. All outputs must be independently verified before use in any court proceeding or legal opinion.')">Bar Council Notice</button></li>
+        <li><button onclick="alert('Cookie Policy: NyAI uses only essential session cookies. No tracking or advertising cookies are used.')">Cookie Policy</button></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NyAI Technologies Pvt. Ltd. · CIN: U72200GJ2024PTC000001 · Ahmedabad, Gujarat</span>
+      <div class="footer-bottom-links">
+        <button onclick="alert('Follow @NyAI_India on Twitter / X')">Twitter / X</button>
+        <button onclick="alert('Connect with NyAI on LinkedIn: linkedin.com/company/nyai-india')">LinkedIn</button>
+        <button onclick="window.location.href='chat.html'">Contact</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>

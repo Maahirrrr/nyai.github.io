@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NyAI — Legal AI for India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pillar/column top -->
+        <rect x="11" y="2" width="2" height="2" fill="currentColor" rx="0.5"/>
+        <!-- Horizontal beam -->
+        <rect x="3" y="4" width="18" height="1.5" fill="currentColor" rx="0.75"/>
+        <!-- Center pole -->
+        <rect x="11.25" y="4" width="1.5" height="13" fill="currentColor"/>
+        <!-- Left scale chain -->
+        <line x1="6" y1="5.5" x2="6" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right scale chain -->
+        <line x1="18" y1="5.5" x2="18" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Left pan -->
+        <path d="M3.5 10 Q6 13.5 8.5 10" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Right pan (slightly lower to suggest weighing) -->
+        <path d="M15.5 11 Q18 14.5 20.5 11" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Left arm -->
+        <line x1="6" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right arm -->
+        <line x1="12" y1="5.5" x2="18" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Base -->
+        <rect x="9" y="17" width="6" height="1.25" fill="currentColor" rx="0.5"/>
+        <rect x="7.5" y="18.25" width="9" height="1.5" fill="currentColor" rx="0.75"/>
+      </svg>
+      NyAI
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="platform.html" id="nav-platform">Platform</a>
+      <a href="pricing.html" id="nav-pricing" class="active">Pricing</a>
+      <a href="resources.html" id="nav-resources">Resources</a>
+      <a href="security.html" id="nav-security">Security</a>
+      <a href="about.html" id="nav-about">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-signin" onclick="window.location.href='signin.html'">Sign in</button>
+      <button class="nav-cta" onclick="window.location.href='chat.html'">Request Demo</button>
+    </div>
+    <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="platform.html" onclick="closeMob()">Platform</a>
+  <a href="pricing.html" onclick="closeMob()">Pricing</a>
+  <a href="resources.html" onclick="closeMob()">Resources</a>
+  <a href="security.html" onclick="closeMob()">Security</a>
+  <a href="about.html" onclick="closeMob()">About</a>
+  <a href="signin.html" onclick="closeMob()">Sign in</a>
+  <a href="chat.html" onclick="closeMob()" style="color:var(--cream2)">Request Demo →</a>
+</div>
+
+<!-- =================== PRICING =================== -->
+<div id="page-pricing" class="page active">
+
+  <div class="page-hero-white">
+    <div class="phi" style="text-align:center;max-width:680px;margin:0 auto">
+      <span class="s-label-light" style="display:inline-block">Pricing</span>
+      <h1 class="p-h1-light">Professional AI for every Indian practice</h1>
+      <p class="p-sub-light" style="margin:1rem auto 0">Transparent pricing designed for independent advocates, growing chambers, and national law firms. Cancel anytime.</p>
+    </div>
+  </div>
+
+  <div class="section-dark">
+    <div class="container">
+      <div class="pricing-wrap">
+        <div class="pricing-grid reveal">
+          <div class="pc">
+            <div class="pc-plan">Individual Advocate</div>
+            <div class="pc-amt">₹1,999</div>
+            <div class="pc-per">per month · billed yearly (₹23,988/yr)</div>
+            <p class="pc-desc">For solo practitioners getting started with AI-powered research and basic contract tools.</p>
+            <ul class="pc-feats">
+              <li>Bharat-Search: All SC & HC Judgments</li>
+              <li>BNS / BNSS / BSA Comparative Engine</li>
+              <li>AI Gavel: Professional Research Assistant</li>
+              <li>5 Contract Analysis documents per month</li>
+              <li>NyAI Chat — unlimited queries</li>
+              <li>PDF citation export</li>
+              <li>MeitY-approved Indian data residency</li>
+            </ul>
+            <button class="pc-btn pc-btn-outline" onclick="window.location.href='chat.html'">Start Free Trial</button>
+          </div>
+          <div class="pc pop">
+            <div class="pc-tag">Most Popular</div>
+            <div class="pc-plan">Professional Chambers</div>
+            <div class="pc-amt">₹4,999</div>
+            <div class="pc-per">per month · billed yearly (₹59,988/yr)</div>
+            <p class="pc-desc">For growing practices needing full research depth, contract automation, and team collaboration.</p>
+            <ul class="pc-feats">
+              <li>Everything in Individual plan</li>
+              <li>Unlimited contract review & redlining</li>
+              <li>SC Writ / SLP drafting AI</li>
+              <li>Legal entity risk extraction from MCA</li>
+              <li>Multi-user workspace (up to 5 seats)</li>
+              <li>Case status & cause list tracking</li>
+              <li>Regulatory alerts (SEBI, RBI, MCA)</li>
+              <li>Priority support & onboarding</li>
+            </ul>
+            <button class="pc-btn pc-btn-light" onclick="window.location.href='chat.html'">Start Free Trial</button>
+          </div>
+          <div class="pc">
+            <div class="pc-plan">National Firm / Corporate</div>
+            <div class="pc-amt" style="font-size:2rem;line-height:1.2;padding-top:.375rem">Custom<br>Enterprise</div>
+            <div class="pc-per">volume pricing · dedicated deployment</div>
+            <p class="pc-desc">For large law firms and in-house teams requiring enterprise security, custom integrations, and dedicated infrastructure.</p>
+            <ul class="pc-feats">
+              <li>Everything in Professional plan</li>
+              <li>Private dedicated VPC architecture</li>
+              <li>SCC / Manupatra internal integration</li>
+              <li>SSO, IAM & full governance audit logs</li>
+              <li>Custom fine-tuned LLM for firm styles</li>
+              <li>API access for workflow automation</li>
+              <li>24/7 dedicated relationship manager</li>
+            </ul>
+            <button class="pc-btn pc-btn-outline" onclick="alert('Contact our enterprise team: sales@nyai.in\n\nWe\'ll schedule a scoping call within 24 hours.')">Contact Sales</button>
+          </div>
+        </div>
+
+        <div class="compare-wrap reveal">
+          <h3>Compare plans</h3>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:38%">Feature</th>
+                <th style="text-align:center">Individual</th>
+                <th style="text-align:center">Professional</th>
+                <th style="text-align:center">Enterprise</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>NyAI Chat queries</td><td style="text-align:center">Unlimited</td><td style="text-align:center">Unlimited</td><td style="text-align:center">Unlimited</td></tr>
+              <tr><td>SC + all 25 HC corpus</td><td style="text-align:center" class="cky">✓</td><td style="text-align:center" class="cky">✓</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>Contract review</td><td style="text-align:center">5/month</td><td style="text-align:center" class="cky">✓ Unlimited</td><td style="text-align:center" class="cky">✓ Unlimited</td></tr>
+              <tr><td>Due diligence workflows</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>Team workspace</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center">5 seats</td><td style="text-align:center">Unlimited</td></tr>
+              <tr><td>Regulatory alerts</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>SCC / Manupatra integration</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>API access</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>Private VPC deployment</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td></tr>
+              <tr><td>Custom LLM fine-tuning</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="ckn">—</td><td style="text-align:center" class="cky">✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- FAQs -->
+        <div class="pricing-faq reveal">
+          <h3 style="font-family:var(--serif);font-size:1.875rem;font-weight:500;color:var(--cream);text-align:center;margin-bottom:2.5rem">Frequently Asked Questions</h3>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>Is there a free trial available?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">Yes — all plans include a 14-day free trial with full access, no credit card required. You can upgrade, downgrade or cancel at any time during the trial.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>Is my client data safe with NyAI?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">Absolutely. NyAI operates under a Zero Retention policy by default — your queries and documents are processed in memory and never stored. All data is hosted on MeitY-empanelled infrastructure within India. Enterprise clients get their own private VPC with no data ever touching shared infrastructure.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>Can I use NyAI for citations in court filings?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">NyAI's citations should always be verified against official SCC, Manupatra, or Gazette records before use in any court filing. NyAI is a research aid that significantly accelerates the process — but independent verification remains the advocate's responsibility under BCI professional conduct rules.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>What Indian courts and statutes are covered?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">NyAI covers all Supreme Court judgments, all 25 High Courts, NCLAT, NCLT, SAT, ITAT, TDSAT, and major tribunals. Statutes include all Central Acts, the BNS/BNSS/BSA, Companies Act, IBC, Income Tax Act, GST laws, FEMA, SEBI regulations, and more. The corpus is updated weekly.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>How does billing work for teams?</span><span class="faq-icon">+</span></div>
+            <div class="faq-a">Professional Chambers is billed per workspace (up to 5 users) at a flat monthly rate. Enterprise pricing is custom and based on number of seats, deployment type, and integration requirements. All plans can be billed monthly or annually (annual saves 20%).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- GLOBAL FOOTER -->
+<footer id="global-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">NyAI</div>
+        <p class="footer-tagline">AI designed for legal and professional services. Built natively for the Indian legal system.</p>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul>
+        <li><a href="platform.html">Research</a></li>
+        <li><a href="platform.html">Contracts</a></li>
+        <li><a href="platform.html">Due Diligence</a></li>
+        <li><a href="platform.html">Compliance</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resources.html">Blog</a></li>
+        <li><button onclick="window.location.href='careers.html'">Careers</button></li>
+        <li><button onclick="alert('Press enquiries: press@nyai.in')">Press</button></li>
+      </ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul>
+        <li><a href="resources.html">Case Studies</a></li>
+        <li><a href="resources.html">Insights</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><button onclick="alert('Bar Council of India Notice:\n\nNyAI is a legal research and drafting tool. It does not constitute legal advice and does not create an advocate-client relationship. All outputs must be independently verified before use in any court proceeding or legal opinion.')">Bar Council Notice</button></li>
+        <li><button onclick="alert('Cookie Policy: NyAI uses only essential session cookies. No tracking or advertising cookies are used.')">Cookie Policy</button></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NyAI Technologies Pvt. Ltd. · CIN: U72200GJ2024PTC000001 · Ahmedabad, Gujarat</span>
+      <div class="footer-bottom-links">
+        <button onclick="alert('Follow @NyAI_India on Twitter / X')">Twitter / X</button>
+        <button onclick="alert('Connect with NyAI on LinkedIn: linkedin.com/company/nyai-india')">LinkedIn</button>
+        <button onclick="window.location.href='chat.html'">Contact</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>

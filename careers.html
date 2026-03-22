@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NyAI — Legal AI for India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pillar/column top -->
+        <rect x="11" y="2" width="2" height="2" fill="currentColor" rx="0.5"/>
+        <!-- Horizontal beam -->
+        <rect x="3" y="4" width="18" height="1.5" fill="currentColor" rx="0.75"/>
+        <!-- Center pole -->
+        <rect x="11.25" y="4" width="1.5" height="13" fill="currentColor"/>
+        <!-- Left scale chain -->
+        <line x1="6" y1="5.5" x2="6" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right scale chain -->
+        <line x1="18" y1="5.5" x2="18" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Left pan -->
+        <path d="M3.5 10 Q6 13.5 8.5 10" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Right pan (slightly lower to suggest weighing) -->
+        <path d="M15.5 11 Q18 14.5 20.5 11" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Left arm -->
+        <line x1="6" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right arm -->
+        <line x1="12" y1="5.5" x2="18" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Base -->
+        <rect x="9" y="17" width="6" height="1.25" fill="currentColor" rx="0.5"/>
+        <rect x="7.5" y="18.25" width="9" height="1.5" fill="currentColor" rx="0.75"/>
+      </svg>
+      NyAI
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="platform.html" id="nav-platform">Platform</a>
+      <a href="pricing.html" id="nav-pricing">Pricing</a>
+      <a href="resources.html" id="nav-resources">Resources</a>
+      <a href="security.html" id="nav-security">Security</a>
+      <a href="about.html" id="nav-about">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-signin" onclick="window.location.href='signin.html'">Sign in</button>
+      <button class="nav-cta" onclick="window.location.href='chat.html'">Request Demo</button>
+    </div>
+    <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="platform.html" onclick="closeMob()">Platform</a>
+  <a href="pricing.html" onclick="closeMob()">Pricing</a>
+  <a href="resources.html" onclick="closeMob()">Resources</a>
+  <a href="security.html" onclick="closeMob()">Security</a>
+  <a href="about.html" onclick="closeMob()">About</a>
+  <a href="signin.html" onclick="closeMob()">Sign in</a>
+  <a href="chat.html" onclick="closeMob()" style="color:var(--cream2)">Request Demo →</a>
+</div>
+
+<!-- =================== CAREERS =================== -->
+<div id="page-careers" class="page active">
+
+
+  <!-- Hero -->
+  <div class="careers-hero">
+    <div class="container">
+      <span class="s-label">Careers</span>
+      <h1 class="p-h1-dark" style="max-width:700px">Build the future of Indian legal practice with us</h1>
+      <p class="p-sub-dark" style="max-width:560px">We're a small, mission-driven team in Ahmedabad building professional-class AI for India's 1.7 million advocates and thousands of in-house legal teams. Join us.</p>
+      <div class="careers-stats-row reveal">
+        <div><span class="cs-num">40+</span><span class="cs-label">Team members</span></div>
+        <div><span class="cs-num">Ahmedabad</span><span class="cs-label">Headquarters</span></div>
+        <div><span class="cs-num">2024</span><span class="cs-label">Founded</span></div>
+        <div><span class="cs-num">Series A</span><span class="cs-label">Stage · ₹22Cr raised</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why NyAI -->
+  <div class="section-dark2">
+    <div class="container">
+      <div class="reveal" style="max-width:760px;margin:0 auto;text-align:center;margin-bottom:3rem">
+        <span class="s-label" style="display:inline-block">Why NyAI</span>
+        <h2 class="s-h2">A genuine mission, not just a job</h2>
+      </div>
+      <div class="careers-values reveal">
+        <div class="cv-item"><div class="cv-icon">⚖️</div><h3 class="cv-h">Work that matters</h3><p class="cv-p">Every feature we ship has a direct impact on how Indian advocates research law, draft arguments, and serve their clients. The stakes are real.</p></div>
+        <div class="cv-item"><div class="cv-icon">🧠</div><h3 class="cv-h">Hard problems</h3><p class="cv-p">Building accurate, hallucination-resistant AI for a domain where errors have serious consequences. We work on genuinely difficult ML, search, and product problems.</p></div>
+        <div class="cv-item"><div class="cv-icon">🚀</div><h3 class="cv-h">Ownership & velocity</h3><p class="cv-p">Small team, big surface area. You'll own large pieces of the product and see your decisions in production within days, not quarters.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Open Roles -->
+  <div class="section-dark">
+    <div class="container">
+      <div class="reveal" style="margin-bottom:2.5rem">
+        <span class="s-label">Open Positions</span>
+        <h2 class="s-h2">7 open roles · Ahmedabad (Hybrid)</h2>
+      </div>
+      <div class="roles-grid reveal">
+
+        <!-- Role 1 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Engineering — AI / ML</div>
+            <div class="role-title">Senior AI/ML Engineer</div>
+            <div class="role-desc">Own the core inference pipeline and Indian law corpus training. Work on retrieval-augmented generation, citation grounding, and reducing hallucination rates in high-stakes legal contexts.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹30–55 LPA</span>
+              <span class="role-tag">4+ yrs exp</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Senior AI/ML Engineer')">Apply →</button>
+        </div>
+
+        <!-- Role 2 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Engineering — Backend</div>
+            <div class="role-title">Backend Engineer — Platform & Infra</div>
+            <div class="role-desc">Build and scale the APIs, data pipelines, and VPC deployment infrastructure that power NyAI for enterprise clients. Own reliability, performance, and security at the infrastructure layer.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹22–40 LPA</span>
+              <span class="role-tag">3+ yrs exp</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Backend Engineer')">Apply →</button>
+        </div>
+
+        <!-- Role 3 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Product</div>
+            <div class="role-title">Product Manager — Legal AI</div>
+            <div class="role-desc">Define and drive the roadmap for NyAI's core research and drafting products. Partner with engineers, legal experts, and enterprise clients to identify the highest-impact features and ship them fast.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹20–38 LPA</span>
+              <span class="role-tag">3+ yrs exp</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Product Manager')">Apply →</button>
+        </div>
+
+        <!-- Role 4 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Legal — Research & Quality</div>
+            <div class="role-title">Legal Research Lead</div>
+            <div class="role-desc">The quality bar for every NyAI output is set by lawyers, not engineers. Own accuracy QA, corpus curation, and work directly with the AI team to improve citation grounding across SC, HC, and tribunal judgments.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹12–22 LPA</span>
+              <span class="role-tag">LLB required</span>
+              <span class="role-tag">2+ yrs practice</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Legal Research Lead')">Apply →</button>
+        </div>
+
+        <!-- Role 5 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Sales & Partnerships</div>
+            <div class="role-title">Enterprise Account Executive</div>
+            <div class="role-desc">Own the full sales cycle for national law firms and large in-house legal teams. You'll be building relationships with senior partners and GCs, running technical evaluations, and closing high-value enterprise contracts.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad / Mumbai</span>
+              <span class="role-tag">₹15–28 LPA + commission</span>
+              <span class="role-tag">B2B SaaS exp preferred</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Enterprise Account Executive')">Apply →</button>
+        </div>
+
+        <!-- Role 6 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Customer Success</div>
+            <div class="role-title">Customer Success Manager</div>
+            <div class="role-desc">Ensure every NyAI client — from solo advocates to large firm teams — gets maximum value from the platform. Own onboarding, retention, expansion, and be the voice of the customer inside the product team.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹10–18 LPA</span>
+              <span class="role-tag">Legal or SaaS background</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Customer Success Manager')">Apply →</button>
+        </div>
+
+        <!-- Role 7 -->
+        <div class="role-card">
+          <div>
+            <div class="role-dept">Design</div>
+            <div class="role-title">Product Designer</div>
+            <div class="role-desc">Design the interfaces that India's top advocates use every day. Own end-to-end UX for new features — from first sketch to shipped product. Deep interest in how professionals work is more important than a portfolio of SaaS dashboards.</div>
+            <div class="role-meta">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Ahmedabad</span>
+              <span class="role-tag">₹14–26 LPA</span>
+              <span class="role-tag">2+ yrs product design</span>
+            </div>
+          </div>
+          <button class="role-apply" onclick="applyRole('Product Designer')">Apply →</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Perks — White section -->
+  <div class="section-white">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:3rem">
+        <span class="s-label-light" style="display:inline-block">Benefits</span>
+        <h2 class="s-h2-light">What we offer</h2>
+      </div>
+      <div class="perks-grid reveal">
+        <div class="perk-item"><div class="perk-icon">💰</div><h4 class="perk-h">Competitive Compensation</h4><p class="perk-p">Market-rate salaries with meaningful equity. We benchmark against Bangalore and Mumbai tech compensation.</p></div>
+        <div class="perk-item"><div class="perk-icon">🏥</div><h4 class="perk-h">Health Insurance</h4><p class="perk-p">Comprehensive health coverage for you and your immediate family. Dental and vision included.</p></div>
+        <div class="perk-item"><div class="perk-icon">📚</div><h4 class="perk-h">Learning Budget</h4><p class="perk-p">₹75,000/year for courses, conferences, and books. We fund bar exam prep and LLM applications for legal team members.</p></div>
+        <div class="perk-item"><div class="perk-icon">🏠</div><h4 class="perk-h">Flexible Work</h4><p class="perk-p">Hybrid-first culture. 3 days in office (Ahmedabad), rest is yours. No rigid 9-to-5. We care about output, not hours.</p></div>
+        <div class="perk-item"><div class="perk-icon">🌴</div><h4 class="perk-h">Unlimited PTO</h4><p class="perk-p">Generous leave policy with a minimum 15 days off per year, national holidays, and additional personal days.</p></div>
+        <div class="perk-item"><div class="perk-icon">⚡</div><h4 class="perk-h">Top-tier Equipment</h4><p class="perk-p">MacBook Pro, external monitor, and any tools you need to do your best work. Home office setup budget included.</p></div>
+        <div class="perk-item"><div class="perk-icon">🚀</div><h4 class="perk-h">Early Equity</h4><p class="perk-p">ESOP participation for all full-time employees. We're Series A — meaningful equity is still on the table.</p></div>
+        <div class="perk-item"><div class="perk-icon">🍱</div><h4 class="perk-h">Daily Meals</h4><p class="perk-p">Free lunch and snacks in the Ahmedabad office. Quarterly team offsite and regular team dinners.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Open application CTA -->
+  <div class="section-dark">
+    <div class="container">
+      <div class="careers-cta-box reveal">
+        <h3>Don't see a role that fits?</h3>
+        <p>We're always interested in exceptional people — lawyers, engineers, and product thinkers who believe in what we're building. Send us a note.</p>
+        <button id="careers-email-btn" style="background:var(--cream);color:var(--black);padding:0.875rem 2.25rem;border-radius:3px;font-size:0.9375rem;font-weight:500;cursor:pointer;font-family:var(--sans);border:none;transition:var(--t)">careers&#64;nyai.in &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- GLOBAL FOOTER -->
+<footer id="global-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">NyAI</div>
+        <p class="footer-tagline">AI designed for legal and professional services. Built natively for the Indian legal system.</p>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul>
+        <li><a href="platform.html">Research</a></li>
+        <li><a href="platform.html">Contracts</a></li>
+        <li><a href="platform.html">Due Diligence</a></li>
+        <li><a href="platform.html">Compliance</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resources.html">Blog</a></li>
+        <li><button onclick="window.location.href='careers.html'">Careers</button></li>
+        <li><button onclick="alert('Press enquiries: press@nyai.in')">Press</button></li>
+      </ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul>
+        <li><a href="resources.html">Case Studies</a></li>
+        <li><a href="resources.html">Insights</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><button onclick="alert('Bar Council of India Notice:\n\nNyAI is a legal research and drafting tool. It does not constitute legal advice and does not create an advocate-client relationship. All outputs must be independently verified before use in any court proceeding or legal opinion.')">Bar Council Notice</button></li>
+        <li><button onclick="alert('Cookie Policy: NyAI uses only essential session cookies. No tracking or advertising cookies are used.')">Cookie Policy</button></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NyAI Technologies Pvt. Ltd. · CIN: U72200GJ2024PTC000001 · Ahmedabad, Gujarat</span>
+      <div class="footer-bottom-links">
+        <button onclick="alert('Follow @NyAI_India on Twitter / X')">Twitter / X</button>
+        <button onclick="alert('Connect with NyAI on LinkedIn: linkedin.com/company/nyai-india')">LinkedIn</button>
+        <button onclick="window.location.href='chat.html'">Contact</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>

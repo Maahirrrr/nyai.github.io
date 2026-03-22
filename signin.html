@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NyAI — Legal AI for India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pillar/column top -->
+        <rect x="11" y="2" width="2" height="2" fill="currentColor" rx="0.5"/>
+        <!-- Horizontal beam -->
+        <rect x="3" y="4" width="18" height="1.5" fill="currentColor" rx="0.75"/>
+        <!-- Center pole -->
+        <rect x="11.25" y="4" width="1.5" height="13" fill="currentColor"/>
+        <!-- Left scale chain -->
+        <line x1="6" y1="5.5" x2="6" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right scale chain -->
+        <line x1="18" y1="5.5" x2="18" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Left pan -->
+        <path d="M3.5 10 Q6 13.5 8.5 10" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Right pan (slightly lower to suggest weighing) -->
+        <path d="M15.5 11 Q18 14.5 20.5 11" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Left arm -->
+        <line x1="6" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right arm -->
+        <line x1="12" y1="5.5" x2="18" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Base -->
+        <rect x="9" y="17" width="6" height="1.25" fill="currentColor" rx="0.5"/>
+        <rect x="7.5" y="18.25" width="9" height="1.5" fill="currentColor" rx="0.75"/>
+      </svg>
+      NyAI
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="platform.html" id="nav-platform">Platform</a>
+      <a href="pricing.html" id="nav-pricing">Pricing</a>
+      <a href="resources.html" id="nav-resources">Resources</a>
+      <a href="security.html" id="nav-security">Security</a>
+      <a href="about.html" id="nav-about">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-signin" onclick="window.location.href='signin.html'">Sign in</button>
+      <button class="nav-cta" onclick="window.location.href='chat.html'">Request Demo</button>
+    </div>
+    <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="platform.html" onclick="closeMob()">Platform</a>
+  <a href="pricing.html" onclick="closeMob()">Pricing</a>
+  <a href="resources.html" onclick="closeMob()">Resources</a>
+  <a href="security.html" onclick="closeMob()">Security</a>
+  <a href="about.html" onclick="closeMob()">About</a>
+  <a href="signin.html" onclick="closeMob()">Sign in</a>
+  <a href="chat.html" onclick="closeMob()" style="color:var(--cream2)">Request Demo →</a>
+</div>
+
+<!-- =================== SIGN IN =================== -->
+<div id="page-signin" class="page active">
+
+  <button class="signin-back" onclick="window.location.href='index.html'">← Back</button>
+  <div class="signin-wrap">
+    <div class="signin-left">
+      <div class="signin-left-bg">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=900&q=85&auto=format&fit=crop" alt="Legal background" onerror="this.style.opacity='0'"/>
+      </div>
+      <div class="signin-left-inner">
+        <span class="signin-logo">NyAI</span>
+        <p class="signin-tagline">"The most successful firm technology adoption story I have ever been a part of."</p>
+        <div class="signin-quote-attr">
+          <strong>Rahul Sharma</strong>
+          <span>Senior Partner, AZB & Partners</span>
+        </div>
+      </div>
+    </div>
+    <div class="signin-right">
+      <div class="signin-form-wrap">
+        <h2>Welcome back</h2>
+        <p class="signin-sub">Sign in to your NyAI account to continue your legal research.</p>
+        <div class="form-group">
+          <label for="signin-email">Email address</label>
+          <input type="email" id="signin-email" placeholder="you@firm.com" autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label for="signin-pass">Password</label>
+          <input type="password" id="signin-pass" placeholder="••••••••" autocomplete="current-password"/>
+        </div>
+        <div class="signin-forgot">
+          <button onclick="alert('Password reset link sent to your email address.')">Forgot password?</button>
+        </div>
+        <button class="signin-btn" onclick="handleSignin()">Sign in →</button>
+        <div class="signin-divider">or</div>
+        <button class="signin-google" onclick="alert('Google SSO is available for Professional and Enterprise plans.\n\nContact your firm administrator to enable.')">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 6.293C4.672 4.169 6.656 3.58 9 3.58z"/></svg>
+          Continue with Google
+        </button>
+        <div class="signin-footer-text">
+          Don't have an account? <button onclick="window.location.href='pricing.html'">View pricing →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- GLOBAL FOOTER -->
+<footer id="global-footer" style="display:none;">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">NyAI</div>
+        <p class="footer-tagline">AI designed for legal and professional services. Built natively for the Indian legal system.</p>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul>
+        <li><a href="platform.html">Research</a></li>
+        <li><a href="platform.html">Contracts</a></li>
+        <li><a href="platform.html">Due Diligence</a></li>
+        <li><a href="platform.html">Compliance</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resources.html">Blog</a></li>
+        <li><button onclick="window.location.href='careers.html'">Careers</button></li>
+        <li><button onclick="alert('Press enquiries: press@nyai.in')">Press</button></li>
+      </ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul>
+        <li><a href="resources.html">Case Studies</a></li>
+        <li><a href="resources.html">Insights</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><button onclick="alert('Bar Council of India Notice:\n\nNyAI is a legal research and drafting tool. It does not constitute legal advice and does not create an advocate-client relationship. All outputs must be independently verified before use in any court proceeding or legal opinion.')">Bar Council Notice</button></li>
+        <li><button onclick="alert('Cookie Policy: NyAI uses only essential session cookies. No tracking or advertising cookies are used.')">Cookie Policy</button></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NyAI Technologies Pvt. Ltd. · CIN: U72200GJ2024PTC000001 · Ahmedabad, Gujarat</span>
+      <div class="footer-bottom-links">
+        <button onclick="alert('Follow @NyAI_India on Twitter / X')">Twitter / X</button>
+        <button onclick="alert('Connect with NyAI on LinkedIn: linkedin.com/company/nyai-india')">LinkedIn</button>
+        <button onclick="window.location.href='chat.html'">Contact</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>

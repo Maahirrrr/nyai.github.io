@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NyAI — Legal AI for India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pillar/column top -->
+        <rect x="11" y="2" width="2" height="2" fill="currentColor" rx="0.5"/>
+        <!-- Horizontal beam -->
+        <rect x="3" y="4" width="18" height="1.5" fill="currentColor" rx="0.75"/>
+        <!-- Center pole -->
+        <rect x="11.25" y="4" width="1.5" height="13" fill="currentColor"/>
+        <!-- Left scale chain -->
+        <line x1="6" y1="5.5" x2="6" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right scale chain -->
+        <line x1="18" y1="5.5" x2="18" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Left pan -->
+        <path d="M3.5 10 Q6 13.5 8.5 10" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Right pan (slightly lower to suggest weighing) -->
+        <path d="M15.5 11 Q18 14.5 20.5 11" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Left arm -->
+        <line x1="6" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right arm -->
+        <line x1="12" y1="5.5" x2="18" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Base -->
+        <rect x="9" y="17" width="6" height="1.25" fill="currentColor" rx="0.5"/>
+        <rect x="7.5" y="18.25" width="9" height="1.5" fill="currentColor" rx="0.75"/>
+      </svg>
+      NyAI
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="platform.html" id="nav-platform">Platform</a>
+      <a href="pricing.html" id="nav-pricing">Pricing</a>
+      <a href="resources.html" id="nav-resources">Resources</a>
+      <a href="security.html" id="nav-security">Security</a>
+      <a href="about.html" id="nav-about">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-signin" onclick="window.location.href='signin.html'">Sign in</button>
+      <button class="nav-cta" onclick="window.location.href='chat.html'">Request Demo</button>
+    </div>
+    <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="platform.html" onclick="closeMob()">Platform</a>
+  <a href="pricing.html" onclick="closeMob()">Pricing</a>
+  <a href="resources.html" onclick="closeMob()">Resources</a>
+  <a href="security.html" onclick="closeMob()">Security</a>
+  <a href="about.html" onclick="closeMob()">About</a>
+  <a href="signin.html" onclick="closeMob()">Sign in</a>
+  <a href="chat.html" onclick="closeMob()" style="color:var(--cream2)">Request Demo →</a>
+</div>
+
+<!-- =================== CHAT =================== -->
+<div id="page-chat" class="page active">
+
+  <div class="chat-layout">
+    <div class="chat-sidebar">
+      <button class="chat-new-btn" onclick="clearChat()">+ New Conversation</button>
+      <div class="chat-sl">Recent</div>
+      <div class="chat-hist" id="chat-hist">
+        <div class="chi active"><span class="chi-text">IBC Section 29A eligibility...</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+        <div class="chi"><span class="chi-text">SEBI AIF Category II compliance</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+        <div class="chi"><span class="chi-text">SHA drag-along clause review</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+        <div class="chi"><span class="chi-text">Income Tax s56(2)(x) analysis</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+        <div class="chi"><span class="chi-text">BNS vs IPC — Section comparison</span><div class="chi-actions"><button class="chi-btn" onclick="renameChat(this, event)">✎</button><button class="chi-btn" onclick="deleteChat(this, event)">🗑</button></div></div>
+      </div>
+      <div class="chat-sf">NyAI · Indian Law AI<br>Responses are for informational purposes only and do not constitute legal advice. Always verify citations.</div>
+    </div>
+    <div class="chat-main">
+      <div class="chat-topbar">
+        <h2>NyAI Legal Assistant</h2>
+        <span class="chat-mb">Indian Law Corpus v3.2</span>
+      </div>
+      <div class="chat-msgs" id="chat-msgs">
+        <div class="chat-welcome" id="chat-welcome">
+          <div class="cwl">NyAI</div>
+          <p>Your AI legal research assistant for Indian law. Ask about judgments, statutes, regulations, contracts, or any legal question — I'll give you a cited, reasoned answer.</p>
+          <div class="chat-sugg-wrap">
+            <button class="chat-sugg" onclick="sendSugg(this)">What are the Section 29A eligibility criteria under IBC?</button>
+            <button class="chat-sugg" onclick="sendSugg(this)">Explain SEBI's insider trading regulations under PIT Regulations 2015</button>
+            <button class="chat-sugg" onclick="sendSugg(this)">Key issues when drafting a drag-along clause in an Indian SHA</button>
+            <button class="chat-sugg" onclick="sendSugg(this)">Summarise the Supreme Court judgment in Vijay Madanlal Choudhary v. Union of India</button>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="chat-disc">Professional-grade research engine · Always verify citations before filing</div>
+        <div class="chat-ir">
+          <textarea class="chat-ta" id="chat-input" placeholder="Ask anything about Indian law..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="chat-sb" id="chat-send" onclick="sendMsg()">↑</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- GLOBAL FOOTER -->
+<footer id="global-footer" style="display:none;">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">NyAI</div>
+        <p class="footer-tagline">AI designed for legal and professional services. Built natively for the Indian legal system.</p>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul>
+        <li><a href="platform.html">Research</a></li>
+        <li><a href="platform.html">Contracts</a></li>
+        <li><a href="platform.html">Due Diligence</a></li>
+        <li><a href="platform.html">Compliance</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resources.html">Blog</a></li>
+        <li><button onclick="window.location.href='careers.html'">Careers</button></li>
+        <li><button onclick="alert('Press enquiries: press@nyai.in')">Press</button></li>
+      </ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul>
+        <li><a href="resources.html">Case Studies</a></li>
+        <li><a href="resources.html">Insights</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><button onclick="alert('Bar Council of India Notice:\n\nNyAI is a legal research and drafting tool. It does not constitute legal advice and does not create an advocate-client relationship. All outputs must be independently verified before use in any court proceeding or legal opinion.')">Bar Council Notice</button></li>
+        <li><button onclick="alert('Cookie Policy: NyAI uses only essential session cookies. No tracking or advertising cookies are used.')">Cookie Policy</button></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NyAI Technologies Pvt. Ltd. · CIN: U72200GJ2024PTC000001 · Ahmedabad, Gujarat</span>
+      <div class="footer-bottom-links">
+        <button onclick="alert('Follow @NyAI_India on Twitter / X')">Twitter / X</button>
+        <button onclick="alert('Connect with NyAI on LinkedIn: linkedin.com/company/nyai-india')">LinkedIn</button>
+        <button onclick="window.location.href='chat.html'">Contact</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>

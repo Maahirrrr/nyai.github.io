@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NyAI — Legal AI for India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pillar/column top -->
+        <rect x="11" y="2" width="2" height="2" fill="currentColor" rx="0.5"/>
+        <!-- Horizontal beam -->
+        <rect x="3" y="4" width="18" height="1.5" fill="currentColor" rx="0.75"/>
+        <!-- Center pole -->
+        <rect x="11.25" y="4" width="1.5" height="13" fill="currentColor"/>
+        <!-- Left scale chain -->
+        <line x1="6" y1="5.5" x2="6" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right scale chain -->
+        <line x1="18" y1="5.5" x2="18" y2="10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Left pan -->
+        <path d="M3.5 10 Q6 13.5 8.5 10" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Right pan (slightly lower to suggest weighing) -->
+        <path d="M15.5 11 Q18 14.5 20.5 11" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Left arm -->
+        <line x1="6" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Right arm -->
+        <line x1="12" y1="5.5" x2="18" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- Base -->
+        <rect x="9" y="17" width="6" height="1.25" fill="currentColor" rx="0.5"/>
+        <rect x="7.5" y="18.25" width="9" height="1.5" fill="currentColor" rx="0.75"/>
+      </svg>
+      NyAI
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="platform.html" id="nav-platform" class="active">Platform</a>
+      <a href="pricing.html" id="nav-pricing">Pricing</a>
+      <a href="resources.html" id="nav-resources">Resources</a>
+      <a href="security.html" id="nav-security">Security</a>
+      <a href="about.html" id="nav-about">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-signin" onclick="window.location.href='signin.html'">Sign in</button>
+      <button class="nav-cta" onclick="window.location.href='chat.html'">Request Demo</button>
+    </div>
+    <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="platform.html" onclick="closeMob()">Platform</a>
+  <a href="pricing.html" onclick="closeMob()">Pricing</a>
+  <a href="resources.html" onclick="closeMob()">Resources</a>
+  <a href="security.html" onclick="closeMob()">Security</a>
+  <a href="about.html" onclick="closeMob()">About</a>
+  <a href="signin.html" onclick="closeMob()">Sign in</a>
+  <a href="chat.html" onclick="closeMob()" style="color:var(--cream2)">Request Demo →</a>
+</div>
+
+<!-- =================== PLATFORM =================== -->
+<div id="page-platform" class="page active">
+
+  <div class="page-hero-dark">
+    <div class="phi">
+      <span class="s-label">Platform</span>
+      <h1 class="p-h1-dark">The complete AI platform<br>for Indian legal practice</h1>
+      <p class="p-sub-dark">Purpose-built for the Indian legal system — trained on every court, statute, and regulatory body that matters. Not adapted. Not translated. Built from the ground up.</p>
+    </div>
+  </div>
+
+  <!-- Feature Blocks -->
+  <div class="platform-feature reveal">
+    <div class="pf-text">
+      <div class="pf-num">01 — Legal Research</div>
+      <h2 class="pf-h">Research That Cites Its Sources</h2>
+      <p class="pf-p">Trained on the complete corpus of Supreme Court judgments, all 25 High Courts, NCLAT, SAT, ITAT, NCLT, and major regulatory bodies. Every answer is fully traceable.</p>
+      <ul class="pf-list">
+        <li>Semantic search across SC, HCs, tribunals, and statutes</li>
+        <li>Automatic case law mapping and precedent hierarchy</li>
+        <li>Statutory cross-references including amendments and notifications</li>
+        <li>Conflicting bench detection and reconciliation summaries</li>
+        <li>Export citations in Bluebook, SCC, and AIR formats</li>
+      </ul>
+    </div>
+    <div class="pf-img">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=900&q=80&auto=format&fit=crop" alt="Legal research" onerror="this.style.opacity='0'"/>
+      <div class="pf-img-overlay"></div>
+    </div>
+  </div>
+
+  <div class="platform-feature flip reveal">
+    <div class="pf-text">
+      <div class="pf-num">02 — Contract Intelligence</div>
+      <h2 class="pf-h">Contract Review for Indian Boilerplate</h2>
+      <p class="pf-p">Upload any agreement and NyAI reviews it against Indian law standards — flagging non-compliant clauses, missing protections, and negotiation leverage points automatically.</p>
+      <ul class="pf-list">
+        <li>One-click risk scoring with clause-level explanations</li>
+        <li>Redline suggestions with track-changes export</li>
+        <li>FEMA, IT Act, and Companies Act compliance checks</li>
+        <li>Comparison against your firm's fallback positions</li>
+        <li>SHA, SPA, MoU, NDA, employment contract templates</li>
+      </ul>
+    </div>
+    <div class="pf-img">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80&auto=format&fit=crop" alt="Contracts" onerror="this.style.opacity='0'"/>
+      <div class="pf-img-overlay"></div>
+    </div>
+  </div>
+
+  <div class="platform-feature reveal">
+    <div class="pf-text">
+      <div class="pf-num">03 — Due Diligence</div>
+      <h2 class="pf-h">M&A Due Diligence at Machine Speed</h2>
+      <p class="pf-p">Upload data room documents and NyAI creates a structured DD report in minutes — identifying risk across corporate, tax, employment, IP, and regulatory dimensions.</p>
+      <ul class="pf-list">
+        <li>Automated document classification and indexing</li>
+        <li>Issue-by-issue risk flagging with severity ratings</li>
+        <li>Indian M&A and PE deal-specific checklists</li>
+        <li>Cross-document inconsistency detection</li>
+        <li>One-click DD report generation in client-ready format</li>
+      </ul>
+    </div>
+    <div class="pf-img">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=900&q=80&auto=format&fit=crop" alt="Due diligence" onerror="this.style.opacity='0'"/>
+      <div class="pf-img-overlay"></div>
+    </div>
+  </div>
+
+  <div class="platform-feature flip reveal">
+    <div class="pf-text">
+      <div class="pf-num">04 — Regulatory Compliance</div>
+      <h2 class="pf-h">Stay Ahead of Every Change</h2>
+      <p class="pf-p">Real-time monitoring across SEBI, RBI, MCA, IRDAI, and CCI. Automated alerts, compliance gap analysis, and structured summaries — delivered before your clients ask.</p>
+      <ul class="pf-list">
+        <li>Real-time regulatory circular and notification monitoring</li>
+        <li>Automated impact analysis for your practice areas</li>
+        <li>DPDP Act, FEMA, and Companies Act compliance coverage</li>
+        <li>BNS/BNSS/BSA comparative mapping for criminal law changes</li>
+        <li>Scheduled digests and custom alert thresholds</li>
+      </ul>
+    </div>
+    <div class="pf-img">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80&auto=format&fit=crop" alt="Compliance" onerror="this.style.opacity='0'"/>
+      <div class="pf-img-overlay"></div>
+    </div>
+  </div>
+
+  <!-- Additional capabilities -->
+  <div class="section-dark2">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:1rem">
+        <span class="s-label" style="display:inline-block">More Capabilities</span>
+        <h2 class="s-h2">Everything you need in one platform</h2>
+      </div>
+      <div class="plat-cap-grid reveal">
+        <div class="plat-cap-item"><div class="pci-icon">⚖️</div><h3 class="pci-h">Pleadings & Drafting</h3><p class="pci-p">Generate Supreme Court writs, SLPs, and High Court applications with AI-assisted drafting calibrated to specific court formats and practices.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">📊</div><h3 class="pci-h">IBC & Insolvency</h3><p class="pci-p">Dedicated module for CIRP timelines, Section 29A eligibility checks, resolution plan analysis, and NCLAT precedent mapping.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">💼</div><h3 class="pci-h">Fund Formation</h3><p class="pci-p">SEBI AIF regulatory checklists, LPA and subscription agreement templates, and category-specific compliance analysis for fund launches.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">🔍</div><h3 class="pci-h">Entity Intelligence</h3><p class="pci-p">Pull MCA filings, ROC records, and corporate history automatically. Identify connected persons, UBOs, and related-party structures instantly.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">📅</div><h3 class="pci-h">Case Tracking</h3><p class="pci-p">Monitor case status across e-Courts, cause lists, and tribunal portals. Never miss a hearing date with automated calendar integration.</p></div>
+        <div class="plat-cap-item"><div class="pci-icon">🤝</div><h3 class="pci-h">Team Workspace</h3><p class="pci-p">Matter-level workspaces with role-based access, shared research libraries, and collaboration tools designed for how law firms operate.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-off" style="text-align:center">
+    <div class="container">
+      <h2 class="s-h2-light" style="margin-bottom:2rem">Ready to see NyAI in action?</h2>
+      <button onclick="window.location.href='chat.html'" style="background:var(--black);color:var(--white);padding:.875rem 2.25rem;border-radius:3px;font-size:.9375rem;font-weight:500;cursor:pointer;font-family:var(--sans);border:none;transition:var(--t)">Request Demo →</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- GLOBAL FOOTER -->
+<footer id="global-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">NyAI</div>
+        <p class="footer-tagline">AI designed for legal and professional services. Built natively for the Indian legal system.</p>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul>
+        <li><a href="platform.html">Research</a></li>
+        <li><a href="platform.html">Contracts</a></li>
+        <li><a href="platform.html">Due Diligence</a></li>
+        <li><a href="platform.html">Compliance</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resources.html">Blog</a></li>
+        <li><button onclick="window.location.href='careers.html'">Careers</button></li>
+        <li><button onclick="alert('Press enquiries: press@nyai.in')">Press</button></li>
+      </ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul>
+        <li><a href="resources.html">Case Studies</a></li>
+        <li><a href="resources.html">Insights</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="security.html">Security</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><button onclick="alert('Bar Council of India Notice:\n\nNyAI is a legal research and drafting tool. It does not constitute legal advice and does not create an advocate-client relationship. All outputs must be independently verified before use in any court proceeding or legal opinion.')">Bar Council Notice</button></li>
+        <li><button onclick="alert('Cookie Policy: NyAI uses only essential session cookies. No tracking or advertising cookies are used.')">Cookie Policy</button></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NyAI Technologies Pvt. Ltd. · CIN: U72200GJ2024PTC000001 · Ahmedabad, Gujarat</span>
+      <div class="footer-bottom-links">
+        <button onclick="alert('Follow @NyAI_India on Twitter / X')">Twitter / X</button>
+        <button onclick="alert('Connect with NyAI on LinkedIn: linkedin.com/company/nyai-india')">LinkedIn</button>
+        <button onclick="window.location.href='chat.html'">Contact</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="app.js"></script>
+</body>
+</html>
