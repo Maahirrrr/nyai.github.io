@@ -715,11 +715,11 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
       NyAI
     </a>
     <div class="nav-links" id="nav-links">
-      <a href="#" onclick="showPage('platform')" id="nav-platform">Platform</a>
-      <a href="#" onclick="showPage('pricing')" id="nav-pricing">Pricing</a>
-      <a href="#" onclick="showPage('resources')" id="nav-resources">Resources</a>
-      <a href="#" onclick="showPage('security')" id="nav-security">Security</a>
-      <a href="#" onclick="showPage('about')" id="nav-about">About</a>
+      <a href="javascript:void(0)" onclick="showPage('platform')" id="nav-platform">Platform</a>
+      <a href="javascript:void(0)" onclick="showPage('pricing')" id="nav-pricing">Pricing</a>
+      <a href="javascript:void(0)" onclick="showPage('resources')" id="nav-resources">Resources</a>
+      <a href="javascript:void(0)" onclick="showPage('security')" id="nav-security">Security</a>
+      <a href="javascript:void(0)" onclick="showPage('about')" id="nav-about">About</a>
     </div>
     <div class="nav-right">
       <button class="nav-signin" onclick="showPage('signin')">Sign in</button>
@@ -729,14 +729,14 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
   </div>
 </nav>
 <div class="mobile-menu" id="mobile-menu">
-  <a href="#" onclick="showPage('home');closeMob()">Home</a>
-  <a href="#" onclick="showPage('platform');closeMob()">Platform</a>
-  <a href="#" onclick="showPage('pricing');closeMob()">Pricing</a>
-  <a href="#" onclick="showPage('resources');closeMob()">Resources</a>
-  <a href="#" onclick="showPage('security');closeMob()">Security</a>
-  <a href="#" onclick="showPage('about');closeMob()">About</a>
-  <a href="#" onclick="showPage('signin');closeMob()">Sign in</a>
-  <a href="#" onclick="showPage('chat');closeMob()" style="color:var(--cream2)">Request Demo →</a>
+  <a href="javascript:void(0)" onclick="showPage('home')">Home</a>
+  <a href="javascript:void(0)" onclick="showPage('platform')">Platform</a>
+  <a href="javascript:void(0)" onclick="showPage('pricing')">Pricing</a>
+  <a href="javascript:void(0)" onclick="showPage('resources')">Resources</a>
+  <a href="javascript:void(0)" onclick="showPage('security')">Security</a>
+  <a href="javascript:void(0)" onclick="showPage('about')">About</a>
+  <a href="javascript:void(0)" onclick="showPage('signin')">Sign in</a>
+  <a href="javascript:void(0)" onclick="showPage('chat')" style="color:var(--cream2)">Request Demo →</a>
 </div>
 
 <!-- =================== HOME =================== -->
@@ -1734,55 +1734,86 @@ var PAGES = ['home','platform','pricing','resources','security','about','careers
 var noFooterPages = ['chat','signin'];
 
 // ── ROUTING: hash-based so refresh stays on current page ──
-window.showPage = function(n) {
-  if (PAGES.indexOf(n) === -1) n = 'home';
-  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-  var t = document.getElementById('page-' + n);
-  if (!t) return;
-  t.classList.add('active');
-  
-  // Instant scroll to top for page changes
-  window.scrollTo({ top: 0, behavior: 'instant' });
-
-  // Update Document Title
-  var titleMap = {
-    'home': 'NyAI — Legal AI for India',
-    'platform': 'Platform — NyAI',
-    'pricing': 'Pricing — NyAI',
-    'resources': 'Resources — NyAI',
-    'security': 'Security — NyAI',
-    'about': 'About — NyAI',
-    'careers': 'Careers — NyAI',
-    'signin': 'Sign In — NyAI',
-    'chat': 'Chat Assistant — NyAI',
-    'privacy': 'Privacy Policy — NyAI',
-    'terms': 'Terms of Service — NyAI'
-  };
-  document.title = titleMap[n] || 'NyAI';
-
-  // Update URL hash
+window.showPage = function(pageId) {
+  console.log('Navigating to:', pageId);
   try {
-    if (window.location.hash !== '#' + n) {
-      history.pushState(null, '', '#' + n);
+    // Basic validation
+    var validPages = ['home','platform','pricing','resources','security','about','careers','signin','chat','privacy','terms'];
+    var targetId = pageId;
+    if (validPages.indexOf(targetId) === -1) targetId = 'home';
+    
+    // 1. Hide all pages
+    var allPages = document.querySelectorAll('.page');
+    for (var i = 0; i < allPages.length; i++) {
+        allPages[i].classList.remove('active');
     }
-  } catch(e) {}
+    
+    // 2. Show target page
+    var targetPage = document.getElementById('page-' + targetId);
+    if (targetPage) {
+        targetPage.classList.add('active');
+    } else {
+        console.error('Target page not found:', 'page-' + targetId);
+        // Fallback to home if possible
+        var homePage = document.getElementById('page-home');
+        if (homePage) homePage.classList.add('active');
+    }
+    
+    // 3. Simple scroll to top
+    window.scrollTo(0, 0);
 
-  // Footer & Nav Visibility
-  var footer = document.getElementById('global-footer');
-  if (footer) footer.style.display = noFooterPages.indexOf(n) !== -1 ? 'none' : 'block';
-  
-  var navRight = document.querySelector('.nav-right');
-  if (navRight) {
-    navRight.style.display = (n === 'chat' || n === 'signin') ? 'none' : 'flex';
+    // 4. Update Document Title
+    var pageTitles = {
+      'home': 'NyAI — Legal AI for India',
+      'platform': 'Platform — NyAI',
+      'pricing': 'Pricing — NyAI',
+      'resources': 'Resources — NyAI',
+      'security': 'Security — NyAI',
+      'about': 'About — NyAI',
+      'careers': 'Careers — NyAI',
+      'signin': 'Sign In — NyAI',
+      'chat': 'Chat Assistant — NyAI',
+      'privacy': 'Privacy Policy — NyAI',
+      'terms': 'Terms of Service — NyAI'
+    };
+    document.title = pageTitles[targetId] || 'NyAI';
+
+    // 5. Update Hash (Silent)
+    try {
+      if (window.location.hash !== '#' + targetId) {
+        history.pushState(null, '', '#' + targetId);
+      }
+    } catch(hashErr) {}
+
+    // 6. UI Toggles (Footer, Nav Right)
+    var footer = document.getElementById('global-footer');
+    var isChatOrSignin = (targetId === 'chat' || targetId === 'signin');
+    if (footer) footer.style.display = isChatOrSignin ? 'none' : 'block';
+    
+    var navRight = document.querySelector('.nav-right');
+    if (navRight) navRight.style.display = isChatOrSignin ? 'none' : 'flex';
+
+    // 7. Nav Links Active State
+    document.querySelectorAll('.nav-links a').forEach(function(a) { 
+        a.classList.remove('active'); 
+        if (a.id === 'nav-' + targetId) a.classList.add('active');
+    });
+
+    // 8. Chat focus
+    if (targetId === 'chat') {
+        setTimeout(function() { 
+            var inp = document.getElementById('chat-input'); 
+            if (inp) inp.focus(); 
+        }, 100);
+    }
+    
+    // 9. Trigger Reveal & Close Mobile Menu
+    if (window.checkReveal) window.checkReveal();
+    if (window.closeMob) window.closeMob();
+
+  } catch (err) {
+    console.error('Navigation error:', err);
   }
-
-  document.querySelectorAll('.nav-links a').forEach(function(a) { a.classList.remove('active'); });
-  var navEl = document.getElementById('nav-' + n);
-  if (navEl) navEl.classList.add('active');
-  
-  if (n === 'chat') setTimeout(function() { var inp = document.getElementById('chat-input'); if (inp) inp.focus(); }, 100);
-  checkReveal();
-  closeMob();
 };
 
 window.toggleMobile = function() { document.getElementById('mobile-menu').classList.toggle('open'); };
@@ -2135,31 +2166,25 @@ function removeTyping(id) {
 
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', function() {
-  window.scrollTo(0, 0);
-  window.addEventListener('scroll', checkReveal);
-  setTimeout(checkReveal, 100);
-
-  // Handle browser back/forward (skipped in sandboxed iframes)
+  // Clear any old scroll positions
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  
+  // Handle browser back/forward buttons
   try {
     window.addEventListener('popstate', function() {
       var hash = window.location.hash.replace('#', '') || 'home';
-      if (PAGES.indexOf(hash) === -1) hash = 'home';
-      var t = document.getElementById('page-' + hash);
-      if (!t) return;
-      document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-      t.classList.add('active');
-      var footer = document.getElementById('global-footer');
-      if (footer) footer.style.display = noFooterPages.indexOf(hash) !== -1 ? 'none' : 'block';
-      checkReveal();
+      window.showPage(hash);
     });
-  } catch(e) { /* sandboxed - ignore */ }
+  } catch(e) {}
 
-  // Route to hash on load (graceful in sandboxed iframes)
-  var initHash;
-  try { initHash = window.location.hash.replace('#', '') || 'home'; }
-  catch(e) { initHash = 'home'; }
-  if (PAGES.indexOf(initHash) === -1) initHash = 'home';
-  showPage(initHash);
+  // Route to current hash or 'home' on launch
+  var startHash = 'home';
+  try { startHash = window.location.hash.replace('#', '') || 'home'; } catch(e) {}
+  window.showPage(startHash);
+
+  // Scroll to reveal elements
+  window.addEventListener('scroll', window.checkReveal);
+  setTimeout(window.checkReveal, 200);
 
   // Init chat sidebar
   if (conversations.length > 0) {
@@ -2167,7 +2192,7 @@ document.addEventListener('DOMContentLoaded', function() {
     chatHistory = conversations[0].messages ? conversations[0].messages.slice() : [];
   }
   renderSidebar();
-  if (initHash === 'chat') {
+  if (startHash === 'chat') {
     if (chatHistory.length > 0) rebuildChatUI(); else resetChatUI();
   }
 
