@@ -411,6 +411,42 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 .typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--cream3);animation:dot 1.2s infinite}
 .typing-dots span:nth-child(2){animation-delay:.2s}.typing-dots span:nth-child(3){animation-delay:.4s}
 @keyframes dot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+/* GROK-STYLE SEARCH INDICATOR */
+.search-indicator{background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;min-width:320px;max-width:520px}
+.search-indicator-header{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.875rem;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent2);font-weight:500;font-family:var(--mono)}
+.search-indicator-header .si-spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent2);border-radius:50%;animation:siSpin 0.8s linear infinite;flex-shrink:0}
+@keyframes siSpin{to{transform:rotate(360deg)}}
+.search-steps{display:flex;flex-direction:column;gap:0.375rem}
+.search-step{display:flex;align-items:center;gap:0.625rem;font-size:0.8rem;color:var(--cream3);font-weight:300;padding:0.25rem 0;opacity:0;transform:translateX(-8px);transition:opacity .35s ease, transform .35s ease, color .3s ease}
+.search-step.visible{opacity:1;transform:translateX(0)}
+.search-step.active{color:var(--cream2)}
+.search-step.done{color:var(--cream3);opacity:0.65}
+.search-step-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.7rem}
+.search-step.active .search-step-icon{color:var(--accent2)}
+.search-step.done .search-step-icon{color:var(--accent2)}
+.si-bar-wrap{margin-top:0.75rem;height:2px;background:var(--dark3);border-radius:1px;overflow:hidden}
+.si-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:1px;width:0%;transition:width 0.5s ease}
+.search-step-dot{width:6px;height:6px;border-radius:50%;background:var(--cream3);animation:siPulse 1s ease infinite}
+.search-step.done .search-step-dot{display:none}
+@keyframes siPulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* FILE ATTACHMENT */
+.chat-attach-btn{width:40px;height:40px;border-radius:3px;background:var(--dark2);border:1px solid var(--border);color:var(--cream3);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--t)}
+.chat-attach-btn:hover{border-color:var(--cream3);color:var(--cream);background:var(--dark3)}
+.chat-file-preview{display:flex;flex-wrap:wrap;gap:0.5rem;padding:0.5rem 0;max-width:100%}
+.chat-file-preview:empty{display:none;padding:0}
+.chat-file-chip{display:inline-flex;align-items:center;gap:0.5rem;background:var(--dark3);border:1px solid var(--border);border-radius:3px;padding:0.375rem 0.625rem 0.375rem 0.75rem;font-size:0.78rem;color:var(--cream2);max-width:280px;animation:chipIn .25s ease}
+@keyframes chipIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+.chip-icon{font-size:0.9rem;color:var(--accent2);flex-shrink:0}
+.chip-info{display:flex;flex-direction:column;min-width:0;flex:1}
+.chip-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400;line-height:1.3}
+.chip-size{font-size:0.67rem;color:var(--cream3);font-family:var(--mono)}
+.chip-remove{width:18px;height:18px;border-radius:50%;background:none;border:none;color:var(--cream3);cursor:pointer;font-size:0.875rem;display:flex;align-items:center;justify-content:center;transition:var(--t);flex-shrink:0;padding:0;line-height:1}
+.chip-remove:hover{color:var(--cream);background:var(--border)}
+.msg-attachment{display:flex;align-items:center;gap:0.5rem;background:var(--dark3);border:1px solid var(--border);border-radius:3px;padding:0.375rem 0.75rem;font-size:0.78rem;color:var(--cream2);margin-bottom:0.5rem;width:fit-content}
+.msg-attachment .chip-icon{font-size:0.85rem}
+
 .chat-input-area{padding:1rem 1.5rem 1.5rem;border-top:1px solid var(--border);background:var(--dark);flex-shrink:0}
 .chat-disc{font-size:0.67rem;color:var(--cream3);text-align:center;margin-bottom:0.75rem;font-family:var(--mono);opacity:0.7}
 .chat-ir{display:flex;gap:0.75rem;align-items:flex-end}
@@ -810,17 +846,16 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
     <div class="quote-inner reveal">
       <div>
         <div class="quote-photo">
-          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=85&auto=format&fit=crop" alt="Rahul Sharma" onerror="this.style.opacity='0'"/>
+          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=400&q=85&auto=format&fit=crop" alt="NyAI Vision" onerror="this.style.opacity='0'"/>
         </div>
       </div>
       <div class="quote-content">
-        <blockquote>"What we have seen at AZB with NyAI is by far the most successful firm technology adoption story I have ever been a part of."</blockquote>
+        <blockquote>"We believe every Indian advocate — from Tier-3 cities to the Supreme Court — deserves AI tools as powerful as those used by the world's largest firms."</blockquote>
         <div class="quote-attr">
-          <strong>Rahul Sharma</strong>
-          <span>Senior Partner</span>
-          <em>AZB & Partners</em>
+          <strong>NyAI Founding Team</strong>
+          <span>Ahmedabad, India · 2024</span>
         </div>
-        <button class="quote-cta" onclick="showPage('resources')">Read the case study →</button>
+        <button class="quote-cta" onclick="showPage('about')">Read our story →</button>
       </div>
     </div>
   </section>
@@ -828,32 +863,31 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
   <section id="cases">
     <div class="cases-inner">
       <div class="cases-header reveal">
-        <h2 class="s-h2">Real impact for real clients</h2>
-        <button class="cases-more" onclick="showPage('resources')">Read more stories</button>
+        <h2 class="s-h2">Built for real legal workflows</h2>
       </div>
       <div class="cases-grid reveal">
-        <div class="case-card" onclick="showPage('resources')">
-          <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop" alt="M&A" onerror="this.style.opacity='0'"/></div>
+        <div class="case-card" onclick="showPage('platform')">
+          <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop" alt="M&A Due Diligence" onerror="this.style.opacity='0'"/></div>
           <div class="case-card-body">
             <div class="case-card-label">Due Diligence</div>
-            <h3>NyAI drives greater efficiency for Khaitan & Co. transforming their M&A practice</h3>
-            <div class="case-card-firm">Khaitan & Co.</div>
+            <h3>Accelerate M&A due diligence — upload data room documents and get structured DD reports in minutes</h3>
+            <div class="case-card-firm">Explore capability →</div>
           </div>
         </div>
-        <div class="case-card" onclick="showPage('resources')">
+        <div class="case-card" onclick="showPage('platform')">
           <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=800&q=80&auto=format&fit=crop" alt="Research" onerror="this.style.opacity='0'"/></div>
           <div class="case-card-body">
             <div class="case-card-label">Legal Research</div>
-            <h3>How Trilegal cut research turnaround time by 60% using NyAI's SCI corpus</h3>
-            <div class="case-card-firm">Trilegal</div>
+            <h3>Search across the complete Supreme Court and all 25 High Court judgments with AI-powered semantic analysis</h3>
+            <div class="case-card-firm">Explore capability →</div>
           </div>
         </div>
-        <div class="case-card" onclick="showPage('resources')">
+        <div class="case-card" onclick="showPage('platform')">
           <div class="case-card-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format&fit=crop" alt="Compliance" onerror="this.style.opacity='0'"/></div>
           <div class="case-card-body">
             <div class="case-card-label">Compliance</div>
-            <h3>Cyril Amarchand uses NyAI to automate SEBI regulatory monitoring at scale</h3>
-            <div class="case-card-firm">Cyril Amarchand Mangaldas</div>
+            <h3>Monitor SEBI, RBI, MCA, and IRDAI regulatory changes in real-time with automated impact analysis</h3>
+            <div class="case-card-firm">Explore capability →</div>
           </div>
         </div>
       </div>
@@ -869,10 +903,10 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
         </div>
       </div>
       <div class="stats-grid reveal">
-        <div class="stat-row"><div class="stat-label">Average hours saved per month</div><div class="stat-num">20<sup>+</sup></div></div>
-        <div class="stat-row"><div class="stat-label">Professionals using NyAI</div><div class="stat-num">100,000<sup>+</sup></div></div>
-        <div class="stat-row"><div class="stat-label">Law firms and in-house legal teams</div><div class="stat-num">1,000<sup>+</sup></div></div>
-        <div class="stat-row"><div class="stat-label">Fortune 100 firms using NyAI</div><div class="stat-num">50<sup>+</sup></div></div>
+        <div class="stat-row"><div class="stat-label">Estimated hours saved per month per user</div><div class="stat-num">20<sup>+</sup></div></div>
+        <div class="stat-row"><div class="stat-label">High Courts + Supreme Court corpus covered</div><div class="stat-num">25<sup>+</sup></div></div>
+        <div class="stat-row"><div class="stat-label">Indian statutes & regulatory bodies indexed</div><div class="stat-num">50<sup>+</sup></div></div>
+        <div class="stat-row"><div class="stat-label">Data retention by default</div><div class="stat-num">Zero</div></div>
       </div>
     </div>
   </section>
@@ -1160,7 +1194,7 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
       <div class="resources-grid reveal" id="resources-grid">
         <div class="rc" data-cat="case-study">
           <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&q=80&auto=format&fit=crop" alt="M&A" onerror="this.style.opacity='0'"/></div>
-          <div class="rc-body"><div class="rc-cat">Case Study</div><div class="rc-date">MARCH 14, 2026</div><h3>How Khaitan & Co. reduced M&A due diligence time by 70% with NyAI</h3><p class="rc-excerpt">Deep-dive into how one of India's premier firms overhauled their data room review process, cutting turnaround from three weeks to four days.</p><span class="rc-read">Read Case Study →</span></div>
+          <div class="rc-body"><div class="rc-cat">Case Study</div><div class="rc-date">MARCH 14, 2026</div><h3>How AI-powered due diligence can reduce M&A review time by up to 70%</h3><p class="rc-excerpt">A deep-dive into how NyAI's automated document classification and risk flagging transforms the data room review process for M&A practitioners.</p><span class="rc-read">Read Case Study →</span></div>
         </div>
         <div class="rc" data-cat="insights">
           <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80&auto=format&fit=crop" alt="SEBI" onerror="this.style.opacity='0'"/></div>
@@ -1184,7 +1218,7 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
         </div>
         <div class="rc" data-cat="case-study">
           <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&auto=format&fit=crop" alt="Report" onerror="this.style.opacity='0'"/></div>
-          <div class="rc-body"><div class="rc-cat">Industry Report</div><div class="rc-date">JAN 15, 2026</div><h3>India Legal Tech Report 2026: AI adoption across Indian law firms</h3><p class="rc-excerpt">Our deep-dive into LLM adoption rates, ROI data, and implementation challenges across Tier-1, Tier-2, and corporate legal teams in India.</p><span class="rc-read">Download Report →</span></div>
+          <div class="rc-body"><div class="rc-cat">Industry Report</div><div class="rc-date">JAN 15, 2026</div><h3>India Legal Tech Report 2026: The state of AI adoption across Indian law firms</h3><p class="rc-excerpt">An analysis of LLM adoption trends, implementation challenges, and opportunity areas across Tier-1, Tier-2, and corporate legal teams in India.</p><span class="rc-read">Download Report →</span></div>
         </div>
         <div class="rc" data-cat="legal-tech">
           <div class="rc-img"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1521791136064-7986c2959213?w=700&q=80&auto=format&fit=crop" alt="Signature" onerror="this.style.opacity='0'"/></div>
@@ -1318,11 +1352,10 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
         <span class="s-label">Leadership</span>
         <h2 class="s-h2">Built by lawyers and engineers</h2>
       </div>
-      <div class="team-grid reveal">
+      <div class="team-grid reveal" style="grid-template-columns:repeat(3,1fr)">
         <div class="tc"><div class="tc-av">MK</div><div class="tc-name">Mahir Kadia</div><div class="tc-role">Co-Founder & CEO</div><div class="tc-bio">Drives product vision and growth strategy. Previously in venture-backed startups and legal technology. Deep interest in AI for access to justice.</div></div>
         <div class="tc"><div class="tc-av">MM</div><div class="tc-name">Mahek Maradiya</div><div class="tc-role">Co-Founder & CFO</div><div class="tc-bio">Manages operations, finance, and enterprise partnerships. Background in corporate finance and technology sector growth.</div></div>
         <div class="tc"><div class="tc-av">TN</div><div class="tc-name">Tirth Nagar</div><div class="tc-role">Co-Founder</div><div class="tc-bio">Leads technical architecture and AI model development. Expertise in LLMs, information retrieval, and building scalable AI systems for professional applications.</div></div>
-        <div class="tc"><div class="tc-av">NK</div><div class="tc-name">Neha Kapoor</div><div class="tc-role">Head of Legal Products</div><div class="tc-bio">Former advocate, High Court of Gujarat. Ensures NyAI's outputs meet the standards of actual Indian legal practice. LLM, University of Cambridge.</div></div>
       </div>
     </div>
   </div>
@@ -1351,11 +1384,11 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
         <h2 class="s-h2">Our milestones</h2>
       </div>
       <div class="milestones reveal">
-        <div class="milestone"><div class="ms-year">2024</div><div class="ms-text"><h4>Founded in Ahmedabad</h4><p>NyAI Technologies incorporated. Initial team of 6 begins building the Indian law corpus and training the first research model.</p></div></div>
-        <div class="milestone"><div class="ms-year">2024</div><div class="ms-text"><h4>First 100 Users</h4><p>Beta launch with invitation-only access to advocates in Gujarat and Maharashtra. First paying customers within 3 months of launch.</p></div></div>
-        <div class="milestone"><div class="ms-year">2025</div><div class="ms-text"><h4>Series A Funding</h4><p>Raised ₹22 crore from leading Indian venture funds to accelerate corpus expansion, enterprise features, and team growth.</p></div></div>
-        <div class="milestone"><div class="ms-year">2025</div><div class="ms-text"><h4>Enterprise Launch</h4><p>First national law firm deployments. Private VPC architecture launched. SOC 2 Type II certification achieved. 1,000+ active users.</p></div></div>
-        <div class="milestone"><div class="ms-year">2026</div><div class="ms-text"><h4>Scale & Expansion</h4><p>100,000+ professionals, 1,000+ firms. BNS/BNSS/BSA modules launched. NyAI named India's leading legal AI platform by multiple industry publications.</p></div></div>
+        <div class="milestone"><div class="ms-year">2024</div><div class="ms-text"><h4>Founded in Ahmedabad</h4><p>NyAI Technologies incorporated by Mahir, Mahek, and Tirth. The founding team begins building the Indian law corpus and designing the research platform.</p></div></div>
+        <div class="milestone"><div class="ms-year">2024</div><div class="ms-text"><h4>Platform Development Begins</h4><p>Started curating Supreme Court and High Court judgment datasets, training the first legal research model, and building the core infrastructure.</p></div></div>
+        <div class="milestone"><div class="ms-year">2025</div><div class="ms-text"><h4>Beta Launch</h4><p>NyAI's legal research engine goes live in private beta. Early users from Gujarat and Maharashtra begin testing the platform and providing feedback.</p></div></div>
+        <div class="milestone"><div class="ms-year">2025</div><div class="ms-text"><h4>Public Launch</h4><p>NyAI opens to all Indian legal professionals. Contract review, regulatory monitoring, and BNS/BNSS/BSA comparative tools launched.</p></div></div>
+        <div class="milestone"><div class="ms-year">2026</div><div class="ms-text"><h4>Building the Future</h4><p>Active development continues — expanding court coverage, deepening regulatory analysis, and building the most comprehensive Indian legal AI platform.</p></div></div>
       </div>
     </div>
   </div>
@@ -1379,10 +1412,10 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
       </div>
       <div class="signin-left-inner">
         <span class="signin-logo">NyAI</span>
-        <p class="signin-tagline">"The most successful firm technology adoption story I have ever been a part of."</p>
+        <p class="signin-tagline">"Intelligence Meets the Law — AI built natively for Indian legal practice."</p>
         <div class="signin-quote-attr">
-          <strong>Rahul Sharma</strong>
-          <span>Senior Partner, AZB & Partners</span>
+          <strong>NyAI</strong>
+          <span>Ahmedabad, India</span>
         </div>
       </div>
     </div>
@@ -1445,7 +1478,12 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
       </div>
       <div class="chat-input-area">
         <div class="chat-disc">Professional-grade research engine · Always verify citations before filing</div>
+        <div class="chat-file-preview" id="chat-file-preview"></div>
         <div class="chat-ir">
+          <button class="chat-attach-btn" id="chat-attach-btn" onclick="handleFileAttach()" title="Attach PDF or legal document (max 20MB)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+          </button>
+          <input type="file" id="chat-file-input" style="display:none" accept=".pdf,.doc,.docx,.txt,.rtf" multiple onchange="handleFileSelect(event)"/>
           <textarea class="chat-ta" id="chat-input" placeholder="Ask anything about Indian law..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
           <button class="chat-sb" id="chat-send" onclick="sendMsg()">↑</button>
         </div>
@@ -1528,10 +1566,10 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
       <h1 class="p-h1-dark" style="max-width:700px">Build the future of Indian legal practice with us</h1>
       <p class="p-sub-dark" style="max-width:560px">We're a small, mission-driven team in Ahmedabad building professional-class AI for India's 1.7 million advocates and thousands of in-house legal teams. Join us.</p>
       <div class="careers-stats-row reveal">
-        <div><span class="cs-num">40+</span><span class="cs-label">Team members</span></div>
+        <div><span class="cs-num">Growing</span><span class="cs-label">Team</span></div>
         <div><span class="cs-num">Ahmedabad</span><span class="cs-label">Headquarters</span></div>
         <div><span class="cs-num">2024</span><span class="cs-label">Founded</span></div>
-        <div><span class="cs-num">Series A</span><span class="cs-label">Stage · ₹22Cr raised</span></div>
+        <div><span class="cs-num">Pre-Seed</span><span class="cs-label">Stage · Bootstrapped</span></div>
       </div>
     </div>
   </div>
@@ -1691,7 +1729,7 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
         <div class="perk-item"><div class="perk-icon">🏠</div><h4 class="perk-h">Flexible Work</h4><p class="perk-p">Hybrid-first culture. 3 days in office (Ahmedabad), rest is yours. No rigid 9-to-5. We care about output, not hours.</p></div>
         <div class="perk-item"><div class="perk-icon">🌴</div><h4 class="perk-h">Unlimited PTO</h4><p class="perk-p">Generous leave policy with a minimum 15 days off per year, national holidays, and additional personal days.</p></div>
         <div class="perk-item"><div class="perk-icon">⚡</div><h4 class="perk-h">Top-tier Equipment</h4><p class="perk-p">MacBook Pro, external monitor, and any tools you need to do your best work. Home office setup budget included.</p></div>
-        <div class="perk-item"><div class="perk-icon">🚀</div><h4 class="perk-h">Early Equity</h4><p class="perk-p">ESOP participation for all full-time employees. We're Series A — meaningful equity is still on the table.</p></div>
+        <div class="perk-item"><div class="perk-icon">🚀</div><h4 class="perk-h">Early Equity</h4><p class="perk-p">ESOP participation for all full-time employees. We're early-stage — meaningful equity is still on the table.</p></div>
         <div class="perk-item"><div class="perk-icon">🍱</div><h4 class="perk-h">Daily Meals</h4><p class="perk-p">Free lunch and snacks in the Ahmedabad office. Quarterly team offsite and regular team dinners.</p></div>
       </div>
     </div>
@@ -2110,23 +2148,89 @@ window.clearChat = function() {
   if (inp) inp.focus();
 };
 
+// ── FILE ATTACHMENT ──
+var attachedFiles = [];
+var MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+
+window.handleFileAttach = function() {
+  document.getElementById('chat-file-input').click();
+};
+
+window.handleFileSelect = function(e) {
+  var files = Array.from(e.target.files);
+  files.forEach(function(file) {
+    if (file.size > MAX_FILE_SIZE) {
+      alert('File "' + file.name + '" exceeds the 20MB limit.\n\nPlease upload a smaller file.');
+      return;
+    }
+    // Prevent duplicates
+    if (attachedFiles.some(function(f) { return f.name === file.name && f.size === file.size; })) return;
+    attachedFiles.push(file);
+  });
+  renderFilePreview();
+  e.target.value = ''; // Reset so same file can be re-selected
+};
+
+window.removeAttachedFile = function(index) {
+  attachedFiles.splice(index, 1);
+  renderFilePreview();
+};
+
+function formatFileSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+function renderFilePreview() {
+  var container = document.getElementById('chat-file-preview');
+  if (!container) return;
+  container.innerHTML = '';
+  attachedFiles.forEach(function(file, idx) {
+    var chip = document.createElement('div');
+    chip.className = 'chat-file-chip';
+    chip.innerHTML =
+      '<span class="chip-icon">📄</span>' +
+      '<div class="chip-info">' +
+        '<span class="chip-name">' + escapeHtml(file.name) + '</span>' +
+        '<span class="chip-size">' + formatFileSize(file.size) + '</span>' +
+      '</div>' +
+      '<button class="chip-remove" onclick="removeAttachedFile(' + idx + ')" title="Remove">×</button>';
+    container.appendChild(chip);
+  });
+}
+
 window.sendMsg = async function() {
   if (isLoading) return;
   var input = document.getElementById('chat-input');
   var text = input.value.trim();
-  if (!text) return;
+  if (!text && attachedFiles.length === 0) return;
   var w = document.getElementById('chat-welcome');
   if (w) w.remove();
   input.value = '';
   input.style.height = 'auto';
-  addMsg(text, 'user', true);
-  chatHistory.push({ role: 'user', content: text });
+
+  // Capture attached files for display
+  var sentFiles = attachedFiles.slice();
+  attachedFiles = [];
+  renderFilePreview();
+
+  // Build display text with file info
+  var displayText = text;
+  if (sentFiles.length > 0) {
+    var fileNames = sentFiles.map(function(f) { return f.name + ' (' + formatFileSize(f.size) + ')'; });
+    if (!displayText) displayText = 'Attached ' + sentFiles.length + ' file(s) for analysis';
+  }
+
+  addMsg(displayText, 'user', true, sentFiles);
+  chatHistory.push({ role: 'user', content: displayText });
 
   // Auto-title conv from first message
   if (activeConvId) {
     var conv = getConv(activeConvId);
     if (conv && (conv.title === 'New conversation' || conv.title === '')) {
-      conv.title = text.length > 42 ? text.slice(0, 42) + '...' : text;
+      var titleText = text || sentFiles[0].name;
+      conv.title = titleText.length > 42 ? titleText.slice(0, 42) + '...' : titleText;
       saveConvs();
       renderSidebar();
     }
@@ -2168,7 +2272,7 @@ window.sendMsg = async function() {
   document.getElementById('chat-send').disabled = false;
 };
 
-function addMsg(text, role, scroll) {
+function addMsg(text, role, scroll, files) {
   var msgs = document.getElementById('chat-msgs');
   if (!msgs) return;
   var d = document.createElement('div');
@@ -2178,7 +2282,16 @@ function addMsg(text, role, scroll) {
   av.textContent = role === 'ai' ? 'N' : 'U';
   var b = document.createElement('div');
   b.className = 'msg-bubble ' + role;
-  b.innerHTML = text
+
+  // Show file attachments if present
+  var fileHtml = '';
+  if (files && files.length > 0) {
+    files.forEach(function(f) {
+      fileHtml += '<div class="msg-attachment"><span class="chip-icon">📄</span>' + escapeHtml(f.name) + ' <span style="color:var(--cream3);font-size:0.67rem;margin-left:0.25rem">' + formatFileSize(f.size) + '</span></div>';
+    });
+  }
+
+  b.innerHTML = fileHtml + text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/^### (.+)$/gm, '<h3 style="font-family:var(--serif);font-size:1.05rem;font-weight:500;margin:.75rem 0 .3rem;color:var(--cream)">$1</h3>')
@@ -2191,6 +2304,16 @@ function addMsg(text, role, scroll) {
   if (scroll !== false) msgs.scrollTop = msgs.scrollHeight;
 }
 
+// ── GROK-STYLE SEARCH INDICATOR ──
+var searchSteps = [
+  { text: 'Searching Supreme Court judgments...', icon: '⚖️' },
+  { text: 'Scanning High Court databases...', icon: '🏛️' },
+  { text: 'Analyzing SEBI & RBI regulations...', icon: '📊' },
+  { text: 'Cross-referencing statutes & amendments...', icon: '📜' },
+  { text: 'Reviewing relevant case law...', icon: '🔍' },
+  { text: 'Preparing cited response...', icon: '✍️' }
+];
+var activeSearchIntervals = {};
 
 function addTyping() {
   var id = 'ty-' + (++tc);
@@ -2198,13 +2321,74 @@ function addTyping() {
   var d = document.createElement('div');
   d.className = 'msg ai';
   d.id = id;
-  d.innerHTML = '<div class="msg-av ai">N</div><div class="msg-bubble ai" style="padding:0"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
+
+  var avHtml = '<div class="msg-av ai">N</div>';
+  var stepsHtml = '';
+  searchSteps.forEach(function(step, i) {
+    stepsHtml += '<div class="search-step" data-step="' + i + '">' +
+      '<div class="search-step-icon"><span class="search-step-dot"></span></div>' +
+      '<span>' + step.icon + ' ' + step.text + '</span></div>';
+  });
+
+  d.innerHTML = avHtml +
+    '<div class="msg-bubble ai" style="padding:0">' +
+      '<div class="search-indicator">' +
+        '<div class="search-indicator-header"><div class="si-spinner"></div> Researching</div>' +
+        '<div class="search-steps">' + stepsHtml + '</div>' +
+        '<div class="si-bar-wrap"><div class="si-bar" id="si-bar-' + id + '"></div></div>' +
+      '</div>' +
+    '</div>';
+
   msgs.appendChild(d);
   msgs.scrollTop = msgs.scrollHeight;
+
+  // Animate steps sequentially
+  var currentStep = 0;
+  var stepEls = d.querySelectorAll('.search-step');
+  var bar = document.getElementById('si-bar-' + id);
+
+  // Show first step immediately
+  if (stepEls[0]) {
+    stepEls[0].classList.add('visible', 'active');
+  }
+  if (bar) bar.style.width = '8%';
+
+  var interval = setInterval(function() {
+    // Mark current as done
+    if (stepEls[currentStep]) {
+      stepEls[currentStep].classList.remove('active');
+      stepEls[currentStep].classList.add('done');
+      stepEls[currentStep].querySelector('.search-step-icon').innerHTML = '✓';
+    }
+    currentStep++;
+    if (currentStep < searchSteps.length) {
+      // Show next step
+      stepEls[currentStep].classList.add('visible', 'active');
+      if (bar) bar.style.width = Math.round(((currentStep + 1) / searchSteps.length) * 85) + '%';
+      // Scroll to keep visible
+      msgs.scrollTop = msgs.scrollHeight;
+    } else {
+      // All done — loop back to keep it alive
+      if (bar) bar.style.width = '92%';
+      clearInterval(interval);
+      // Keep a subtle pulsing on last step
+      if (stepEls[searchSteps.length - 1]) {
+        stepEls[searchSteps.length - 1].classList.remove('done');
+        stepEls[searchSteps.length - 1].classList.add('active');
+        stepEls[searchSteps.length - 1].querySelector('.search-step-icon').innerHTML = '<span class="search-step-dot"></span>';
+      }
+    }
+  }, 1200);
+
+  activeSearchIntervals[id] = interval;
   return id;
 }
 
 function removeTyping(id) {
+  if (activeSearchIntervals[id]) {
+    clearInterval(activeSearchIntervals[id]);
+    delete activeSearchIntervals[id];
+  }
   var el = document.getElementById(id);
   if (el) el.remove();
 }
