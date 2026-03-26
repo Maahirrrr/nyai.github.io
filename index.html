@@ -1793,6 +1793,12 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
 </footer>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+if (window.pdfjsLib) {
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+</script>
 <script>
 (function() {
 'use strict';
@@ -2200,6 +2206,56 @@ function renderFilePreview() {
   });
 }
 
+// ── Extract text from a PDF file using pdf.js ──
+async function extractPdfText(file) {
+  try {
+    if (!window.pdfjsLib) {
+      return '[PDF text extraction unavailable — pdf.js not loaded]';
+    }
+    var arrayBuffer = await file.arrayBuffer();
+    var pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    var allText = [];
+    for (var i = 1; i <= pdf.numPages; i++) {
+      var page = await pdf.getPage(i);
+      var content = await page.getTextContent();
+      var pageText = content.items.map(function(item) { return item.str; }).join(' ');
+      allText.push('--- Page ' + i + ' ---\n' + pageText);
+    }
+    return allText.join('\n\n');
+  } catch (err) {
+    console.error('PDF extraction error:', err);
+    return '[Error extracting PDF text: ' + err.message + ']';
+  }
+}
+
+// ── Extract text from any supported file ──
+async function extractFileText(file) {
+  var ext = file.name.split('.').pop().toLowerCase();
+  
+  if (ext === 'pdf') {
+    return await extractPdfText(file);
+  }
+  
+  if (['txt', 'csv', 'json', 'md', 'rtf'].indexOf(ext) !== -1) {
+    return await file.text();
+  }
+  
+  if (['doc', 'docx'].indexOf(ext) !== -1) {
+    // For DOC/DOCX we read as text (limited but better than nothing)
+    try {
+      var text = await file.text();
+      // DOCX is XML-based, try to extract readable text
+      var cleaned = text.replace(/<[^>]+>/g, ' ').replace(/\s{2,}/g, ' ').trim();
+      if (cleaned.length > 50) return cleaned;
+      return '[DOC/DOCX file detected: "' + file.name + '". For best results, please copy-paste the document text directly, or convert to PDF first.]';
+    } catch(e) {
+      return '[Could not read DOC/DOCX file. Please convert to PDF or paste the text directly.]';
+    }
+  }
+  
+  return '[Unsupported file type: .' + ext + '. Please upload PDF, TXT, CSV, JSON, or MD files.]';
+}
+
 window.sendMsg = async function() {
   if (isLoading) return;
   var input = document.getElementById('chat-input');
@@ -2239,15 +2295,39 @@ window.sendMsg = async function() {
   isLoading = true;
   document.getElementById('chat-send').disabled = true;
   var tid = addTyping();
+
   try {
+    // ── Extract text from all attached files ──
+    var allFileContent = '';
+    var firstFileName = null;
+    if (sentFiles.length > 0) {
+      var extractionResults = [];
+      for (var fi = 0; fi < sentFiles.length; fi++) {
+        var fileText = await extractFileText(sentFiles[fi]);
+        extractionResults.push('=== FILE: ' + sentFiles[fi].name + ' ===\n' + fileText);
+        if (!firstFileName) firstFileName = sentFiles[fi].name;
+      }
+      allFileContent = extractionResults.join('\n\n');
+    }
+
+    // ── Build the request payload ──
+    var payload = {
+      query: text || displayText,
+      message: text || displayText,
+      history: chatHistory,
+      sessionId: activeConvId || 'session_' + Date.now()
+    };
+
+    // Add file content if files were attached
+    if (allFileContent) {
+      payload.fileContent = allFileContent;
+      payload.fileName = firstFileName;
+    }
+
     var res = await fetch('http://localhost:5678/webhook-test/82dfe55e-93cf-4dfe-ae95-54e68dda2153', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: displayText,
-        message: displayText,
-        history: chatHistory
-      })
+      body: JSON.stringify(payload)
     });
     
     var rawData = await res.json();
@@ -2289,6 +2369,7 @@ window.sendMsg = async function() {
     }
   } catch(e) {
     removeTyping(tid);
+    console.error('Send error:', e);
     addMsg('Connection error — please check if your local webhook (localhost:5678) is running.', 'ai', false);
   }
   isLoading = false;
