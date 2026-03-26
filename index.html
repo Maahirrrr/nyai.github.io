@@ -123,16 +123,14 @@ button{cursor:pointer;font-family:var(--sans);border:none;background:none}
 .cap-item:hover .cap-arrow,.cap-item.active .cap-arrow{color:var(--cream)}
 
 /* QUOTE */
-#quote-section{background:var(--offwhite);padding:8rem 0;border-top:1px solid var(--lightborder)}
-.quote-inner{max-width:1440px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:240px 1fr;gap:6rem;align-items:center}
-.quote-photo{border-radius:3px;overflow:hidden;width:180px;height:220px}
-.quote-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(15%)}
-.quote-content blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.25vw,1.875rem);font-style:italic;line-height:1.55;color:var(--lighttext);margin-bottom:2rem}
-.quote-attr strong{color:var(--lighttext);font-size:0.875rem;font-weight:600;display:block;margin-bottom:0.2rem}
-.quote-attr span{font-size:0.8125rem;color:var(--lightmuted)}
-.quote-attr em{font-family:var(--serif);font-size:0.9375rem;color:var(--lightmuted);font-style:italic;display:block;margin-top:0.25rem}
-.quote-cta{display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.5rem;font-size:0.8125rem;color:var(--lightmuted);border-bottom:1px solid var(--lightborder);padding-bottom:2px;transition:var(--t);cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--sans)}
+#quote-section{background:var(--offwhite);padding:8rem 0;border-top:1px solid var(--lightborder);text-align:center}
+.quote-inner{max-width:800px;margin:0 auto;padding:0 2.5rem}
+.quote-content blockquote{font-family:var(--serif);font-size:clamp(1.5rem,2.5vw,2.125rem);font-style:italic;line-height:1.5;color:var(--lighttext);margin-bottom:2rem}
+.quote-attr strong{color:var(--lighttext);font-size:0.9375rem;font-weight:600;display:block;margin-bottom:0.3rem}
+.quote-attr span{font-size:0.875rem;color:var(--lightmuted)}
+.quote-cta{display:inline-flex;align-items:center;gap:0.5rem;margin-top:2rem;font-size:0.875rem;color:var(--lightmuted);border-bottom:1px solid var(--lightborder);padding-bottom:2px;transition:var(--t);cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--sans)}
 .quote-cta:hover{color:var(--lighttext);border-color:var(--lightmuted)}
+
 
 /* CASES */
 #cases{padding:6rem 0;background:var(--dark)}
@@ -857,11 +855,6 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
 
   <section id="quote-section">
     <div class="quote-inner reveal">
-      <div>
-        <div class="quote-photo">
-          <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1473186578172-c141e6798ee4?w=800&q=80&auto=format&fit=crop" alt="Legal Vision"/>
-        </div>
-      </div>
       <div class="quote-content">
         <blockquote>"We believe every Indian advocate — from Tier-3 cities to the Supreme Court — deserves AI tools as powerful as those used by the world's largest firms."</blockquote>
         <div class="quote-attr">
@@ -872,6 +865,7 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
       </div>
     </div>
   </section>
+
 
   <section id="cases">
     <div class="cases-inner">
