@@ -2244,15 +2244,19 @@ window.sendMsg = async function() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        message: text || displayText,
+        query: displayText,
+        message: displayText,
         history: chatHistory
       })
     });
     
-    var data = await res.json();
+    var rawData = await res.json();
     removeTyping(tid);
-    
-    // Robust response handling for diverse webhook formats (Flowise, n8n, custom)
+
+    // n8n often wraps the response in an array — unwrap it
+    var data = Array.isArray(rawData) ? rawData[0] : rawData;
+
+    // Robust response handling: check common field names
     var reply = '';
     if (typeof data === 'string') {
       reply = data;
@@ -2264,10 +2268,12 @@ window.sendMsg = async function() {
       reply = data.text;
     } else if (data.reply) {
       reply = data.reply;
+    } else if (data.message && typeof data.message === 'string') {
+      reply = data.message;
     } else if (data.content && data.content[0] && data.content[0].text) {
       reply = data.content[0].text;
     } else {
-      reply = JSON.stringify(data);
+      reply = 'Sorry, I received an unexpected response format.';
     }
 
     if (reply) {
