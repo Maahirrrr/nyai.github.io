@@ -2333,7 +2333,7 @@ window.sendMsg = async function() {
       payload.fileName = firstFileName;
     }
 
-    var res = await fetch('http://localhost:5678/webhook-test/82dfe55e-93cf-4dfe-ae95-54e68dda2153', {
+    var res = await fetch('http://localhost:5678/webhook/82dfe55e-93cf-4dfe-ae95-54e68dda2153', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
