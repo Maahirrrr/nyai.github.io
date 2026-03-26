@@ -1794,6 +1794,7 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
   window.pdfjsLib = window['pdfjs-dist/build/pdf'];
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -2403,18 +2404,56 @@ function addMsg(text, role, scroll, files) {
     });
   }
 
+  // Detect FIR content for PDF download
+  var firDownloadBtn = '';
+  if (role === 'ai' && text.indexOf('FIRST INFORMATION REPORT') !== -1) {
+     firDownloadBtn = '<div style="margin-top:1rem;padding-top:0.8rem;border-top:1px solid rgba(255,255,255,0.08)">' +
+                        '<button class="chat-sugg" style="background:var(--accent);color:white;width:auto;padding:0.5rem 1rem;font-size:0.8rem;display:inline-flex;align-items:center;gap:0.5rem" onclick="downloadFIRAsPDF(this.closest(\'.msg-bubble\').innerText)">' +
+                        '<span>📥</span> Download Draft FIR as PDF</button>' +
+                      '</div>';
+  }
+
   b.innerHTML = fileHtml + text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/^### (.+)$/gm, '<h3 style="font-family:var(--serif);font-size:1.05rem;font-weight:500;margin:.75rem 0 .3rem;color:var(--cream)">$1</h3>')
     .replace(/^## (.+)$/gm, '<h3 style="font-family:var(--serif);font-size:1.1rem;font-weight:500;margin:.875rem 0 .3rem;color:var(--cream)">$1</h3>')
     .replace(/\n\n/g, '<br><br>')
-    .replace(/\n/g, '<br>');
+    .replace(/\n/g, '<br>') + firDownloadBtn;
   d.appendChild(av);
   d.appendChild(b);
   msgs.appendChild(d);
   if (scroll !== false) msgs.scrollTop = msgs.scrollHeight;
 }
+
+window.downloadFIRAsPDF = function(rawText) {
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Simple parsing - clean up some common artifacts
+    let cleanText = rawText
+      .replace(/📥 Download Draft FIR as PDF/g, '')
+      .replace(/FIRST INFORMATION REPORT/g, 'FIRST INFORMATION REPORT (DRAFT)')
+      .trim();
+    
+    // Add title
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text("DRAFT FIRST INFORMATION REPORT", 105, 20, { align: "center" });
+    
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    
+    const splitText = doc.splitTextToSize(cleanText, 180);
+    doc.text(splitText, 15, 35);
+    
+    doc.save("NyAI_Draft_FIR.pdf");
+  } catch (err) {
+    console.error('PDF generation error:', err);
+    alert('Failed to generate PDF. Please copy the text manually.');
+  }
+};
 
 // ── GROK-STYLE SEARCH INDICATOR ──
 var searchSteps = [
