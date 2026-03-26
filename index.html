@@ -2431,10 +2431,44 @@ window.downloadFIRAsPDF = function(rawText) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     
-    // Simple parsing - clean up some common artifacts
-    let cleanText = rawText
-      .replace(/📥 Download Draft FIR as PDF/g, '')
-      .replace(/FIRST INFORMATION REPORT/g, 'FIRST INFORMATION REPORT (DRAFT)')
+    // Extract actual FIR content boundaries
+    let firContent = rawText;
+    
+    const startIndex = rawText.indexOf("FIRST INFORMATION REPORT");
+    if (startIndex !== -1) {
+      firContent = rawText.substring(startIndex);
+    }
+    
+    const endMarkers = [
+      "⚠️ IMPORTANT", 
+      "Would you like me", 
+      "Please review this draft",
+      "Draft FIR ends",
+      "Thank you"
+    ];
+    
+    for (let marker of endMarkers) {
+      const markerIndex = firContent.indexOf(marker);
+      if (markerIndex > 100) { // arbitrary threshold to ensure we don't cut off everything early
+        firContent = firContent.substring(0, markerIndex);
+      }
+    }
+    
+    // Clean up emojis and special characters that jsPDF Helvetica doesn't support
+    let cleanText = firContent
+      .replace(/₹/g, 'Rs. ')
+      .replace(/[\u{1F300}-\u{1F5FF}]/gu, '') // symbols & dicts
+      .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // supplemental symbols
+      .replace(/[\u{1F600}-\u{1F64F}]/gu, '') // emoticons
+      .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // transport & map
+      .replace(/[\u{2600}-\u{26FF}]/gu, '')   // misc symbols
+      .replace(/[\u{2700}-\u{27BF}]/gu, '')   // dingbats
+      .replace(/📋|⚠️|💡|📥/g, '')             // specific remaining emojis
+      .replace(/[^\x00-\x7F]/g, '')           // remove all non-ASCII characters
+      .replace(/Download Draft FIR as PDF/ig, '')
+      .replace(/^FIRST INFORMATION REPORT \(FIR\)/i, '')
+      .replace(/^FIRST INFORMATION REPORT \(DRAFT\)/i, '')
+      .replace(/^FIRST INFORMATION REPORT/i, '')
       .trim();
     
     // Add title
@@ -2446,7 +2480,7 @@ window.downloadFIRAsPDF = function(rawText) {
     doc.setFont("helvetica", "normal");
     
     const splitText = doc.splitTextToSize(cleanText, 180);
-    doc.text(splitText, 15, 35);
+    doc.text(splitText, 15, 30);
     
     doc.save("NyAI_Draft_FIR.pdf");
   } catch (err) {
