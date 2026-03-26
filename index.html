@@ -2256,6 +2256,8 @@ window.sendMsg = async function() {
     var reply = '';
     if (typeof data === 'string') {
       reply = data;
+    } else if (data.response) {
+      reply = data.response;
     } else if (data.output) {
       reply = data.output;
     } else if (data.text) {
