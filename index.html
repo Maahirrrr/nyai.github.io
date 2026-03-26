@@ -1795,9 +1795,8 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-if (window.pdfjsLib) {
-  window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-}
+  window.pdfjsLib = window['pdfjs-dist/build/pdf'];
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 </script>
 <script>
 (function() {
@@ -2206,25 +2205,34 @@ function renderFilePreview() {
   });
 }
 
-// ── Extract text from a PDF file using pdf.js ──
 async function extractPdfText(file) {
   try {
-    if (!window.pdfjsLib) {
-      return '[PDF text extraction unavailable — pdf.js not loaded]';
-    }
     var arrayBuffer = await file.arrayBuffer();
-    var pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    var pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     var allText = [];
+    var hasText = false;
+
     for (var i = 1; i <= pdf.numPages; i++) {
       var page = await pdf.getPage(i);
       var content = await page.getTextContent();
-      var pageText = content.items.map(function(item) { return item.str; }).join(' ');
-      allText.push('--- Page ' + i + ' ---\n' + pageText);
+      var pageText = content.items.map(function(item) { return item.str; }).join(' ').trim();
+      
+      if (pageText.length > 0) {
+        hasText = true;
+        allText.push('--- Page ' + i + ' ---\n' + pageText);
+      } else {
+        allText.push('--- Page ' + i + ' ---\n[This page seems to be an image or has no selectable text]');
+      }
     }
+
+    if (!hasText) {
+      return '[SCANNED DOCUMENT DETECTED: This PDF appears to be a scanned image or contains no selectable text. Please ask the user to provide a text-based version or the relevant details manually.]';
+    }
+
     return allText.join('\n\n');
   } catch (err) {
     console.error('PDF extraction error:', err);
-    return '[Error extracting PDF text: ' + err.message + ']';
+    return '[ERROR: Could not read this PDF. It might be password protected or corrupted. Error: ' + err.message + ']';
   }
 }
 
