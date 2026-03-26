@@ -450,6 +450,17 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 .msg-attachment .chip-icon{font-size:0.85rem}
 
 .chat-input-area{padding:1rem 1.5rem 1.5rem;border-top:1px solid var(--border);background:var(--dark);flex-shrink:0}
+.chat-menu-btn{background:none;border:none;color:var(--cream);cursor:pointer;display:none;padding:8px;margin-right:8px;border-radius:4px;transition:var(--t)}
+.chat-menu-btn:hover{background:var(--dark3)}
+.chat-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;display:none;opacity:0;transition:opacity 0.3s}
+.sidebar-open .chat-overlay{display:block;opacity:1}
+@media (max-width: 1024px) {
+  .chat-menu-btn{display:flex}
+  .chat-sidebar{position:fixed;left:0;top:0;bottom:0;z-index:1000;transform:translateX(-100%);transition:transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);display:flex !important;width:280px}
+  .sidebar-open .chat-sidebar{transform:translateX(0)}
+  #chat-welcome{display:none}
+}
+
 .chat-disc{font-size:0.67rem;color:var(--cream3);text-align:center;margin-bottom:0.75rem;font-family:var(--mono);opacity:0.7}
 .chat-ir{display:flex;gap:0.75rem;align-items:flex-end}
 .chat-ta{flex:1;resize:none;background:var(--dark2);border:1px solid var(--border);border-radius:3px;padding:0.8rem 1rem;font-family:var(--sans);font-size:0.875rem;color:var(--cream);outline:none;transition:var(--t);max-height:140px;min-height:44px;line-height:1.5;font-weight:300}
@@ -1453,6 +1464,7 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
 <!-- =================== CHAT =================== -->
 <div id="page-chat" class="page">
   <div class="chat-layout">
+    <div class="chat-overlay" onclick="toggleChatSidebar()"></div>
     <div class="chat-sidebar">
       <button class="chat-new-btn" onclick="clearChat()">+ New Conversation</button>
       <div class="chat-sl">Recent</div>
@@ -1463,7 +1475,10 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
     </div>
     <div class="chat-main">
       <div class="chat-topbar">
-        <h2>NyAI Legal Assistant</h2>
+        <button class="chat-menu-btn" onclick="toggleChatSidebar()" title="Conversations">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <h2 style="flex:1">NyAI Legal Assistant</h2>
         <span class="chat-mb">Indian Law Corpus v3.2</span>
       </div>
       <div class="chat-msgs" id="chat-msgs">
@@ -1919,6 +1934,10 @@ window.setActive = function(el) {
   el.classList.add('active');
 };
 
+window.toggleChatSidebar = function() {
+  document.getElementById('page-chat').classList.toggle('sidebar-open');
+};
+
 window.toggleFaq = function(el) {
   var wasOpen = el.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(function(f) { f.classList.remove('open'); });
@@ -2106,6 +2125,9 @@ function loadConv(id) {
   chatHistory = conv.messages ? conv.messages.slice() : [];
   renderSidebar();
   rebuildChatUI();
+  if (window.innerWidth <= 1024) {
+    document.getElementById('page-chat').classList.remove('sidebar-open');
+  }
 }
 
 function rebuildChatUI() {
@@ -2150,6 +2172,9 @@ window.clearChat = function() {
   chatHistory = [];
   renderSidebar();
   resetChatUI();
+  if (window.innerWidth <= 1024) {
+    document.getElementById('page-chat').classList.remove('sidebar-open');
+  }
   var inp = document.getElementById('chat-input');
   if (inp) inp.focus();
 };
