@@ -2240,20 +2240,35 @@ window.sendMsg = async function() {
   document.getElementById('chat-send').disabled = true;
   var tid = addTyping();
   try {
-    var res = await fetch('https://api.anthropic.com/v1/messages', {
+    var res = await fetch('http://localhost:5678/webhook-test/nyai-agent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: 'You are NyAI, an expert Indian legal research and drafting assistant. You are deeply knowledgeable about Indian statutes (Companies Act 2013, IBC 2016, IT Act 2000, SEBI regulations, FEMA, Income Tax Act, GST laws, CPC, CrPC, BNS, BNSS, BSA, Contract Act, Transfer of Property Act), Indian courts (Supreme Court of India, all 25 High Courts, NCLAT, SAT, ITAT, NCLT, TDSAT), and Indian regulatory bodies (SEBI, RBI, MCA, IRDAI, CCI, TRAI). Be precise, cite specific section numbers and case names, use **bold** for key references, structure complex answers with ## headings, flag risks, and remind users to verify citations before court use.',
-        messages: chatHistory
+        message: text || displayText,
+        history: chatHistory
       })
     });
+    
     var data = await res.json();
     removeTyping(tid);
-    if (data.content && data.content[0]) {
-      var reply = data.content[0].text;
+    
+    // Robust response handling for diverse webhook formats (Flowise, n8n, custom)
+    var reply = '';
+    if (typeof data === 'string') {
+      reply = data;
+    } else if (data.output) {
+      reply = data.output;
+    } else if (data.text) {
+      reply = data.text;
+    } else if (data.reply) {
+      reply = data.reply;
+    } else if (data.content && data.content[0] && data.content[0].text) {
+      reply = data.content[0].text;
+    } else {
+      reply = JSON.stringify(data);
+    }
+
+    if (reply) {
       chatHistory.push({ role: 'assistant', content: reply });
       addMsg(reply, 'ai', true);
       // Persist
@@ -2266,7 +2281,7 @@ window.sendMsg = async function() {
     }
   } catch(e) {
     removeTyping(tid);
-    addMsg('Connection error — please try again.', 'ai', false);
+    addMsg('Connection error — please check if your local webhook (localhost:5678) is running.', 'ai', false);
   }
   isLoading = false;
   document.getElementById('chat-send').disabled = false;
