@@ -2802,6 +2802,19 @@ var LAWYER_DIRECTORY = [
     guidance: "Ask about: Severance dispute mediation, non-compete enforceability under Section 27 Contract Act."
   },
   {
+    name: "Adv. S. Ramesh Babu",
+    firm: "Babu & Associates Criminal Defense Chambers",
+    bar_council: "Karnataka State Bar Council (KAR/894/2003)",
+    experience: "21+ Years Practice",
+    courts: "Karnataka High Court · City Civil & Sessions Court Mayo Hall",
+    city: "Bengaluru",
+    domains: "Criminal Defense, Cyber Crime (IT Act 2000), Anticipatory Bail (BNSS 482), Economic Offences",
+    phone: "+91 98452 31890",
+    email: "ramesh.babu@blrbar.in",
+    chamber: "Chamber 82, High Court Advocates Block, Ambedkar Veedhi, Bengaluru 560001",
+    guidance: "Ask about: Cyber crime account freezing, anticipatory bail under Section 482 BNSS, quashing petitions."
+  },
+  {
     name: "Adv. Harishbhai Patel",
     firm: "Patel & Associates Legal Chambers",
     bar_council: "Bar Council of Gujarat (G/892/1997)",
@@ -2826,6 +2839,58 @@ var LAWYER_DIRECTORY = [
     email: "adv.tanvishah@ahmedabadlaw.org",
     chamber: "Chamber 302, Pelican House, Ashram Road, Ahmedabad 380009",
     guidance: "Ask about: BNS vs IPC transitional rules, preservation of phone/call records, settlement compounding."
+  },
+  {
+    name: "Adv. Pradeep R. Vaghela",
+    firm: "Vaghela Criminal Defense Chambers",
+    bar_council: "Bar Council of Gujarat (G/612/1999)",
+    experience: "25+ Years Practice",
+    courts: "Gujarat High Court · City Sessions Court Bhadra · Mirzapur Sessions Court",
+    city: "Ahmedabad",
+    domains: "Criminal Defense, Homicide & Bodily Offences (BNS 101/103 / IPC 302), Bail & Custody (BNSS 480/482), Criminal Trials & Appeals",
+    phone: "+91 98240 18834",
+    email: "chambers.vaghela@gujaratbar.org",
+    chamber: "Chamber 215, City Civil & Sessions Court Complex, Bhadra, Ahmedabad 380001",
+    guidance: "Ask about: Urgent surrender before Judicial Magistrate, custodial safeguards under Article 22, legal representation during remand hearing, cross-examination strategy."
+  },
+  {
+    name: "Adv. S. K. Reddy",
+    firm: "Reddy Law Associates",
+    bar_council: "Bar Council of Telangana (TS/1450/2005)",
+    experience: "19+ Years Practice",
+    courts: "Telangana High Court · City Civil Court Hyderabad · Nampally Criminal Courts",
+    city: "Hyderabad",
+    domains: "Criminal Defense, Bail & Quashing, Land Title & Dharani Issues, Commercial Recovery",
+    phone: "+91 98480 31278",
+    email: "reddyassociates@hydlegal.com",
+    chamber: "Chamber 76, High Court Buildings, Hyderabad 500066",
+    guidance: "Ask about: High Court criminal revision, police station bail under Section 479 BNSS, title verification."
+  },
+  {
+    name: "Adv. R. Subramanian",
+    firm: "Subramanian & Partners Advocates",
+    bar_council: "Bar Council of Tamil Nadu & Puducherry (MS/1204/2001)",
+    experience: "23+ Years Practice",
+    courts: "Madras High Court · George Town Court · Madras City Civil Court",
+    city: "Chennai",
+    domains: "Commercial Suits, Civil Appeals, Property Law, Intellectual Property & Trademarks",
+    phone: "+91 98401 67230",
+    email: "rsubramanian@chennailaw.in",
+    chamber: "New Lawyers Block, High Court Buildings, Chennai 600104",
+    guidance: "Ask about: High Court Original Side civil jurisdiction, permanent injunction against infringement."
+  },
+  {
+    name: "Adv. Debabrata Chatterjee",
+    firm: "Chatterjee Law Chambers",
+    bar_council: "Bar Council of West Bengal (WB/512/1995)",
+    experience: "29+ Years Practice",
+    courts: "Calcutta High Court · Bankshall Court · Alipore District Court",
+    city: "Kolkata",
+    domains: "Constitutional Law, Rent Control & Tenancy, Arbitration, Criminal Revision",
+    phone: "+91 98300 45892",
+    email: "chatterjee.law@calbar.org",
+    chamber: "Bar Library Club, First Floor, Calcutta High Court, Kolkata 700001",
+    guidance: "Ask about: Thika tenancy issues, Section 11 arbitration petitions, stay in criminal revision."
   }
 ];
 
@@ -2916,19 +2981,50 @@ async function checkHermesGatewayStatus() {
 
 function findLawyersClient(city, query) {
   var c = (city || '').toLowerCase();
-  var q = (query || '').toLowerCase();
-  var matches = LAWYER_DIRECTORY.filter(function(l) {
-    var matchCity = !c || l.city.toLowerCase().indexOf(c) !== -1;
-    var matchDomain = !q || l.domains.toLowerCase().indexOf(q) !== -1 || l.courts.toLowerCase().indexOf(q) !== -1;
-    return matchCity && matchDomain;
+  var d = (query || '').toLowerCase();
+  
+  var pool = LAWYER_DIRECTORY;
+  if (c) {
+    var cityMatches = pool.filter(function(l) {
+      return l.city.toLowerCase().indexOf(c) !== -1;
+    });
+    if (cityMatches.length > 0) pool = cityMatches;
+  }
+  
+  var domainKeywords = [];
+  if (d.indexOf('homicide') !== -1 || d.indexOf('murder') !== -1 || d.indexOf('kill') !== -1 || d.indexOf('criminal') !== -1 || d.indexOf('bail') !== -1) {
+    domainKeywords = ['criminal', 'homicide', 'bail', 'custody', 'bns', 'quashing', 'offence', 'sessions', 'trial'];
+  } else if (d.indexOf('cheque') !== -1 || d.indexOf('138') !== -1) {
+    domainKeywords = ['138', 'cheque', 'dishonour', 'recovery', 'negotiable'];
+  } else if (d.indexOf('scam') !== -1 || d.indexOf('fraud') !== -1 || d.indexOf('cyber') !== -1) {
+    domainKeywords = ['cyber', 'fraud', 'criminal', 'cheating', 'it act', 'economic'];
+  } else if (d.indexOf('tenant') !== -1 || d.indexOf('property') !== -1 || d.indexOf('rent') !== -1) {
+    domainKeywords = ['property', 'tenant', 'rent', 'land', 'injunction', 'partition', 'rera'];
+  } else if (d.indexOf('matrimonial') !== -1 || d.indexOf('divorce') !== -1 || d.indexOf('family') !== -1) {
+    domainKeywords = ['matrimonial', 'divorce', 'family', 'domestic', 'custody', 'maintenance'];
+  } else if (d.indexOf('employment') !== -1 || d.indexOf('salary') !== -1) {
+    domainKeywords = ['employment', 'posh', 'labor', 'service', 'workplace', 'esop'];
+  } else {
+    domainKeywords = ['commercial', 'civil', 'contract', 'recovery', 'corporate', 'injunction'];
+  }
+
+  function scoreLawyer(l) {
+    var score = 0;
+    var blob = ((l.domains || '') + ' ' + (l.courts || '') + ' ' + (l.guidance || '')).toLowerCase();
+    domainKeywords.forEach(function(kw) {
+      if (blob.indexOf(kw) !== -1) score += 10;
+    });
+    return score;
+  }
+
+  var scored = pool.map(function(l) {
+    return { lawyer: l, score: scoreLawyer(l) };
   });
-  if (matches.length === 0 && c) {
-    matches = LAWYER_DIRECTORY.filter(function(l) { return l.city.toLowerCase().indexOf(c) !== -1; });
-  }
-  if (matches.length === 0) {
-    matches = LAWYER_DIRECTORY.slice(0, 3);
-  }
-  return matches.slice(0, 3);
+  scored.sort(function(a, b) {
+    return b.score - a.score;
+  });
+
+  return scored.map(function(item) { return item.lawyer; }).slice(0, 3);
 }
 
 function formatLawyerCardsClient(lawyers) {
@@ -3012,8 +3108,42 @@ function generateLegalDiagnostic(query, history) {
   var citationText = '';
   var steps = [];
   var limitation = '';
+  var isEmergencyCriminal = false;
 
-  if (q.indexOf('138') !== -1 || q.indexOf('cheque') !== -1 || q.indexOf('bounce') !== -1 || q.indexOf('dishonour') !== -1) {
+  var isHomicide = /\b(kill|killed|killing|killer|murder|murdered|homicide|death|dead|stab|stabbed|shoot|shot|strangle|poison|manslaughter|lynch|302|103|101|culpable\s+homicide)\b/i.test(q);
+  var isBailCustody = /\b(arrest|arrested|bail|anticipatory\s+bail|custody|remand|lockup|police\s+station|warrant|surrender|480|482|438|439|detained)\b/i.test(q);
+  var isCheque = /\b(138|cheque|check|bounce|bounced|dishonour|dishonored)\b/i.test(q);
+  var isFraud = /\b(scam|fraud|cheat|cheated|420|318|cyber|phishing|hack|telegram\s+scam|crypto\s+scam|otp\s+fraud)\b/i.test(q);
+  var isMatrimonial = /\b(divorce|wife|husband|marriage|dowry|498a|85\s+bns|cruelty|domestic\s+violence|dv\s+act|maintenance|125\s+crpc|144\s+bnss|custody|alimony)\b/i.test(q);
+  var isEmployment = /\b(salary|wages|unpaid|fired|terminated|termination|severance|gratuity|provident\s+fund|pf|posh|labor\s+court|retrenchment|employer)\b/i.test(q);
+  var isProperty = /\b(tenant|landlord|rent|eviction|evict|lease|flat|builder|rera|property|encroachment|possession)\b/i.test(q);
+
+  if (isHomicide) {
+    isEmergencyCriminal = true;
+    domain = 'criminal defense homicide';
+    statuteHeader = 'Section 103 (Murder) & Section 101 (Culpable Homicide), Bharatiya Nyaya Sanhita 2023 (Old Sections 300 & 302 IPC)';
+    citationText = '- **Section 103(1) Bharatiya Nyaya Sanhita 2023 (Old Section 302 IPC)**: Murder — punishable with death or imprisonment for life, and fine. Cognizable and non-bailable offense exclusively triable by Court of Session.\n- **Section 101 BNS 2023 (Old Section 299/304 IPC)**: Culpable homicide not amounting to murder — applies where death occurs without premeditation, during sudden mutual quarrel, or under grave provocation (Section 100 Exceptions).\n- **Article 22(1) & Article 20(3) Constitution of India**: Fundamental constitutional guarantees ensuring right to be defended by a legal practitioner of choice and protection against self-incrimination.\n- **Section 23 Bharatiya Sakshya Adhiniyam 2023 (BSA / Old Sec 25 & 26 Evidence Act)**: Statements or confessions made to a police officer are strictly inadmissible as evidence in court.';
+    steps = [
+      '**Exercise Constitutional Right to Silence (Article 20(3))**: Do not give oral confessions, write explanations, or sign police papers without your advocate present. Confessions given under police custody have no evidentiary validity under Section 23 BSA 2023.',
+      '**Engage Senior Criminal Defense Counsel Immediately**: Contact a qualified criminal trial and Sessions Court defense advocate in ' + detectedCity + ' immediately. If you lack financial means, you are constitutionally entitled to free defense counsel appointed by the District Legal Services Authority (DLSA) or call the NALSA Helpline **15100**.',
+      '**Formal Surrender before Judicial Magistrate**: Rather than evading or absconding (which leads to non-bailable warrants and attachment under Section 84 BNSS), your advocate will draft and file a formal surrender application before the jurisdictional Judicial Magistrate / Metropolitan Magistrate under judicial supervision.',
+      '**Demand Mandatory Medical Examination (Section 53 BNSS 2023)**: Insist on an immediate medical examination by a government medical officer upon detention or surrender to document bodily condition, physical marks, and mental state on official record.',
+      '**Counsel Representation at Remand Hearing (Within 24 Hours)**: Under Article 22(2) and Section 58 BNSS, police must produce the accused before a Magistrate within 24 hours. Your advocate must appear to oppose police remand and petition for direct judicial custody.'
+    ];
+    limitation = 'Grave non-bailable offense. Under Section 514 BNSS (old Section 468 CrPC), there is no period of limitation for murder. Securing immediate legal representation is critically imperative.';
+  } else if (isBailCustody) {
+    isEmergencyCriminal = true;
+    domain = 'criminal bail';
+    statuteHeader = 'Section 480 (Regular Bail) & Section 482 (Anticipatory Bail), BNSS 2023 (Old Sections 437, 438, 439 CrPC)';
+    citationText = '- **Section 482 BNSS 2023 (Old Section 438 CrPC)**: Anticipatory bail jurisdiction vested in Sessions Court and High Court for apprehension of arrest in non-bailable offenses.\n- **Section 35 BNSS 2023 (Old Section 41A CrPC / Arnesh Kumar Guidelines)**: Mandatory notice of appearance for offenses punishable up to 7 years; arrest is an exception requiring recorded written reasons.';
+    steps = [
+      '**Ascertain FIR & Crime Number**: Immediately obtain copy of FIR or notice issued by the investigating officer.',
+      '**Move Anticipatory Bail Petition under Section 482 BNSS**: If apprehension of arrest exists, move the Sessions Court or High Court demonstrating cooperation with investigation and absence of flight risk.',
+      '**Enforce Right to Counsel during Interrogation**: Under Section 39 BNSS (old Section 41D CrPC), the accused is legally permitted to meet an advocate during police questioning.',
+      '**Regular Bail Application upon First Production**: If arrested, advocate must argue regular bail under Section 480 BNSS at the 24-hour magistrate production hearing.'
+    ];
+    limitation = 'Urgent personal liberty petition. Bail petitions should be moved immediately upon knowledge of non-bailable FIR or arrest threat.';
+  } else if (isCheque) {
     domain = 'cheque';
     statuteHeader = 'Section 138, Negotiable Instruments Act 1881';
     citationText = '- **Section 138 NI Act**: Dishonour of cheque for insufficiency of funds. Strict liability criminal offense punishable with up to 2 years imprisonment or fine up to twice the cheque amount.\n- **Dashrath Rupsingh Rathod v. State of Maharashtra (2014)**: Territorial jurisdiction lies with the court where the payee maintaining bank branch is located (codified in Section 142(2)).';
@@ -3024,7 +3154,7 @@ function generateLegalDiagnostic(query, history) {
       '**File Criminal Complaint within 30 Days**: File a complaint under Section 142 before the Metropolitan Magistrate / Judicial Magistrate within 1 month from the cause of action.'
     ];
     limitation = 'Statutory notice must be dispatched strictly within **30 days** of receiving bank return memo. Complaint must be filed within **30 days** after 15-day cure window expires.';
-  } else if (q.indexOf('scam') !== -1 || q.indexOf('fraud') !== -1 || q.indexOf('cheat') !== -1 || q.indexOf('420') !== -1 || q.indexOf('cyber') !== -1) {
+  } else if (isFraud) {
     domain = 'criminal';
     statuteHeader = 'Section 318 BNS 2023 (Old Section 420 IPC) & IT Act 2000';
     citationText = '- **Section 318(4) Bharatiya Nyaya Sanhita (BNS 2023)**: Cheating and dishonestly inducing delivery of property. Punishable with up to 7 years imprisonment and fine.\n- **Section 63 Bharatiya Sakshya Adhiniyam (BSA 2023)**: Admissibility of electronic records and digital transactions under standardized evidentiary certificate.';
@@ -3035,7 +3165,29 @@ function generateLegalDiagnostic(query, history) {
       '**Magistrate Remedy under Section 175(3) BNSS**: If the SHO refuses to lodge an FIR, file an application before the Judicial Magistrate for an order directing investigation.'
     ];
     limitation = 'Cognizable offense; prompt filing is essential to preserve banking freeze logs before funds are withdrawn.';
-  } else if (q.indexOf('tenant') !== -1 || q.indexOf('landlord') !== -1 || q.indexOf('rent') !== -1 || q.indexOf('eviction') !== -1 || q.indexOf('property') !== -1) {
+  } else if (isMatrimonial) {
+    domain = 'matrimonial';
+    statuteHeader = 'Sections 85 & 86 BNS 2023, PWDVA 2005 & Section 144 BNSS 2023';
+    citationText = '- **Protection of Women from Domestic Violence Act 2005**: Protection orders, residence orders, and monetary maintenance under Sections 18, 19, 20.\n- **Section 144 BNSS 2023 (Old Section 125 CrPC)**: Statutory maintenance for spouses, children, and dependent parents to prevent vagrancy.';
+    steps = [
+      '**Family Court Pre-Litigation Mediation**: Attempt resolution through DLSA family counselors or Family Court mediation cell.',
+      '**File for Interim Maintenance**: Apply under Section 144 BNSS or Section 24 Hindu Marriage Act for urgent living expenses and legal costs.',
+      '**Obtain Domestic Violence Protection Orders**: If facing harassment or dispossession, move the Magistrate under Section 12 PWDVA.',
+      '**File Asset & Income Disclosure Affidavit**: Prepare comprehensive disclosure affidavit per Supreme Court mandatory directives in *Rajnesh v. Neha (2020)*.'
+    ];
+    limitation = 'Claims for ongoing maintenance are continuing causes of action; prompt filing ensures interim relief from application date.';
+  } else if (isEmployment) {
+    domain = 'employment';
+    statuteHeader = 'Payment of Wages Act 1936, Industrial Disputes Act 1947 & Gratuity Act 1972';
+    citationText = '- **Payment of Gratuity Act 1972**: Mandatory statutory gratuity for continuous service of 5 years or more.\n- **Payment of Wages Act 1936**: Protection against unauthorized salary deductions or withheld compensation.';
+    steps = [
+      '**Collate Employment Documentation**: Collate appointment letter, monthly payslips, bank statements, resignation/termination notice, and email trail.',
+      '**Issue Formal Statutory Demand Notice**: Send a 15-day cure notice demanding release of pending salary, PF dues, and relieving letter.',
+      '**File Complaint before Labor Commissioner**: Approach the jurisdictional Labor Officer / Conciliation Officer under the Industrial Disputes Act.',
+      '**Controlling Authority Application for Gratuity**: If gratuity is withheld past 30 days of leaving, file Form N before the Gratuity Controlling Authority.'
+    ];
+    limitation = 'Recovery of unpaid wages or salary is subject to a **3-year** limitation period under Article 7 of the Limitation Act 1963.';
+  } else if (isProperty) {
     domain = 'property';
     statuteHeader = 'Transfer of Property Act 1882 & State Rent Control Acts';
     citationText = '- **Section 106 Transfer of Property Act**: 15 days written notice required for terminating month-to-month tenancies.\n- **Order XXXIX Rules 1 & 2 CPC**: Application for temporary injunction to prevent dispossession or alienation of property.';
@@ -3060,9 +3212,15 @@ function generateLegalDiagnostic(query, history) {
 
   var lawyers = findLawyersClient(detectedCity, domain);
   var out = [];
-  out.push('### Legal Analysis & Step-by-Step Action Roadmap');
-  out.push('');
-  out.push('Based on your situation in **' + detectedCity + '**, here is your governing legal framework, immediate procedural steps, and verified advocate contacts.');
+  if (isEmergencyCriminal) {
+    out.push('### Emergency Criminal Defense Advisory & Constitutional Protections');
+    out.push('');
+    out.push('Based on your situation in **' + detectedCity + '**, this matter involves serious cognizable offenses under the **Bharatiya Nyaya Sanhita 2023 (BNS)** and **Bharatiya Nagarik Suraksha Sanhita 2023 (BNSS)** [replacing IPC & CrPC]. Here are your fundamental constitutional rights, emergency procedural steps, and verified criminal defense advocates in ' + detectedCity + '.');
+  } else {
+    out.push('### Legal Analysis & Step-by-Step Action Roadmap');
+    out.push('');
+    out.push('Based on your situation in **' + detectedCity + '**, here is your governing legal framework, immediate procedural steps, and verified advocate contacts.');
+  }
   out.push('');
   out.push('#### § 1. Statutory Provisions: ' + statuteHeader);
   out.push(citationText);
@@ -3075,6 +3233,10 @@ function generateLegalDiagnostic(query, history) {
     out.push('');
     out.push('> **Statutory Limitation**: ' + limitation);
   }
+  if (isEmergencyCriminal) {
+    out.push('');
+    out.push('> **National Legal Aid Helpline (Free Defense Counsel)**: If you or your family cannot afford private counsel, you are entitled to free defense counsel appointed by the **District Legal Services Authority (DLSA) in ' + detectedCity + '** under Article 39A. Call toll-free **15100**.');
+  }
   out.push('');
   out.push('#### § 3. Recommended Advocates & Legal Chambers in ' + detectedCity);
   out.push('');
@@ -3082,6 +3244,9 @@ function generateLegalDiagnostic(query, history) {
 
   return out.join('\n');
 }
+
+window.generateLegalDiagnostic = generateLegalDiagnostic;
+window.findLawyersClient = findLawyersClient;
 
 })();
 </script>

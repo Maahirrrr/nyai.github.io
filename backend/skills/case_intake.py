@@ -47,23 +47,28 @@ def analyze_user_prompt(text: str, history: List[Dict]) -> Dict:
         "lawyer", "advocate", "counsel", "attorney", "vakil", "chamber", "contact detail", "phone number", "suggest lawyer"
     ])
     
-    # Check for dispute / case intake cues
-    is_case_dispute = any(k in t for k in [
-        "what happened", "what to do", "cheque bounce", "cheque dishonour", "notice received",
-        "scam", "fraud", "cheated", "fir", "police", "arrest", "tenant", "landlord", "eviction",
-        "builder", "possession", "flat", "refund", "divorce", "maintenance", "custody", "agreement",
-        "breach", "salary unpaid", "terminated", "defamation", "dispute", "sued", "summons", "court case"
+    # Check if a specific legal domain or emergency is identified
+    has_specific_domain = any(re.search(r'\b' + re.escape(kw) + r'\b', t) for kw in [
+        "kill", "killed", "killing", "murder", "homicide", "death", "stab", "shoot", "bail", "anticipatory", "arrest",
+        "cheque", "check", "bounce", "dishonour", "138", "scam", "fraud", "cheat", "cyber", "tenant",
+        "eviction", "landlord", "rent", "divorce", "maintenance", "salary", "terminated", "posh"
+    ])
+
+    # Check for dispute / case intake cues (vague prompts asking for general help)
+    is_vague_intake = not has_specific_domain and any(k in t for k in [
+        "what happened", "what to do", "help me", "need help", "dispute", "case against me", "legal issue", "problem"
     ])
     
     # Check if the query contains enough factual substance
     word_count = len(text.strip().split())
-    has_substance = word_count >= 18
+    has_substance = has_specific_domain or word_count >= 18
     
     return {
-        "is_case_dispute": is_case_dispute,
+        "is_case_dispute": is_vague_intake,
         "is_lawyer_query": is_lawyer_query,
         "detected_city": detected_city,
         "has_substance": has_substance,
+        "has_specific_domain": has_specific_domain,
         "query": text
     }
 
@@ -109,35 +114,91 @@ def generate_interactive_case_response(user_text: str, history: List[Dict]) -> s
         )
 
     # ── CASE 3: FULL ADVISORY WITH NEXT STEPS AND LAWYER CONTACTS ──
-    # User provided sufficient facts
-    domain = "general"
-    statute_heading = "Applicable Indian Statutory Framework"
+    # Evaluate substantive dispute category
+    domain = "civil dispute"
+    statute_heading = "Code of Civil Procedure (CPC 1908) & Indian Contract Act 1872"
     next_steps = []
     limitation_text = ""
-    
-    if any(k in query_lower for k in ["cheque", "check", "bounce", "138", "dishonour"]):
+    is_emergency_criminal = False
+
+    is_homicide = bool(re.search(r'\b(kill|killed|killing|killer|murder|murdered|homicide|death|dead|stab|stabbed|shoot|shot|strangle|poison|manslaughter|lynch|302|103|101|culpable\s+homicide)\b', query_lower))
+    is_bail = bool(re.search(r'\b(arrest|arrested|bail|anticipatory\s+bail|custody|remand|lockup|police\s+station|warrant|surrender|480|482|438|439|detained)\b', query_lower))
+    is_cheque = bool(re.search(r'\b(cheque|check|bounce|bounced|dishonour|138)\b', query_lower))
+    is_fraud = bool(re.search(r'\b(scam|fraud|cheated|cheat|420|318|cyber|phishing|crypto\s+scam|telegram\s+scam)\b', query_lower))
+    is_property = bool(re.search(r'\b(tenant|landlord|rent|eviction|lease|flat|builder|rera|property|possession)\b', query_lower))
+    is_matrimonial = bool(re.search(r'\b(divorce|wife|husband|marriage|dowry|498a|85\s+bns|cruelty|domestic\s+violence|dv\s+act|maintenance|125\s+crpc|144\s+bnss|custody|alimony)\b', query_lower))
+    is_employment = bool(re.search(r'\b(salary|wages|unpaid|fired|terminated|termination|severance|gratuity|provident\s+fund|pf|posh|labor\s+court|retrenchment|employer)\b', query_lower))
+
+    if is_homicide:
+        is_emergency_criminal = True
+        domain = "criminal defense homicide"
+        statute_heading = "Section 103 (Murder) & Section 101 (Culpable Homicide), Bharatiya Nyaya Sanhita 2023 (Old Sections 300 & 302 IPC)"
+        next_steps = [
+            "**Exercise Fundamental Right to Silence (Article 20(3))**: Do not give oral confessions, sign police statements, or answer custodial interrogations without your advocate present. Confessions to police officers are strictly inadmissible under Section 23, Bharatiya Sakshya Adhiniyam 2023 (BSA 2023).",
+            f"**Engage Senior Criminal Defense Counsel Immediately**: Contact a qualified criminal trial advocate in {city} immediately. If financial means are unavailable, apply for free legal defense counsel via the District Legal Services Authority (DLSA) or call NALSA Helpline **15100** under Article 39A.",
+            "**Formal Surrender before Judicial Magistrate**: Rather than evading or absconding (which prompts proclamation and property attachment under Section 84 BNSS), your advocate will draft and execute a formal voluntary surrender petition before the jurisdictional Judicial Magistrate / Metropolitan Magistrate under judicial protection.",
+            "**Demand Mandatory Medical Examination (Section 53 BNSS 2023)**: Insist on an immediate medical examination by a government medical officer upon detention/surrender to formally document physical state, bodily marks, and mental condition on official record.",
+            "**Counsel Representation at 24-Hour Remand Hearing**: Under Article 22(2) and Section 58 BNSS, police must produce the accused before the Magistrate within 24 hours. Your advocate must appear to oppose police remand and petition for direct judicial custody."
+        ]
+        limitation_text = "Grave non-bailable offense. Under Section 514 BNSS (old Section 468 CrPC), there is no period of limitation for murder. Securing immediate criminal defense counsel is critically imperative."
+
+    elif is_bail:
+        is_emergency_criminal = True
+        domain = "criminal bail"
+        statute_heading = "Section 480 (Regular Bail) & Section 482 (Anticipatory Bail), BNSS 2023 (Old Sections 437, 438, 439 CrPC)"
+        next_steps = [
+            "**Ascertain FIR & Complaint Details**: Verify the exact Police Station, Crime Number, and statutory offenses invoked.",
+            "**Move Anticipatory Bail under Section 482 BNSS**: If arrest is anticipated, file an urgent application before the Sessions Court or High Court demonstrating cooperation with investigation and absence of flight risk.",
+            "**Enforce Section 35 BNSS Protections**: For offenses punishable up to 7 years, police must comply with Arnesh Kumar guidelines and issue a Notice of Appearance rather than effecting arbitrary arrest.",
+            "**Apply for Regular Bail upon Remand**: If arrested, counsel must move a bail application under Section 480 BNSS at the first production before the Judicial Magistrate."
+        ]
+        limitation_text = "Urgent custodial liberty matter; prompt filing before jurisdictional Sessions Court is paramount to prevent judicial remand."
+
+    elif is_cheque:
         domain = "cheque bounce"
         statute_heading = "Section 138, Negotiable Instruments Act, 1881"
         next_steps = [
-            "**Preserve the Original Cheque and Bank Return Memo**: The memo date triggers the strict statutory clock.",
+            "**Preserve Original Cheque and Bank Return Memo**: The return memo date starts the mandatory 30-day statutory clock.",
             "**Send Statutory Demand Notice within 30 Days**: Send a formal legal notice demanding payment within 15 days via Registered Post AD and Speed Post.",
-            "**Wait for the 15-Day Cure Period**: The cause of action arises only on the 16th day following receipt of notice.",
+            "**Wait for the 15-Day Cure Period**: The statutory cause of action arises only on the 16th day following receipt of notice.",
             "**File Criminal Complaint within 30 Days**: Section 142 mandates filing the complaint before the competent Judicial Magistrate within 1 month from the cause of action."
         ]
-        limitation_text = "**Critical Limitation Deadline**: Notice must be dispatched strictly within **30 days** of receiving the bank memo. Complaint must be filed within **30 days** after the 15-day cure period expires."
-        
-    elif any(k in query_lower for k in ["scam", "fraud", "cheated", "420", "money taken", "cyber"]):
+        limitation_text = "Notice must be dispatched strictly within **30 days** of receiving the bank memo. Complaint must be filed within **30 days** after the 15-day cure period expires."
+
+    elif is_fraud:
         domain = "criminal fraud"
         statute_heading = "Section 318 BNS 2023 (Old Section 420 IPC) & IT Act Section 66D"
         next_steps = [
-            "**Preserve Digital Records**: Take certified screenshots and preserve transaction IDs under Section 63, Bharatiya Sakshya Adhiniyam (BSA 2023).",
+            "**Preserve Digital Evidence**: Take certified screenshots and preserve transaction IDs under Section 63, Bharatiya Sakshya Adhiniyam (BSA 2023).",
             "**Report to National Cyber Crime Portal**: Call 1930 immediately or file at `cybercrime.gov.in` within 24 hours to freeze suspicious bank accounts.",
             "**Lodge Written Police Complaint**: File with the local Police Station / Cyber Crime Cell under Section 173 BNSS 2023 requesting an FIR.",
             "**Magistrate Remedy if Police Refuse FIR**: If the SHO refuses to lodge the FIR, approach the Superintendent of Police under Section 175(3) BNSS or file an application before the Judicial Magistrate under Section 175(3) BNSS (old 156(3) CrPC)."
         ]
-        limitation_text = "**Limitation Warning**: For criminal cheating punishable up to 7 years, there is no formal period of limitation under Section 514 BNSS (old 468 CrPC), but unexplained delay significantly weakens the prosecution case."
-        
-    elif any(k in query_lower for k in ["tenant", "landlord", "rent", "eviction", "lease", "flat"]):
+        limitation_text = "Prompt filing is essential to preserve banking freeze logs before funds are withdrawn or siphoned."
+
+    elif is_matrimonial:
+        domain = "matrimonial"
+        statute_heading = "Sections 85 & 86 BNS 2023, PWDVA 2005 & Section 144 BNSS 2023"
+        next_steps = [
+            "**Explore Pre-Litigation Mediation**: Family disputes are compulsorily referred to mediation by the Family Court or DLSA counseling clinics.",
+            "**File for Interim Maintenance**: Apply under Section 144 BNSS (old 125 CrPC) or Section 24 Hindu Marriage Act for financial support.",
+            "**Protection and Residence Orders**: If facing domestic violence or dispossession, file an urgent application under Sections 18 & 19 of the Domestic Violence Act (PWDVA 2005).",
+            "**Affidavit of Assets and Liabilities**: Prepare complete disclosure of income, assets, and liabilities as mandated by the Supreme Court in *Rajnesh v. Neha (2020)*."
+        ]
+        limitation_text = "Maintenance claims under Section 144 BNSS are ongoing; prompt filing ensures interim maintenance from the date of application."
+
+    elif is_employment:
+        domain = "employment"
+        statute_heading = "Industrial Disputes Act 1947 & Payment of Wages / Gratuity Acts"
+        next_steps = [
+            "**Collate Employment Records**: Gather appointment letter, salary slips, bank statements, appraisal emails, and termination notice.",
+            "**Send Formal Legal Notice to Employer**: Demand payment of unpaid wages, severance, and relieving letter within 15 days.",
+            "**File Complaint before Labor Commissioner**: Initiate conciliation proceedings before the jurisdictional Labor Officer / Conciliation Officer.",
+            "**Gratuity & PF Recovery**: For gratuity withheld after 5 years service, file an application before the Controlling Authority under the Payment of Gratuity Act 1972."
+        ]
+        limitation_text = "Recovery of unpaid salary or wages under the Payment of Wages Act / Limitation Act is strictly **3 years** from when wages became payable."
+
+    elif is_property:
         domain = "property tenancy"
         statute_heading = "Transfer of Property Act 1882 (Section 106) & State Rent Control"
         next_steps = [
@@ -146,8 +207,8 @@ def generate_interactive_case_response(user_text: str, history: List[Dict]) -> s
             "**Civil Suit for Ejectment and Mesne Profits**: If the tenant refuses to vacate, file an eviction suit before the competent City Civil Court / Small Causes Court.",
             "**Avoid Self-Help Measures**: Never disconnect water, electricity, or lock premises without court sanction; this violates Section 115 BNS (old 341 IPC wrongful restraint)."
         ]
-        limitation_text = "**Limitation Deadline**: Recovery of arrears of rent is limited to **3 years** under Article 52 of the Limitation Act, 1963."
-        
+        limitation_text = "Recovery of arrears of rent is limited to **3 years** under Article 52 of the Limitation Act, 1963."
+
     else:
         domain = "civil dispute"
         statute_heading = "Code of Civil Procedure (CPC 1908) & Indian Contract Act 1872"
@@ -157,7 +218,7 @@ def generate_interactive_case_response(user_text: str, history: List[Dict]) -> s
             "**Mandatory Pre-Institution Mediation**: If commercial dispute under Commercial Courts Act 2015, mediation under Section 12A is mandatory before filing suit.",
             "**Civil Suit for Recovery**: File a summary suit under Order XXXVII CPC or ordinary money suit before the competent District Court."
         ]
-        limitation_text = "**Limitation Deadline**: Suits for breach of contract or recovery of money must be filed within **3 years** from the date the debt became due (Limitation Act 1963)."
+        limitation_text = "Suits for breach of contract or recovery of money must be filed within **3 years** from the date the debt became due (Limitation Act 1963)."
 
     # Fetch live or curated citation data
     scrape_data = scrape_legal_source(user_text)
@@ -165,8 +226,12 @@ def generate_interactive_case_response(user_text: str, history: List[Dict]) -> s
     lawyer_cards = format_lawyer_cards(lawyers)
 
     response_parts = []
-    response_parts.append(f"### Legal Diagnostic & Step-by-Step Action Plan\n")
-    response_parts.append(f"Based on your case summary in **{city}**, here is your statutory analysis, immediate next steps, and verified advocate contacts.\n")
+    if is_emergency_criminal:
+        response_parts.append("### Emergency Criminal Defense Advisory & Constitutional Protections\n\n")
+        response_parts.append(f"Based on your statement in **{city}**, this matter involves serious cognizable offenses under the Bharatiya Nyaya Sanhita 2023 (BNS) and Bharatiya Nagarik Suraksha Sanhita 2023 (BNSS). Here is your statutory framework, critical constitutional protections, immediate surrender/remand protocol, and verified criminal defense counsel.\n")
+    else:
+        response_parts.append("### Legal Diagnostic & Step-by-Step Action Plan\n\n")
+        response_parts.append(f"Based on your case summary in **{city}**, here is your statutory analysis, immediate next steps, and verified advocate contacts.\n")
     
     response_parts.append(f"#### § 1. Statutory Provisions & Governing Law: {statute_heading}\n")
     if scrape_data.get("citations"):

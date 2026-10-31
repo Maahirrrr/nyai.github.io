@@ -118,6 +118,21 @@ LAWYER_DIRECTORY: List[Dict] = [
         "chamber": "2nd Floor, Infantry Court, Infantry Road, Bengaluru 560001",
         "consultation_guidance": "Ask about: Severance dispute mediation, non-compete enforceability under Section 27 Indian Contract Act."
     },
+    {
+        "id": "blr_03",
+        "name": "Adv. S. Ramesh Babu",
+        "firm": "Babu & Associates Criminal Defense Chambers",
+        "bar_council": "Karnataka State Bar Council (KAR/894/2003)",
+        "experience": "21+ Years Practice",
+        "courts": ["Karnataka High Court", "City Civil & Sessions Court Mayo Hall"],
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "domains": ["Criminal Defense", "Cyber Crime (IT Act 2000)", "Anticipatory Bail (BNSS 482)", "Economic Offences"],
+        "phone": "+91 98452 31890",
+        "email": "ramesh.babu@blrbar.in",
+        "chamber": "Chamber 82, High Court Advocates Block, Ambedkar Veedhi, Bengaluru 560001",
+        "consultation_guidance": "Ask about: Cyber crime account freezing, anticipatory bail under Section 482 BNSS, quashing petitions."
+    },
 
     # ── AHMEDABAD / GUJARAT ──
     {
@@ -149,6 +164,21 @@ LAWYER_DIRECTORY: List[Dict] = [
         "email": "adv.tanvishah@ahmedabadlaw.org",
         "chamber": "Chamber 302, Pelican House, Ashram Road, Ahmedabad 380009",
         "consultation_guidance": "Ask about: BNS vs IPC conversion, preservation of phone/call records, settlement in compoundable offenses."
+    },
+    {
+        "id": "ahd_03",
+        "name": "Adv. Pradeep R. Vaghela",
+        "firm": "Vaghela Criminal Defense Chambers",
+        "bar_council": "Bar Council of Gujarat (G/612/1999)",
+        "experience": "25+ Years Practice",
+        "courts": ["Gujarat High Court", "City Sessions Court Bhadra", "Mirzapur Sessions Court"],
+        "city": "Ahmedabad",
+        "state": "Gujarat",
+        "domains": ["Criminal Defense", "Homicide & Bodily Offences (BNS 101 / 103 / IPC 302)", "Bail & Custody (BNSS 480 / 482)", "Criminal Trials & Appeals"],
+        "phone": "+91 98240 18834",
+        "email": "chambers.vaghela@gujaratbar.org",
+        "chamber": "Chamber 215, City Civil & Sessions Court Complex, Bhadra, Ahmedabad 380001",
+        "consultation_guidance": "Ask about: Immediate voluntary surrender before Judicial Magistrate, custodial safeguards under Article 22, legal representation during remand hearing, and trial cross-examination."
     },
 
     # ── HYDERABAD / TELANGANA ──
@@ -217,13 +247,33 @@ def find_lawyers(city: Optional[str] = None, domain_query: Optional[str] = None)
             
     if domain_query:
         dq = domain_query.strip().lower()
-        matched_domain = []
-        for l in results:
-            text_blob = " ".join(l["domains"]).lower() + " " + " ".join(l["courts"]).lower()
-            if any(term in text_blob for term in dq.split()):
-                matched_domain.append(l)
-        if matched_domain:
-            results = matched_domain
+        domain_keywords = []
+        if any(k in dq for k in ["homicide", "murder", "kill", "dead", "death", "stab", "shoot", "302", "103", "101", "culpable homicide"]):
+            domain_keywords = ["criminal", "homicide", "bail", "custody", "bns", "quashing", "offence", "sessions", "trials"]
+        elif any(k in dq for k in ["bail", "arrest", "custody", "remand", "480", "482"]):
+            domain_keywords = ["bail", "custody", "criminal", "defense", "quashing"]
+        elif any(k in dq for k in ["cheque", "138", "bounce", "dishonour"]):
+            domain_keywords = ["138", "cheque", "dishonour", "recovery", "negotiable"]
+        elif any(k in dq for k in ["scam", "fraud", "cyber", "cheat", "420", "318"]):
+            domain_keywords = ["cyber", "fraud", "criminal", "cheating", "it act", "economic"]
+        elif any(k in dq for k in ["tenant", "landlord", "rent", "eviction", "property", "flat", "rera"]):
+            domain_keywords = ["property", "tenant", "rent", "land", "injunction", "partition", "rera"]
+        elif any(k in dq for k in ["divorce", "matrimonial", "maintenance", "498a", "domestic violence"]):
+            domain_keywords = ["matrimonial", "divorce", "family", "domestic", "custody", "maintenance"]
+        elif any(k in dq for k in ["salary", "employment", "fired", "terminated", "posh"]):
+            domain_keywords = ["employment", "posh", "labor", "service", "workplace", "esop"]
+        else:
+            domain_keywords = ["commercial", "civil", "contract", "recovery", "corporate", "injunction"]
+
+        def score_lawyer(l: Dict) -> int:
+            score = 0
+            blob = (" ".join(l["domains"]) + " " + " ".join(l["courts"]) + " " + l.get("consultation_guidance", "")).lower()
+            for kw in domain_keywords:
+                if kw in blob:
+                    score += 10
+            return score
+
+        results = sorted(results, key=score_lawyer, reverse=True)
             
     return results[:3]
 
