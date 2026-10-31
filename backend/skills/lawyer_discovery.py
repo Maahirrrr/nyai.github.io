@@ -262,6 +262,10 @@ def find_lawyers(city: Optional[str] = None, domain_query: Optional[str] = None)
             domain_keywords = ["matrimonial", "divorce", "family", "domestic", "custody", "maintenance"]
         elif any(k in dq for k in ["salary", "employment", "fired", "terminated", "posh"]):
             domain_keywords = ["employment", "posh", "labor", "service", "workplace", "esop"]
+        elif any(k in dq for k in ["traffic", "motor", "driving", "underage", "challan", "mva"]):
+            domain_keywords = ["criminal", "defense", "bail", "quashing", "offence", "sessions", "trials"]
+        elif any(k in dq for k in ["consumer", "defective", "warranty", "goods", "service"]):
+            domain_keywords = ["consumer", "recovery", "commercial", "civil", "contract"]
         else:
             domain_keywords = ["commercial", "civil", "contract", "recovery", "corporate", "injunction"]
 
@@ -292,7 +296,7 @@ def format_lawyer_cards(lawyers: List[Dict]) -> str:
         domains_str = ", ".join(l["domains"][:3])
         courts_str = ", ".join(l["courts"][:2])
         card = (
-            f"**{idx}. {l['name']}** — *{l['firm']}*\n"
+            f"{idx}. **{l['name']}** — *{l['firm']}*\n"
             f"- **Bar Enrollment**: `{l['bar_council']}` ({l['experience']})\n"
             f"- **Courts**: {courts_str}\n"
             f"- **Specialization**: {domains_str}\n"

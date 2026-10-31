@@ -40,7 +40,28 @@ def analyze_user_prompt(text: str, history: List[Dict]) -> Dict:
                 detected_city = "Mumbai"
             elif detected_city in ["Bangalore", "Mysuru"]:
                 detected_city = "Bengaluru"
+            elif detected_city in ["Gandhinagar", "Surat", "Vadodara"]:
+                detected_city = "Ahmedabad"
             break
+
+    # If no city in current prompt, inherit city from conversation history
+    if not detected_city and history:
+        for prev_msg in reversed(history):
+            pt = prev_msg.get("content", "").lower()
+            for c in INDIAN_CITIES:
+                if re.search(r'\b' + re.escape(c) + r'\b', pt):
+                    detected_city = c.title()
+                    if detected_city in ["New Delhi", "Noida", "Gurgaon", "Gurugram"]:
+                        detected_city = "Delhi"
+                    elif detected_city in ["Navi Mumbai", "Thane", "Pune"]:
+                        detected_city = "Mumbai"
+                    elif detected_city in ["Bangalore", "Mysuru"]:
+                        detected_city = "Bengaluru"
+                    elif detected_city in ["Gandhinagar", "Surat", "Vadodara"]:
+                        detected_city = "Ahmedabad"
+                    break
+            if detected_city:
+                break
             
     # Check for explicit lawyer / advocate requests
     is_lawyer_query = any(k in t for k in [
@@ -51,7 +72,8 @@ def analyze_user_prompt(text: str, history: List[Dict]) -> Dict:
     has_specific_domain = any(re.search(r'\b' + re.escape(kw) + r'\b', t) for kw in [
         "kill", "killed", "killing", "murder", "homicide", "death", "stab", "shoot", "bail", "anticipatory", "arrest",
         "cheque", "check", "bounce", "dishonour", "138", "scam", "fraud", "cheat", "cyber", "tenant",
-        "eviction", "landlord", "rent", "divorce", "maintenance", "salary", "terminated", "posh"
+        "eviction", "landlord", "rent", "divorce", "maintenance", "salary", "terminated", "posh",
+        "underage", "driving", "challan", "mva", "traffic", "consumer", "defective", "warranty"
     ])
 
     # Check for dispute / case intake cues (vague prompts asking for general help)
@@ -128,6 +150,8 @@ def generate_interactive_case_response(user_text: str, history: List[Dict]) -> s
     is_property = bool(re.search(r'\b(tenant|landlord|rent|eviction|lease|flat|builder|rera|property|possession)\b', query_lower))
     is_matrimonial = bool(re.search(r'\b(divorce|wife|husband|marriage|dowry|498a|85\s+bns|cruelty|domestic\s+violence|dv\s+act|maintenance|125\s+crpc|144\s+bnss|custody|alimony)\b', query_lower))
     is_employment = bool(re.search(r'\b(salary|wages|unpaid|fired|terminated|termination|severance|gratuity|provident\s+fund|pf|posh|labor\s+court|retrenchment|employer)\b', query_lower))
+    is_traffic = bool(re.search(r'\b(underage\s+driving|minor\s+driving|driving\s+without\s+licen[sc]e|without\s+dl|traffic\s+challan|challan|traffic\s+police|drunk\s+driving|drink\s+and\s+drive|mva|motor\s+vehicle|rc\s+suspension|impounded\s+car|impounded\s+bike|seized\s+vehicle|rash\s+driving|hit\s+and\s+run|mact)\b', query_lower))
+    is_consumer = bool(re.search(r'\b(consumer\s+court|consumer\s+forum|consumer\s+commission|defective\s+product|defective\s+goods|cpa\s+2019|flipkart|amazon|warranty|refund\s+denied|deficiency\s+in\s+service)\b', query_lower))
 
     if is_homicide:
         is_emergency_criminal = True
@@ -198,6 +222,29 @@ def generate_interactive_case_response(user_text: str, history: List[Dict]) -> s
         ]
         limitation_text = "Recovery of unpaid salary or wages under the Payment of Wages Act / Limitation Act is strictly **3 years** from when wages became payable."
 
+    elif is_traffic:
+        domain = "traffic motor vehicle criminal"
+        statute_heading = "Motor Vehicles Act 1988 (Amended 2019) & Juvenile Justice Act 2015"
+        next_steps = [
+            "**Do Not Detain Minor in Police Lockup (Section 10 JJ Act)**: Under the Juvenile Justice Act, a child in conflict with law cannot be placed in a police cell or adult jail. Police must place the minor with the Child Welfare Police Officer (CWPO) and immediately notify parents/guardians.",
+            "**Production before Juvenile Justice Board (Within 24 Hours)**: The minor must be produced before the jurisdictional Juvenile Justice Board (JJB) within 24 hours. Your advocate will apply for immediate release to the custody of parents under Section 12 JJ Act.",
+            "**Defense Strategy for Vehicle Owner/Guardian (Section 199A(2))**: To avoid 3-year imprisonment and Rs. 25,000 penalty, the parent/registered vehicle owner must demonstrate that the vehicle was taken without their consent or that they exercised all due diligence to prevent unauthorized driving.",
+            "**Release of Impounded Vehicle (Superdari Application)**: If the vehicle has been seized by traffic police, your advocate must file a Superdari application under Section 497 BNSS (old Section 451 CrPC) before the Metropolitan Magistrate (Traffic) for release on custody bond.",
+            "**Appearance before Traffic Magistrate & Challan Disposal**: Appear on the scheduled date before the Traffic Court / Virtual Court to compound eligible traffic offenses and address the 12-month RC suspension notice."
+        ]
+        limitation_text = "Summary trial proceedings before the Traffic Court and Juvenile Justice Board. Appear on the designated court date or settle compoundable components via the Virtual Court portal to avoid coercive summons."
+
+    elif is_consumer:
+        domain = "consumer dispute"
+        statute_heading = "Consumer Protection Act 2019 (CPA 2019)"
+        next_steps = [
+            "**Preserve Invoices & Service Requests**: Collate tax invoice, warranty card, replacement requests, customer care ticket IDs, and email communication.",
+            "**Serve Formal Legal Notice (15 Days)**: Send a formal demand notice to the manufacturer and seller demanding immediate refund or replacement plus compensation for mental agony.",
+            "**Lodge Complaint via NCH Portal**: Register complaint at `consumerhelpline.gov.in` (National Consumer Helpline 1915) for pre-litigation conciliation.",
+            "**File Consumer Complaint on e-Daakhil**: If unresolved, file a consumer complaint online via `edaakhil.nic.in` before the jurisdictional District Consumer Commission."
+        ]
+        limitation_text = "Strict statutory limitation period of **2 years** from the date on which the cause of action arose under Section 69 CPA 2019."
+
     elif is_property:
         domain = "property tenancy"
         statute_heading = "Transfer of Property Act 1882 (Section 106) & State Rent Control"
@@ -239,12 +286,15 @@ def generate_interactive_case_response(user_text: str, history: List[Dict]) -> s
             response_parts.append(f"- **{c['title']}**: {c['snippet']} *([Official Reference]({c['url']}))*\n")
             
     response_parts.append("\n#### § 2. What to Do Now (Immediate Next Steps)\n")
-    for step in next_steps:
-        response_parts.append(f"1. {step}\n")
+    for idx, step in enumerate(next_steps, 1):
+        response_parts.append(f"{idx}. {step}\n")
         
     if limitation_text:
         response_parts.append(f"\n> **Statutory Limitation**: {limitation_text}\n")
         
+    if is_emergency_criminal:
+        response_parts.append(f"\n> **National Legal Aid Helpline (Free Defense Counsel)**: If you or your family cannot afford private counsel, you are entitled to free defense counsel appointed by the **District Legal Services Authority (DLSA) in {city}** under Article 39A of the Constitution. Call toll-free **15100**.\n")
+
     response_parts.append(f"\n#### § 3. Recommended Advocates & Legal Chambers in {city}\n")
     response_parts.append(lawyer_cards)
     

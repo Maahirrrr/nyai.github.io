@@ -1926,8 +1926,17 @@ window.showPage = function(pageId) {
         if (a.id === 'nav-' + targetId) a.classList.add('active');
     });
 
-    // 8. Chat focus
+    // 8. Chat sync & focus
     if (targetId === 'chat') {
+        if (typeof activeConvId !== 'undefined' && activeConvId && typeof getConv === 'function') {
+            var activeC = getConv(activeConvId);
+            if (activeC && activeC.messages && activeC.messages.length > 0) {
+                chatHistory = activeC.messages.slice();
+                if (typeof rebuildChatUI === 'function') rebuildChatUI();
+            } else if (typeof resetChatUI === 'function') {
+                resetChatUI();
+            }
+        }
         setTimeout(function() { 
             var inp = document.getElementById('chat-input'); 
             if (inp) inp.focus(); 
@@ -2022,15 +2031,67 @@ try { conversations = JSON.parse(localStorage.getItem('nyai_convs') || '[]'); }
 catch(e) { conversations = []; }
 var activeConvId = null;
 
-// Seed sample conversations if none exist
+var SEED_CONVERSATION_MESSAGES = {
+  'c1': [
+    {
+      role: 'user',
+      content: 'What are the Section 29A eligibility criteria under the Insolvency and Bankruptcy Code (IBC 2016)?'
+    },
+    {
+      role: 'assistant',
+      content: '### Insolvency & Bankruptcy Code 2016: Section 29A Eligibility Framework\n\nSection 29A of the Insolvency and Bankruptcy Code (IBC 2016) was introduced to prevent defaulting promoters and undesirable persons from regaining control of corporate debtors at discounted valuations during CIRP.\n\n#### § 1. Primary Ineligibility Disqualifications\n1. **Undischarged Insolvent (Clause a)**: Any individual or entity declared an undischarged insolvent.\n2. **Wilful Defaulter (Clause b)**: Declared a wilful defaulter per RBI circular guidelines.\n3. **NPA Account > 1 Year (Clause c)**: An account classified as Non-Performing Asset for 1+ years prior to CIRP commencement without paying overdue debt.\n4. **Conviction of Offence (Clause d)**: Convicted of an offence punishable with imprisonment for two years or more under scheduled acts.\n5. **Disqualified Director (Clause e)**: Disqualified under Section 164 of the Companies Act 2013.\n6. **Connected Persons Bar**: Applies to holding companies, subsidiaries, associate firms, and related parties exercising joint control.\n\n> **Landmark Precedent**: In *ArcelorMittal India Pvt. Ltd. v. Satish Kumar Gupta (2019)*, the Supreme Court held that Section 29A applies strictly at the time of resolution plan submission, and the corporate veil can be pierced.'
+    }
+  ],
+  'c2': [
+    {
+      role: 'user',
+      content: 'Explain SEBI Alternative Investment Funds (AIF) Category II regulatory compliance and borrowing limits.'
+    },
+    {
+      role: 'assistant',
+      content: '### Regulatory Compliance: SEBI (Alternative Investment Funds) Regulations 2012\n\nCategory II Alternative Investment Funds (AIFs)—such as private equity funds and debt funds—operate under close-ended structures with strict operational mandates.\n\n#### § 1. Key Governance Parameters\n1. **Tenure & Structure**: Strictly close-ended funds with a minimum tenure of 3 years. Tenure extension requires two-thirds investor approval by value.\n2. **Minimum Ticket Size**: ₹1 Crore minimum investment from an investor (₹25 Lakhs for employees/directors of fund manager).\n3. **Leverage & Borrowing Restrictions**: Category II AIFs are barred from day-to-day borrowing or financial leverage, except for temporary operational obligations up to 30 days and 10% of investable funds.\n4. **Audit & Demat Mandate**: PPM audit by independent chartered accountants and mandatory dematerialization of fund units.\n\n> **Statutory Notice**: Compliance filings must be submitted via SEBI Intermediary Portal with semi-annual activity reporting.'
+    }
+  ],
+  'c3': [
+    {
+      role: 'user',
+      content: 'Key issues and safeguards when drafting a drag-along clause in an Indian Shareholders Agreement (SHA).'
+    },
+    {
+      role: 'assistant',
+      content: '### Shareholders Agreement (SHA): Drag-Along Rights & Risk Mitigation\n\nA Drag-Along Right allows majority shareholders or lead investors to compel minority shareholders to sell their shares to a bona fide third-party acquirer on identical terms.\n\n#### § 1. Critical Drafting Safeguards\n1. **Minimum Valuation Floor**: Mandate an absolute valuation floor or hurdle IRR below which minority shareholders cannot be dragged.\n2. **Identical Consideration & Currency**: Guarantee that dragged holders receive the exact same class, form, and cash currency of consideration per share.\n3. **Representations & Warranties Carveout**: Dragged minority investors must only give representations regarding their own title and authority—never company operational indemnities.\n4. **Long-Stop Expiry**: Provide that if the third-party acquisition fails to close within 90 days, drag notices automatically lapse with full return of share certificates.\n\n> **Enforceability in India**: Transfer restrictions in the SHA must be incorporated into the company Articles of Association (AoA) to bind the company per the Supreme Court ruling in *Vodafone International Holdings*.'
+    }
+  ],
+  'c4': [
+    {
+      role: 'user',
+      content: 'Explain Section 56(2)(x) of the Income Tax Act regarding deemed gift taxation and property acquired for inadequate consideration.'
+    },
+    {
+      role: 'assistant',
+      content: '### Income Tax Act 1961: Section 56(2)(x) Deemed Income Analysis\n\nSection 56(2)(x) taxes receipts of money, immovable property, or specified movable property received without consideration or for inadequate consideration under "Income from Other Sources".\n\n#### § 1. Statutory Thresholds & Application\n1. **Monetary Gifts**: Sum of money exceeding ₹50,000 received without consideration is fully taxable in the hands of the recipient.\n2. **Immovable Property (Without Consideration)**: Stamp Duty Value (SDV) exceeding ₹50,000 is deemed taxable income.\n3. **Immovable Property (Inadequate Consideration)**: If SDV exceeds consideration by more than higher of ₹50,000 or 10% of consideration (Safe Harbour tolerance band under Finance Act 2020), the differential is taxed as deemed income.\n4. **Specified Movable Property**: Shares, securities, jewellery, and artwork where Fair Market Value (FMV) exceeds consideration by > ₹50,000.\n\n> **Statutory Exceptions**: Section 56(2)(x) does not apply to receipts from specified relatives (spouses, siblings, lineal ascendants/descendants), under a will or inheritance, or in contemplation of marriage.'
+    }
+  ]
+};
+
+// Seed sample conversations if none exist, or populate legacy empty entries
 if (conversations.length === 0) {
   conversations = [
-    { id: 'c1', title: 'IBC Section 29A eligibility', messages: [] },
-    { id: 'c2', title: 'SEBI AIF Category II compliance', messages: [] },
-    { id: 'c3', title: 'SHA drag-along clause review', messages: [] },
-    { id: 'c4', title: 'Income Tax s56(2)(x) analysis', messages: [] },
+    { id: 'c1', title: 'IBC Section 29A eligibility', messages: SEED_CONVERSATION_MESSAGES['c1'].slice() },
+    { id: 'c2', title: 'SEBI AIF Category II compliance', messages: SEED_CONVERSATION_MESSAGES['c2'].slice() },
+    { id: 'c3', title: 'SHA drag-along clause review', messages: SEED_CONVERSATION_MESSAGES['c3'].slice() },
+    { id: 'c4', title: 'Income Tax s56(2)(x) analysis', messages: SEED_CONVERSATION_MESSAGES['c4'].slice() }
   ];
   saveConvs();
+} else {
+  var upgradedAny = false;
+  conversations.forEach(function(c) {
+    if (SEED_CONVERSATION_MESSAGES[c.id] && (!c.messages || c.messages.length === 0)) {
+      c.messages = SEED_CONVERSATION_MESSAGES[c.id].slice();
+      upgradedAny = true;
+    }
+  });
+  if (upgradedAny) saveConvs();
 }
 
 function saveConvs() {
@@ -2341,19 +2402,28 @@ window.sendMsg = async function() {
     if (!displayText) displayText = 'Attached ' + sentFiles.length + ' file(s) for analysis';
   }
 
+  // Ensure active conversation exists
+  var currentConv = activeConvId ? getConv(activeConvId) : null;
+  if (!activeConvId || !currentConv) {
+    var newId = 'c' + Date.now();
+    var titleText = text || (sentFiles.length > 0 ? sentFiles[0].name : 'New conversation');
+    var convTitle = titleText.length > 42 ? titleText.slice(0, 42) + '...' : titleText;
+    currentConv = { id: newId, title: convTitle, messages: [] };
+    conversations.unshift(currentConv);
+    activeConvId = newId;
+    saveConvs();
+    renderSidebar();
+  } else if (currentConv.title === 'New conversation' || currentConv.title === '') {
+    var titleText = text || (sentFiles.length > 0 ? sentFiles[0].name : 'New conversation');
+    currentConv.title = titleText.length > 42 ? titleText.slice(0, 42) + '...' : titleText;
+    saveConvs();
+    renderSidebar();
+  }
+
   addMsg(displayText, 'user', true, sentFiles);
   chatHistory.push({ role: 'user', content: displayText });
-
-  // Auto-title conv from first message
-  if (activeConvId) {
-    var conv = getConv(activeConvId);
-    if (conv && (conv.title === 'New conversation' || conv.title === '')) {
-      var titleText = text || sentFiles[0].name;
-      conv.title = titleText.length > 42 ? titleText.slice(0, 42) + '...' : titleText;
-      saveConvs();
-      renderSidebar();
-    }
-  }
+  currentConv.messages = chatHistory.slice();
+  saveConvs();
 
   isLoading = true;
   document.getElementById('chat-send').disabled = true;
@@ -2466,11 +2536,72 @@ window.sendMsg = async function() {
     removeTyping(tid);
     console.error('Chat error:', e);
     var fallbackReply = generateLegalDiagnostic(text || displayText, chatHistory);
+    chatHistory.push({ role: 'assistant', content: fallbackReply });
     addMsg(fallbackReply, 'ai', true);
+    if (activeConvId) {
+      var c = getConv(activeConvId);
+      if (c) { c.messages = chatHistory.slice(); saveConvs(); }
+    }
   }
   isLoading = false;
   document.getElementById('chat-send').disabled = false;
 };
+
+function renderMarkdown(text) {
+  if (!text) return '';
+  var s = text.replace(/\r\n/g, '\n');
+
+  // 1. Code blocks (```...```)
+  s = s.replace(/```([a-z]*)\n([\s\S]*?)```/g, function(match, lang, code) {
+    return '<pre style="background:var(--dark3);padding:0.875rem 1rem;border-radius:4px;border:1px solid var(--border);overflow-x:auto;font-family:var(--mono);font-size:0.8rem;margin:0.75rem 0;color:var(--cream)"><code>' + escapeHtml(code.trim()) + '</code></pre>';
+  });
+
+  // 2. Inline code (`...`)
+  s = s.replace(/`([^`\n]+)`/g, function(match, code) {
+    return '<code style="background:var(--dark3);padding:0.15rem 0.35rem;border-radius:3px;font-family:var(--mono);font-size:0.8rem;border:1px solid var(--border);color:var(--cream)">' + escapeHtml(code) + '</code>';
+  });
+
+  // 3. Blockquotes (> text)
+  s = s.replace(/^>\s*(.+)$/gm, function(match, quoteText) {
+    return '<div class="chat-callout" style="border-left:3px solid var(--accent2);background:rgba(212,163,115,0.06);padding:0.6rem 0.85rem;margin:0.75rem 0;border-radius:0 4px 4px 0;font-size:0.84rem;color:var(--cream2);line-height:1.6">' + quoteText.trim() + '</div>';
+  });
+
+  // 4. Headers (####, ###, ##, #)
+  s = s.replace(/^#### (.+)$/gm, '<h4 style="font-family:var(--serif);font-size:1rem;font-weight:600;margin:1.25rem 0 0.4rem;color:var(--cream);letter-spacing:0.01em">$1</h4>');
+  s = s.replace(/^### (.+)$/gm, '<h3 style="font-family:var(--serif);font-size:1.15rem;font-weight:600;margin:1.35rem 0 0.5rem;color:var(--cream)">$1</h3>');
+  s = s.replace(/^## (.+)$/gm, '<h2 style="font-family:var(--serif);font-size:1.25rem;font-weight:600;margin:1.5rem 0 0.6rem;color:var(--cream)">$1</h2>');
+
+  // 5. Ordered lists (1. item) - process before bold/italic
+  s = s.replace(/^(?:(\d+)\.\s+)(.+)$/gm, function(match, num, item) {
+    return '<div style="display:flex;gap:0.5rem;margin:0.35rem 0;line-height:1.65"><span style="color:var(--accent2);font-weight:600;min-width:1.25rem">' + num + '.</span><span style="flex:1">' + item + '</span></div>';
+  });
+
+  // 6. Unordered lists (- item or * item) - process before bold/italic
+  s = s.replace(/^(?:[-*]\s+)(.+)$/gm, function(match, item) {
+    return '<div style="display:flex;gap:0.5rem;margin:0.35rem 0;line-height:1.65"><span style="color:var(--accent2);margin-left:0.25rem;font-size:0.9rem">•</span><span style="flex:1">' + item + '</span></div>';
+  });
+
+  // 7. Links ([text](url))
+  s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, linkText, url) {
+    var isExt = url.startsWith('http://') || url.startsWith('https://');
+    var target = isExt ? ' target="_blank" rel="noopener"' : '';
+    return '<a href="' + url + '"' + target + ' style="color:var(--accent2);text-decoration:underline;text-underline-offset:2px">' + linkText + '</a>';
+  });
+
+  // 8. Bold & Italic
+  s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+  // 9. Paragraph breaks
+  s = s.replace(/\n\n+/g, '<div style="height:0.75rem"></div>');
+  s = s.replace(/\n/g, '<br>');
+
+  // Clean adjacent br
+  s = s.replace(/<br>\s*(<(?:div|h[1-6]|blockquote|pre))/gi, '$1');
+  s = s.replace(/(<\/(?:div|h[1-6]|blockquote|pre)>)\s*<br>/gi, '$1');
+
+  return s;
+}
 
 function addMsg(text, role, scroll, files) {
   var msgs = document.getElementById('chat-msgs');
@@ -2500,13 +2631,7 @@ function addMsg(text, role, scroll, files) {
                       '</div>';
   }
 
-  b.innerHTML = fileHtml + text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/^### (.+)$/gm, '<h3 style="font-family:var(--serif);font-size:1.05rem;font-weight:500;margin:.75rem 0 .3rem;color:var(--cream)">$1</h3>')
-    .replace(/^## (.+)$/gm, '<h3 style="font-family:var(--serif);font-size:1.1rem;font-weight:500;margin:.875rem 0 .3rem;color:var(--cream)">$1</h3>')
-    .replace(/\n\n/g, '<br><br>')
-    .replace(/\n/g, '<br>') + firDownloadBtn;
+  b.innerHTML = fileHtml + renderMarkdown(text) + firDownloadBtn;
   d.appendChild(av);
   d.appendChild(b);
   msgs.appendChild(d);
@@ -2910,6 +3035,13 @@ window.closeHermesSettings = function() {
   document.getElementById('hermes-test-feedback').style.display = 'none';
 };
 
+window.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var hm = document.getElementById('hermes-modal');
+    if (hm && hm.style.display !== 'none') closeHermesSettings();
+  }
+});
+
 window.saveHermesSettings = function() {
   var url = document.getElementById('hermes-url-input').value.trim() || 'http://127.0.0.1:8000/api/chat';
   var model = document.getElementById('hermes-model-input').value.trim() || 'hermes-3-llama-3.1-8b-legal';
@@ -2992,12 +3124,14 @@ function findLawyersClient(city, query) {
   }
   
   var domainKeywords = [];
-  if (d.indexOf('homicide') !== -1 || d.indexOf('murder') !== -1 || d.indexOf('kill') !== -1 || d.indexOf('criminal') !== -1 || d.indexOf('bail') !== -1) {
+  if (d.indexOf('homicide') !== -1 || d.indexOf('murder') !== -1 || d.indexOf('kill') !== -1 || d.indexOf('criminal') !== -1 || d.indexOf('bail') !== -1 || d.indexOf('traffic') !== -1 || d.indexOf('underage') !== -1 || d.indexOf('driving') !== -1) {
     domainKeywords = ['criminal', 'homicide', 'bail', 'custody', 'bns', 'quashing', 'offence', 'sessions', 'trial'];
   } else if (d.indexOf('cheque') !== -1 || d.indexOf('138') !== -1) {
     domainKeywords = ['138', 'cheque', 'dishonour', 'recovery', 'negotiable'];
   } else if (d.indexOf('scam') !== -1 || d.indexOf('fraud') !== -1 || d.indexOf('cyber') !== -1) {
     domainKeywords = ['cyber', 'fraud', 'criminal', 'cheating', 'it act', 'economic'];
+  } else if (d.indexOf('consumer') !== -1 || d.indexOf('defective') !== -1) {
+    domainKeywords = ['consumer', 'disputes', 'recovery', 'civil', 'commercial'];
   } else if (d.indexOf('tenant') !== -1 || d.indexOf('property') !== -1 || d.indexOf('rent') !== -1) {
     domainKeywords = ['property', 'tenant', 'rent', 'land', 'injunction', 'partition', 'rera'];
   } else if (d.indexOf('matrimonial') !== -1 || d.indexOf('divorce') !== -1 || d.indexOf('family') !== -1) {
@@ -3034,7 +3168,7 @@ function formatLawyerCardsClient(lawyers) {
   lines.push('*Verified advocates admitted to practice in the jurisdiction. Listed per Bar Council of India Rule 36 informational guidelines:*');
   lines.push('');
   lawyers.forEach(function(l, i) {
-    lines.push('**' + (i+1) + '. ' + l.name + '** — *' + l.firm + '*');
+    lines.push((i + 1) + '. **' + l.name + '** — *' + l.firm + '*');
     lines.push('- **Bar Enrollment**: `' + l.bar_council + '` (' + l.experience + ')');
     lines.push('- **Courts of Practice**: ' + l.courts);
     lines.push('- **Specialization**: ' + l.domains);
@@ -3048,22 +3182,53 @@ function formatLawyerCardsClient(lawyers) {
 }
 
 function generateLegalDiagnostic(query, history) {
-  var q = query.toLowerCase();
-  var words = query.trim().split(/\s+/);
+  var q = (query || '').toLowerCase();
+  var words = (query || '').trim().split(/\s+/);
 
-  var detectedCity = 'Delhi';
-  if (q.indexOf('mumbai') !== -1 || q.indexOf('thane') !== -1 || q.indexOf('pune') !== -1) detectedCity = 'Mumbai';
-  else if (q.indexOf('bengaluru') !== -1 || q.indexOf('bangalore') !== -1) detectedCity = 'Bengaluru';
-  else if (q.indexOf('ahmedabad') !== -1 || q.indexOf('gujarat') !== -1) detectedCity = 'Ahmedabad';
-  else if (q.indexOf('hyderabad') !== -1) detectedCity = 'Hyderabad';
-  else if (q.indexOf('chennai') !== -1) detectedCity = 'Chennai';
-  else if (q.indexOf('kolkata') !== -1) detectedCity = 'Kolkata';
+  function matchCity(str) {
+    if (!str) return null;
+    var s = str.toLowerCase();
+    if (s.indexOf('mumbai') !== -1 || s.indexOf('thane') !== -1 || s.indexOf('pune') !== -1 || s.indexOf('maharashtra') !== -1) return 'Mumbai';
+    if (s.indexOf('bengaluru') !== -1 || s.indexOf('bangalore') !== -1 || s.indexOf('karnataka') !== -1) return 'Bengaluru';
+    if (s.indexOf('ahmedabad') !== -1 || s.indexOf('gujarat') !== -1 || s.indexOf('gandhinagar') !== -1 || s.indexOf('vadodara') !== -1 || s.indexOf('surat') !== -1) return 'Ahmedabad';
+    if (s.indexOf('hyderabad') !== -1 || s.indexOf('secunderabad') !== -1 || s.indexOf('telangana') !== -1 || s.indexOf('andhra') !== -1) return 'Hyderabad';
+    if (s.indexOf('chennai') !== -1 || s.indexOf('madras') !== -1 || s.indexOf('tamil nadu') !== -1) return 'Chennai';
+    if (s.indexOf('kolkata') !== -1 || s.indexOf('calcutta') !== -1 || s.indexOf('west bengal') !== -1) return 'Kolkata';
+    if (s.indexOf('delhi') !== -1 || s.indexOf('noida') !== -1 || s.indexOf('gurgaon') !== -1 || s.indexOf('gurugram') !== -1 || s.indexOf('faridabad') !== -1 || s.indexOf('ghaziabad') !== -1) return 'Delhi';
+    return null;
+  }
+
+  var detectedCity = matchCity(query);
+  if (!detectedCity && history && history.length > 0) {
+    for (var hi = history.length - 1; hi >= 0; hi--) {
+      var prevContent = history[hi].content || '';
+      var inherited = matchCity(prevContent);
+      if (inherited) {
+        detectedCity = inherited;
+        break;
+      }
+    }
+  }
+  if (!detectedCity) detectedCity = 'Delhi';
 
   var isLawyerQuery = q.indexOf('lawyer') !== -1 || q.indexOf('advocate') !== -1 || q.indexOf('counsel') !== -1 || q.indexOf('contact') !== -1;
-  var isShortCase = (q.indexOf('what happened') !== -1 || q.indexOf('what to do') !== -1 || q.indexOf('help') !== -1 || q.indexOf('dispute') !== -1) && words.length < 15;
+
+  var isHomicide = /\b(kill|killed|killing|killer|murder|murdered|homicide|death|dead|stab|stabbed|shoot|shot|strangle|poison|manslaughter|lynch|302|103|101|culpable\s+homicide)\b/i.test(q);
+  var isTraffic = /\b(underage\s+driving|minor\s+driving|driving\s+without\s+licen[sc]e|without\s+dl|traffic\s+challan|challan|traffic\s+police|drunk\s+driving|drink\s+and\s+drive|mva|motor\s+vehicle|rc\s+suspension|impounded\s+car|impounded\s+bike|seized\s+vehicle|rash\s+driving|hit\s+and\s+run|mact|over\s+speeding)\b/i.test(q);
+  var isBailCustody = /\b(arrest|arrested|bail|anticipatory\s+bail|custody|remand|lockup|police\s+station|warrant|surrender|480|482|438|439|detained)\b/i.test(q);
+  var isCheque = /\b(138|cheque|check|bounce|bounced|dishonour|dishonored)\b/i.test(q);
+  var isFraud = /\b(scam|fraud|cheat|cheated|420|318|cyber|phishing|hack|telegram\s+scam|crypto\s+scam|otp\s+fraud)\b/i.test(q);
+  var isMatrimonial = /\b(divorce|wife|husband|marriage|dowry|498a|85\s+bns|cruelty|domestic\s+violence|dv\s+act|maintenance|125\s+crpc|144\s+bnss|custody|alimony)\b/i.test(q);
+  var isEmployment = /\b(salary|wages|unpaid|fired|terminated|termination|severance|gratuity|provident\s+fund|pf|posh|labor\s+court|retrenchment|employer)\b/i.test(q);
+  var isProperty = /\b(tenant|landlord|rent|eviction|evict|lease|flat|builder|rera|property|encroachment|possession)\b/i.test(q);
+  var isConsumer = /\b(consumer\s+court|consumer\s+forum|consumer\s+commission|defective\s+product|defective\s+goods|cpa\s+2019|flipkart|amazon|warranty|refund\s+denied|deficiency\s+in\s+service)\b/i.test(q);
+
+  var hasSpecificDomain = isHomicide || isTraffic || isBailCustody || isCheque || isFraud || isMatrimonial || isEmployment || isProperty || isConsumer;
+
+  var isShortCase = !hasSpecificDomain && (q.indexOf('what happened') !== -1 || q.indexOf('what to do') !== -1 || q.indexOf('help') !== -1 || q.indexOf('dispute') !== -1) && words.length < 15;
 
   // 1. Direct lawyer search request
-  if (isLawyerQuery && words.length < 15) {
+  if (isLawyerQuery && words.length < 15 && !hasSpecificDomain) {
     var lawyers = findLawyersClient(detectedCity, q);
     var parts = [];
     parts.push('### Verified Advocates in ' + detectedCity);
@@ -3079,7 +3244,7 @@ function generateLegalDiagnostic(query, history) {
     return parts.join('\n');
   }
 
-  // 2. Short case dispute prompt — ask diagnostic intake questions
+  // 2. Short vague case dispute prompt — ask diagnostic intake questions
   if (isShortCase) {
     var intake = [];
     intake.push('### NyAI Case Intake & Diagnostic Triage');
@@ -3110,14 +3275,6 @@ function generateLegalDiagnostic(query, history) {
   var limitation = '';
   var isEmergencyCriminal = false;
 
-  var isHomicide = /\b(kill|killed|killing|killer|murder|murdered|homicide|death|dead|stab|stabbed|shoot|shot|strangle|poison|manslaughter|lynch|302|103|101|culpable\s+homicide)\b/i.test(q);
-  var isBailCustody = /\b(arrest|arrested|bail|anticipatory\s+bail|custody|remand|lockup|police\s+station|warrant|surrender|480|482|438|439|detained)\b/i.test(q);
-  var isCheque = /\b(138|cheque|check|bounce|bounced|dishonour|dishonored)\b/i.test(q);
-  var isFraud = /\b(scam|fraud|cheat|cheated|420|318|cyber|phishing|hack|telegram\s+scam|crypto\s+scam|otp\s+fraud)\b/i.test(q);
-  var isMatrimonial = /\b(divorce|wife|husband|marriage|dowry|498a|85\s+bns|cruelty|domestic\s+violence|dv\s+act|maintenance|125\s+crpc|144\s+bnss|custody|alimony)\b/i.test(q);
-  var isEmployment = /\b(salary|wages|unpaid|fired|terminated|termination|severance|gratuity|provident\s+fund|pf|posh|labor\s+court|retrenchment|employer)\b/i.test(q);
-  var isProperty = /\b(tenant|landlord|rent|eviction|evict|lease|flat|builder|rera|property|encroachment|possession)\b/i.test(q);
-
   if (isHomicide) {
     isEmergencyCriminal = true;
     domain = 'criminal defense homicide';
@@ -3131,6 +3288,18 @@ function generateLegalDiagnostic(query, history) {
       '**Counsel Representation at Remand Hearing (Within 24 Hours)**: Under Article 22(2) and Section 58 BNSS, police must produce the accused before a Magistrate within 24 hours. Your advocate must appear to oppose police remand and petition for direct judicial custody.'
     ];
     limitation = 'Grave non-bailable offense. Under Section 514 BNSS (old Section 468 CrPC), there is no period of limitation for murder. Securing immediate legal representation is critically imperative.';
+  } else if (isTraffic) {
+    domain = 'criminal traffic';
+    statuteHeader = 'Motor Vehicles Act 1988 (Amended 2019) & Juvenile Justice Act 2015';
+    citationText = '- **Section 199A Motor Vehicles Act 1988 (2019 Amendment)**: Where an offence has been committed by a juvenile, the parent or guardian of the juvenile or the vehicle owner is deemed guilty and liable to up to 3 years imprisonment and ₹25,000 fine.\n- **Section 199A(5) MVA**: The registration certificate (RC) of the motor vehicle used in the offence shall be cancelled for a period of 12 months.\n- **Section 199A(6) MVA**: The juvenile is legally barred from obtaining a learner\'s licence or driving licence until reaching the age of 25 years.\n- **Juvenile Justice (Care and Protection of Children) Act 2015 (Section 10)**: Strict statutory bar against lodging minors in regular police stations or lockups. Minor must be placed in charge of the Child Welfare Police Officer and produced before the Juvenile Justice Board (JJB) within 24 hours.\n- **Section 497 BNSS 2023 (Old Section 451 CrPC)**: Superdari application before the jurisdictional Magistrate for interim release of seized/impounded vehicle.';
+    steps = [
+      '**Invoke Juvenile Justice Act Protections (Section 10 JJ Act)**: A minor cannot be placed in a police lockup or jail. The juvenile must be placed in an observation home or released on undertaking to parents/guardians.',
+      '**Prepare for Juvenile Justice Board (JJB) Production**: The minor must be produced before the Principal Magistrate and members of the JJB within 24 hours. An advocate must represent the juvenile to seek immediate release under Section 12 of the JJ Act.',
+      '**Guardian Defense Strategy under Section 199A(2) MVA**: The parent/vehicle owner can defend against criminal liability by establishing that the vehicle was used without their consent or knowledge, or that due diligence was exercised to prevent the offence.',
+      '**File Superdari Application under Section 497 BNSS 2023**: File an urgent application before the Metropolitan / Judicial Magistrate for interim custody and release of the impounded vehicle on furnishing indemnity bond.',
+      '**Compound Challan / Contest Notice**: If issued a compoundable traffic challan under Section 200 MVA, obtain legal guidance on compounding or contest before the Traffic Special Court.'
+    ];
+    limitation = 'Vehicle impoundment requires immediate Superdari petition. JJB production must occur within **24 hours** under Section 10 JJ Act 2015.';
   } else if (isBailCustody) {
     isEmergencyCriminal = true;
     domain = 'criminal bail';
@@ -3198,6 +3367,17 @@ function generateLegalDiagnostic(query, history) {
       '**Avoid Self-Help Measures**: Never disconnect electricity or water supply without court order; this attracts prosecution under Section 115 BNS.'
     ];
     limitation = 'Recovery of rent arrears is subject to a **3-year** limitation period under Article 52 of the Limitation Act 1963.';
+  } else if (isConsumer) {
+    domain = 'consumer';
+    statuteHeader = 'Consumer Protection Act 2019 (Sections 35, 38 & 47)';
+    citationText = '- **Section 35 Consumer Protection Act 2019**: Direct consumer complaint before District Consumer Disputes Redressal Commission for deficiency in service or defect in goods.\n- **Section 34 CPA 2019 (Territorial Jurisdiction)**: Complaint can be filed where complainant resides or personally works for gain, simplifying filing against e-commerce platforms.\n- **Section 38(7) CPA 2019**: Mandate for consumer commissions to decide matters expeditiously, endeavoring within 3 months (5 months if testing required).';
+    steps = [
+      '**Preserve Invoices, Transaction IDs & Communications**: Collate proof of purchase, payment receipt, return denial emails, and customer care transcripts.',
+      '**Lodge National Consumer Helpline (NCH) Grievance**: Dial 1915 or lodge an online grievance on consumerhelpline.gov.in (often resolves 60%+ of e-commerce issues).',
+      '**Issue Formal Legal Notice (15-Day Cure Period)**: Send a legal notice via advocate demanding refund, replacement, or compensation for deficiency in service.',
+      '**File Online Complaint via e-Daakhil Portal**: If unresolved, file consumer case on `edaakhil.nic.in` before jurisdictional District Commission without mandatory physical filing.'
+    ];
+    limitation = 'Statutory limitation period for consumer complaints is strictly **2 years** from the date the cause of action arose under Section 69 CPA 2019.';
   } else {
     statuteHeader = 'Code of Civil Procedure 1908 & Specific Relief Act 1963';
     citationText = '- **Section 9 CPC**: Courts have jurisdiction to try all suits of a civil nature unless expressly barred.\n- **Section 12A Commercial Courts Act 2015**: Pre-institution mediation is mandatory before filing commercial recovery suits.';
@@ -3247,12 +3427,14 @@ function generateLegalDiagnostic(query, history) {
 
 window.generateLegalDiagnostic = generateLegalDiagnostic;
 window.findLawyersClient = findLawyersClient;
+window.renderMarkdown = renderMarkdown;
+window.SEED_CONVERSATION_MESSAGES = SEED_CONVERSATION_MESSAGES;
 
 })();
 </script>
 
 <!-- =================== HERMES SETTINGS MODAL =================== -->
-<div id="hermes-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;padding:1.5rem">
+<div id="hermes-modal" onclick="if(event.target===this)closeHermesSettings()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;padding:1.5rem">
   <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;max-width:540px;width:100%;padding:2rem;position:relative">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
       <div style="display:flex;align-items:center;gap:0.5rem">
