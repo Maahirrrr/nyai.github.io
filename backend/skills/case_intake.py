@@ -178,7 +178,7 @@ def generate_interactive_case_response(user_text: str, history: List[Dict]) -> s
         response_parts.append(f"1. {step}\n")
         
     if limitation_text:
-        response_parts.append(f"\n> ⚠️ {limitation_text}\n")
+        response_parts.append(f"\n> **Statutory Limitation**: {limitation_text}\n")
         
     response_parts.append(f"\n#### § 3. Recommended Advocates & Legal Chambers in {city}\n")
     response_parts.append(lawyer_cards)

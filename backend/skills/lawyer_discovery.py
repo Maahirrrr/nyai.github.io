@@ -247,7 +247,7 @@ def format_lawyer_cards(lawyers: List[Dict]) -> str:
             f"- **Courts**: {courts_str}\n"
             f"- **Specialization**: {domains_str}\n"
             f"- **Chamber Address**: {l['chamber']}\n"
-            f"- **Direct Contacts**: 📞 Phone: [{l['phone']}](tel:{l['phone'].replace(' ', '')}) | ✉️ Email: [{l['email']}](mailto:{l['email']})\n"
+            f"- **Direct Contacts**: Phone: [{l['phone']}](tel:{l['phone'].replace(' ', '')}) | Email: [{l['email']}](mailto:{l['email']})\n"
             f"- **Suggested Consultation Questions**: *{l['consultation_guidance']}*\n"
         )
         out.append(card)
