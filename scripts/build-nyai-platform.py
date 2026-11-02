@@ -1,0 +1,2351 @@
+import os
+
+html_content = '''<!DOCTYPE html>
+<html lang="en" class="entrance entrance-s2">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NyAI — Sovereign Legal AI for Bharat · Think clearly. Decide confidently</title>
+
+  <!-- External Fonts (Preconnect & Load) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==============================================
+       EXACT DESIGN TOKENS & SYSTEM VARIABLES
+       ============================================== */
+    :root {
+      /* Section 1 exact tokens */
+      --bg: #0c0c0c;
+      --box: #111111;
+      --hairline: rgba(255, 255, 255, 0.065);
+      --heading: #fafafa;
+      --subtitle: #9e9e9e;
+      --nav: #bcbcbc;
+      --placeholder: #aeaeae;
+      --chip-fill: rgba(255, 255, 255, 0.028);
+      --chip-border: rgba(255, 255, 255, 0.30);
+      --chip-edge: linear-gradient(135deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0.94) 22%,
+        rgba(255, 255, 255, 0.44) 38%,
+        rgba(255, 255, 255, 0.28) 50%,
+        rgba(255, 255, 255, 0.11) 63%,
+        rgba(255, 255, 255, 0.04) 75%,
+        rgba(255, 255, 255, 0.02) 100%);
+      --icon: #e8e8e8;
+      --mic: #e1e1e1;
+      --strip: #5c5c5c;
+      --grad: linear-gradient(90deg,
+        rgba(255, 232, 120, 0) 0%, #ffe776 6%, #ffd400 26%, #ffd000 42%,
+        #c9c93c 60%, #86ca8a 74%, #78d0cd 88%, rgba(120, 208, 205, 0.55) 100%);
+      --grad-solid: linear-gradient(90deg,
+        #ffe776 0%, #ffd400 22%, #ffd000 40%, #c9c93c 60%, #86ca8a 76%, #78d0cd 100%);
+
+      /* Section 2 exact tokens */
+      --s2-heading: #ffffff;
+      --s2-subhead: #8b8b8d;
+      --panel-bg: #0d0d0d;
+      --bubble-bg: #1c1c1c;
+      --msg-text: #efefef;
+      --reason-text: #0b0c07;
+      --green: #23d92c;
+      --input-bg: #fdfdfd;
+      --s2-placeholder: #6b6b6d;
+      --send-bg: #0c0c0c;
+
+      /* Legal Bharat Gold & Obsidian Accents */
+      --legal-gold: #C5A059;
+      --legal-gold-light: #E0C078;
+      --legal-gold-glow: rgba(197, 160, 89, 0.25);
+      --font-serif: "EB Garamond", Georgia, serif;
+      --font-sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+      --font-s2: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+
+    /* Universal Resets */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      background: #0c0c0c !important;
+      color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      background: #0c0c0c;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ==============================================
+       ENTRANCE STATES (WAAPI Pre-Flight Setup)
+       ============================================== */
+    html.entrance [data-enter] {
+      opacity: 0;
+    }
+    html.entrance .hl-line {
+      opacity: 0;
+    }
+    html.entrance .hl-mask {
+      overflow: hidden;
+    }
+
+    html.entrance-s2 .s2-enter {
+      opacity: 0;
+    }
+    html.entrance-s2 .s2-hl-line {
+      opacity: 0;
+    }
+    html.entrance-s2 .s2-hl-mask {
+      overflow: hidden;
+    }
+
+    /* ==============================================
+       SECTION 1 — HERO (CLASS section-one, ID "home")
+       ============================================== */
+    .section-one {
+      min-height: 100dvh;
+      background: var(--bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    /* Atmospheric Subtle Radial Glow */
+    .section-one::before {
+      content: "";
+      position: absolute;
+      top: -15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(600px, 80vw, 1200px);
+      height: clamp(350px, 45vh, 600px);
+      background: radial-gradient(ellipse at center, rgba(197, 160, 89, 0.08) 0%, rgba(255, 212, 0, 0.03) 35%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(14px, 1.55vw, 26px) clamp(16px, 1.7vw, 28px) 0;
+      position: relative;
+      z-index: 1;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ─── NAV TOPBAR ─── */
+    .nav-topbar {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      width: 100%;
+      padding-bottom: clamp(10px, 1.2vw, 20px);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transform-origin: center;
+      transition: transform 0.2s ease;
+    }
+    .logo-link:hover {
+      transform: scale(1.04);
+    }
+
+    .logo-svg {
+      width: clamp(34px, 3.1vw, 52px);
+      height: clamp(34px, 3.1vw, 52px);
+      display: block;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.35rem, 1.6vw, 1.85rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .brand-scale-symbol {
+      color: var(--legal-gold);
+      font-size: 1.15em;
+    }
+
+    /* Center Nav Links */
+    .nav-center {
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: clamp(1.2rem, 2.2vw, 2.5rem);
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--nav);
+      font-weight: 400;
+      font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+      letter-spacing: 0.005em;
+      transition: color 0.18s ease;
+      white-space: nowrap;
+    }
+    .nav-link:hover {
+      color: #f2f2f2;
+    }
+
+    .nav-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.82rem;
+      color: #8b8b8d;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .status-dot-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #23d92c;
+      box-shadow: 0 0 8px rgba(35, 217, 44, 0.8);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .nav-cta {
+      background: #ffffff;
+      color: #0c0c0c;
+      font-weight: 500;
+      font-size: clamp(0.85rem, 0.95vw, 0.95rem);
+      border-radius: 999px;
+      padding: clamp(0.55em, 0.9vw, 0.62em) clamp(1.1em, 2vw, 1.35em);
+      transition: background 0.18s ease, transform 0.12s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-cta:hover {
+      background: #ededed;
+    }
+    .nav-cta:active {
+      transform: scale(0.98);
+    }
+
+    /* Burger Menu Button (Mobile) */
+    .burger-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 26px;
+      height: 18px;
+      padding: 0;
+    }
+    .bar {
+      display: block;
+      height: 1.5px;
+      width: 100%;
+      background-color: #fafafa;
+      border-radius: 1px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    /* ─── HERO COPY ─── */
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: clamp(1.2rem, 3.2vh, 3.5rem);
+      z-index: 2;
+    }
+
+    /* Pill Badge */
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: clamp(5px, 0.6vw, 7px) clamp(12px, 1.2vw, 18px);
+      border-radius: 999px;
+      background: rgba(197, 160, 89, 0.08);
+      border: 1px solid rgba(197, 160, 89, 0.28);
+      font-size: clamp(0.72rem, 0.85vw, 0.85rem);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--legal-gold-light);
+      margin-bottom: clamp(14px, 2vh, 22px);
+      box-shadow: 0 0 20px rgba(197, 160, 89, 0.1);
+    }
+    .hero-badge-pill::before {
+      content: "•";
+      color: var(--legal-gold);
+    }
+
+    .hero-h1 {
+      font-weight: 500;
+      color: var(--heading);
+      line-height: 1.05;
+      letter-spacing: -0.024em;
+      font-size: clamp(2.3rem, 5.2vw, 5.2rem);
+    }
+
+    .hl-serif {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+
+    .hl-mask {
+      display: block;
+      padding-bottom: 0.16em;
+      margin-bottom: -0.16em;
+      overflow: visible;
+    }
+    .hl-line {
+      display: block;
+      will-change: transform, opacity;
+    }
+
+    .hero-sub {
+      color: var(--subtitle);
+      font-weight: 400;
+      font-size: clamp(0.95rem, 1.35vw, 1.35rem);
+      line-height: 1.45;
+      letter-spacing: 0.004em;
+      margin-top: clamp(1rem, 2vh, 1.8rem);
+      max-width: 760px;
+    }
+
+    /* ─── COMPOSER CARD ─── */
+    .composer-shell {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      isolation: isolate;
+      transform: translate3d(0, 0, 0);
+      margin-top: clamp(1.4rem, 2.8vh, 2.6rem);
+      z-index: 3;
+    }
+
+    .composer {
+      width: clamp(320px, 64vw, 840px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 42%), var(--box);
+      border: 1px solid var(--hairline);
+      border-radius: clamp(14px, 1.32vw, 22px);
+      box-shadow: 0 4px 50px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      padding: clamp(16px, 1.8vw, 28px);
+      min-height: clamp(150px, 16vw, 220px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .composer:focus-within {
+      border-color: rgba(197, 160, 89, 0.4);
+      box-shadow: 0 4px 60px rgba(0, 0, 0, 0.8), 0 0 25px rgba(197, 160, 89, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    /* Gradient Underglow hugging bottom edge */
+    .composer-glow {
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: calc(-1 * clamp(3px, 0.35vw, 6px));
+      border-radius: inherit;
+      background: var(--grad-solid);
+      filter: blur(0.6px);
+      opacity: 0.95;
+      pointer-events: none;
+    }
+
+    .composer-input-row {
+      width: 100%;
+    }
+
+    .composer-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fafafa;
+      font-family: inherit;
+      font-size: clamp(0.95rem, 1.25vw, 1.25rem);
+      line-height: 1.45;
+      resize: none;
+      height: 52px;
+    }
+    .composer-textarea::placeholder {
+      color: var(--placeholder);
+      opacity: 1;
+    }
+
+    /* Controls Row */
+    .composer-controls {
+      display: flex;
+      align-items: center;
+      gap: clamp(8px, 1vw, 16px);
+      margin-top: clamp(12px, 1.8vh, 20px);
+      width: 100%;
+    }
+
+    .chip-btn-round {
+      width: clamp(38px, 3.2vw, 48px);
+      height: clamp(38px, 3.2vw, 48px);
+      border-radius: 50%;
+      background: var(--chip-fill);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border: 1px solid var(--chip-border);
+      transition: background 0.18s ease, transform 0.12s ease;
+    }
+    .chip-btn-round:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: scale(1.04);
+    }
+
+    .chip-btn-pill {
+      height: clamp(38px, 3.2vw, 48px);
+      border-radius: 999px;
+      background: var(--chip-fill);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 clamp(12px, 1.3vw, 20px);
+      font-size: clamp(0.85rem, 1vw, 1.05rem);
+      font-weight: 500;
+      border: 1px solid var(--chip-border);
+      transition: background 0.18s ease, transform 0.12s ease;
+    }
+    .chip-btn-pill:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: scale(1.03);
+    }
+    .chip-btn-pill svg {
+      color: #ffe776;
+    }
+
+    .composer-spacer {
+      flex: 1;
+    }
+
+    .mic-btn {
+      color: var(--mic);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 50%;
+      transition: color 0.18s ease, transform 0.12s ease;
+    }
+    .mic-btn:hover {
+      color: #ffffff;
+      transform: scale(1.06);
+    }
+
+    /* Send Button with continuous 10s ring sweep */
+    .send-btn-wrap {
+      width: clamp(40px, 3.3vw, 50px);
+      height: clamp(40px, 3.3vw, 50px);
+      border-radius: 50%;
+      padding: clamp(1.2px, 0.1vw, 1.8px);
+      background: var(--grad-solid);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      transition: filter 0.18s ease, transform 0.12s ease;
+    }
+    .send-btn-wrap:hover {
+      filter: brightness(1.12);
+      transform: scale(1.04);
+    }
+    .send-btn-wrap:active {
+      transform: scale(0.96);
+    }
+
+    .send-btn-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background: conic-gradient(from 0deg, #ffe776, #ffd000, #86ca8a, #78d0cd, #ffd000, #ffe776);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    html.hero-ready .send-btn-wrap::before {
+      animation: send-ring-sweep 10s linear infinite;
+    }
+
+    @keyframes send-ring-sweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .send-inner {
+      width: 100%;
+      height: 100%;
+      background: #141414;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+    .send-inner svg {
+      stroke: #fafafa;
+      width: 44%;
+      height: 44%;
+    }
+
+    /* Dual Action CTA Buttons under Composer */
+    .hero-action-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: clamp(16px, 2.2vh, 26px);
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-launch {
+      background: #ffffff;
+      color: #0c0c0c;
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+      padding: clamp(0.7em, 1vw, 0.82em) clamp(1.5em, 2.2vw, 1.9em);
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+      transition: background 0.18s ease, transform 0.12s ease;
+    }
+    .btn-primary-launch:hover {
+      background: #eaeaea;
+      transform: scale(1.02);
+    }
+    .btn-primary-launch:active {
+      transform: scale(0.97);
+    }
+
+    .btn-secondary-demo {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fafafa;
+      font-weight: 500;
+      font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+      padding: clamp(0.7em, 1vw, 0.82em) clamp(1.4em, 2vw, 1.8em);
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+    }
+    .btn-secondary-demo:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.02);
+    }
+
+    /* ─── TRUST LOGOS FOOTER ─── */
+    .trust-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(1.6rem, 5.6vw, 5.9rem);
+      color: var(--strip);
+      padding: clamp(24px, 4vh, 42px) 0 clamp(16px, 2.4vh, 26px);
+      width: 100%;
+      flex-wrap: wrap;
+      z-index: 2;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      margin-top: clamp(20px, 3vh, 36px);
+    }
+
+    .trust-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: clamp(0.85rem, 1.05vw, 1.05rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #7a7a7a;
+      transition: color 0.18s ease;
+    }
+    .trust-brand:hover {
+      color: #c0c0c0;
+    }
+    .trust-brand svg {
+      width: 20px;
+      height: 20px;
+      color: var(--legal-gold);
+    }
+
+    /* ==============================================
+       SECTION 2 — FEATURES & LIVE REASONING (CLASS section-two, ID "features")
+       ============================================== */
+    .section-two {
+      min-height: 100dvh;
+      background: var(--bg);
+      font-family: var(--font-s2);
+      padding: clamp(40px, 6vh, 90px) clamp(16px, 6vw, 91px) clamp(40px, 6vh, 80px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .s2-wrap {
+      max-width: 1300px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .s2-heading-block {
+      text-align: center;
+      margin-bottom: clamp(24px, 4vh, 46px);
+      width: 100%;
+    }
+
+    .s2-h2 {
+      font-weight: 400;
+      letter-spacing: -0.024em;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      line-height: 1.12;
+      color: var(--s2-heading);
+    }
+    .s2-h2-serif {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: #ffffff;
+    }
+
+    .s2-hl-mask {
+      display: block;
+      padding-bottom: 0.14em;
+      margin-bottom: -0.14em;
+      overflow: visible;
+    }
+    .s2-hl-line {
+      display: block;
+      will-change: transform, opacity;
+    }
+
+    .s2-subcopy {
+      color: var(--s2-subhead);
+      font-size: clamp(0.9rem, 1.25vw, 1.15rem);
+      line-height: 1.45;
+      margin-top: 14px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ─── EXACT MULTI-LAYER GRADIENT PANEL ─── */
+    .panel {
+      width: 100%;
+      max-width: 1020px;
+      border-radius: clamp(14px, 1.4vw, 22px);
+      padding: clamp(16px, 2.5vw, 32px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 60px rgba(0, 0, 0, 0.7);
+      background:
+        radial-gradient(120% 150% at 9% 52%, #d2ae1a 0%, #bf9f28 22%, rgba(175, 155, 55, 0) 56%),
+        radial-gradient(120% 150% at 95% 50%, #64a3a2 0%, #4d9494 34%, rgba(70, 140, 140, 0) 64%),
+        radial-gradient(80% 110% at 42% 6%, rgba(150, 160, 55, 0.55) 0%, rgba(150, 160, 60, 0) 42%),
+        linear-gradient(96deg, #c6a119 0%, #b0972a 32%, #7ba184 62%, #509393 100%);
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(135% 120% at 50% 50%, transparent 58%, rgba(0, 0, 0, 0.35) 100%);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* "Live reasoning" Status Row */
+    .live-reasoning-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: clamp(12px, 1.6vw, 18px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(35, 217, 44, 0.85);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+
+    .live-label {
+      color: #0b0c07;
+      font-weight: 600;
+      font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* Chat Card Inside Panel */
+    .chat-card {
+      background: var(--panel-bg);
+      border-radius: clamp(12px, 1.4vw, 18px);
+      padding: clamp(16px, 2.2vw, 28px);
+      width: 100%;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(14px, 1.8vh, 22px);
+    }
+
+    .chat-messages {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(14px, 1.6vh, 20px);
+      max-height: 440px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .chat-messages::-webkit-scrollbar {
+      width: 5px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+
+    .chat-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      width: 100%;
+    }
+    .chat-row.user {
+      justify-content: flex-end;
+    }
+    .chat-row.ai {
+      justify-content: flex-start;
+    }
+
+    .chat-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #222222;
+    }
+
+    .chat-avatar-user-svg {
+      width: 18px;
+      height: 18px;
+      stroke: #f2f2f2;
+    }
+
+    .chat-avatar-ai-grad {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(105deg, #f5c40a 0%, #dcae3f 40%, #6ac6a0 62%, #22c0cf 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .chat-bubble {
+      background: var(--bubble-bg);
+      color: var(--msg-text);
+      border-radius: clamp(11px, 1.1vw, 15px);
+      padding: clamp(10px, 1.1vw, 14px) clamp(14px, 1.5vw, 18px);
+      max-width: 78%;
+      font-size: clamp(0.85rem, 1.05vw, 1.02rem);
+      line-height: 1.48;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    }
+    .chat-row.user .chat-bubble {
+      background: #252830;
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-row.ai .chat-bubble {
+      background: #181a1f;
+      border-bottom-left-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* ─── WHITE PILL INPUT BAR ─── */
+    .white-pill-inputbar {
+      height: clamp(44px, 4.8vh, 52px);
+      background: var(--input-bg);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      padding: 4px 6px 4px clamp(14px, 1.6vw, 20px);
+      box-shadow: 0 3px 18px rgba(0, 0, 0, 0.35);
+      position: relative;
+      z-index: 2;
+    }
+
+    .white-pill-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #0c0c0c;
+      font-family: inherit;
+      font-size: clamp(0.88rem, 1.05vw, 1.02rem);
+    }
+    .white-pill-input::placeholder {
+      color: var(--s2-placeholder);
+    }
+
+    .white-pill-mic {
+      color: #111111;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.12s ease;
+    }
+    .white-pill-mic:hover {
+      transform: scale(1.1);
+    }
+
+    .white-pill-send {
+      width: clamp(34px, 3.6vh, 40px);
+      height: clamp(34px, 3.6vh, 40px);
+      border-radius: 50%;
+      background: var(--send-bg);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, transform 0.12s ease;
+    }
+    .white-pill-send:hover {
+      background: #222222;
+      transform: scale(1.05);
+    }
+    .white-pill-send:active {
+      transform: scale(0.95);
+    }
+    .white-pill-send svg {
+      width: 16px;
+      height: 16px;
+      stroke: #ffffff;
+    }
+
+    /* ==============================================
+       SECTION 3 — ENTERPRISE & WORKSTATION (CLASS section-three, ID "platform")
+       ============================================== */
+    .section-three {
+      padding: clamp(50px, 8vh, 100px) clamp(16px, 6vw, 91px) clamp(60px, 10vh, 120px);
+      background: #090909;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .cta-card-wrap {
+      max-width: 1100px;
+      width: 100%;
+      background: linear-gradient(180deg, #16181f 0%, #0e1014 100%);
+      border: 1px solid rgba(197, 160, 89, 0.22);
+      border-radius: clamp(16px, 1.8vw, 24px);
+      padding: clamp(32px, 5vw, 64px) clamp(24px, 4vw, 56px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .cta-card-wrap::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle at top right, rgba(197, 160, 89, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-left {
+      max-width: 620px;
+    }
+
+    .cta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(197, 160, 89, 0.12);
+      border: 1px solid rgba(197, 160, 89, 0.35);
+      color: var(--legal-gold-light);
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .cta-h3 {
+      font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+      font-weight: 500;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 14px;
+    }
+
+    .cta-desc {
+      color: #9e9e9e;
+      font-size: clamp(0.92rem, 1.1vw, 1.1rem);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-gold-glass {
+      background: linear-gradient(135deg, #C5A059 0%, #A07D38 100%);
+      color: #000000;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(197, 160, 89, 0.3);
+      transition: filter 0.18s ease, transform 0.12s ease;
+    }
+    .btn-gold-glass:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+
+    /* ==============================================
+       GRAND LEGAL FOOTER WITH MARBLE HANDS & SUNKEN WORDMARK
+       ============================================== */
+    .grand-footer {
+      background: #060606;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: clamp(60px, 8vh, 100px) clamp(16px, 6vw, 91px) clamp(30px, 4vh, 48px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-columns-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: clamp(24px, 3.5vw, 48px);
+      max-width: 1200px;
+      width: 100%;
+      margin-bottom: clamp(60px, 8vh, 100px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-col-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-brand-tagline {
+      color: #8b8b8d;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      max-width: 300px;
+    }
+
+    .footer-col-title {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .footer-links a {
+      color: #888888;
+      font-size: 0.88rem;
+      transition: color 0.18s ease;
+    }
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    /* Carrara Marble Hands & Sunken NyAI Wordmark */
+    .sunken-wordmark-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(30px, 5vh, 60px) 0 clamp(10px, 2vh, 20px);
+      z-index: 1;
+    }
+
+    .sunken-wordmark {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: clamp(5rem, 16vw, 15rem);
+      letter-spacing: 0.03em;
+      color: #1a1510;
+      text-shadow: 0 -2px 0 rgba(0, 0, 0, 0.9), 0 2px 0 rgba(255, 255, 255, 0.04);
+      user-select: none;
+      line-height: 0.8;
+      text-align: center;
+    }
+
+    .footer-bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      color: #555555;
+      font-size: 0.82rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ==============================================
+       FULL-SCREEN CHAT ASSISTANT (#page-chat)
+       ============================================== */
+    #page-chat {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #090A0D;
+      z-index: 9999;
+      color: #F5F7FA;
+      font-family: var(--font-sans);
+    }
+    #page-chat.active {
+      display: flex;
+    }
+
+    .chat-layout {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Left Sidebar */
+    .chat-sidebar {
+      width: 290px;
+      background: #0D0F14;
+      border-right: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      flex-direction: column;
+      padding: 18px 14px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .btn-close-chat {
+      color: #8b8b8d;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      background: rgba(255, 255, 255, 0.04);
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .btn-close-chat:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .btn-new-convo {
+      margin-top: 14px;
+      background: #ffffff;
+      color: #0c0c0c;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 10px 14px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s ease;
+    }
+    .btn-new-convo:hover {
+      background: #eaeaea;
+    }
+
+    .recent-header {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #666666;
+      margin-top: 24px;
+      margin-bottom: 8px;
+      padding-left: 6px;
+    }
+
+    .recent-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .recent-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 10px;
+      border-radius: 6px;
+      font-size: 0.84rem;
+      color: #cccccc;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+    .recent-item.active {
+      background: rgba(197, 160, 89, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(197, 160, 89, 0.25);
+    }
+    .recent-item:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .recent-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 190px;
+    }
+
+    .sidebar-user {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .user-avatar-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #252830;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: var(--legal-gold);
+    }
+    .user-info-col {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.82rem;
+    }
+    .user-name {
+      font-weight: 500;
+      color: #ffffff;
+    }
+    .user-status {
+      font-size: 0.72rem;
+      color: #23d92c;
+    }
+
+    /* Main Chat Stream */
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #090A0D;
+      height: 100%;
+    }
+
+    .chat-topbar {
+      height: 56px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .chat-topbar-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: #cccccc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-canvas {
+      flex: 1;
+      overflow-y: auto;
+      padding: 30px clamp(16px, 6vw, 80px);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .chat-composer-wrap {
+      padding: 16px clamp(16px, 6vw, 80px) 24px;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .chat-composer-box {
+      background: #13161D;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chat-composer-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 0.95rem;
+      resize: none;
+      min-height: 44px;
+      font-family: inherit;
+    }
+
+    .chat-composer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-composer-send-btn {
+      background: var(--legal-gold);
+      color: #000000;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-disclaimer {
+      font-size: 0.72rem;
+      color: #666666;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* ─── MOBILE RESPONSIVENESS (≤1024, ≤680, ≤600) ─── */
+    @media (max-width: 1024px) {
+      .nav-links, .nav-cta, .status-badge {
+        display: none;
+      }
+      .burger-btn {
+        display: flex;
+      }
+      .composer {
+        width: 100%;
+      }
+      .footer-columns-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .chat-sidebar {
+        display: none;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .hero-h1 {
+        font-size: 2.2rem;
+      }
+      .trust-footer {
+        gap: 1.6rem;
+      }
+      .trust-brand {
+        flex: 1 1 40%;
+      }
+      .cta-card-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* Mobile Nav Fullscreen Overlay */
+    #navOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(12, 12, 12, 0.96);
+      backdrop-filter: blur(24px);
+      z-index: 1000;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      padding: 24px;
+    }
+    #navOverlay.open {
+      display: flex;
+    }
+    .overlay-link {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #ffffff;
+      transition: color 0.15s ease;
+    }
+    .overlay-link:hover {
+      color: var(--legal-gold);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==============================================
+       1. SECTION 1 — HERO & LEGAL AI COMPOSER (ID "home")
+       ============================================== -->
+  <section class="section-one" id="home">
+    <div class="page">
+
+      <!-- TOPBAR -->
+      <header class="nav-topbar">
+        <div class="nav-left">
+          <a href="#home" class="logo-link" aria-label="NyAI Home" data-enter>
+            <svg class="logo-svg" viewBox="0 0 52 52" aria-hidden="true">
+              <g class="rays" stroke="#f4f4f4" stroke-width="1.4" stroke-linecap="round"></g>
+              <circle cx="26" cy="26" r="7.4" fill="#fbfbfb"/>
+            </svg>
+            <div class="brand-title">
+              <span class="brand-scale-symbol">⚖</span>
+              <span>NyAI</span>
+            </div>
+          </a>
+        </div>
+
+        <nav class="nav-center" aria-label="Platform Navigation">
+          <ul class="nav-links">
+            <li><a href="#features" class="nav-link" data-enter>Capabilities</a></li>
+            <li><a href="#features" class="nav-link" data-enter>Live Reasoning</a></li>
+            <li><a href="#platform" class="nav-link" data-enter>Enterprise</a></li>
+            <li><a href="#chat" class="nav-link" data-enter onclick="openAssistantView(); return false;" style="color: #F0A24C; font-weight: 600;">Chat Assistant ➔</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-right">
+          <div class="status-badge" data-enter>
+            <span class="status-dot-pulse"></span>
+            <span>Hermes Engine Online</span>
+          </div>
+          <button class="nav-cta" data-enter onclick="openAssistantView()">
+            <span>Open Assistant</span>
+            <span>➔</span>
+          </button>
+          <button class="burger-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navOverlay" data-enter onclick="toggleMobileMenu()">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- HERO COPY -->
+      <div class="hero-content">
+        <!-- Pill Badge -->
+        <div class="hero-badge-pill" data-enter>
+          <span>Sovereign Legal Intelligence · Bharat Jurisprudence · BNS 2023 Native</span>
+        </div>
+
+        <!-- H1 Masked Lines -->
+        <h1 class="hero-h1">
+          <span class="hl-mask"><span class="hl-line hl-serif">Intelligence Meets the Law</span></span>
+          <span class="hl-mask"><span class="hl-line">Think clearly. Decide confidently.</span></span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-sub" data-enter>
+          NyAI acts as a force multiplier for India's top law firms, corporate counsels, and advocates — structuring statutory reasoning, BNS concordances, and verified advocate discovery.
+        </p>
+      </div>
+
+      <!-- COMPOSER CARD -->
+      <div class="composer-shell" data-enter>
+        <div class="composer">
+          <!-- Gradient Underglow -->
+          <div class="composer-glow" data-enter></div>
+
+          <!-- Multiline Input -->
+          <div class="composer-input-row">
+            <textarea class="composer-textarea" id="heroComposerText"
+              placeholder="Break down a legal dispute, BNS section, contract clause, or bail petition…"
+              rows="2"></textarea>
+          </div>
+
+          <!-- Controls Row -->
+          <div class="composer-controls">
+            <!-- Round + Chip Button -->
+            <button class="chip-btn-round" aria-label="Attach case files" data-enter title="Attach legal document or FIR">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </button>
+
+            <!-- DeepThink Pill Chip -->
+            <button class="chip-btn-pill" data-enter title="Activate Sovereign Reasoning Engine">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18h6"/>
+                <path d="M10 22h4"/>
+                <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/>
+              </svg>
+              <span>NyAI DeepThink</span>
+            </button>
+
+            <div class="composer-spacer"></div>
+
+            <!-- Mic Button -->
+            <button class="mic-btn" aria-label="Voice dictation" data-enter title="Voice legal dictation">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+            </button>
+
+            <!-- Send Button with Continuous 10s Ring Sweep -->
+            <div class="send-btn-wrap" data-enter id="heroSendBtn" onclick="handleHeroSubmit()" title="Execute Statutory Analysis">
+              <div class="send-inner">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Action CTA Buttons under Composer -->
+        <div class="hero-action-buttons" data-enter>
+          <button class="btn-primary-launch" onclick="openAssistantView()">
+            <span>⚖ Launch Legal AI Assistant</span>
+          </button>
+          <button class="btn-secondary-demo" onclick="document.getElementById('features').scrollIntoView({ behavior: 'smooth' })">
+            <span>Try Case Triage Demo ➔</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TRUST LOGOS / INSTITUTIONAL STANDARDS STRIP -->
+      <footer class="trust-footer" data-enter aria-label="Institutional Standards">
+        <div class="trust-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 2l9 8H3l9-8z"/></svg>
+          <span>25 High Courts Covered</span>
+        </div>
+        <div class="trust-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5h-2v-2h2zm0-4h-2V7h2z"/></svg>
+          <span>Supreme Court Precedents</span>
+        </div>
+        <div class="trust-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>BNS 2023 Native Concordance</span>
+        </div>
+        <div class="trust-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>ISO 27001 Sovereign Privacy</span>
+        </div>
+      </footer>
+
+    </div>
+  </section>
+
+  <!-- ==============================================
+       2. SECTION 2 — FEATURES & LIVE REASONING PANEL (ID "features")
+       ============================================== -->
+  <section class="section-two" id="features">
+    <div class="s2-wrap">
+
+      <!-- Heading -->
+      <div class="s2-heading-block">
+        <h2 class="s2-h2">
+          <span class="s2-hl-mask"><span class="s2-hl-line s2-h2-serif">Built for human counsel.</span></span>
+          <span class="s2-hl-mask"><span class="s2-hl-line">Powered by structured legal intelligence.</span></span>
+        </h2>
+        <p class="s2-subcopy s2-enter">
+          NyAI decomposes ambiguous legal claims into cited statutory logic, High Court precedents, and immediate actionable defense steps.
+        </p>
+      </div>
+
+      <!-- 4-Layer Gradient Panel -->
+      <div class="panel s2-enter">
+        <!-- Live Reasoning Status -->
+        <div class="live-reasoning-row">
+          <span class="live-dot"></span>
+          <span class="live-label">● Live legal reasoning</span>
+        </div>
+
+        <!-- Chat Card -->
+        <div class="chat-card">
+          <div class="chat-messages" id="panelChatStream">
+            <!-- Turn 1: User -->
+            <div class="chat-row user">
+              <div class="chat-bubble">i killed a person of my age 20 year old and im living in ahmedabad</div>
+              <div class="chat-avatar">
+                <svg class="chat-avatar-user-svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Turn 2: AI -->
+            <div class="chat-row ai">
+              <div class="chat-avatar">
+                <div class="chat-avatar-ai-grad">⚖</div>
+              </div>
+              <div class="chat-bubble">
+                <strong style="color: #F0A24C; display: block; margin-bottom: 0.35rem;">Emergency Criminal Defense Advisory & Constitutional Protections</strong>
+                Based on your situation in Ahmedabad, this involves cognizable offenses under <strong>Bharatiya Nyaya Sanhita 2023 (BNS § 103 / § 101)</strong> and BNSS 2023:
+                <div style="margin-top: 0.6em; line-height: 1.55; background: rgba(0,0,0,0.3); padding: 0.55rem 0.75rem; border-radius: 6px; border-left: 2px solid #C5A059;">
+                  • <strong>Action 01: Maintain Right to Silence</strong> (Art. 20(3) Constitution & BSA § 23)<br>
+                  • <strong>Action 02: Formal Judicial Surrender</strong> with defense counsel (BNSS § 84)<br>
+                  • <strong>Action 03: Oppose Police Remand</strong> at mandatory 24h Magistrate production (BNSS § 58)<br>
+                  • <strong>Verified Chambers:</strong> Adv. Pradeep R. Vaghela (City Civil & Sessions Court, Bhadra)
+                </div>
+              </div>
+            </div>
+
+            <!-- Turn 3: User -->
+            <div class="chat-row user">
+              <div class="chat-bubble">What is the statutory difference between BNS 103 and BNS 101 regarding premeditation?</div>
+              <div class="chat-avatar">
+                <svg class="chat-avatar-user-svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Turn 4: AI -->
+            <div class="chat-row ai">
+              <div class="chat-avatar">
+                <div class="chat-avatar-ai-grad">⚖</div>
+              </div>
+              <div class="chat-bubble">
+                <strong>BNS § 103 (Old IPC 302)</strong> requires intentional killing without provocation, punishable with death or life imprisonment. <strong>BNS § 101 (Old IPC 304)</strong> applies where death occurs in a sudden mutual quarrel without premeditation (Section 100 Exceptions).
+              </div>
+            </div>
+
+            <!-- Turn 5: User (Final) -->
+            <div class="chat-row user">
+              <div class="chat-bubble">Draft an urgent application for anticipatory bail under BNSS Section 482</div>
+              <div class="chat-avatar">
+                <svg class="chat-avatar-user-svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- White Pill Input Bar at bottom of chat card -->
+          <div class="white-pill-inputbar">
+            <input type="text" class="white-pill-input" id="panelInput"
+              placeholder="Ask a legal follow-up or test an Ahmedabad dispute scenario…"
+              onkeydown="if(event.key==='Enter') handlePanelSubmit()">
+            <button class="white-pill-mic" aria-label="Voice input" title="Voice dictation">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              </svg>
+            </button>
+            <button class="white-pill-send" aria-label="Send message" onclick="handlePanelSubmit()" title="Submit">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19V5M5 12l7-7 7 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==============================================
+       3. SECTION 3 — ENTERPRISE & WORKSTATION (ID "platform")
+       ============================================== -->
+  <section class="section-three" id="platform">
+    <div class="cta-card-wrap">
+      <div class="cta-left">
+        <div class="cta-pill">⚖ Sovereign Legal AI for Bharat</div>
+        <h3 class="cta-h3">Your statutory advantage starts now.</h3>
+        <p class="cta-desc">
+          Join over 4,200 advocates, Senior Counsels, and corporate legal teams structuring citations, filings, and case research on NyAI.
+        </p>
+        <div class="cta-actions">
+          <button class="btn-gold-glass" onclick="openAssistantView()">
+            <span>Launch Legal AI Assistant</span>
+            <span>➔</span>
+          </button>
+          <button class="btn-secondary-demo" onclick="alert('NyAI Enterprise On-Premises & Chambers sandbox requested. Our Ahmedabad team will connect shortly.')">
+            <span>Schedule Chambers Demo</span>
+          </button>
+        </div>
+      </div>
+      <div style="font-family: var(--font-serif); font-size: 8rem; color: rgba(197, 160, 89, 0.15); user-select: none; line-height: 1;">
+        ⚖
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================
+       4. GRAND LEGAL FOOTER (ID "footer")
+       ============================================== -->
+  <footer class="grand-footer" id="footer">
+    <div class="footer-columns-grid">
+      <!-- Col 1: Brand Info -->
+      <div class="footer-col-brand">
+        <div class="footer-brand-title">
+          <span style="color: var(--legal-gold)">⚖</span>
+          <span>NyAI</span>
+        </div>
+        <p class="footer-brand-tagline">
+          NyAI keeps every statute, High Court precedent, and advocate in sync, so counsel never builds arguments from scratch.
+        </p>
+      </div>
+
+      <!-- Col 2: Jurisprudence -->
+      <div>
+        <div class="footer-col-title">Jurisprudence</div>
+        <ul class="footer-links">
+          <li><a href="#features">BNS 2023 Concordance</a></li>
+          <li><a href="#features">BNSS Criminal Procedure</a></li>
+          <li><a href="#features">BSA Evidence Code</a></li>
+          <li><a href="#features">Supreme Court Rulings</a></li>
+          <li><a href="#features">25 High Court Opinions</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Chambers -->
+      <div>
+        <div class="footer-col-title">Chambers</div>
+        <ul class="footer-links">
+          <li><a href="#chat" onclick="openAssistantView(); return false;">Case Triage Assistant</a></li>
+          <li><a href="#chat" onclick="openAssistantView(); return false;">Bail Petition Drafter</a></li>
+          <li><a href="#features">Ahmedabad Counsel Discovery</a></li>
+          <li><a href="#features">FIR Risk Analysis</a></li>
+          <li><a href="#features">Statutory Cross-Walk</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Security -->
+      <div>
+        <div class="footer-col-title">Security & Ethics</div>
+        <ul class="footer-links">
+          <li><a href="#platform">ISO 27001 Certified</a></li>
+          <li><a href="#platform">Privilege Shield (BSA § 132)</a></li>
+          <li><a href="#platform">Zero Data Retention</a></li>
+          <li><a href="#platform">On-Premises Air-Gapped</a></li>
+          <li><a href="#platform">BCI Standards Compliance</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 5: Company -->
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#home">About NyAI</a></li>
+          <li><a href="#platform">Ahmedabad Chambers</a></li>
+          <li><a href="#home">Careers in Legal AI</a></li>
+          <li><a href="#platform">Security Whitepaper</a></li>
+          <li><a href="#home">Contact Legal Team</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sunken Wordmark with Amber Rim Glow -->
+    <div class="sunken-wordmark-wrap">
+      <div class="sunken-wordmark">NyAI</div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom-bar">
+      <div>©2026 NyAI — Sovereign Legal AI for Bharat. All rights reserved.</div>
+      <div>Designed with Precision for Indian Law & Counsel</div>
+    </div>
+  </footer>
+
+  <!-- ==============================================
+       5. FULL-PAGE INTERACTIVE CHAT ASSISTANT (#page-chat)
+       ============================================== -->
+  <div id="page-chat">
+    <div class="chat-layout">
+      <!-- Left Sidebar (Replicates Screenshot) -->
+      <aside class="chat-sidebar">
+        <div class="sidebar-brand-row">
+          <div class="sidebar-brand">
+            <span style="color: var(--legal-gold);">⚖</span>
+            <span>NyAI</span>
+          </div>
+          <button class="btn-close-chat" onclick="closeAssistantView()" title="Return to main landing">
+            ← Back to Home
+          </button>
+        </div>
+
+        <button class="btn-new-convo" onclick="createNewChatSession()">
+          <span>+</span>
+          <span>New Consultation</span>
+        </button>
+
+        <div class="recent-header">Recent Consultations</div>
+        <ul class="recent-list">
+          <li class="recent-item active">
+            <span class="recent-text">i killed a person of my age 20 year old and im living in ahmedabad</span>
+            <span style="color: #666; font-size: 11px;">Active</span>
+          </li>
+          <li class="recent-item">
+            <span class="recent-text">Anticipatory bail draft BNSS 482</span>
+            <span style="color: #555; font-size: 11px;">Yesterday</span>
+          </li>
+          <li class="recent-item">
+            <span class="recent-text">Commercial dispute Section 9 IBC</span>
+            <span style="color: #555; font-size: 11px;">3 days ago</span>
+          </li>
+        </ul>
+
+        <!-- Bottom User Card -->
+        <div class="sidebar-user">
+          <div class="user-avatar-badge">M</div>
+          <div class="user-info-col">
+            <span class="user-name">maahir</span>
+            <span class="user-status">● Hermes Online (Local)</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Chat Canvas -->
+      <main class="chat-main">
+        <header class="chat-topbar">
+          <div class="chat-topbar-title">
+            <span style="color: var(--legal-gold);">⚖</span>
+            <span>NyAI Sovereign Legal Assistant</span>
+            <span style="font-size: 0.75rem; color: #888; margin-left: 8px;">• Bharat Law Concordance Engine</span>
+          </div>
+          <button class="btn-close-chat" onclick="closeAssistantView()">
+            ✕ Close
+          </button>
+        </header>
+
+        <div class="chat-canvas" id="mainChatStream">
+          <!-- Turn 1 -->
+          <div class="chat-row user">
+            <div class="chat-bubble">i killed a person of my age 20 year old and im living in ahmedabad</div>
+            <div class="chat-avatar">
+              <svg class="chat-avatar-user-svg" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Turn 2 -->
+          <div class="chat-row ai">
+            <div class="chat-avatar">
+              <div class="chat-avatar-ai-grad">⚖</div>
+            </div>
+            <div class="chat-bubble">
+              <strong style="color: #F0A24C; display: block; margin-bottom: 0.35rem;">Emergency Criminal Defense Advisory & Constitutional Protections</strong>
+              Based on your situation in Ahmedabad, this involves cognizable offenses under <strong>Bharatiya Nyaya Sanhita 2023 (BNS § 103 / § 101)</strong> and BNSS 2023:
+              <div style="margin-top: 0.6em; line-height: 1.55; background: rgba(0,0,0,0.3); padding: 0.55rem 0.75rem; border-radius: 6px; border-left: 2px solid #C5A059;">
+                • <strong>Action 01: Maintain Right to Silence</strong> (Art. 20(3) Constitution & BSA § 23)<br>
+                • <strong>Action 02: Formal Judicial Surrender</strong> with defense counsel (BNSS § 84)<br>
+                • <strong>Action 03: Oppose Police Remand</strong> at mandatory 24h Magistrate production (BNSS § 58)<br>
+                • <strong>Verified Chambers:</strong> Adv. Pradeep R. Vaghela (City Civil & Sessions Court, Bhadra)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Composer Box -->
+        <div class="chat-composer-wrap">
+          <div class="chat-composer-box">
+            <textarea class="chat-composer-textarea" id="mainChatInput"
+              placeholder="Ask a question, request petition drafting, or cite a statute…"
+              onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); handleMainChatSubmit(); }"></textarea>
+            <div class="chat-composer-bottom">
+              <div style="display:flex; gap:10px; color:#888; font-size:12px;">
+                <span>💡 NyAI DeepThink Active</span>
+                <span>• BNS 2023 Native</span>
+              </div>
+              <button class="chat-composer-send-btn" onclick="handleMainChatSubmit()">
+                <span>Send</span>
+                <span>➔</span>
+              </button>
+            </div>
+          </div>
+          <div class="chat-disclaimer">
+            NyAI is an AI legal research and decision-support assistant. Verify all citations against official gazettes before court filing.
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Overlay (≤1024) -->
+  <div id="navOverlay" onclick="if(event.target===this) toggleMobileMenu()">
+    <a href="#features" class="overlay-link" onclick="toggleMobileMenu()">Capabilities</a>
+    <a href="#features" class="overlay-link" onclick="toggleMobileMenu()">Live Reasoning</a>
+    <a href="#platform" class="overlay-link" onclick="toggleMobileMenu()">Enterprise</a>
+    <a href="#chat" class="overlay-link" onclick="toggleMobileMenu(); openAssistantView();" style="color: #F0A24C;">Chat Assistant</a>
+    <button class="btn-primary-launch" style="margin-top: 20px;" onclick="toggleMobileMenu(); openAssistantView();">
+      Launch Legal AI Assistant ➔
+    </button>
+  </div>
+
+  <!-- ==============================================
+       JAVASCRIPT — WAAPI TIMELINES & LIVE LOGIC
+       ============================================== -->
+  <script>
+    // 1. Generate 24 Logo Rays at Runtime via JS
+    (function generateLogoRays() {
+      const g = document.querySelector('.logo-svg .rays');
+      if (!g) return;
+      const count = 24;
+      const cx = 26, cy = 26;
+      const rInner = 10.4, rOuter = 22.6;
+      for (let i = 0; i < count; i++) {
+        const theta = -Math.PI / 2 + (i * 2 * Math.PI) / count;
+        const x1 = (cx + rInner * Math.cos(theta)).toFixed(2);
+        const y1 = (cy + rInner * Math.sin(theta)).toFixed(2);
+        const x2 = (cx + rOuter * Math.cos(theta)).toFixed(2);
+        const y2 = (cy + rOuter * Math.sin(theta)).toFixed(2);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        g.appendChild(line);
+      }
+    })();
+
+    // 2. Master WAAPI Entrance Timeline
+    (function runMasterEntrance() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        document.documentElement.classList.remove('entrance', 'entrance-s2');
+        document.documentElement.classList.add('hero-ready');
+        return;
+      }
+
+      const REVEAL = 'cubic-bezier(0.16, 1, 0.3, 1)';
+      const LIFT = 'cubic-bezier(0.22, 1, 0.36, 1)';
+      const isMobile = window.innerWidth <= 680;
+      const D = isMobile ? 0.7 : 1.0;
+
+      // Section 1 Master Timeline
+      const startS1 = () => {
+        // Logo
+        const logo = document.querySelector('.logo-link');
+        if (logo) {
+          logo.animate([
+            { opacity: 0, transform: 'scale(0.92)' },
+            { opacity: 1, transform: 'scale(1)' }
+          ], { duration: 600, easing: LIFT, fill: 'forwards' });
+        }
+
+        // Nav Links
+        const navLinks = document.querySelectorAll('.nav-links .nav-link');
+        navLinks.forEach((nl, i) => {
+          nl.animate([
+            { opacity: 0, transform: 'translateY(10px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+          ], { duration: 500, delay: 100 + i * 50, easing: LIFT, fill: 'forwards' });
+        });
+
+        // CTA and Badge
+        const navRightItems = document.querySelectorAll('.nav-right [data-enter]');
+        navRightItems.forEach((item, i) => {
+          item.animate([
+            { opacity: 0, transform: 'translateY(10px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+          ], { duration: 500, delay: 200 + i * 60, easing: LIFT, fill: 'forwards' });
+        });
+
+        // Pill Badge
+        const pillBadge = document.querySelector('.hero-badge-pill');
+        if (pillBadge) {
+          pillBadge.animate([
+            { opacity: 0, transform: 'translateY(12px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+          ], { duration: 650, delay: 160, easing: LIFT, fill: 'forwards' });
+        }
+
+        // Headline Masked Lines
+        const lines = document.querySelectorAll('.hero-h1 .hl-line');
+        lines.forEach((line, i) => {
+          line.animate([
+            { opacity: 0, transform: 'translateY(108%)' },
+            { opacity: 1, offset: 0.14 },
+            { opacity: 1, transform: 'translateY(0)' }
+          ], { duration: 950, delay: 200 + i * 90, easing: REVEAL, fill: 'forwards' });
+        });
+
+        // Subtitle
+        const sub = document.querySelector('.hero-sub');
+        if (sub) {
+          sub.animate([
+            { opacity: 0, transform: 'translateY(14px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+          ], { duration: 650, delay: 520, easing: LIFT, fill: 'forwards' });
+        }
+
+        // Composer Shell
+        const composer = document.querySelector('.composer-shell');
+        if (composer) {
+          composer.animate([
+            { opacity: 0, transform: `translateY(${22 * D}px) scale(0.985)` },
+            { opacity: 1, transform: 'translateY(0) scale(1)' }
+          ], { duration: 950, delay: 640, easing: REVEAL, fill: 'forwards' });
+        }
+
+        // Trust Strip
+        const trustBrands = document.querySelectorAll('.trust-brand');
+        trustBrands.forEach((tb, i) => {
+          tb.animate([
+            { opacity: 0, transform: 'translateY(12px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+          ], { duration: 550, delay: 900 + i * 60, easing: LIFT, fill: 'forwards' });
+        });
+
+        // Teardown class after 1.8s
+        setTimeout(() => {
+          document.documentElement.classList.remove('entrance');
+          document.documentElement.classList.add('hero-ready');
+        }, 1800);
+      };
+
+      // Failsafe
+      setTimeout(() => {
+        document.documentElement.classList.remove('entrance');
+        document.documentElement.classList.add('hero-ready');
+      }, 3500);
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(startS1);
+      } else {
+        setTimeout(startS1, 300);
+      }
+
+      // Section 2 Intersection Observer Entrance
+      const s2Observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const s2Lines = document.querySelectorAll('.s2-h2 .s2-hl-line');
+            s2Lines.forEach((l, i) => {
+              l.animate([
+                { opacity: 0, transform: 'translateY(108%)' },
+                { opacity: 1, offset: 0.14 },
+                { opacity: 1, transform: 'translateY(0)' }
+              ], { duration: 900, delay: i * 90, easing: REVEAL, fill: 'forwards' });
+            });
+
+            const s2Sub = document.querySelector('.s2-subcopy');
+            if (s2Sub) {
+              s2Sub.animate([
+                { opacity: 0, transform: 'translateY(14px)' },
+                { opacity: 1, transform: 'translateY(0)' }
+              ], { duration: 650, delay: 300, easing: LIFT, fill: 'forwards' });
+            }
+
+            const panel = document.querySelector('.panel');
+            if (panel) {
+              panel.animate([
+                { opacity: 0, transform: `translateY(${26 * D}px) scale(0.985)` },
+                { opacity: 1, transform: 'translateY(0) scale(1)' }
+              ], { duration: 1000, delay: 400, easing: REVEAL, fill: 'forwards' });
+            }
+
+            setTimeout(() => {
+              document.documentElement.classList.remove('entrance-s2');
+            }, 1500);
+
+            s2Observer.disconnect();
+          }
+        });
+      }, { rootMargin: '0px 0px -20% 0px', threshold: 0 });
+
+      const s2Target = document.querySelector('.section-two');
+      if (s2Target) s2Observer.observe(s2Target);
+    })();
+
+    // 3. Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const overlay = document.getElementById('navOverlay');
+      const burger = document.querySelector('.burger-btn');
+      if (!overlay) return;
+      const isOpen = overlay.classList.toggle('open');
+      document.body.classList.toggle('menu-open', isOpen);
+      if (burger) burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    // 4. Assistant View Switcher (#page-chat)
+    function openAssistantView() {
+      const chatPage = document.getElementById('page-chat');
+      if (chatPage) {
+        chatPage.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        window.location.hash = 'chat';
+        const inp = document.getElementById('mainChatInput');
+        if (inp) inp.focus();
+      }
+    }
+
+    function closeAssistantView() {
+      const chatPage = document.getElementById('page-chat');
+      if (chatPage) {
+        chatPage.classList.remove('active');
+        document.body.style.overflow = '';
+        if (window.location.hash === '#chat') {
+          history.pushState(null, null, '#home');
+        }
+      }
+    }
+
+    // Hash change handler for direct links to #chat
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash === '#chat') {
+        openAssistantView();
+      } else {
+        closeAssistantView();
+      }
+    });
+
+    if (window.location.hash === '#chat') {
+      openAssistantView();
+    }
+
+    // 5. Submit from Hero Composer
+    function handleHeroSubmit() {
+      const input = document.getElementById('heroComposerText');
+      if (!input || !input.value.trim()) return;
+      const query = input.value.trim();
+      input.value = '';
+      openAssistantView();
+      appendChatMessage(query, 'user');
+      triggerAIResponse(query);
+    }
+
+    document.getElementById('heroComposerText')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleHeroSubmit();
+      }
+    });
+
+    // 6. Section 2 Panel Submit
+    function handlePanelSubmit() {
+      const input = document.getElementById('panelInput');
+      if (!input || !input.value.trim()) return;
+      const query = input.value.trim();
+      input.value = '';
+
+      const stream = document.getElementById('panelChatStream');
+      if (!stream) return;
+
+      // Append user row
+      const userRow = document.createElement('div');
+      userRow.className = 'chat-row user';
+      userRow.innerHTML = `
+        <div class="chat-bubble">${escapeHTML(query)}</div>
+        <div class="chat-avatar">
+          <svg class="chat-avatar-user-svg" viewBox="0 0 24 24" fill="none" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+      `;
+      stream.appendChild(userRow);
+      stream.scrollTop = stream.scrollHeight;
+
+      // AI Typing row
+      const aiRow = document.createElement('div');
+      aiRow.className = 'chat-row ai';
+      aiRow.innerHTML = `
+        <div class="chat-avatar"><div class="chat-avatar-ai-grad">⚖</div></div>
+        <div class="chat-bubble" style="color: #aeaeae;">Analyzing BNS concordance and Gujarat judicial precedents…</div>
+      `;
+      stream.appendChild(aiRow);
+      stream.scrollTop = stream.scrollHeight;
+
+      setTimeout(() => {
+        aiRow.querySelector('.chat-bubble').innerHTML = generateLegalAdvice(query);
+        stream.scrollTop = stream.scrollHeight;
+      }, 700);
+    }
+
+    // 7. Main Chat View Submit
+    function handleMainChatSubmit() {
+      const input = document.getElementById('mainChatInput');
+      if (!input || !input.value.trim()) return;
+      const query = input.value.trim();
+      input.value = '';
+      appendChatMessage(query, 'user');
+      triggerAIResponse(query);
+    }
+
+    function appendChatMessage(text, sender) {
+      const canvas = document.getElementById('mainChatStream');
+      if (!canvas) return;
+      const row = document.createElement('div');
+      row.className = `chat-row ${sender}`;
+      if (sender === 'user') {
+        row.innerHTML = `
+          <div class="chat-bubble">${escapeHTML(text)}</div>
+          <div class="chat-avatar">
+            <svg class="chat-avatar-user-svg" viewBox="0 0 24 24" fill="none" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+        `;
+      } else {
+        row.innerHTML = `
+          <div class="chat-avatar"><div class="chat-avatar-ai-grad">⚖</div></div>
+          <div class="chat-bubble">${text}</div>
+        `;
+      }
+      canvas.appendChild(row);
+      canvas.scrollTop = canvas.scrollHeight;
+    }
+
+    function triggerAIResponse(query) {
+      const canvas = document.getElementById('mainChatStream');
+      if (!canvas) return;
+
+      const aiRow = document.createElement('div');
+      aiRow.className = 'chat-row ai';
+      aiRow.innerHTML = `
+        <div class="chat-avatar"><div class="chat-avatar-ai-grad">⚖</div></div>
+        <div class="chat-bubble" style="color: #aeaeae;">Structuring statutory reasoning via NyAI DeepThink…</div>
+      `;
+      canvas.appendChild(aiRow);
+      canvas.scrollTop = canvas.scrollHeight;
+
+      // Try local Hermes backend first, fallback to rich offline legal engine
+      fetch('http://localhost:8000/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: query, session_id: 'nyai-web' })
+      })
+      .then(res => res.json())
+      .then(data => {
+        aiRow.querySelector('.chat-bubble').innerHTML = data.reply || generateLegalAdvice(query);
+        canvas.scrollTop = canvas.scrollHeight;
+      })
+      .catch(() => {
+        setTimeout(() => {
+          aiRow.querySelector('.chat-bubble').innerHTML = generateLegalAdvice(query);
+          canvas.scrollTop = canvas.scrollHeight;
+        }, 600);
+      });
+    }
+
+    function generateLegalAdvice(q) {
+      const lq = q.toLowerCase();
+      if (lq.includes('bail') || lq.includes('482') || lq.includes('arrest')) {
+        return `
+          <strong style="color:#F0A24C; display:block; margin-bottom:4px;">Anticipatory Bail & Remand Protection (BNSS § 482)</strong>
+          For urgent pre-arrest defense before the High Court of Gujarat or City Sessions Court:<br>
+          <div style="background:rgba(0,0,0,0.3); padding:8px 12px; border-radius:6px; margin-top:6px; border-left:2px solid #C5A059;">
+            1. <strong>Filing Jurisdiction:</strong> File under BNSS § 482 directly to the Sessions Court or concurrent Gujarat High Court.<br>
+            2. <strong>Essential Averments:</strong> Establish deep community roots, absence of flight risk, and willingness to join investigation.<br>
+            3. <strong>Interim Protection:</strong> Request urgent ad-interim relief citing <em>Satender Kumar Antil (2022)</em> guidelines.
+          </div>
+        `;
+      }
+      return `
+        <strong style="color:#F0A24C; display:block; margin-bottom:4px;">NyAI Statutory Analysis & Case Concordance</strong>
+        Reviewing query under <strong>Bharatiya Nyaya Sanhita 2023</strong> and relevant High Court precedents:<br>
+        <div style="background:rgba(0,0,0,0.3); padding:8px 12px; border-radius:6px; margin-top:6px; border-left:2px solid #C5A059;">
+          • <strong>Statutory Mapping:</strong> Converted IPC provisions to current BNS 2023 concordance.<br>
+          • <strong>Procedural Next Steps:</strong> Verify jurisdiction under BNSS 2023 procedural codes.<br>
+          • <strong>Advocate Chambers Discovery:</strong> Ahmedabad Bar Council chambers available for immediate drafting and filing.
+        </div>
+      `;
+    }
+
+    function createNewChatSession() {
+      const canvas = document.getElementById('mainChatStream');
+      if (canvas) {
+        canvas.innerHTML = `
+          <div class="chat-row ai">
+            <div class="chat-avatar"><div class="chat-avatar-ai-grad">⚖</div></div>
+            <div class="chat-bubble">
+              Welcome to <strong>NyAI Legal Consultation</strong>. How may I assist your chambers today? You can break down a dispute, verify BNS 2023 concordance, or draft urgent bail pleadings.
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+      }[tag] || tag));
+    }
+  </script>
+</body>
+</html>
+'''
+
+with open('/home/maahir/.gemini/antigravity/scratch/nyai.github.io/index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content.strip() + '\n')
+
+print("New index.html built successfully! Size:", len(html_content))
