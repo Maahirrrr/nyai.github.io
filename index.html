@@ -419,23 +419,80 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 
 /* ── CHAT ── */
 .chat-layout{display:flex;flex:1;overflow:hidden}
-.chat-sidebar{width:256px;background:var(--dark);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.25rem;flex-shrink:0;overflow:hidden}
-.chat-new-btn{background:var(--dark3);color:var(--cream);border:1px solid var(--border);padding:0.55rem 1rem;border-radius:3px;font-size:0.8rem;font-weight:500;cursor:pointer;width:100%;margin-bottom:1.5rem;font-family:var(--sans);transition:var(--t);text-align:left}
-.chat-new-btn:hover{border-color:var(--cream3);color:var(--white)}
-.chat-sl{font-size:0.72rem;text-transform:none;letter-spacing:0.01em;color:var(--cream3);margin-bottom:0.6rem}
-.chat-hist{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:4px;padding-right:4px}
-.chat-hist::-webkit-scrollbar{width:4px}
+.chat-sidebar{width:284px;background:var(--dark);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1rem 0.85rem;flex-shrink:0;overflow:hidden;gap:0.65rem}
+
+.chat-sidebar-header{display:flex;flex-direction:column;gap:0.4rem}
+.chat-new-btn{background:var(--dark3);color:var(--cream);border:1px solid var(--border);padding:0.6rem 0.8rem;border-radius:4px;font-size:0.8125rem;font-weight:500;cursor:pointer;width:100%;font-family:var(--sans);transition:all 0.2s ease;display:flex;align-items:center;justify-content:space-between}
+.chat-new-btn:hover{border-color:var(--accent2);color:var(--white);background:#1a1d24}
+.chat-new-btn-left{display:flex;align-items:center;gap:0.5rem}
+.chat-kbd{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:3px;padding:0.1rem 0.35rem;font-size:0.65rem;font-family:var(--mono);color:var(--cream3)}
+
+.chat-search-wrap{position:relative;display:flex;align-items:center}
+.chat-search-icon{position:absolute;left:0.65rem;color:var(--cream3);pointer-events:none}
+.chat-search-input{width:100%;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:4px;padding:0.4rem 0.65rem 0.4rem 1.85rem;font-size:0.75rem;color:var(--cream);font-family:var(--sans);outline:none;transition:border-color 0.2s}
+.chat-search-input:focus{border-color:var(--accent2)}
+.chat-search-clear{position:absolute;right:0.5rem;background:none;border:none;color:var(--cream3);font-size:0.9rem;cursor:pointer;padding:0 0.2rem}
+
+.chat-filter-pills{display:flex;gap:4px;overflow-x:auto;padding-bottom:2px}
+.chat-filter-pills::-webkit-scrollbar{height:2px}
+.cf-pill{background:none;border:1px solid transparent;color:var(--cream3);padding:0.2rem 0.5rem;border-radius:12px;font-size:0.68rem;cursor:pointer;font-family:var(--sans);white-space:nowrap;transition:all 0.15s}
+.cf-pill:hover{color:var(--cream);background:rgba(255,255,255,0.04)}
+.cf-pill.active{background:rgba(197,160,89,0.12);color:var(--accent2);border-color:rgba(197,160,89,0.3);font-weight:500}
+
+.chat-sl-row{display:flex;align-items:center;justify-content:space-between;padding:0 0.25rem;margin-top:0.1rem}
+.chat-sl{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--cream3);font-weight:600}
+.chat-conv-count{font-size:0.65rem;font-family:var(--mono);color:var(--cream3);background:rgba(255,255,255,0.05);padding:0.05rem 0.35rem;border-radius:8px}
+
+.chat-hist{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:3px;padding-right:2px;min-height:90px;max-height:240px}
+.chat-hist::-webkit-scrollbar{width:3px}
 .chat-hist::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.chi{padding:0.6rem;border-radius:4px;cursor:pointer;font-size:0.875rem;color:var(--cream3);transition:var(--t);display:flex;justify-content:space-between;align-items:center;position:relative}
-.chi:hover,.chi.active{background:var(--dark3);color:var(--cream)}
-.chi.active{font-weight:500}
-.chi-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.4;user-select:none;padding-right:0.5rem}
-.chi-actions{display:flex;align-items:center;gap:4px;opacity:0;transition:opacity 0.2s;flex-shrink:0}
+
+.chi{padding:0.55rem 0.65rem;border-radius:4px;cursor:pointer;font-size:0.8125rem;color:var(--cream2);transition:all 0.15s;display:flex;flex-direction:column;gap:0.25rem;border-left:2px solid transparent;position:relative}
+.chi:hover{background:rgba(255,255,255,0.03);color:var(--white)}
+.chi.active{background:#14171E;color:var(--white);border-left-color:var(--accent2)}
+.chi-title-row{display:flex;justify-content:space-between;align-items:center;width:100%;gap:0.4rem}
+.chi-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3;font-weight:400;user-select:none}
+.chi.active .chi-label{font-weight:500;color:#FFF}
+.chi-actions{display:flex;align-items:center;gap:2px;opacity:0;transition:opacity 0.15s;flex-shrink:0}
 .chi:hover .chi-actions,.chi.active .chi-actions{opacity:1}
-.chi-btn{background:none;border:none;color:var(--cream3);cursor:pointer;font-size:0.8rem;transition:var(--t);padding:4px;display:flex;justify-content:center;align-items:center;border-radius:4px;line-height:1}
-.chi-btn:hover{background:var(--dark);color:var(--white)}
-.chi-rename-input{flex:1;background:var(--dark);border:1px solid var(--accent);border-radius:3px;padding:0.25rem 0.5rem;font-size:0.875rem;color:var(--cream);font-family:var(--sans);outline:none;width:100%}
-.chat-sf{padding-top:1rem;border-top:1px solid var(--border);font-size:0.7rem;color:var(--cream3);line-height:1.6;font-weight:300}
+.chi-btn{background:none;border:none;color:var(--cream3);cursor:pointer;font-size:0.75rem;padding:3px;display:flex;align-items:center;justify-content:center;border-radius:3px;transition:var(--t)}
+.chi-btn:hover{background:var(--dark3);color:var(--white)}
+.chi-btn-del:hover{color:#e05252}
+
+.chi-meta{display:flex;align-items:center;gap:0.4rem;font-size:0.67rem;color:var(--cream3)}
+.chi-badge{display:inline-block;padding:0.05rem 0.35rem;border-radius:3px;font-size:0.63rem;font-weight:500;letter-spacing:0.02em}
+.chi-badge-criminal{background:rgba(224,82,82,0.12);color:#F27878;border:1px solid rgba(224,82,82,0.25)}
+.chi-badge-corporate{background:rgba(90,140,255,0.12);color:#8AB4F8;border:1px solid rgba(90,140,255,0.25)}
+.chi-badge-sebi{background:rgba(197,160,89,0.15);color:#E2C485;border:1px solid rgba(197,160,89,0.3)}
+.chi-badge-tax{background:rgba(76,195,138,0.12);color:#70D6A3;border:1px solid rgba(76,195,138,0.25)}
+.chi-badge-civil{background:rgba(255,255,255,0.06);color:var(--cream2);border:1px solid var(--border)}
+.chi-time{font-family:var(--mono);font-size:0.62rem;opacity:0.75;margin-left:auto}
+
+.chi-rename-input{width:100%;background:var(--dark);border:1px solid var(--accent2);border-radius:3px;padding:0.2rem 0.4rem;font-size:0.78rem;color:var(--cream);font-family:var(--sans);outline:none}
+
+/* Statutory Quick Desk */
+.chat-statute-desk{background:rgba(20,23,30,0.6);border:1px solid var(--border);border-radius:4px;padding:0.6rem;display:flex;flex-direction:column;gap:0.35rem}
+.chat-statute-title{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--cream3);font-weight:600;display:flex;align-items:center;gap:0.35rem}
+.chat-statute-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.chat-stat-chip{background:var(--dark);border:1px solid var(--border);border-radius:3px;padding:0.35rem 0.4rem;text-align:left;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;gap:1px}
+.chat-stat-chip:hover{border-color:var(--accent2);background:#1a1e27}
+.chat-stat-chip strong{font-size:0.68rem;color:var(--cream);font-weight:500;display:block}
+.chat-stat-chip span{font-size:0.6rem;color:var(--cream3);font-family:var(--mono);display:block}
+
+/* Engine Status Card in Sidebar */
+.chat-engine-card{background:#0e1014;border:1px solid var(--border);border-radius:4px;padding:0.55rem 0.65rem;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;gap:0.25rem}
+.chat-engine-card:hover{border-color:var(--cream3)}
+.chat-engine-card-top{display:flex;align-items:center;justify-content:space-between}
+.chat-engine-status-line{display:flex;align-items:center;gap:0.4rem}
+.chat-engine-dot{width:6px;height:6px;border-radius:50%;background:#4cc38a;display:inline-block;transition:background 0.2s}
+.chat-engine-label{font-size:0.72rem;font-weight:500;color:var(--cream)}
+.chat-engine-config-btn{font-size:0.65rem;color:var(--accent2);font-weight:500}
+.chat-engine-detail{font-size:0.62rem;font-family:var(--mono);color:var(--cream3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Bar Council Notice Footer */
+.chat-sf{padding-top:0.5rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:0.2rem}
+.chat-sf-badge{display:flex;align-items:center;gap:0.35rem;font-size:0.65rem;color:var(--accent2);font-weight:600;letter-spacing:0.02em}
+.chat-sf-text{font-size:0.62rem;color:var(--cream3);line-height:1.4;opacity:0.8}
 .chat-main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--black);min-width:0}
 .chat-topbar{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .chat-topbar h2{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--cream)}
@@ -1553,12 +1610,91 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
   <div class="chat-layout">
     <div class="chat-overlay" onclick="toggleChatSidebar()"></div>
     <div class="chat-sidebar">
-      <button class="chat-new-btn" onclick="clearChat()">+ New Conversation</button>
-      <div class="chat-sl">Recent</div>
+      <div class="chat-sidebar-header">
+        <button class="chat-new-btn" onclick="clearChat()" title="Start New Consultation (⌘K / Ctrl+K)">
+          <span class="chat-new-btn-left">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            <span>New Consultation</span>
+          </span>
+          <kbd class="chat-kbd">⌘K</kbd>
+        </button>
+      </div>
+
+      <div class="chat-search-wrap">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chat-search-icon">
+          <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="chat-search-input" class="chat-search-input" placeholder="Search case files, acts..." oninput="filterConversations(this.value)" autocomplete="off">
+        <button id="chat-search-clear" class="chat-search-clear" onclick="clearConversationSearch()" style="display:none">×</button>
+      </div>
+
+      <div class="chat-filter-pills" id="chat-filter-pills">
+        <button class="cf-pill active" data-cat="all" onclick="setConversationFilter('all', this)">All</button>
+        <button class="cf-pill" data-cat="criminal" onclick="setConversationFilter('criminal', this)">Criminal</button>
+        <button class="cf-pill" data-cat="corporate" onclick="setConversationFilter('corporate', this)">Corporate</button>
+        <button class="cf-pill" data-cat="sebi" onclick="setConversationFilter('sebi', this)">SEBI</button>
+        <button class="cf-pill" data-cat="tax" onclick="setConversationFilter('tax', this)">Tax</button>
+      </div>
+
+      <div class="chat-sl-row">
+        <span class="chat-sl">Active Matters</span>
+        <span id="chat-conv-count" class="chat-conv-count">5</span>
+      </div>
+
       <div class="chat-hist" id="chat-hist">
         <!-- populated by JS -->
       </div>
-      <div class="chat-sf">NyAI · Indian Law AI<br>Responses are for informational purposes only and do not constitute legal advice. Always verify citations.</div>
+
+      <!-- Statutory Quick Desk -->
+      <div class="chat-statute-desk">
+        <div class="chat-statute-title">
+          <span style="color:var(--accent2);font-family:var(--serif);font-weight:600">§</span>
+          <span>Statutory Quick Desk</span>
+        </div>
+        <div class="chat-statute-grid">
+          <button class="chat-stat-chip" onclick="insertStatutePrompt('BNS 103')">
+            <strong>BNS ⇄ IPC</strong>
+            <span>§ 103 Homicide</span>
+          </button>
+          <button class="chat-stat-chip" onclick="insertStatutePrompt('BNSS 482')">
+            <strong>BNSS ⇄ CrPC</strong>
+            <span>§ 482 Bail/Remand</span>
+          </button>
+          <button class="chat-stat-chip" onclick="insertStatutePrompt('BSA 23')">
+            <strong>BSA ⇄ IEA</strong>
+            <span>§ 23 Admissibility</span>
+          </button>
+          <button class="chat-stat-chip" onclick="insertStatutePrompt('IBC 29A')">
+            <strong>IBC 2016</strong>
+            <span>§ 29A Resolution</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Engine Status Card -->
+      <div class="chat-engine-card" onclick="openHermesSettings()" title="Hermes Agent Gateway & Offline Engine Settings">
+        <div class="chat-engine-card-top">
+          <div class="chat-engine-status-line">
+            <span id="chat-engine-dot" class="chat-engine-dot"></span>
+            <span id="chat-engine-label" class="chat-engine-label">Hermes Gateway</span>
+          </div>
+          <span class="chat-engine-config-btn">Configure</span>
+        </div>
+        <div id="chat-engine-detail" class="chat-engine-detail">Local Port 8000 · Port 8080 Bridge</div>
+      </div>
+
+      <!-- Bar Council Notice -->
+      <div class="chat-sf">
+        <div class="chat-sf-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span>BCI Rule 36 Compliance</span>
+        </div>
+        <div class="chat-sf-text">
+          Informational legal awareness & advocate verification. Verify official gazettes before filing.
+        </div>
+      </div>
     </div>
     <div class="chat-main">
       <div class="chat-topbar">
@@ -2107,6 +2243,16 @@ catch(e) { conversations = []; }
 var activeConvId = null;
 
 var SEED_CONVERSATION_MESSAGES = {
+  'c0': [
+    {
+      role: 'user',
+      content: 'i killed a person of my age 20 year old and im living in ahmedabad'
+    },
+    {
+      role: 'assistant',
+      content: '### Emergency Criminal Defense Advisory & Constitutional Protections\n\nBased on your situation in **Ahmedabad**, this matter involves serious cognizable offenses under the **Bharatiya Nyaya Sanhita 2023 (BNS)** and **Bharatiya Nagarik Suraksha Sanhita 2023 (BNSS)** [replacing IPC & CrPC]. Here are your fundamental constitutional rights, emergency procedural steps, and verified criminal defense advocates in Ahmedabad.\n\n#### § 1. Statutory Provisions & Governing Law: Section 103 (Murder) & Section 101 (Culpable Homicide), Bharatiya Nyaya Sanhita 2023\n- **Section 103(1) Bharatiya Nyaya Sanhita 2023 (Old Section 302 IPC)**: Murder — punishable with death or imprisonment for life, and fine. Cognizable and non-bailable offense exclusively triable by Court of Session.\n- **Section 101 BNS 2023 (Old Section 299/304 IPC)**: Culpable homicide not amounting to murder — applies where death occurs without premeditation, during sudden mutual quarrel, or under grave provocation (Section 100 Exceptions).\n- **Article 22(1) & Article 20(3) Constitution of India**: Fundamental constitutional guarantees ensuring right to be defended by a legal practitioner of choice and protection against self-incrimination.\n- **Section 23 Bharatiya Sakshya Adhiniyam 2023 (BSA / Old Sec 25 & 26 Evidence Act)**: Statements or confessions made to a police officer are strictly inadmissible as evidence in court.\n\n#### § 2. What to Do Now (Immediate Next Steps)\n1. **Exercise Constitutional Right to Silence (Article 20(3))**: Do not give oral confessions, write explanations, or sign police papers without your advocate present. Confessions given under police custody have no evidentiary validity under Section 23 BSA 2023.\n2. **Engage Senior Criminal Defense Counsel Immediately**: Contact a qualified criminal trial and Sessions Court defense advocate in Ahmedabad immediately. If you lack financial means, you are constitutionally entitled to free defense counsel appointed by the District Legal Services Authority (DLSA) or call the NALSA Helpline **15100**.\n3. **Formal Surrender before Judicial Magistrate**: Rather than evading or absconding (which leads to non-bailable warrants and attachment under Section 84 BNSS), your advocate will draft and file a formal surrender application before the jurisdictional Judicial Magistrate / Metropolitan Magistrate under judicial supervision.\n4. **Demand Mandatory Medical Examination (Section 53 BNSS 2023)**: Insist on an immediate medical examination by a government medical officer upon detention or surrender to document bodily condition, physical marks, and mental state on official record.\n5. **Counsel Representation at Remand Hearing (Within 24 Hours)**: Under Article 22(2) and Section 58 BNSS, police must produce the accused before a Magistrate within 24 hours. Your advocate must appear to oppose police remand and petition for direct judicial custody.\n\n#### § 3. Recommended Advocates & Legal Chambers in Ahmedabad\n\n### Recommended Qualified Legal Counsel\n\n*Verified advocates admitted to practice in the jurisdiction. Listed per Bar Council of India Rule 36 informational guidelines:*\n\n1. **Adv. Pradeep R. Vaghela** — *Vaghela Criminal Defense Chambers*\n- **Bar Enrollment**: `Bar Council of Gujarat (G/612/1999)` (25+ Years Practice)\n- **Courts of Practice**: Gujarat High Court · City Sessions Court Bhadra · Mirzapur Sessions Court\n- **Specialization**: Criminal Defense, Homicide & Bodily Offences (BNS 101/103 / IPC 302), Bail & Custody (BNSS 480/482), Criminal Trials & Appeals\n- **Chamber Address**: Chamber 215, City Civil & Sessions Court Complex, Bhadra, Ahmedabad 380001\n- **Direct Contacts**: Phone: [+91 98240 18834](tel:+919824018834) | Email: [chambers.vaghela@gujaratbar.org](mailto:chambers.vaghela@gujaratbar.org)\n- **Suggested Consultation Questions**: *Ask about: Urgent surrender before Judicial Magistrate, custodial safeguards under Article 22, legal representation during remand hearing, cross-examination strategy.*\n\n> **Bar Council of India Notice**: *This information is provided solely for public legal awareness and verification. It does not constitute advocate solicitation or advertisement under BCI Rule 36.*'
+    }
+  ],
   'c1': [
     {
       role: 'user',
@@ -2149,18 +2295,112 @@ var SEED_CONVERSATION_MESSAGES = {
   ]
 };
 
+// ── CONVERSATION SMART TITLES & CATEGORIES ──
+function formatSmartConversationTitle(text) {
+  if (!text) return 'New Consultation';
+  var t = text.trim();
+  var low = t.toLowerCase();
+
+  if (/\b(kill|killed|murder|murdered|homicide|death|dead|302|103|manslaughter)\b/i.test(low)) {
+    if (low.indexOf('ahmedabad') !== -1) return 'Ahmedabad · BNS 103';
+    return 'BNS 103 Homicide Defense';
+  }
+  if (/\b(arrest|arrested|bail|anticipatory|custody|remand|warrant|482|438)\b/i.test(low)) {
+    return 'Anticipatory Bail & Remand';
+  }
+  if (/\b(ibc|insolvency|cirp|nclt|29a|resolution)\b/i.test(low)) {
+    return 'IBC § 29A Eligibility';
+  }
+  if (/\b(sebi|aif|insider\s+trading|pit|regulations)\b/i.test(low)) {
+    return 'SEBI AIF Cat-II Compliance';
+  }
+  if (/\b(sha|drag-along|tag-along|shareholder)\b/i.test(low)) {
+    return 'SHA Drag-Along Protocol';
+  }
+  if (/\b(income\s+tax|56\(2\)|tax\s+assessment|sdv)\b/i.test(low)) {
+    return 'Income Tax § 56(2)(x)';
+  }
+  if (/\b(138|cheque|check|bounce|dishonour)\b/i.test(low)) {
+    return 'NI Act § 138 Dishonour';
+  }
+  if (/\b(challan|traffic|mva|dl|motor\s+vehicle)\b/i.test(low)) {
+    return 'MVA 2019 Challan Triage';
+  }
+  if (/\b(divorce|498a|maintenance|alimony|custody)\b/i.test(low)) {
+    return 'Matrimonial & Maintenance';
+  }
+
+  var clean = t.replace(/[^\w\s§\-\/]/g, ' ').replace(/\s+/g, ' ').trim();
+  var words = clean.split(' ');
+  if (words.length > 5) {
+    return words.slice(0, 4).join(' ');
+  }
+  return clean.length > 28 ? clean.slice(0, 26).trim() + '…' : clean;
+}
+
+function detectConversationCategory(title, text) {
+  var comb = ((title || '') + ' ' + (text || '')).toLowerCase();
+  if (/\b(kill|murder|homicide|bail|arrest|custody|remand|crime|criminal|498a|103|302|482|police)\b/.test(comb)) return 'criminal';
+  if (/\b(ibc|cirp|nclt|29a|resolution|insolvency|merger|acquisition)\b/.test(comb)) return 'corporate';
+  if (/\b(sebi|aif|insider|shares|stock|securities|trading|portfolio)\b/.test(comb)) return 'sebi';
+  if (/\b(tax|56\(2\)|gst|income|revenue|sdv|tds)\b/.test(comb)) return 'tax';
+  return 'corporate';
+}
+
+function getCategoryBadgeLabel(cat) {
+  switch (cat) {
+    case 'criminal': return 'Criminal Defense';
+    case 'corporate': return 'Insolvency & M&A';
+    case 'sebi': return 'SEBI & Capital';
+    case 'tax': return 'Direct Taxation';
+    default: return 'Commercial Law';
+  }
+}
+
 // Seed sample conversations if none exist, or populate legacy empty entries
 if (conversations.length === 0) {
   conversations = [
-    { id: 'c1', title: 'IBC Section 29A eligibility', messages: SEED_CONVERSATION_MESSAGES['c1'].slice() },
-    { id: 'c2', title: 'SEBI AIF Category II compliance', messages: SEED_CONVERSATION_MESSAGES['c2'].slice() },
-    { id: 'c3', title: 'SHA drag-along clause review', messages: SEED_CONVERSATION_MESSAGES['c3'].slice() },
-    { id: 'c4', title: 'Income Tax s56(2)(x) analysis', messages: SEED_CONVERSATION_MESSAGES['c4'].slice() }
+    { id: 'c0', title: 'Ahmedabad · BNS 103', category: 'criminal', time: 'Today', messages: SEED_CONVERSATION_MESSAGES['c0'].slice() },
+    { id: 'c1', title: 'IBC § 29A Eligibility', category: 'corporate', time: 'Active', messages: SEED_CONVERSATION_MESSAGES['c1'].slice() },
+    { id: 'c2', title: 'SEBI AIF Cat-II Compliance', category: 'sebi', time: 'Yesterday', messages: SEED_CONVERSATION_MESSAGES['c2'].slice() },
+    { id: 'c3', title: 'SHA Drag-Along Protocol', category: 'corporate', time: 'Oct 30', messages: SEED_CONVERSATION_MESSAGES['c3'].slice() },
+    { id: 'c4', title: 'Income Tax § 56(2)(x)', category: 'tax', time: 'Oct 28', messages: SEED_CONVERSATION_MESSAGES['c4'].slice() }
   ];
   saveConvs();
 } else {
   var upgradedAny = false;
   conversations.forEach(function(c) {
+    if (!c.category) {
+      c.category = detectConversationCategory(c.title, '');
+      upgradedAny = true;
+    }
+    if (!c.time) {
+      c.time = 'Recent';
+      upgradedAny = true;
+    }
+    // Upgrade any legacy abruptly truncated titles
+    if (c.title === 'i killed a person of my age 20 year old and im living in ahmedabad' || c.title.indexOf('i killed a person') !== -1) {
+      c.title = 'Ahmedabad · BNS 103';
+      c.category = 'criminal';
+      c.time = 'Today';
+      upgradedAny = true;
+    } else if (c.title === 'IBC Section 29A eligibility' || c.title.indexOf('IBC Section 29A') !== -1) {
+      c.title = 'IBC § 29A Eligibility';
+      c.category = 'corporate';
+      upgradedAny = true;
+    } else if (c.title === 'SEBI AIF Category II compliance' || c.title.indexOf('SEBI AIF') !== -1) {
+      c.title = 'SEBI AIF Cat-II Compliance';
+      c.category = 'sebi';
+      upgradedAny = true;
+    } else if (c.title === 'SHA drag-along clause review' || c.title.indexOf('SHA drag-along') !== -1) {
+      c.title = 'SHA Drag-Along Protocol';
+      c.category = 'corporate';
+      upgradedAny = true;
+    } else if (c.title === 'Income Tax s56(2)(x) analysis' || c.title.indexOf('Income Tax') !== -1) {
+      c.title = 'Income Tax § 56(2)(x)';
+      c.category = 'tax';
+      upgradedAny = true;
+    }
     if (SEED_CONVERSATION_MESSAGES[c.id] && (!c.messages || c.messages.length === 0)) {
       c.messages = SEED_CONVERSATION_MESSAGES[c.id].slice();
       upgradedAny = true;
@@ -2178,29 +2418,108 @@ function getConv(id) {
   return conversations.find(function(c) { return c.id === id; });
 }
 
+var activeFilterCategory = 'all';
+var conversationSearchQuery = '';
+
+window.setConversationFilter = function(cat, btn) {
+  activeFilterCategory = cat;
+  document.querySelectorAll('.cf-pill').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  renderSidebar();
+};
+
+window.filterConversations = function(query) {
+  conversationSearchQuery = (query || '').toLowerCase().trim();
+  var clearBtn = document.getElementById('chat-search-clear');
+  if (clearBtn) clearBtn.style.display = conversationSearchQuery ? 'block' : 'none';
+  renderSidebar();
+};
+
+window.clearConversationSearch = function() {
+  conversationSearchQuery = '';
+  var inp = document.getElementById('chat-search-input');
+  if (inp) inp.value = '';
+  var clearBtn = document.getElementById('chat-search-clear');
+  if (clearBtn) clearBtn.style.display = 'none';
+  renderSidebar();
+};
+
+window.insertStatutePrompt = function(statute) {
+  var promptMap = {
+    'BNS 103': 'Explain Section 103 of Bharatiya Nyaya Sanhita 2023 (Punishment for murder vs Section 101 culpable homicide) and constitutional rights upon arrest.',
+    'BNSS 482': 'What are the procedural requirements for anticipatory bail under Section 482 of BNSS 2023 and police remand safeguards?',
+    'BSA 23': 'Explain the legal admissibility of custodial statements and confessions under Section 23 of Bharatiya Sakshya Adhiniyam 2023.',
+    'IBC 29A': 'What are the mandatory resolution applicant ineligibility criteria under Section 29A of the Insolvency and Bankruptcy Code 2016?'
+  };
+  var val = promptMap[statute] || ('Tell me about ' + statute);
+  var inp = document.getElementById('chat-input');
+  if (inp) {
+    inp.value = val;
+    inp.style.height = 'auto';
+    inp.style.height = Math.min(inp.scrollHeight, 160) + 'px';
+    inp.focus();
+  }
+};
+
 function renderSidebar() {
   var hist = document.getElementById('chat-hist');
   if (!hist) return;
   hist.innerHTML = '';
-  conversations.forEach(function(conv) {
+
+  var filtered = conversations.filter(function(conv) {
+    var cat = conv.category || detectConversationCategory(conv.title, '');
+    if (activeFilterCategory !== 'all' && cat !== activeFilterCategory) return false;
+    if (conversationSearchQuery) {
+      var t = (conv.title || '').toLowerCase();
+      var msgSnippet = (conv.messages || []).map(function(m){ return m.content || ''; }).join(' ').toLowerCase();
+      if (t.indexOf(conversationSearchQuery) === -1 && msgSnippet.indexOf(conversationSearchQuery) === -1) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  var countBadge = document.getElementById('chat-conv-count');
+  if (countBadge) countBadge.textContent = filtered.length;
+
+  if (filtered.length === 0) {
+    var empty = document.createElement('div');
+    empty.style.padding = '1.25rem 0.5rem';
+    empty.style.textAlign = 'center';
+    empty.style.fontSize = '0.72rem';
+    empty.style.color = 'var(--cream3)';
+    empty.textContent = conversationSearchQuery ? 'No matching matters found' : 'No consultations in this category';
+    hist.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach(function(conv) {
     var item = document.createElement('div');
     item.className = 'chi' + (conv.id === activeConvId ? ' active' : '');
     item.dataset.id = conv.id;
 
+    var cat = conv.category || detectConversationCategory(conv.title, '');
+    var timeStr = conv.time || 'Recent';
+
+    // Title Row
+    var titleRow = document.createElement('div');
+    titleRow.className = 'chi-title-row';
+
     var label = document.createElement('span');
     label.className = 'chi-label';
     label.textContent = conv.title;
+    label.title = conv.title;
 
     var renameBtn = document.createElement('button');
     renameBtn.className = 'chi-btn';
     renameBtn.title = 'Rename';
-    renameBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
+    renameBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
     renameBtn.addEventListener('click', function(e) { startRename(conv.id, e); });
 
     var deleteBtn = document.createElement('button');
-    deleteBtn.className = 'chi-btn';
+    deleteBtn.className = 'chi-btn chi-btn-del';
     deleteBtn.title = 'Delete';
-    deleteBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>';
+    deleteBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>';
     deleteBtn.addEventListener('click', function(e) { deleteConv(conv.id, e); });
 
     var actions = document.createElement('span');
@@ -2208,8 +2527,26 @@ function renderSidebar() {
     actions.appendChild(renameBtn);
     actions.appendChild(deleteBtn);
 
-    item.appendChild(label);
-    item.appendChild(actions);
+    titleRow.appendChild(label);
+    titleRow.appendChild(actions);
+
+    // Meta Row
+    var metaRow = document.createElement('div');
+    metaRow.className = 'chi-meta';
+
+    var badge = document.createElement('span');
+    badge.className = 'chi-badge chi-badge-' + cat;
+    badge.textContent = getCategoryBadgeLabel(cat);
+
+    var timeLabel = document.createElement('span');
+    timeLabel.className = 'chi-time';
+    timeLabel.textContent = timeStr;
+
+    metaRow.appendChild(badge);
+    metaRow.appendChild(timeLabel);
+
+    item.appendChild(titleRow);
+    item.appendChild(metaRow);
     item.addEventListener('click', function() { loadConv(conv.id); });
     hist.appendChild(item);
   });
@@ -2325,7 +2662,7 @@ window.clearChat = function() {
   }
   // Create new conversation
   var newId = 'c' + Date.now();
-  conversations.unshift({ id: newId, title: 'New conversation', messages: [] });
+  conversations.unshift({ id: newId, title: 'New Consultation', category: 'corporate', time: 'Just now', messages: [] });
   saveConvs();
   activeConvId = newId;
   chatHistory = [];
@@ -2481,16 +2818,17 @@ window.sendMsg = async function() {
   var currentConv = activeConvId ? getConv(activeConvId) : null;
   if (!activeConvId || !currentConv) {
     var newId = 'c' + Date.now();
-    var titleText = text || (sentFiles.length > 0 ? sentFiles[0].name : 'New conversation');
-    var convTitle = titleText.length > 42 ? titleText.slice(0, 42) + '...' : titleText;
-    currentConv = { id: newId, title: convTitle, messages: [] };
+    var convTitle = formatSmartConversationTitle(text || (sentFiles.length > 0 ? sentFiles[0].name : 'New Consultation'));
+    var convCat = detectConversationCategory(convTitle, text);
+    currentConv = { id: newId, title: convTitle, category: convCat, time: 'Just now', messages: [] };
     conversations.unshift(currentConv);
     activeConvId = newId;
     saveConvs();
     renderSidebar();
-  } else if (currentConv.title === 'New conversation' || currentConv.title === '') {
-    var titleText = text || (sentFiles.length > 0 ? sentFiles[0].name : 'New conversation');
-    currentConv.title = titleText.length > 42 ? titleText.slice(0, 42) + '...' : titleText;
+  } else if (currentConv.title === 'New conversation' || currentConv.title === 'New Consultation' || currentConv.title === '') {
+    currentConv.title = formatSmartConversationTitle(text || (sentFiles.length > 0 ? sentFiles[0].name : 'New Consultation'));
+    currentConv.category = detectConversationCategory(currentConv.title, text);
+    currentConv.time = 'Just now';
     saveConvs();
     renderSidebar();
   }
@@ -3273,6 +3611,9 @@ var LAWYER_DIRECTORY = [
 ];
 
 function getHermesUrl() {
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return localStorage.getItem('nyai_hermes_url') || (window.location.origin + '/api/chat');
+  }
   return localStorage.getItem('nyai_hermes_url') || 'http://127.0.0.1:8000/api/chat';
 }
 
@@ -3280,6 +3621,12 @@ window.openHermesSettings = function() {
   document.getElementById('hermes-url-input').value = getHermesUrl();
   document.getElementById('hermes-model-input').value = localStorage.getItem('nyai_hermes_model') || 'hermes-3-llama-3.1-8b-legal';
   document.getElementById('hermes-token-input').value = localStorage.getItem('nyai_hermes_token') || '';
+
+  var warnBox = document.getElementById('hermes-https-warning');
+  if (warnBox) {
+    warnBox.style.display = (window.location.protocol === 'https:') ? 'block' : 'none';
+  }
+
   document.getElementById('hermes-modal').style.display = 'flex';
 };
 
@@ -3293,7 +3640,36 @@ window.addEventListener('keydown', function(e) {
     var hm = document.getElementById('hermes-modal');
     if (hm && hm.style.display !== 'none') closeHermesSettings();
   }
+  if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+    e.preventDefault();
+    if (window.currentPage !== 'chat') {
+      window.showPage('chat');
+    }
+    window.clearChat();
+  }
 });
+
+window.applyHermesPreset = function(type) {
+  var urlInput = document.getElementById('hermes-url-input');
+  var modelInput = document.getElementById('hermes-model-input');
+  var tokenInput = document.getElementById('hermes-token-input');
+
+  if (type === 'local8000') {
+    urlInput.value = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? (window.location.origin + '/api/chat')
+      : 'http://127.0.0.1:8000/api/chat';
+    modelInput.value = 'hermes-3-llama-3.1-8b-legal';
+    tokenInput.value = '';
+  } else if (type === 'nous8080') {
+    urlInput.value = 'http://127.0.0.1:8080/v1/chat/completions';
+    modelInput.value = 'hermes-3-llama-3.1-8b';
+    tokenInput.value = 'nyai-hermes-secret-key-2026-auth';
+  } else if (type === 'offline') {
+    urlInput.value = 'offline';
+    modelInput.value = 'nyai-embedded-offline-engine';
+    tokenInput.value = '';
+  }
+};
 
 window.saveHermesSettings = function() {
   var url = document.getElementById('hermes-url-input').value.trim() || 'http://127.0.0.1:8000/api/chat';
@@ -3310,6 +3686,24 @@ window.testHermesConnectionLive = async function() {
   var url = document.getElementById('hermes-url-input').value.trim() || 'http://127.0.0.1:8000/api/chat';
   var fb = document.getElementById('hermes-test-feedback');
   fb.style.display = 'block';
+
+  if (url === 'offline') {
+    fb.style.color = '#4cc38a';
+    fb.innerHTML = '✓ <strong>Built-in Offline Engine Active</strong>: Comprehensive statutory concordances, BNS diagnostics, and verified lawyer discovery running in-browser.';
+    updateHermesBadge(false);
+    return;
+  }
+
+  // Detect HTTPS mixed content
+  if (window.location.protocol === 'https:' && url.startsWith('http://')) {
+    fb.style.color = '#e2a843';
+    fb.innerHTML = '⚠️ <strong>Browser Mixed Content Restriction:</strong><br>' +
+      'You are viewing NyAI over HTTPS (GitHub Pages). Browsers block direct HTTP localhost calls from HTTPS sites.<br><br>' +
+      '<strong>Recommended:</strong> Open NyAI locally at <a href="http://localhost:8000/#chat" target="_blank" style="color:var(--accent2);text-decoration:underline">http://localhost:8000/#chat</a> (Hermes connects directly with zero setup!)<br>' +
+      '<em>Or run an HTTPS tunnel:</em> <code>npx localtunnel --port 8000</code> and paste the resulting https URL here.';
+    return;
+  }
+
   fb.style.color = 'var(--cream3)';
   fb.textContent = 'Testing connection to ' + url + '...';
 
@@ -3317,9 +3711,13 @@ window.testHermesConnectionLive = async function() {
   if (testUrl.endsWith('/api/chat')) testUrl = testUrl.replace('/api/chat', '/health');
   else if (testUrl.endsWith('/v1/chat/completions')) testUrl = testUrl.replace('/v1/chat/completions', '/health');
 
+  var headers = {};
+  var token = document.getElementById('hermes-token-input').value.trim();
+  if (token) headers['Authorization'] = token.startsWith('Bearer ') ? token : 'Bearer ' + token;
+
   var t0 = Date.now();
   try {
-    var res = await fetch(testUrl, { method: 'GET' });
+    var res = await fetch(testUrl, { method: 'GET', headers: headers });
     var ms = Date.now() - t0;
     if (res.ok) {
       fb.style.color = '#4cc38a';
@@ -3331,7 +3729,7 @@ window.testHermesConnectionLive = async function() {
     }
   } catch (err) {
     fb.style.color = 'var(--accent2)';
-    fb.textContent = 'Connection failed: ' + err.message + '. Ensure backend/hermes_server.py is running on port 8000.';
+    fb.textContent = 'Connection failed: ' + err.message + '. Run "python3 backend/hermes_server.py" on port 8000.';
     updateHermesBadge(false);
   }
 };
@@ -3339,19 +3737,34 @@ window.testHermesConnectionLive = async function() {
 function updateHermesBadge(isLive) {
   var dot = document.getElementById('hermes-dot');
   var txt = document.getElementById('hermes-status-text');
-  if (dot && txt) {
-    if (isLive) {
-      dot.style.background = '#4cc38a';
-      txt.textContent = 'Hermes: Online';
-    } else {
-      dot.style.background = '#d99b26';
-      txt.textContent = 'Hermes: Standby';
-    }
+  var sDot = document.getElementById('chat-engine-dot');
+  var sLbl = document.getElementById('chat-engine-label');
+  var sDet = document.getElementById('chat-engine-detail');
+
+  var currentUrl = getHermesUrl();
+  var is8080 = currentUrl.indexOf('8080') !== -1;
+
+  if (isLive) {
+    if (dot) dot.style.background = '#4cc38a';
+    if (txt) txt.textContent = is8080 ? 'Hermes: 8080 Live' : 'Hermes: Online';
+    if (sDot) sDot.style.background = '#4cc38a';
+    if (sLbl) sLbl.textContent = is8080 ? 'Nous Hermes Live' : 'Hermes Gateway: Online';
+    if (sDet) sDet.textContent = is8080 ? 'Port 8080 · Llama 3.1 8B' : 'Port 8000 · Unified Skills Gateway';
+  } else {
+    if (dot) dot.style.background = '#d99b26';
+    if (txt) txt.textContent = 'Hermes: Standby';
+    if (sDot) sDot.style.background = '#d99b26';
+    if (sLbl) sLbl.textContent = 'Hermes: Standby';
+    if (sDet) sDet.textContent = 'Running Standalone Offline Engine';
   }
 }
 
 async function checkHermesGatewayStatus() {
   var targetUrl = getHermesUrl();
+  if (targetUrl === 'offline') {
+    updateHermesBadge(false);
+    return;
+  }
   var testUrl = targetUrl;
   if (testUrl.endsWith('/api/chat')) testUrl = testUrl.replace('/api/chat', '/health');
   else if (testUrl.endsWith('/v1/chat/completions')) testUrl = testUrl.replace('/v1/chat/completions', '/health');
@@ -3689,18 +4102,43 @@ window.SEED_CONVERSATION_MESSAGES = SEED_CONVERSATION_MESSAGES;
 <!-- =================== HERMES SETTINGS MODAL =================== -->
 <div id="hermes-modal" onclick="if(event.target===this)closeHermesSettings()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;padding:1.5rem">
   <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;max-width:540px;width:100%;padding:2rem;position:relative">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
       <div style="display:flex;align-items:center;gap:0.5rem">
         <span style="color:var(--accent2);font-family:var(--serif);font-weight:600;font-size:1.2rem">§</span>
         <h3 style="font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--cream)">Hermes Agent Backend Configuration</h3>
       </div>
-      <button onclick="closeHermesSettings()" style="color:var(--cream3);font-size:1.4rem;cursor:pointer;background:none;border:none">×</button>
+      <button id="hermes-modal-close" onclick="closeHermesSettings()" style="color:var(--cream3);font-size:1.4rem;cursor:pointer;background:none;border:none">×</button>
     </div>
+
+    <!-- Browser Mixed Content Notice (Automated on HTTPS) -->
+    <div id="hermes-https-warning" style="display:none;background:rgba(217,155,38,0.12);border:1px solid rgba(217,155,38,0.3);border-radius:4px;padding:0.75rem;margin-bottom:1.25rem;font-size:0.72rem;color:var(--cream);line-height:1.5">
+      <strong style="color:#e2a843;display:block;margin-bottom:0.25rem">⚠️ Running on GitHub Pages (HTTPS):</strong>
+      Modern browsers block direct HTTP localhost connections from HTTPS web pages (Mixed Content security policy).<br><br>
+      <strong>1-Click Fix:</strong> Run <code>python3 backend/hermes_server.py</code> and open <strong><a href="http://localhost:8000/#chat" target="_blank" style="color:var(--accent2);text-decoration:underline">http://localhost:8000/#chat</a></strong> in your browser. The unified server serves the web app locally with 100% online Hermes integration and zero blocking.<br><br>
+      <em>To use GitHub Pages directly with local Hermes:</em> Run <code>npx localtunnel --port 8000</code> and paste the HTTPS URL below.
+    </div>
+
+    <!-- Presets -->
+    <div style="margin-bottom:1.25rem">
+      <label style="font-size:0.72rem;color:var(--cream3);margin-bottom:0.4rem;display:block;text-transform:uppercase;letter-spacing:0.05em;font-weight:600">Quick Presets</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button type="button" onclick="applyHermesPreset('local8000')" style="background:var(--dark3);border:1px solid var(--border);color:var(--cream2);padding:0.35rem 0.65rem;border-radius:4px;font-size:0.72rem;cursor:pointer;font-family:var(--sans)">
+          NyAI Gateway (Port 8000)
+        </button>
+        <button type="button" onclick="applyHermesPreset('nous8080')" style="background:var(--dark3);border:1px solid var(--border);color:var(--cream2);padding:0.35rem 0.65rem;border-radius:4px;font-size:0.72rem;cursor:pointer;font-family:var(--sans)">
+          Nous Hermes (Port 8080)
+        </button>
+        <button type="button" onclick="applyHermesPreset('offline')" style="background:var(--dark3);border:1px solid var(--border);color:var(--cream2);padding:0.35rem 0.65rem;border-radius:4px;font-size:0.72rem;cursor:pointer;font-family:var(--sans)">
+          Offline Embedded AI
+        </button>
+      </div>
+    </div>
+
     <div style="margin-bottom:1.25rem">
       <label style="font-size:0.75rem;color:var(--cream2);margin-bottom:0.4rem;display:block;font-weight:500">Hermes API Gateway Endpoint</label>
       <input type="url" id="hermes-url-input" class="chat-ta" style="width:100%;min-height:40px;padding:0.6rem 0.8rem;font-family:var(--mono);font-size:0.8rem" placeholder="http://127.0.0.1:8000/api/chat or /v1/chat/completions"/>
       <div style="font-size:0.7rem;color:var(--cream3);margin-top:0.35rem;line-height:1.5">
-        Run backend locally: <code>python3 backend/hermes_server.py</code> (runs on port 8000). For GitHub Pages, use an HTTPS tunnel or let NyAI use the embedded offline legal intelligence engine.
+        Backend runs on <code>port 8000</code> (Unified Gateway) or <code>port 8080</code> (Nous Hermes Agent CLI).
       </div>
     </div>
     <div style="margin-bottom:1.25rem">
@@ -3708,14 +4146,14 @@ window.SEED_CONVERSATION_MESSAGES = SEED_CONVERSATION_MESSAGES;
       <input type="text" id="hermes-model-input" class="chat-ta" style="width:100%;min-height:40px;padding:0.6rem 0.8rem;font-family:var(--mono);font-size:0.8rem" placeholder="hermes-3-llama-3.1-8b-legal"/>
     </div>
     <div style="margin-bottom:1.5rem">
-      <label style="font-size:0.75rem;color:var(--cream2);margin-bottom:0.4rem;display:block;font-weight:500">Optional Authorization Bearer Token</label>
-      <input type="password" id="hermes-token-input" class="chat-ta" style="width:100%;min-height:40px;padding:0.6rem 0.8rem;font-size:0.8rem" placeholder="Optional token (stored only in browser localStorage)"/>
+      <label style="font-size:0.75rem;color:var(--cream2);margin-bottom:0.4rem;display:block;font-weight:500">Authorization Bearer Token</label>
+      <input type="password" id="hermes-token-input" class="chat-ta" style="width:100%;min-height:40px;padding:0.6rem 0.8rem;font-size:0.8rem" placeholder="Optional for 8000, required for 8080 (nyai-hermes-secret-key-2026-auth)"/>
     </div>
     <div style="display:flex;gap:0.75rem;justify-content:flex-end">
       <button onclick="testHermesConnectionLive()" style="background:var(--dark3);border:1px solid var(--border);color:var(--cream2);padding:0.6rem 1.25rem;border-radius:4px;font-size:0.8rem;cursor:pointer">Test Connection</button>
       <button onclick="saveHermesSettings()" style="background:var(--cream);color:var(--black);padding:0.6rem 1.25rem;border-radius:4px;font-size:0.8rem;font-weight:500;cursor:pointer">Save Settings</button>
     </div>
-    <div id="hermes-test-feedback" style="margin-top:1rem;font-size:0.75rem;font-family:var(--mono);display:none"></div>
+    <div id="hermes-test-feedback" style="margin-top:1rem;font-size:0.75rem;font-family:var(--mono);display:none;line-height:1.5"></div>
   </div>
 </div>
 
