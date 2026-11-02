@@ -49,23 +49,24 @@ if (!fs.existsSync(OUT_DIR)) {
     console.log('   Captured redesigned sidebar close-up');
   }
 
-  // 2. Test Category Filtering
-  console.log('2. Testing Category Filtering: Clicking "Criminal"');
-  await page.click('button[data-cat="criminal"]');
+  // 2. Test Matter Search Filtering
+  console.log('2. Testing Matter Search: Filtering by "ahmedabad"');
+  await page.fill('#chat-search-input', 'ahmedabad');
   await page.waitForTimeout(300);
-  const criminalItems = await page.$$('.chi');
-  console.log('   Criminal filter items count:', criminalItems.length);
+  const ahmedabadItems = await page.$$('.chi');
+  console.log('   Ahmedabad search items count:', ahmedabadItems.length);
 
-  // Reset to All
-  await page.click('button[data-cat="all"]');
+  // Clear search
+  await page.click('#chat-search-clear');
   await page.waitForTimeout(300);
 
-  // 3. Test Statutory Quick Desk pill insertion
-  console.log('3. Testing Statutory Quick Desk click (§ 103 Homicide)');
-  await page.click('.chat-stat-chip');
-  await page.waitForTimeout(300);
-  const inputValue = await page.$eval('#chat-input', el => el.value);
-  console.log('   Input value after pill click:', inputValue.slice(0, 50) + '...');
+  // 3. Test Selecting Conversation from History
+  console.log('3. Testing selecting conversation from history');
+  const firstConv = await page.$('.chi');
+  if (firstConv) {
+    await firstConv.click();
+    await page.waitForTimeout(400);
+  }
 
   // 4. Test Hermes Modal
   console.log('4. Testing Hermes Backend Configuration Modal');

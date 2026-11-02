@@ -274,28 +274,47 @@ def generate_interactive_case_response(user_text: str, history: List[Dict]) -> s
 
     response_parts = []
     if is_emergency_criminal:
-        response_parts.append("### Emergency Criminal Defense Advisory & Constitutional Protections\n\n")
-        response_parts.append(f"Based on your statement in **{city}**, this matter involves serious cognizable offenses under the Bharatiya Nyaya Sanhita 2023 (BNS) and Bharatiya Nagarik Suraksha Sanhita 2023 (BNSS). Here is your statutory framework, critical constitutional protections, immediate surrender/remand protocol, and verified criminal defense counsel.\n")
+        response_parts.append("### Emergency Criminal Defense Advisory & Constitutional Directives\n\n")
+        response_parts.append('<div class="nyai-action-bar">\n')
+        response_parts.append(f'  <div class="nab-badge">CRITICAL ACTION PROTOCOL · {city.upper()} JURISDICTION</div>\n')
+        response_parts.append('  <div class="nab-cards">\n')
+        response_parts.append('    <div class="nab-card"><span class="nab-step">ACTION 01</span><strong>Maintain Right to Silence</strong><p>Make no confession, oral statement, or signature without defense counsel present (Art. 20(3) Constitution & BSA § 23).</p></div>\n')
+        response_parts.append('    <div class="nab-card"><span class="nab-step">ACTION 02</span><strong>Formal Judicial Surrender</strong><p>Surrender directly before Judicial Magistrate with counsel rather than evading or absconding (BNSS § 84).</p></div>\n')
+        response_parts.append('    <div class="nab-card"><span class="nab-step">ACTION 03</span><strong>Trial Counsel Representation</strong><p>Retain a Sessions Court defense advocate immediately to oppose police remand at the mandatory 24h Magistrate production.</p></div>\n')
+        response_parts.append('  </div>\n')
+        response_parts.append('</div>\n\n')
+        response_parts.append(f"#### Verified Criminal Defense Advocates in {city}\n\n")
+        response_parts.append(lawyer_cards)
+        response_parts.append(f"\n\n<details class=\"statute-box\" open>\n  <summary>§ Statutory Framework: {statute_heading}</summary>\n  <div style=\"font-size:0.75rem;color:var(--cream2);line-height:1.6;margin-top:0.5rem\">\n")
+        if scrape_data.get("citations"):
+            for c in scrape_data["citations"][:2]:
+                response_parts.append(f"• <strong>{c['title']}</strong>: {c['snippet']} <em>([Official Gazette]({c['url']}))</em><br>\n")
+        response_parts.append("  </div>\n</details>\n")
+        if limitation_text:
+            response_parts.append(f"\n> **Statutory Limitation**: {limitation_text}\n")
+        response_parts.append(f"\n> **National Legal Aid Helpline (Free Defense Counsel)**: If you or your family cannot afford private counsel, you are entitled to free defense counsel appointed by the **District Legal Services Authority (DLSA) in {city}** under Article 39A. Call toll-free **15100**.\n")
     else:
-        response_parts.append("### Legal Diagnostic & Step-by-Step Action Plan\n\n")
-        response_parts.append(f"Based on your case summary in **{city}**, here is your statutory analysis, immediate next steps, and verified advocate contacts.\n")
-    
-    response_parts.append(f"#### § 1. Statutory Provisions & Governing Law: {statute_heading}\n")
-    if scrape_data.get("citations"):
-        for c in scrape_data["citations"][:2]:
-            response_parts.append(f"- **{c['title']}**: {c['snippet']} *([Official Reference]({c['url']}))*\n")
-            
-    response_parts.append("\n#### § 2. What to Do Now (Immediate Next Steps)\n")
-    for idx, step in enumerate(next_steps, 1):
-        response_parts.append(f"{idx}. {step}\n")
-        
-    if limitation_text:
-        response_parts.append(f"\n> **Statutory Limitation**: {limitation_text}\n")
-        
-    if is_emergency_criminal:
-        response_parts.append(f"\n> **National Legal Aid Helpline (Free Defense Counsel)**: If you or your family cannot afford private counsel, you are entitled to free defense counsel appointed by the **District Legal Services Authority (DLSA) in {city}** under Article 39A of the Constitution. Call toll-free **15100**.\n")
+        response_parts.append("### Legal Analysis & Step-by-Step Action Roadmap\n\n")
+        response_parts.append('<div class="nyai-action-bar">\n')
+        response_parts.append(f'  <div class="nab-badge">KEY ACTION DIRECTIVES · {city.upper()}</div>\n')
+        response_parts.append('  <div class="nab-cards">\n')
+        for idx, step in enumerate(next_steps[:3], 1):
+            parts = step.split(":", 1)
+            s_title = parts[0].replace("**", "").strip()
+            s_body = parts[1].strip() if len(parts) > 1 else ""
+            response_parts.append(f'    <div class="nab-card"><span class="nab-step">STEP 0{idx}</span><strong>{s_title}</strong><p>{s_body}</p></div>\n')
+        response_parts.append('  </div>\n')
+        response_parts.append('</div>\n\n')
+        response_parts.append(f"#### Verified Legal Counsel in {city}\n\n")
+        response_parts.append(lawyer_cards)
+        response_parts.append(f"\n\n<details class=\"statute-box\">\n  <summary>§ Procedural Steps & Governing Law: {statute_heading}</summary>\n  <div style=\"font-size:0.75rem;color:var(--cream2);line-height:1.6;margin-top:0.5rem\">\n")
+        for idx, step in enumerate(next_steps, 1):
+            response_parts.append(f"{idx}. {step}<br>\n")
+        if scrape_data.get("citations"):
+            for c in scrape_data["citations"][:2]:
+                response_parts.append(f"<br>• <strong>{c['title']}</strong>: {c['snippet']}<br>\n")
+        if limitation_text:
+            response_parts.append(f"<br><strong>Limitation:</strong> {limitation_text}\n")
+        response_parts.append("  </div>\n</details>\n")
 
-    response_parts.append(f"\n#### § 3. Recommended Advocates & Legal Chambers in {city}\n")
-    response_parts.append(lawyer_cards)
-    
     return "".join(response_parts)

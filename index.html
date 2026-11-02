@@ -477,42 +477,32 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 
 /* ── CHAT ── */
 .chat-layout{display:flex;flex:1;overflow:hidden}
-.chat-sidebar{width:284px;background:var(--dark);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1rem 0.85rem;flex-shrink:0;overflow:hidden;gap:0.65rem}
+.chat-sidebar{width:280px;background:var(--dark);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.25rem 0.95rem 1rem;flex-shrink:0;overflow:hidden;gap:0.85rem}
 
 .chat-sidebar-header{display:flex;flex-direction:column;gap:0.4rem}
-.chat-new-btn{background:var(--dark3);color:var(--cream);border:1px solid var(--border);padding:0.6rem 0.8rem;border-radius:4px;font-size:0.8125rem;font-weight:500;cursor:pointer;width:100%;font-family:var(--sans);transition:all 0.2s ease;display:flex;align-items:center;justify-content:space-between}
-.chat-new-btn:hover{border-color:var(--accent2);color:var(--white);background:#1a1d24}
+.chat-new-btn{background:var(--dark3);color:var(--cream);border:1px solid var(--border);padding:0.65rem 0.85rem;border-radius:4px;font-size:0.8125rem;font-weight:500;cursor:pointer;width:100%;font-family:var(--sans);transition:all 0.2s ease;display:flex;align-items:center;justify-content:space-between}
+.chat-new-btn:hover{border-color:var(--accent2);color:var(--white);background:#181b22}
 .chat-new-btn-left{display:flex;align-items:center;gap:0.5rem}
 .chat-kbd{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:3px;padding:0.1rem 0.35rem;font-size:0.65rem;font-family:var(--mono);color:var(--cream3)}
 
 .chat-search-wrap{position:relative;display:flex;align-items:center}
 .chat-search-icon{position:absolute;left:0.65rem;color:var(--cream3);pointer-events:none}
-.chat-search-input{width:100%;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:4px;padding:0.4rem 0.65rem 0.4rem 1.85rem;font-size:0.75rem;color:var(--cream);font-family:var(--sans);outline:none;transition:border-color 0.2s}
+.chat-search-input{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:4px;padding:0.42rem 0.65rem 0.42rem 1.85rem;font-size:0.75rem;color:var(--cream);font-family:var(--sans);outline:none;transition:border-color 0.2s}
 .chat-search-input:focus{border-color:var(--accent2)}
 .chat-search-clear{position:absolute;right:0.5rem;background:none;border:none;color:var(--cream3);font-size:0.9rem;cursor:pointer;padding:0 0.2rem}
 
-.chat-filter-pills{display:flex;gap:4px;overflow-x:auto;padding-bottom:2px}
-.chat-filter-pills::-webkit-scrollbar{height:2px}
-.cf-pill{background:none;border:1px solid transparent;color:var(--cream3);padding:0.2rem 0.5rem;border-radius:12px;font-size:0.68rem;cursor:pointer;font-family:var(--sans);white-space:nowrap;transition:all 0.15s}
-.cf-pill:hover{color:var(--cream);background:rgba(255,255,255,0.04)}
-.cf-pill.active{background:rgba(197,160,89,0.12);color:var(--accent2);border-color:rgba(197,160,89,0.3);font-weight:500}
-
-.chat-sl-row{display:flex;align-items:center;justify-content:space-between;padding:0 0.25rem;margin-top:0.1rem}
-.chat-sl{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--cream3);font-weight:600}
-.chat-conv-count{font-size:0.65rem;font-family:var(--mono);color:var(--cream3);background:rgba(255,255,255,0.05);padding:0.05rem 0.35rem;border-radius:8px}
-
-.chat-hist{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:3px;padding-right:2px;min-height:90px;max-height:240px}
+.chat-hist{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:3px;padding-right:2px;min-height:0;max-height:none}
 .chat-hist::-webkit-scrollbar{width:3px}
 .chat-hist::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-.chi{padding:0.55rem 0.65rem;border-radius:4px;cursor:pointer;font-size:0.8125rem;color:var(--cream2);transition:all 0.15s;display:flex;flex-direction:column;gap:0.25rem;border-left:2px solid transparent;position:relative}
+.chi{padding:0.6rem 0.75rem;border-radius:4px;cursor:pointer;font-size:0.8125rem;color:var(--cream2);transition:all 0.15s;display:flex;flex-direction:column;gap:0.25rem;border-left:2px solid transparent;position:relative}
 .chi:hover{background:rgba(255,255,255,0.03);color:var(--white)}
-.chi.active{background:#14171E;color:var(--white);border-left-color:var(--accent2)}
+.chi.active{background:#13151b;color:var(--white);border-left-color:var(--accent)}
 .chi-title-row{display:flex;justify-content:space-between;align-items:center;width:100%;gap:0.4rem}
 .chi-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3;font-weight:400;user-select:none}
 .chi.active .chi-label{font-weight:500;color:#FFF}
 .chi-actions{display:flex;align-items:center;gap:2px;opacity:0;transition:opacity 0.15s;flex-shrink:0}
-.chi:hover .chi-actions,.chi.active .chi-actions{opacity:1}
+.chi:hover .chi-actions{opacity:1}
 .chi-btn{background:none;border:none;color:var(--cream3);cursor:pointer;font-size:0.75rem;padding:3px;display:flex;align-items:center;justify-content:center;border-radius:3px;transition:var(--t)}
 .chi-btn:hover{background:var(--dark3);color:var(--white)}
 .chi-btn-del:hover{color:#e05252}
@@ -528,24 +518,52 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 
 .chi-rename-input{width:100%;background:var(--dark);border:1px solid var(--accent2);border-radius:3px;padding:0.2rem 0.4rem;font-size:0.78rem;color:var(--cream);font-family:var(--sans);outline:none}
 
-/* Statutory Quick Desk */
-.chat-statute-desk{background:rgba(20,23,30,0.6);border:1px solid var(--border);border-radius:4px;padding:0.6rem;display:flex;flex-direction:column;gap:0.35rem}
-.chat-statute-title{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--cream3);font-weight:600;display:flex;align-items:center;gap:0.35rem}
-.chat-statute-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.chat-stat-chip{background:var(--dark);border:1px solid var(--border);border-radius:3px;padding:0.35rem 0.4rem;text-align:left;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;gap:1px}
-.chat-stat-chip:hover{border-color:var(--accent2);background:#1a1e27}
-.chat-stat-chip strong{font-size:0.68rem;color:var(--cream);font-weight:500;display:block}
-.chat-stat-chip span{font-size:0.6rem;color:var(--cream3);font-family:var(--mono);display:block}
+/* ── LOW COGNITIVE LOAD SIDEBAR FOOTER ── */
+.chat-sidebar-footer{padding-top:0.65rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.chat-footer-status{background:none;border:none;color:var(--cream2);cursor:pointer;font-size:0.7rem;font-family:var(--sans);display:inline-flex;align-items:center;gap:0.4rem;padding:0;transition:color 0.2s}
+.chat-footer-status:hover{color:var(--white)}
+.chat-engine-dot{width:6px;height:6px;border-radius:50%;background:#4cc38a;display:inline-block}
+.chat-footer-legal{font-size:0.64rem;color:var(--cream3);font-family:var(--mono);opacity:0.6}
 
-/* Engine Status Card in Sidebar */
-.chat-engine-card{background:#0e1014;border:1px solid var(--border);border-radius:4px;padding:0.55rem 0.65rem;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;gap:0.25rem}
-.chat-engine-card:hover{border-color:var(--cream3)}
-.chat-engine-card-top{display:flex;align-items:center;justify-content:space-between}
-.chat-engine-status-line{display:flex;align-items:center;gap:0.4rem}
-.chat-engine-dot{width:6px;height:6px;border-radius:50%;background:#4cc38a;display:inline-block;transition:background 0.2s}
-.chat-engine-label{font-size:0.72rem;font-weight:500;color:var(--cream)}
-.chat-engine-config-btn{font-size:0.65rem;color:var(--accent2);font-weight:500}
-.chat-engine-detail{font-size:0.62rem;font-family:var(--mono);color:var(--cream3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* ── LOW COGNITIVE LOAD: DIRECTIVE ACTION BAR ── */
+.nyai-action-bar{background:rgba(197,160,89,0.05);border:1px solid rgba(197,160,89,0.22);border-left:3px solid var(--accent);border-radius:4px;padding:1rem 1.15rem;margin:1rem 0 1.25rem}
+.nab-badge{font-size:0.68rem;font-family:var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;margin-bottom:0.75rem}
+.nab-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem}
+.nab-card{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:0.75rem 0.85rem}
+.nab-step{display:inline-block;font-family:var(--mono);font-size:0.65rem;color:var(--accent);margin-bottom:0.25rem;font-weight:600}
+.nab-card strong{display:block;font-size:0.84rem;color:var(--cream);font-weight:500;margin-bottom:0.25rem}
+.nab-card p{font-size:0.75rem;color:var(--cream3);line-height:1.45;margin:0}
+
+/* ── LOW COGNITIVE LOAD: ADVOCATE DIRECTORY CARDS ── */
+.advocate-deck{display:flex;flex-direction:column;gap:0.75rem;margin:1rem 0}
+.advocate-card{background:var(--dark);border:1px solid var(--border);border-radius:4px;padding:0.9rem 1.1rem;transition:border-color 0.2s,background 0.2s}
+.advocate-card:hover{border-color:rgba(197,160,89,0.4);background:#101217}
+.ac-header{display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;margin-bottom:0.25rem}
+.ac-name{font-family:var(--serif);font-size:1.02rem;font-weight:500;color:var(--cream);margin:0}
+.ac-firm{font-size:0.76rem;color:var(--cream3);font-style:italic;display:block;margin-top:2px}
+.ac-badge{font-family:var(--mono);font-size:0.64rem;padding:0.12rem 0.4rem;border-radius:3px;background:rgba(197,160,89,0.12);color:var(--accent);border:1px solid rgba(197,160,89,0.25);white-space:nowrap}
+.ac-meta{display:flex;flex-direction:column;gap:0.2rem;font-size:0.75rem;color:var(--cream2);margin:0.45rem 0 0.75rem;line-height:1.45}
+.ac-ctas{display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center}
+.ac-btn{display:inline-flex;align-items:center;gap:0.35rem;padding:0.4rem 0.75rem;border-radius:4px;font-size:0.75rem;font-family:var(--sans);text-decoration:none!important;font-weight:500;transition:all 0.15s ease}
+.ac-btn-call{background:var(--cream);color:var(--black)!important}
+.ac-btn-call:hover{background:var(--white);box-shadow:0 0 12px rgba(255,255,255,0.2)}
+.ac-btn-mail{background:var(--dark3);border:1px solid var(--border);color:var(--cream2)!important}
+.ac-btn-mail:hover{border-color:var(--cream3);color:var(--white)!important}
+.ac-disclosure{margin-top:0.65rem;padding-top:0.55rem;border-top:1px solid rgba(255,255,255,0.05);font-size:0.73rem;color:var(--cream3)}
+.ac-disclosure summary{cursor:pointer;color:var(--accent);font-family:var(--mono);font-size:0.68rem;user-select:none;outline:none}
+.ac-disclosure summary:hover{text-decoration:underline}
+.ac-disclosure-body{margin-top:0.45rem;padding:0.55rem 0.7rem;background:rgba(0,0,0,0.3);border-radius:3px;border:1px solid rgba(255,255,255,0.04);line-height:1.55}
+.ac-disclosure-body p,.ac-disclosure-body div{margin:0.2rem 0}
+
+/* ── LOW COGNITIVE LOAD: STATUTORY CONCORDANCE DRAWER ── */
+.statute-box{background:var(--dark2);border:1px solid var(--border);border-radius:4px;padding:0.7rem 0.95rem;margin:1rem 0}
+.statute-box summary{cursor:pointer;font-family:var(--serif);font-size:0.9rem;font-weight:500;color:var(--cream);user-select:none;outline:none}
+.statute-box summary:hover{color:var(--accent)}
+.sb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.65rem;margin-top:0.75rem;padding-top:0.65rem;border-top:1px solid var(--border)}
+.sb-item{background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.05);border-radius:3px;padding:0.55rem 0.65rem}
+.sb-tag{display:inline-block;font-family:var(--mono);font-size:0.63rem;color:var(--accent);margin-bottom:0.15rem}
+.sb-item strong{display:block;font-size:0.78rem;color:var(--cream);margin-bottom:0.15rem}
+.sb-item p{font-size:0.71rem;color:var(--cream3);line-height:1.4;margin:0}
 
 /* Bar Council Notice Footer */
 .chat-sf{padding-top:0.5rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:0.2rem}
@@ -1692,70 +1710,17 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
         <button id="chat-search-clear" class="chat-search-clear" onclick="clearConversationSearch()" style="display:none">×</button>
       </div>
 
-      <div class="chat-filter-pills" id="chat-filter-pills">
-        <button class="cf-pill active" data-cat="all" onclick="setConversationFilter('all', this)">All</button>
-        <button class="cf-pill" data-cat="criminal" onclick="setConversationFilter('criminal', this)">Criminal</button>
-        <button class="cf-pill" data-cat="corporate" onclick="setConversationFilter('corporate', this)">Corporate</button>
-        <button class="cf-pill" data-cat="sebi" onclick="setConversationFilter('sebi', this)">SEBI</button>
-        <button class="cf-pill" data-cat="tax" onclick="setConversationFilter('tax', this)">Tax</button>
-      </div>
-
-      <div class="chat-sl-row">
-        <span class="chat-sl">Active Matters</span>
-        <span id="chat-conv-count" class="chat-conv-count">5</span>
-      </div>
-
       <div class="chat-hist" id="chat-hist">
         <!-- populated by JS -->
       </div>
 
-      <!-- Statutory Quick Desk -->
-      <div class="chat-statute-desk">
-        <div class="chat-statute-title">
-          <span style="color:var(--accent2);font-family:var(--serif);font-weight:600">§</span>
-          <span>Statutory Quick Desk</span>
-        </div>
-        <div class="chat-statute-grid">
-          <button class="chat-stat-chip" onclick="insertStatutePrompt('BNS 103')">
-            <strong>BNS ⇄ IPC</strong>
-            <span>§ 103 Homicide</span>
-          </button>
-          <button class="chat-stat-chip" onclick="insertStatutePrompt('BNSS 482')">
-            <strong>BNSS ⇄ CrPC</strong>
-            <span>§ 482 Bail/Remand</span>
-          </button>
-          <button class="chat-stat-chip" onclick="insertStatutePrompt('BSA 23')">
-            <strong>BSA ⇄ IEA</strong>
-            <span>§ 23 Admissibility</span>
-          </button>
-          <button class="chat-stat-chip" onclick="insertStatutePrompt('IBC 29A')">
-            <strong>IBC 2016</strong>
-            <span>§ 29A Resolution</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Engine Status Card -->
-      <div class="chat-engine-card" onclick="openHermesSettings()" title="Hermes Agent Gateway & Offline Engine Settings">
-        <div class="chat-engine-card-top">
-          <div class="chat-engine-status-line">
-            <span id="chat-engine-dot" class="chat-engine-dot"></span>
-            <span id="chat-engine-label" class="chat-engine-label">Hermes Gateway</span>
-          </div>
-          <span class="chat-engine-config-btn">Configure</span>
-        </div>
-        <div id="chat-engine-detail" class="chat-engine-detail">Local Port 8000 · Port 8080 Bridge</div>
-      </div>
-
-      <!-- Bar Council Notice -->
-      <div class="chat-sf">
-        <div class="chat-sf-badge">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          <span>BCI Rule 36 Compliance</span>
-        </div>
-        <div class="chat-sf-text">
-          Informational legal awareness & advocate verification. Verify official gazettes before filing.
-        </div>
+      <!-- Low Cognitive Load Footer -->
+      <div class="chat-sidebar-footer">
+        <button class="chat-footer-status" onclick="openHermesSettings()" title="Hermes Gateway Settings">
+          <span id="chat-engine-dot" class="chat-engine-dot"></span>
+          <span id="chat-engine-label">Hermes Gateway</span>
+        </button>
+        <span class="chat-footer-legal">BCI Rule 36</span>
       </div>
     </div>
     <div class="chat-main">
@@ -2314,7 +2279,90 @@ var SEED_CONVERSATION_MESSAGES = {
     },
     {
       role: 'assistant',
-      content: '### Emergency Criminal Defense Advisory & Constitutional Protections\n\nBased on your situation in **Ahmedabad**, this matter involves serious cognizable offenses under the **Bharatiya Nyaya Sanhita 2023 (BNS)** and **Bharatiya Nagarik Suraksha Sanhita 2023 (BNSS)** [replacing IPC & CrPC]. Here are your fundamental constitutional rights, emergency procedural steps, and verified criminal defense advocates in Ahmedabad.\n\n#### § 1. Statutory Provisions & Governing Law: Section 103 (Murder) & Section 101 (Culpable Homicide), Bharatiya Nyaya Sanhita 2023\n- **Section 103(1) Bharatiya Nyaya Sanhita 2023 (Old Section 302 IPC)**: Murder — punishable with death or imprisonment for life, and fine. Cognizable and non-bailable offense exclusively triable by Court of Session.\n- **Section 101 BNS 2023 (Old Section 299/304 IPC)**: Culpable homicide not amounting to murder — applies where death occurs without premeditation, during sudden mutual quarrel, or under grave provocation (Section 100 Exceptions).\n- **Article 22(1) & Article 20(3) Constitution of India**: Fundamental constitutional guarantees ensuring right to be defended by a legal practitioner of choice and protection against self-incrimination.\n- **Section 23 Bharatiya Sakshya Adhiniyam 2023 (BSA / Old Sec 25 & 26 Evidence Act)**: Statements or confessions made to a police officer are strictly inadmissible as evidence in court.\n\n#### § 2. What to Do Now (Immediate Next Steps)\n1. **Exercise Constitutional Right to Silence (Article 20(3))**: Do not give oral confessions, write explanations, or sign police papers without your advocate present. Confessions given under police custody have no evidentiary validity under Section 23 BSA 2023.\n2. **Engage Senior Criminal Defense Counsel Immediately**: Contact a qualified criminal trial and Sessions Court defense advocate in Ahmedabad immediately. If you lack financial means, you are constitutionally entitled to free defense counsel appointed by the District Legal Services Authority (DLSA) or call the NALSA Helpline **15100**.\n3. **Formal Surrender before Judicial Magistrate**: Rather than evading or absconding (which leads to non-bailable warrants and attachment under Section 84 BNSS), your advocate will draft and file a formal surrender application before the jurisdictional Judicial Magistrate / Metropolitan Magistrate under judicial supervision.\n4. **Demand Mandatory Medical Examination (Section 53 BNSS 2023)**: Insist on an immediate medical examination by a government medical officer upon detention or surrender to document bodily condition, physical marks, and mental state on official record.\n5. **Counsel Representation at Remand Hearing (Within 24 Hours)**: Under Article 22(2) and Section 58 BNSS, police must produce the accused before a Magistrate within 24 hours. Your advocate must appear to oppose police remand and petition for direct judicial custody.\n\n#### § 3. Recommended Advocates & Legal Chambers in Ahmedabad\n\n### Recommended Qualified Legal Counsel\n\n*Verified advocates admitted to practice in the jurisdiction. Listed per Bar Council of India Rule 36 informational guidelines:*\n\n1. **Adv. Pradeep R. Vaghela** — *Vaghela Criminal Defense Chambers*\n- **Bar Enrollment**: `Bar Council of Gujarat (G/612/1999)` (25+ Years Practice)\n- **Courts of Practice**: Gujarat High Court · City Sessions Court Bhadra · Mirzapur Sessions Court\n- **Specialization**: Criminal Defense, Homicide & Bodily Offences (BNS 101/103 / IPC 302), Bail & Custody (BNSS 480/482), Criminal Trials & Appeals\n- **Chamber Address**: Chamber 215, City Civil & Sessions Court Complex, Bhadra, Ahmedabad 380001\n- **Direct Contacts**: Phone: [+91 98240 18834](tel:+919824018834) | Email: [chambers.vaghela@gujaratbar.org](mailto:chambers.vaghela@gujaratbar.org)\n- **Suggested Consultation Questions**: *Ask about: Urgent surrender before Judicial Magistrate, custodial safeguards under Article 22, legal representation during remand hearing, cross-examination strategy.*\n\n> **Bar Council of India Notice**: *This information is provided solely for public legal awareness and verification. It does not constitute advocate solicitation or advertisement under BCI Rule 36.*'
+      content: '### Emergency Criminal Defense Advisory & Constitutional Directives\n\n' +
+        '<div class="nyai-action-bar">\n' +
+        '  <div class="nab-badge">CRITICAL ACTION PROTOCOL · AHMEDABAD JURISDICTION</div>\n' +
+        '  <div class="nab-cards">\n' +
+        '    <div class="nab-card">\n' +
+        '      <span class="nab-step">ACTION 01</span>\n' +
+        '      <strong>Maintain Right to Silence</strong>\n' +
+        '      <p>Make no confession, oral statement, or signature without your advocate present (Art. 20(3) Constitution & BSA § 23).</p>\n' +
+        '    </div>\n' +
+        '    <div class="nab-card">\n' +
+        '      <span class="nab-step">ACTION 02</span>\n' +
+        '      <strong>Formal Judicial Surrender</strong>\n' +
+        '      <p>Surrender directly before the Judicial Magistrate with defense counsel rather than evading or absconding (BNSS § 84).</p>\n' +
+        '    </div>\n' +
+        '    <div class="nab-card">\n' +
+        '      <span class="nab-step">ACTION 03</span>\n' +
+        '      <strong>Trial Counsel Representation</strong>\n' +
+        '      <p>Engage a Sessions Court trial advocate immediately to oppose police remand at the mandatory 24h Magistrate production.</p>\n' +
+        '    </div>\n' +
+        '  </div>\n' +
+        '</div>\n\n' +
+        '#### Verified Criminal Defense Advocates in Ahmedabad\n\n' +
+        '<div class="advocate-deck">\n' +
+        '  <div class="advocate-card">\n' +
+        '    <div class="ac-header">\n' +
+        '      <div>\n' +
+        '        <h4 class="ac-name">Adv. Pradeep R. Vaghela</h4>\n' +
+        '        <span class="ac-firm">Vaghela Criminal Defense Chambers</span>\n' +
+        '      </div>\n' +
+        '      <span class="ac-badge">25+ Yrs Bar Practice</span>\n' +
+        '    </div>\n' +
+        '    <div class="ac-meta">\n' +
+        '      <span>🏛️ Gujarat High Court · City Sessions Court Bhadra · Mirzapur Sessions Court</span>\n' +
+        '      <span>⚖️ Homicide & Bodily Offences (BNS 101/103), Bail & Custody (BNSS 480/482), Criminal Trials</span>\n' +
+        '    </div>\n' +
+        '    <div class="ac-ctas">\n' +
+        '      <a href="tel:+919824018834" class="ac-btn ac-btn-call">📞 Call Chambers: +91 98240 18834</a>\n' +
+        '      <a href="mailto:chambers.vaghela@gujaratbar.org" class="ac-btn ac-btn-mail">✉️ Email Chambers</a>\n' +
+        '    </div>\n' +
+        '    <details class="ac-disclosure">\n' +
+        '      <summary>View Chamber Address, Bar Enrollment & Consultation Strategy</summary>\n' +
+        '      <div class="ac-disclosure-body">\n' +
+        '        <p><strong>Bar Enrollment:</strong> <code>Bar Council of Gujarat (G/612/1999)</code></p>\n' +
+        '        <p><strong>Chamber Address:</strong> Chamber 215, City Civil & Sessions Court Complex, Bhadra, Ahmedabad 380001</p>\n' +
+        '        <p><strong>Consultation Guidance:</strong> Ask about: Urgent surrender before Judicial Magistrate, custodial safeguards under Article 22, legal representation during remand hearing, cross-examination strategy.</p>\n' +
+        '      </div>\n' +
+        '    </details>\n' +
+        '  </div>\n' +
+        '  <div class="advocate-card">\n' +
+        '    <div class="ac-header">\n' +
+        '      <div>\n' +
+        '        <h4 class="ac-name">Adv. Kirankumar B. Dave</h4>\n' +
+        '        <span class="ac-firm">Dave & Co. Legal Chambers</span>\n' +
+        '      </div>\n' +
+        '      <span class="ac-badge">19+ Yrs Bar Practice</span>\n' +
+        '    </div>\n' +
+        '    <div class="ac-meta">\n' +
+        '      <span>🏛️ Gujarat High Court · Ahmedabad District & Sessions Court (Rural)</span>\n' +
+        '      <span>⚖️ Sessions Trial Defense, Anticipatory Bail (BNSS 482), Murder Charges (BNS 103)</span>\n' +
+        '    </div>\n' +
+        '    <div class="ac-ctas">\n' +
+        '      <a href="tel:+919825129044" class="ac-btn ac-btn-call">📞 Call Chambers: +91 98251 29044</a>\n' +
+        '      <a href="mailto:adv.kdave@ahmedabadbar.org" class="ac-btn ac-btn-mail">✉️ Email Chambers</a>\n' +
+        '    </div>\n' +
+        '    <details class="ac-disclosure">\n' +
+        '      <summary>View Chamber Address, Bar Enrollment & Consultation Strategy</summary>\n' +
+        '      <div class="ac-disclosure-body">\n' +
+        '        <p><strong>Bar Enrollment:</strong> <code>Bar Council of Gujarat (G/1442/2005)</code></p>\n' +
+        '        <p><strong>Chamber Address:</strong> Chamber 312, 3rd Floor, Gujarat High Court Advocates Chambers, S.G. Highway, Sola, Ahmedabad 380060</p>\n' +
+        '        <p><strong>Consultation Guidance:</strong> Ask about: Opposing police remand, application for judicial custody, preservation of CCTV/call detail records.</p>\n' +
+        '      </div>\n' +
+        '    </details>\n' +
+        '  </div>\n' +
+        '</div>\n\n' +
+        '<details class="statute-box" open>\n' +
+        '  <summary>§ Statutory Framework: Bharatiya Nyaya Sanhita 2023 & Safeguards</summary>\n' +
+        '  <div class="sb-grid">\n' +
+        '    <div class="sb-item"><span class="sb-tag">BNS § 103 (Old IPC § 302)</span><strong>Murder</strong><p>Punishable with imprisonment for life or death. Non-bailable, triable exclusively by Court of Session.</p></div>\n' +
+        '    <div class="sb-item"><span class="sb-tag">BNS § 101 (Old IPC § 304)</span><strong>Culpable Homicide</strong><p>Applies where act is committed without premeditation, sudden mutual quarrel, or under grave provocation.</p></div>\n' +
+        '    <div class="sb-item"><span class="sb-tag">Art. 20(3) & 22(1)</span><strong>Constitutional Rights</strong><p>Fundamental protection against self-incrimination and guaranteed right to counsel of choice.</p></div>\n' +
+        '    <div class="sb-item"><span class="sb-tag">BNSS § 53 & § 58</span><strong>Procedural Safeguards</strong><p>Mandatory government medical exam upon custody, and mandatory production before Magistrate within 24 hours.</p></div>\n' +
+        '  </div>\n' +
+        '</details>\n\n' +
+        '> **National Legal Aid Helpline (Free Defense Counsel)**: If you or your family cannot afford private counsel, you are constitutionally entitled to free defense counsel appointed by the District Legal Services Authority (DLSA) in Ahmedabad. Call toll-free **15100**.'
     }
   ],
   'c1': [
@@ -4012,23 +4060,44 @@ function findLawyersClient(city, query) {
 }
 
 function formatLawyerCardsClient(lawyers) {
-  var lines = [];
-  lines.push('### Recommended Qualified Legal Counsel');
-  lines.push('');
-  lines.push('*Verified advocates admitted to practice in the jurisdiction. Listed per Bar Council of India Rule 36 informational guidelines:*');
-  lines.push('');
-  lawyers.forEach(function(l, i) {
-    lines.push((i + 1) + '. **' + l.name + '** — *' + l.firm + '*');
-    lines.push('- **Bar Enrollment**: `' + l.bar_council + '` (' + l.experience + ')');
-    lines.push('- **Courts of Practice**: ' + l.courts);
-    lines.push('- **Specialization**: ' + l.domains);
-    lines.push('- **Chamber Address**: ' + l.chamber);
-    lines.push('- **Direct Contacts**: Phone: [' + l.phone + '](tel:' + l.phone.replace(/\s+/g,'') + ') | Email: [' + l.email + '](mailto:' + l.email + ')');
-    lines.push('- **Suggested Consultation Questions**: *' + l.guidance + '*');
-    lines.push('');
+  if (!lawyers || lawyers.length === 0) return '';
+  var html = ['<div class="advocate-deck">'];
+  lawyers.forEach(function(l) {
+    var tel = (l.phone || '').replace(/\s+/g, '');
+    var domainsStr = (l.domains || '');
+    var courtsStr = (l.courts || '');
+    var chamberStr = (l.chamber || '');
+    var guidanceStr = (l.guidance || '');
+
+    html.push('<div class="advocate-card">');
+    html.push('  <div class="ac-header">');
+    html.push('    <div>');
+    html.push('      <h4 class="ac-name">' + escapeHtml(l.name) + '</h4>');
+    html.push('      <span class="ac-firm">' + escapeHtml(l.firm) + '</span>');
+    html.push('    </div>');
+    html.push('    <span class="ac-badge">' + escapeHtml(l.experience) + '</span>');
+    html.push('  </div>');
+    html.push('  <div class="ac-meta">');
+    html.push('    <span>🏛️ ' + escapeHtml(courtsStr) + '</span>');
+    html.push('    <span>⚖️ ' + escapeHtml(domainsStr) + '</span>');
+    html.push('  </div>');
+    html.push('  <div class="ac-ctas">');
+    html.push('    <a href="tel:' + tel + '" class="ac-btn ac-btn-call">📞 Call Chambers: ' + escapeHtml(l.phone) + '</a>');
+    html.push('    <a href="mailto:' + escapeHtml(l.email) + '" class="ac-btn ac-btn-mail">✉️ Email Chambers</a>');
+    html.push('  </div>');
+    html.push('  <details class="ac-disclosure">');
+    html.push('    <summary>View Chamber Address, Bar Enrollment & Strategy</summary>');
+    html.push('    <div class="ac-disclosure-body">');
+    html.push('      <p><strong>Bar Enrollment:</strong> <code>' + escapeHtml(l.bar_council) + '</code></p>');
+    html.push('      <p><strong>Chamber:</strong> ' + escapeHtml(chamberStr) + '</p>');
+    html.push('      <p><strong>Consultation Guidance:</strong> ' + escapeHtml(guidanceStr) + '</p>');
+    html.push('    </div>');
+    html.push('  </details>');
+    html.push('</div>');
   });
-  lines.push('> **Bar Council of India Notice**: *This information is provided solely for public legal awareness and verification. It does not constitute advocate solicitation or advertisement under BCI Rule 36.*');
-  return lines.join('\n');
+  html.push('</div>');
+  html.push('<div style="font-size:0.67rem;color:var(--cream3);opacity:0.65;margin-top:0.35rem;font-family:var(--sans)">Bar Council of India Rule 36: Informational listing for verification and legal assistance only.</div>');
+  return html.join('\n');
 }
 
 function generateLegalDiagnostic(query, history) {
@@ -4243,34 +4312,63 @@ function generateLegalDiagnostic(query, history) {
   var lawyers = findLawyersClient(detectedCity, domain);
   var out = [];
   if (isEmergencyCriminal) {
-    out.push('### Emergency Criminal Defense Advisory & Constitutional Protections');
+    out.push('### Emergency Criminal Defense Advisory & Constitutional Directives');
     out.push('');
-    out.push('Based on your situation in **' + detectedCity + '**, this matter involves serious cognizable offenses under the **Bharatiya Nyaya Sanhita 2023 (BNS)** and **Bharatiya Nagarik Suraksha Sanhita 2023 (BNSS)** [replacing IPC & CrPC]. Here are your fundamental constitutional rights, emergency procedural steps, and verified criminal defense advocates in ' + detectedCity + '.');
+    out.push('<div class="nyai-action-bar">');
+    out.push('  <div class="nab-badge">CRITICAL ACTION PROTOCOL · ' + detectedCity.toUpperCase() + ' JURISDICTION</div>');
+    out.push('  <div class="nab-cards">');
+    out.push('    <div class="nab-card"><span class="nab-step">ACTION 01</span><strong>Maintain Right to Silence</strong><p>Make no confession, oral statement, or signature without defense counsel present (Art. 20(3) Constitution & BSA § 23).</p></div>');
+    out.push('    <div class="nab-card"><span class="nab-step">ACTION 02</span><strong>Formal Judicial Surrender</strong><p>Surrender directly before the Judicial Magistrate with counsel rather than evading or absconding (BNSS § 84).</p></div>');
+    out.push('    <div class="nab-card"><span class="nab-step">ACTION 03</span><strong>Trial Counsel Representation</strong><p>Retain a Sessions Court trial advocate immediately to oppose police remand at the mandatory 24h Magistrate production.</p></div>');
+    out.push('  </div>');
+    out.push('</div>');
+    out.push('');
+    out.push('#### Verified Criminal Defense Advocates in ' + detectedCity);
+    out.push(formatLawyerCardsClient(lawyers));
+    out.push('');
+    out.push('<details class="statute-box" open>');
+    out.push('  <summary>§ Statutory Framework: ' + statuteHeader + '</summary>');
+    out.push('  <div style="font-size:0.75rem;color:var(--cream2);line-height:1.6;margin-top:0.5rem">');
+    out.push(citationText.replace(/\n/g, '<br>'));
+    out.push('  </div>');
+    out.push('</details>');
+    if (limitation) {
+      out.push('');
+      out.push('> **Statutory Limitation**: ' + limitation);
+    }
+    out.push('');
+    out.push('> **National Legal Aid Helpline (Free Defense Counsel)**: If you or your family cannot afford private counsel, you are entitled to free defense counsel appointed by the **District Legal Services Authority (DLSA) in ' + detectedCity + '** under Article 39A. Call toll-free **15100**.');
   } else {
     out.push('### Legal Analysis & Step-by-Step Action Roadmap');
     out.push('');
-    out.push('Based on your situation in **' + detectedCity + '**, here is your governing legal framework, immediate procedural steps, and verified advocate contacts.');
-  }
-  out.push('');
-  out.push('#### § 1. Statutory Provisions: ' + statuteHeader);
-  out.push(citationText);
-  out.push('');
-  out.push('#### § 2. What to Do Now (Immediate Next Steps)');
-  steps.forEach(function(s, idx) {
-    out.push((idx + 1) + '. ' + s);
-  });
-  if (limitation) {
+    out.push('<div class="nyai-action-bar">');
+    out.push('  <div class="nab-badge">KEY ACTION DIRECTIVES · ' + detectedCity.toUpperCase() + '</div>');
+    out.push('  <div class="nab-cards">');
+    if (steps.length >= 3) {
+      for (var si = 0; si < 3; si++) {
+        var parts = steps[si].split(':');
+        var sTitle = parts[0].replace(/\*\*/g, '').trim();
+        var sBody = (parts[1] || '').trim();
+        out.push('    <div class="nab-card"><span class="nab-step">STEP 0' + (si + 1) + '</span><strong>' + escapeHtml(sTitle) + '</strong><p>' + escapeHtml(sBody) + '</p></div>');
+      }
+    }
+    out.push('  </div>');
+    out.push('</div>');
     out.push('');
-    out.push('> **Statutory Limitation**: ' + limitation);
-  }
-  if (isEmergencyCriminal) {
+    out.push('#### Verified Legal Counsel in ' + detectedCity);
+    out.push(formatLawyerCardsClient(lawyers));
     out.push('');
-    out.push('> **National Legal Aid Helpline (Free Defense Counsel)**: If you or your family cannot afford private counsel, you are entitled to free defense counsel appointed by the **District Legal Services Authority (DLSA) in ' + detectedCity + '** under Article 39A. Call toll-free **15100**.');
+    out.push('<details class="statute-box">');
+    out.push('  <summary>§ Detailed Procedural Steps & Governing Law: ' + statuteHeader + '</summary>');
+    out.push('  <div style="font-size:0.75rem;color:var(--cream2);line-height:1.6;margin-top:0.5rem">');
+    steps.forEach(function(s, idx) {
+      out.push((idx + 1) + '. ' + s + '<br>');
+    });
+    out.push('  <br><strong>Statutory Provisions:</strong><br>' + citationText.replace(/\n/g, '<br>'));
+    if (limitation) out.push('<br><br><strong>Limitation:</strong> ' + limitation);
+    out.push('  </div>');
+    out.push('</details>');
   }
-  out.push('');
-  out.push('#### § 3. Recommended Advocates & Legal Chambers in ' + detectedCity);
-  out.push('');
-  out.push(formatLawyerCardsClient(lawyers));
 
   return out.join('\n');
 }

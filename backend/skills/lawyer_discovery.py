@@ -283,28 +283,42 @@ def find_lawyers(city: Optional[str] = None, domain_query: Optional[str] = None)
 
 def format_lawyer_cards(lawyers: List[Dict]) -> str:
     """
-    Format lawyer recommendation cards in clean markdown for the chat bubble.
+    Format lawyer recommendation cards in clean low-cognitive-load cards with progressive disclosure.
     """
     if not lawyers:
         return "No advocate profiles found matching those specific filters. Consult your local State Bar Council directory."
         
-    out = []
-    out.append("### Recommended Qualified Legal Counsel\n")
-    out.append("*Verified advocates practicing in the relevant jurisdiction. Sourced under Bar Council of India Rule 36 informational guidelines:*\n")
-    
-    for idx, l in enumerate(lawyers, 1):
+    out = ['<div class="advocate-deck">']
+    for l in lawyers:
         domains_str = ", ".join(l["domains"][:3])
         courts_str = ", ".join(l["courts"][:2])
+        tel = l["phone"].replace(" ", "")
         card = (
-            f"{idx}. **{l['name']}** — *{l['firm']}*\n"
-            f"- **Bar Enrollment**: `{l['bar_council']}` ({l['experience']})\n"
-            f"- **Courts**: {courts_str}\n"
-            f"- **Specialization**: {domains_str}\n"
-            f"- **Chamber Address**: {l['chamber']}\n"
-            f"- **Direct Contacts**: Phone: [{l['phone']}](tel:{l['phone'].replace(' ', '')}) | Email: [{l['email']}](mailto:{l['email']})\n"
-            f"- **Suggested Consultation Questions**: *{l['consultation_guidance']}*\n"
+            '<div class="advocate-card">\n'
+            '  <div class="ac-header">\n'
+            f'    <div><h4 class="ac-name">{l["name"]}</h4><span class="ac-firm">{l["firm"]}</span></div>\n'
+            f'    <span class="ac-badge">{l["experience"]}</span>\n'
+            '  </div>\n'
+            '  <div class="ac-meta">\n'
+            f'    <span>🏛️ {courts_str}</span>\n'
+            f'    <span>⚖️ {domains_str}</span>\n'
+            '  </div>\n'
+            '  <div class="ac-ctas">\n'
+            f'    <a href="tel:{tel}" class="ac-btn ac-btn-call">📞 Call Chambers ({l["phone"]})</a>\n'
+            f'    <a href="mailto:{l["email"]}" class="ac-btn ac-btn-mail">✉️ Email Chambers</a>\n'
+            '  </div>\n'
+            '  <details class="ac-disclosure">\n'
+            '    <summary>View Chamber Address, Bar Enrollment & Strategy</summary>\n'
+            '    <div class="ac-disclosure-body">\n'
+            f'      <p><strong>Bar Enrollment:</strong> <code>{l["bar_council"]}</code></p>\n'
+            f'      <p><strong>Chamber:</strong> {l["chamber"]}</p>\n'
+            f'      <p><strong>Consultation Guidance:</strong> {l["consultation_guidance"]}</p>\n'
+            '    </div>\n'
+            '  </details>\n'
+            '</div>'
         )
         out.append(card)
         
-    out.append("> **Bar Council of India Disclaimer**: *This directory listing provides public verification details for informational assistance only and does not constitute advertisement or advocate solicitation under BCI Rule 36.*")
+    out.append('</div>')
+    out.append('<div style="font-size:0.67rem;color:var(--cream3);opacity:0.65;margin-top:0.35rem;font-family:var(--sans)">Bar Council of India Rule 36: Directory information provided solely for public legal awareness.</div>')
     return "\n".join(out)
