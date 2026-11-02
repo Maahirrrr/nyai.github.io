@@ -3,25 +3,29 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com https://images.unsplash.com http://localhost:5678 http://127.0.0.1:5678 data: blob:; img-src 'self' https: data: blob:; connect-src 'self' http://localhost:5678 http://127.0.0.1:5678 https:; font-src 'self' https://fonts.gstatic.com data:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com https://images.unsplash.com http://localhost:5678 http://127.0.0.1:5678 http://localhost:8000 http://127.0.0.1:8000 data: blob:; img-src 'self' https: data: blob:; connect-src 'self' http://localhost:5678 http://127.0.0.1:5678 http://localhost:8000 http://127.0.0.1:8000 https:; font-src 'self' https://fonts.gstatic.com data:;">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <title>NyAI — Legal AI for India</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --black:#0A0908;
-  --dark:#111010;
-  --dark2:#181614;
-  --dark3:#201E1C;
-  --border:#2A2724;
-  --cream:#F0EBE3;
-  --cream2:#C8BFB5;
-  --cream3:#7A7470;
-  --accent:#C84B2F;
-  --accent2:#E05535;
+  --black:#07080A;
+  --dark:#0D0F14;
+  --dark2:#13161D;
+  --dark3:#191D26;
+  --border:rgba(255,255,255,0.08);
+  --border-strong:rgba(255,255,255,0.14);
+  --cream:#F5F7FA;
+  --cream2:#CBD2DE;
+  --cream3:#848B98;
+  --accent:#C5A059;
+  --accent2:#D4AF37;
+  --accent-subtle:rgba(197,160,89,0.12);
+  --accent-glow:rgba(197,160,89,0.22);
   --white:#FFFFFF;
   --offwhite:#F7F5F2;
   --lightborder:#E8E4DF;
@@ -31,17 +35,18 @@
   --sans:'Inter',system-ui,sans-serif;
   --mono:'JetBrains Mono',monospace;
   --nav-h:64px;
-  --t:.22s ease;
+  --t:.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 html{scroll-behavior:smooth;scrollbar-gutter:stable}
 body{font-family:var(--sans);background:var(--black);color:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button{cursor:pointer;font-family:var(--sans);border:none;background:none}
-:focus-visible{outline:2px solid var(--cream2);outline-offset:2px}
-::selection{background:var(--accent);color:var(--white)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+::selection{background:var(--accent-glow);color:var(--white)}
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:var(--dark)}
-::-webkit-scrollbar-thumb{background:var(--cream3)}
+::-webkit-scrollbar-thumb{background:var(--dark3);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:var(--cream3)}
 
 /* NAV */
 #nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);background:rgba(10,9,8,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:var(--t)}
@@ -91,15 +96,56 @@ button{cursor:pointer;font-family:var(--sans);border:none;background:none}
 .p-sub-light{font-size:1rem;color:var(--lightmuted);line-height:1.75;font-weight:300;max-width:64ch}
 
 /* HERO */
-#hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:flex-end;overflow:hidden;padding-top:var(--nav-h)}
-.hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,9,8,0.1) 0%,rgba(10,9,8,0.05) 30%,rgba(10,9,8,0.55) 65%,rgba(10,9,8,1) 100%)}
-.hero-inner{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:0 2.5rem 5.5rem;width:100%}
-.hero-h1{font-family:var(--serif);font-size:clamp(3.25rem,6.5vw,6rem);font-weight:500;line-height:1.0;letter-spacing:-1px;color:var(--white);margin-bottom:1.375rem;animation:fadeUp .8s ease both;max-width:700px}
-.hero-sub{font-size:1rem;color:rgba(240,235,227,0.75);max-width:460px;line-height:1.72;font-weight:300;margin-bottom:2.25rem;animation:fadeUp .8s .12s ease both}
-.hero-btn{display:inline-flex;align-items:center;gap:0.5rem;background:var(--white);color:var(--black);padding:0.75rem 1.75rem;border-radius:4px;font-size:0.875rem;font-weight:500;transition:var(--t);animation:fadeUp .8s .22s ease both;cursor:pointer;border:none;font-family:var(--sans)}
-.hero-btn:hover{background:var(--cream)}.hero-btn:active{transform:scale(0.98)}
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:var(--nav-h);padding-bottom:3rem}
+.hero-bg{position:absolute;inset:0;z-index:0;opacity:0.35}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 20%;filter:grayscale(60%) contrast(1.15)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 65% 50%, rgba(7,8,10,0.3) 0%, rgba(7,8,10,0.92) 75%, var(--black) 100%)}
+.hero-inner{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:3rem 2.5rem;width:100%;display:grid;grid-template-columns:1.2fr 0.8fr;gap:3.5rem;align-items:center}
+.hero-content{display:flex;flex-direction:column;align-items:flex-start}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(197,160,89,0.08);border:1px solid rgba(197,160,89,0.25);padding:0.35rem 0.85rem;border-radius:9999px;font-size:0.75rem;font-family:var(--mono);color:var(--accent);margin-bottom:1.5rem;letter-spacing:0.04em;animation:fadeUp .8s ease both}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.hero-h1{font-family:var(--serif);font-size:clamp(3rem,5.5vw,5.25rem);font-weight:500;line-height:1.04;letter-spacing:-0.025em;color:var(--cream);margin-bottom:1.375rem;animation:fadeUp .8s .08s ease both}
+.hero-sub{font-size:1.0625rem;color:var(--cream2);max-width:540px;line-height:1.7;font-weight:300;margin-bottom:2.25rem;animation:fadeUp .8s .16s ease both}
+.hero-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s .24s ease both}
+.hero-btn{display:inline-flex;align-items:center;gap:0.5rem;background:var(--cream);color:var(--black);padding:0.8rem 1.85rem;border-radius:4px;font-size:0.875rem;font-weight:500;transition:var(--t);cursor:pointer;border:none;font-family:var(--sans)}
+.hero-btn:hover{background:var(--white);box-shadow:0 0 20px rgba(255,255,255,0.15)}
+.hero-btn:active{transform:scale(0.98)}
+.hero-btn-secondary{display:inline-flex;align-items:center;gap:0.5rem;background:transparent;color:var(--cream);padding:0.8rem 1.6rem;border-radius:4px;font-size:0.875rem;font-weight:400;border:1px solid var(--border);transition:var(--t);cursor:pointer;font-family:var(--sans)}
+.hero-btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.hero-metrics{display:flex;align-items:center;gap:2rem;margin-top:2.75rem;padding-top:2rem;border-top:1px solid var(--border);animation:fadeUp .8s .32s ease both}
+.hero-metric-item{display:flex;flex-direction:column;gap:0.25rem}
+.hero-metric-val{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--cream)}
+.hero-metric-lbl{font-size:0.72rem;color:var(--cream3);font-family:var(--mono);letter-spacing:0.02em}
+
+/* 3D PROCEDURAL THREE.JS LEX CORE */
+.hero-three-wrap{position:relative;width:100%;height:480px;display:flex;align-items:center;justify-content:center;animation:fadeUp 1s .2s ease both}
+#hero-three-canvas{width:100%;height:100%;display:block;cursor:grab}
+#hero-three-canvas:active{cursor:grabbing}
+.hero-three-caption{position:absolute;bottom:8px;display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-family:var(--mono);color:var(--cream3);letter-spacing:0.04em;background:rgba(13,15,20,0.88);backdrop-filter:blur(8px);padding:0.3rem 0.75rem;border-radius:3px;border:1px solid var(--border);pointer-events:none}
+
+/* MOTIONSITES CURSOR SPOTLIGHT */
+.case-card, .sec-card, .pc, .cap-item {
+  position: relative;
+  transition: transform var(--t), border-color var(--t), background var(--t);
+}
+.case-card::after, .sec-card::after, .pc::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(450px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(197, 160, 89, 0.08), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+}
+.case-card:hover::after, .sec-card:hover::after, .pc:hover::after {
+  opacity: 1;
+}
+
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr;gap:2rem;padding-bottom:3rem}
+  .hero-three-wrap{height:340px}
+}
 
 /* INTRO */
 #intro{background:var(--white);padding:8rem 0}
@@ -817,9 +863,38 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
       <img loading="eager" decoding="async" src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1920&q=85&auto=format&fit=crop&crop=top" alt="Legal professional" style="object-position:center top;"/>
     </div>
     <div class="hero-inner">
-      <h1 class="hero-h1">Intelligence<br>Meets the Law</h1>
-      <p class="hero-sub">NyAI acts as a force multiplier for India's top law firms and in-house teams — advancing your expertise on a secure platform that lets you focus on high-value work.</p>
-      <button class="hero-btn" onclick="showPage('chat')">Request Demo</button>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          <span>Sovereign Legal Intelligence · Bharat Jurisprudence</span>
+        </div>
+        <h1 class="hero-h1">Intelligence<br>Meets the Law</h1>
+        <p class="hero-sub">NyAI acts as a force multiplier for India's top law firms, corporate counsels, and advocates — bringing cited statutory precision, BNS concordances, and verified advocate discovery to every case.</p>
+        <div class="hero-actions">
+          <button class="hero-btn" onclick="showPage('chat')">Request Demo</button>
+          <button class="hero-btn-secondary" onclick="showPage('platform')">Explore Platform →</button>
+        </div>
+        <div class="hero-metrics">
+          <div class="hero-metric-item">
+            <span class="hero-metric-val">25</span>
+            <span class="hero-metric-lbl">High Courts Covered</span>
+          </div>
+          <div class="hero-metric-item">
+            <span class="hero-metric-val">BNS 2023</span>
+            <span class="hero-metric-lbl">Native Concordance</span>
+          </div>
+          <div class="hero-metric-item">
+            <span class="hero-metric-val">ISO 27001</span>
+            <span class="hero-metric-lbl">Sovereign Privacy</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-three-wrap">
+        <canvas id="hero-three-canvas"></canvas>
+        <div class="hero-three-caption">
+          <span style="color:var(--accent)">§</span> Interactive 3D Lex Core · Drag to Orbit
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2830,7 +2905,185 @@ document.addEventListener('DOMContentLoaded', function() {
       window.location.href = 'mai' + 'lto:careers' + '@nyai.in';
     });
   }
+
+  // ── MOTIONSITES: AMBIENT CURSOR SPOTLIGHT ──
+  document.addEventListener('mousemove', function(e) {
+    var cards = document.querySelectorAll('.case-card, .sec-card, .pc, .cap-item');
+    for (var i = 0; i < cards.length; i++) {
+      var rect = cards[i].getBoundingClientRect();
+      if (
+        e.clientX >= rect.left - 80 &&
+        e.clientX <= rect.right + 80 &&
+        e.clientY >= rect.top - 80 &&
+        e.clientY <= rect.bottom + 80
+      ) {
+        cards[i].style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+        cards[i].style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+      }
+    }
+  });
+
+  // ── IMG2THREEJS: PROCEDURAL 3D JUDICIAL CORE ──
+  initHeroLexCore();
 });
+
+function initHeroLexCore() {
+  var canvas = document.getElementById('hero-three-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+
+  var wrap = canvas.parentElement;
+  if (!wrap) return;
+
+  var scene = new THREE.Scene();
+  var width = wrap.clientWidth || 450;
+  var height = wrap.clientHeight || 450;
+  var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+  camera.position.z = 4.4;
+
+  var renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+  } catch(e) {
+    return; // graceful WebGL fallback
+  }
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+  // Ambient & Directional Lighting
+  var ambient = new THREE.AmbientLight(0xffffff, 0.75);
+  scene.add(ambient);
+  var goldLight = new THREE.DirectionalLight(0xd4af37, 1.4);
+  goldLight.position.set(4, 5, 4);
+  scene.add(goldLight);
+  var rimLight = new THREE.PointLight(0xffffff, 0.8, 10);
+  rimLight.position.set(-4, -3, 3);
+  scene.add(rimLight);
+
+  var root = new THREE.Group();
+  scene.add(root);
+
+  // 1. Concentric Armillary Rings (Gold Brass)
+  var ringMat = new THREE.MeshStandardMaterial({
+    color: 0xc5a059,
+    metalness: 0.88,
+    roughness: 0.22,
+    wireframe: false
+  });
+  var r1 = new THREE.Mesh(new THREE.TorusGeometry(1.42, 0.024, 16, 90), ringMat);
+  var r2 = new THREE.Mesh(new THREE.TorusGeometry(1.18, 0.020, 16, 90), ringMat);
+  var r3 = new THREE.Mesh(new THREE.TorusGeometry(0.92, 0.016, 16, 80), ringMat);
+  r2.rotation.x = Math.PI / 3;
+  r3.rotation.y = Math.PI / 3;
+  root.add(r1);
+  root.add(r2);
+  root.add(r3);
+
+  // 2. Central Truth Core (Faceted Icosahedron)
+  var coreGeo = new THREE.IcosahedronGeometry(0.48, 0);
+  var coreMat = new THREE.MeshStandardMaterial({
+    color: 0xf5f7fa,
+    metalness: 0.95,
+    roughness: 0.1,
+    wireframe: true
+  });
+  var coreMesh = new THREE.Mesh(coreGeo, coreMat);
+  root.add(coreMesh);
+
+  // 3. Floating Legal Particle Constellation
+  var pCount = 75;
+  var positions = new Float32Array(pCount * 3);
+  for (var i = 0; i < pCount * 3; i += 3) {
+    var u = Math.random();
+    var v = Math.random();
+    var theta = u * 2.0 * Math.PI;
+    var phi = Math.acos(2.0 * v - 1.0);
+    var radius = 1.6 + Math.random() * 0.45;
+    positions[i] = radius * Math.sin(phi) * Math.cos(theta);
+    positions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
+    positions[i + 2] = radius * Math.cos(phi);
+  }
+  var particleGeo = new THREE.BufferGeometry();
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  var particleMat = new THREE.PointsMaterial({
+    color: 0xd4af37,
+    size: 0.045,
+    transparent: true,
+    opacity: 0.75
+  });
+  var particles = new THREE.Points(particleGeo, particleMat);
+  root.add(particles);
+
+  // Mouse Interaction (Tilt + Drag Orbit)
+  var mouseX = 0, mouseY = 0;
+  var targetX = 0, targetY = 0;
+  var isDragging = false;
+  var prevPointerX = 0, prevPointerY = 0;
+  var isVisible = true;
+
+  wrap.addEventListener('pointerdown', function(e) {
+    isDragging = true;
+    prevPointerX = e.clientX;
+    prevPointerY = e.clientY;
+  });
+  window.addEventListener('pointerup', function() { isDragging = false; });
+  window.addEventListener('pointermove', function(e) {
+    if (isDragging) {
+      var dx = e.clientX - prevPointerX;
+      var dy = e.clientY - prevPointerY;
+      root.rotation.y += dx * 0.008;
+      root.rotation.x += dy * 0.008;
+      prevPointerX = e.clientX;
+      prevPointerY = e.clientY;
+    } else {
+      var rx = (e.clientX / window.innerWidth) * 2 - 1;
+      var ry = (e.clientY / window.innerHeight) * 2 - 1;
+      targetX = rx * 0.35;
+      targetY = ry * 0.35;
+    }
+  });
+
+  // Pause rendering when off-screen to save battery/CPU
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      isVisible = entries[0].isIntersecting;
+    });
+    obs.observe(wrap);
+  }
+
+  // Responsive Resize
+  window.addEventListener('resize', function() {
+    if (!wrap) return;
+    var w = wrap.clientWidth;
+    var h = wrap.clientHeight;
+    if (w && h) {
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+  });
+
+  // Animation Loop (60fps with graceful idle rotation)
+  function animate() {
+    requestAnimationFrame(animate);
+    if (!isVisible) return;
+
+    if (!isDragging) {
+      mouseX += (targetX - mouseX) * 0.05;
+      mouseY += (targetY - mouseY) * 0.05;
+      root.rotation.y += 0.004;
+      root.rotation.x = mouseY * 0.4;
+      root.rotation.z = mouseX * 0.2;
+    }
+
+    r1.rotation.z += 0.002;
+    r2.rotation.y += 0.003;
+    r3.rotation.x += 0.0025;
+    coreMesh.rotation.y -= 0.005;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+}
 
 
 // ── HERMES GATEWAY & LAWYER DISCOVERY ENGINE ──
