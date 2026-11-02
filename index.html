@@ -121,7 +121,42 @@ button{cursor:pointer;font-family:var(--sans);border:none;background:none}
 .hero-three-wrap{position:relative;width:100%;height:480px;display:flex;align-items:center;justify-content:center;animation:fadeUp 1s .2s ease both}
 #hero-three-canvas{width:100%;height:100%;display:block;cursor:grab}
 #hero-three-canvas:active{cursor:grabbing}
-.hero-three-caption{position:absolute;bottom:8px;display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-family:var(--mono);color:var(--cream3);letter-spacing:0.04em;background:rgba(13,15,20,0.88);backdrop-filter:blur(8px);padding:0.3rem 0.75rem;border-radius:3px;border:1px solid var(--border);pointer-events:none}
+.hero-three-caption{position:absolute;bottom:8px;display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-family:var(--mono);color:var(--cream3);letter-spacing:0.04em;background:rgba(13,15,20,0.88);backdrop-filter:blur(8px);padding:0.3rem 0.75rem;border-radius:3px;border:1px solid var(--border);pointer-events:none;z-index:11}
+
+/* ── VENGEANCE UI & SKIPER UI: RAY-TRACED BORDER BEAM ── */
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+.border-beam-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.border-beam {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: calc(var(--border-width, 1.5) * 1px) solid transparent;
+  mask: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
+  mask-clip: padding-box, border-box;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 10;
+}
+.border-beam::after {
+  content: "";
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  width: calc(var(--size, 200) * 1px);
+  animation: border-beam calc(var(--duration, 14) * 1s) infinite linear;
+  animation-delay: calc(var(--delay, 0) * 1s);
+  background: linear-gradient(to left, var(--color-from, #FFE699), var(--color-to, #C5A059), transparent);
+  offset-anchor: calc(var(--anchor, 90) * 1%) 50%;
+  offset-path: rect(0 auto auto 0 round calc(var(--size, 200) * 1px));
+}
 
 /* MOTIONSITES CURSOR SPOTLIGHT */
 .case-card, .sec-card, .pc, .cap-item {
@@ -244,11 +279,34 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 .footer-bottom-links button{background:none;border:none;cursor:pointer;font-size:0.75rem;color:var(--cream3);font-family:var(--sans);transition:var(--t)}
 .footer-bottom-links button:hover{color:var(--cream2)}
 
-/* ── PLATFORM ── */
-.platform-feature{display:grid;grid-template-columns:1fr 1fr;min-height:480px;border-bottom:1px solid var(--border)}
+/* ── PLATFORM: VENGEANCE UI STACKED VERSE CARDS ── */
+.platform-features-deck {
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.5rem 2.5rem 4rem;
+}
+.platform-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 480px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 2.5rem;
+  background: var(--dark);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  position: sticky;
+  top: calc(5.5rem + var(--card-index, 0) * 1.5rem);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  overflow: hidden;
+}
 .platform-feature.flip{display:grid;grid-template-columns:1fr 1fr}
 .platform-feature.flip .pf-text{order:2}
 .platform-feature.flip .pf-img{order:1}
+@media(max-width:960px){
+  .platform-features-deck{padding:1rem 1.25rem 2.5rem}
+  .platform-feature{position:relative;top:auto;margin-bottom:1.5rem}
+}
 .pf-text{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;background:var(--dark)}
 .pf-num{font-size:0.72rem;font-family:var(--mono);color:var(--accent2);letter-spacing:0.01em;margin-bottom:1.25rem;text-transform:none}
 .pf-h{font-family:var(--serif);font-size:clamp(1.75rem,2.5vw,2.375rem);font-weight:500;line-height:1.2;color:var(--cream);margin-bottom:1.25rem}
@@ -946,11 +1004,12 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
           </div>
         </div>
       </div>
-      <div class="hero-three-wrap">
+      <div class="hero-three-wrap border-beam-wrap">
         <canvas id="hero-three-canvas"></canvas>
         <div class="hero-three-caption">
           <span style="color:var(--accent)">§</span> Interactive 3D Lex Core · Drag to Orbit
         </div>
+        <div class="border-beam" style="--size:260;--duration:12;--color-from:#FFE699;--color-to:#C5A059"></div>
       </div>
     </div>
   </section>
@@ -1060,10 +1119,10 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
         </div>
       </div>
       <div class="stats-grid reveal">
-        <div class="stat-row"><div class="stat-label">Estimated hours saved per month per user</div><div class="stat-num">20<sup>+</sup></div></div>
-        <div class="stat-row"><div class="stat-label">High Courts + Supreme Court corpus covered</div><div class="stat-num">25<sup>+</sup></div></div>
-        <div class="stat-row"><div class="stat-label">Indian statutes & regulatory bodies indexed</div><div class="stat-num">50<sup>+</sup></div></div>
-        <div class="stat-row"><div class="stat-label">Data retention by default</div><div class="stat-num">3 Years</div></div>
+        <div class="stat-row"><div class="stat-label">Estimated hours saved per month per user</div><div class="stat-num" data-target="20" data-suffix="+">20<sup>+</sup></div></div>
+        <div class="stat-row"><div class="stat-label">High Courts + Supreme Court corpus covered</div><div class="stat-num" data-target="25" data-suffix="+">25<sup>+</sup></div></div>
+        <div class="stat-row"><div class="stat-label">Indian statutes & regulatory bodies indexed</div><div class="stat-num" data-target="50" data-suffix="+">50<sup>+</sup></div></div>
+        <div class="stat-row"><div class="stat-label">Data retention by default</div><div class="stat-num" data-target="3" data-suffix=" Years">3<sup> Years</sup></div></div>
       </div>
     </div>
   </section>
@@ -1104,80 +1163,82 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
     </div>
   </div>
 
-  <!-- Feature Blocks -->
-  <div class="platform-feature reveal">
-    <div class="pf-text">
-      <div class="pf-num">01. Legal Research</div>
-      <h2 class="pf-h">Research That Cites Its Sources</h2>
-      <p class="pf-p">Trained on the complete corpus of Supreme Court judgments, all 25 High Courts, NCLAT, SAT, ITAT, NCLT, and major regulatory bodies. Every answer is fully traceable.</p>
-      <ul class="pf-list">
-        <li>Semantic search across SC, HCs, tribunals, and statutes</li>
-        <li>Automatic case law mapping and precedent hierarchy</li>
-        <li>Statutory cross-references including amendments and notifications</li>
-        <li>Conflicting bench detection and reconciliation summaries</li>
-        <li>Export citations in Bluebook, SCC, and AIR formats</li>
-      </ul>
+  <!-- Feature Blocks: Vengeance UI Stacked Verse Cards -->
+  <div class="platform-features-deck">
+    <div class="platform-feature reveal" style="--card-index:0">
+      <div class="pf-text">
+        <div class="pf-num">01. Legal Research</div>
+        <h2 class="pf-h">Research That Cites Its Sources</h2>
+        <p class="pf-p">Trained on the complete corpus of Supreme Court judgments, all 25 High Courts, NCLAT, SAT, ITAT, NCLT, and major regulatory bodies. Every answer is fully traceable.</p>
+        <ul class="pf-list">
+          <li>Semantic search across SC, HCs, tribunals, and statutes</li>
+          <li>Automatic case law mapping and precedent hierarchy</li>
+          <li>Statutory cross-references including amendments and notifications</li>
+          <li>Conflicting bench detection and reconciliation summaries</li>
+          <li>Export citations in Bluebook, SCC, and AIR formats</li>
+        </ul>
+      </div>
+      <div class="pf-img">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=900&q=80&auto=format&fit=crop" alt="Legal research" onerror="this.style.opacity='0'"/>
+        <div class="pf-img-overlay"></div>
+      </div>
     </div>
-    <div class="pf-img">
-      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=900&q=80&auto=format&fit=crop" alt="Legal research" onerror="this.style.opacity='0'"/>
-      <div class="pf-img-overlay"></div>
-    </div>
-  </div>
 
-  <div class="platform-feature flip reveal">
-    <div class="pf-text">
-      <div class="pf-num">02 — Contract Intelligence</div>
-      <h2 class="pf-h">Contract Review for Indian Boilerplate</h2>
-      <p class="pf-p">Upload any agreement and NyAI reviews it against Indian law standards — flagging non-compliant clauses, missing protections, and negotiation leverage points automatically.</p>
-      <ul class="pf-list">
-        <li>One-click risk scoring with clause-level explanations</li>
-        <li>Redline suggestions with track-changes export</li>
-        <li>FEMA, IT Act, and Companies Act compliance checks</li>
-        <li>Comparison against your firm's fallback positions</li>
-        <li>SHA, SPA, MoU, NDA, employment contract templates</li>
-      </ul>
+    <div class="platform-feature flip reveal" style="--card-index:1">
+      <div class="pf-text">
+        <div class="pf-num">02 — Contract Intelligence</div>
+        <h2 class="pf-h">Contract Review for Indian Boilerplate</h2>
+        <p class="pf-p">Upload any agreement and NyAI reviews it against Indian law standards — flagging non-compliant clauses, missing protections, and negotiation leverage points automatically.</p>
+        <ul class="pf-list">
+          <li>One-click risk scoring with clause-level explanations</li>
+          <li>Redline suggestions with track-changes export</li>
+          <li>FEMA, IT Act, and Companies Act compliance checks</li>
+          <li>Comparison against your firm's fallback positions</li>
+          <li>SHA, SPA, MoU, NDA, employment contract templates</li>
+        </ul>
+      </div>
+      <div class="pf-img">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80&auto=format&fit=crop" alt="Contracts" onerror="this.style.opacity='0'"/>
+        <div class="pf-img-overlay"></div>
+      </div>
     </div>
-    <div class="pf-img">
-      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80&auto=format&fit=crop" alt="Contracts" onerror="this.style.opacity='0'"/>
-      <div class="pf-img-overlay"></div>
-    </div>
-  </div>
 
-  <div class="platform-feature reveal">
-    <div class="pf-text">
-      <div class="pf-num">03. Due Diligence</div>
-      <h2 class="pf-h">M&A Due Diligence at Machine Speed</h2>
-      <p class="pf-p">Upload data room documents and NyAI creates a structured DD report in minutes — identifying risk across corporate, tax, employment, IP, and regulatory dimensions.</p>
-      <ul class="pf-list">
-        <li>Automated document classification and indexing</li>
-        <li>Issue-by-issue risk flagging with severity ratings</li>
-        <li>Indian M&A and PE deal-specific checklists</li>
-        <li>Cross-document inconsistency detection</li>
-        <li>One-click DD report generation in client-ready format</li>
-      </ul>
+    <div class="platform-feature reveal" style="--card-index:2">
+      <div class="pf-text">
+        <div class="pf-num">03. Due Diligence</div>
+        <h2 class="pf-h">M&A Due Diligence at Machine Speed</h2>
+        <p class="pf-p">Upload data room documents and NyAI creates a structured DD report in minutes — identifying risk across corporate, tax, employment, IP, and regulatory dimensions.</p>
+        <ul class="pf-list">
+          <li>Automated document classification and indexing</li>
+          <li>Issue-by-issue risk flagging with severity ratings</li>
+          <li>Indian M&A and PE deal-specific checklists</li>
+          <li>Cross-document inconsistency detection</li>
+          <li>One-click DD report generation in client-ready format</li>
+        </ul>
+      </div>
+      <div class="pf-img">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=900&q=80&auto=format&fit=crop" alt="Due diligence" onerror="this.style.opacity='0'"/>
+        <div class="pf-img-overlay"></div>
+      </div>
     </div>
-    <div class="pf-img">
-      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=900&q=80&auto=format&fit=crop" alt="Due diligence" onerror="this.style.opacity='0'"/>
-      <div class="pf-img-overlay"></div>
-    </div>
-  </div>
 
-  <div class="platform-feature flip reveal">
-    <div class="pf-text">
-      <div class="pf-num">04 — Regulatory Compliance</div>
-      <h2 class="pf-h">Stay Ahead of Every Change</h2>
-      <p class="pf-p">Real-time monitoring across SEBI, RBI, MCA, IRDAI, and CCI. Automated alerts, compliance gap analysis, and structured summaries — delivered before your clients ask.</p>
-      <ul class="pf-list">
-        <li>Real-time regulatory circular and notification monitoring</li>
-        <li>Automated impact analysis for your practice areas</li>
-        <li>DPDP Act, FEMA, and Companies Act compliance coverage</li>
-        <li>BNS/BNSS/BSA comparative mapping for criminal law changes</li>
-        <li>Scheduled digests and custom alert thresholds</li>
-      </ul>
-    </div>
-    <div class="pf-img">
-      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80&auto=format&fit=crop" alt="Compliance" onerror="this.style.opacity='0'"/>
-      <div class="pf-img-overlay"></div>
+    <div class="platform-feature flip reveal" style="--card-index:3">
+      <div class="pf-text">
+        <div class="pf-num">04 — Regulatory Compliance</div>
+        <h2 class="pf-h">Stay Ahead of Every Change</h2>
+        <p class="pf-p">Real-time monitoring across SEBI, RBI, MCA, IRDAI, and CCI. Automated alerts, compliance gap analysis, and structured summaries — delivered before your clients ask.</p>
+        <ul class="pf-list">
+          <li>Real-time regulatory circular and notification monitoring</li>
+          <li>Automated impact analysis for your practice areas</li>
+          <li>DPDP Act, FEMA, and Companies Act compliance coverage</li>
+          <li>BNS/BNSS/BSA comparative mapping for criminal law changes</li>
+          <li>Scheduled digests and custom alert thresholds</li>
+        </ul>
+      </div>
+      <div class="pf-img">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80&auto=format&fit=crop" alt="Compliance" onerror="this.style.opacity='0'"/>
+        <div class="pf-img-overlay"></div>
+      </div>
     </div>
   </div>
 
@@ -1237,7 +1298,8 @@ button,a,[onclick]{-webkit-tap-highlight-color:transparent;touch-action:manipula
             </ul>
             <button class="pc-btn pc-btn-outline" onclick="showPage('chat')">Start Free Trial</button>
           </div>
-          <div class="pc pop">
+          <div class="pc pop border-beam-wrap">
+            <div class="border-beam" style="--size:240;--duration:11;--color-from:#FFE699;--color-to:#C5A059"></div>
             <div class="pc-tag">Most Popular</div>
             <div class="pc-plan">Professional Chambers</div>
             <div class="pc-amt">₹4,999</div>
@@ -2157,6 +2219,8 @@ window.showPage = function(pageId) {
     // 9. Trigger Reveal & Close Mobile Menu
     if (window.checkReveal) window.checkReveal();
     if (window.closeMob) window.closeMob();
+    if (typeof initAnimasterInertiaTilt === 'function') initAnimasterInertiaTilt();
+    if (typeof initSkiperStatsCounters === 'function') initSkiperStatsCounters();
 
   } catch (err) {
     console.error('Navigation error:', err);
@@ -2378,11 +2442,14 @@ if (conversations.length === 0) {
       c.time = 'Recent';
       upgradedAny = true;
     }
-    // Upgrade any legacy abruptly truncated titles
-    if (c.title === 'i killed a person of my age 20 year old and im living in ahmedabad' || c.title.indexOf('i killed a person') !== -1) {
+    // Upgrade any legacy abruptly truncated titles or stale CPC responses
+    if (c.title === 'i killed a person of my age 20 year old and im living in ahmedabad' || c.title.indexOf('i killed a person') !== -1 || c.title === 'Ahmedabad · BNS 103') {
       c.title = 'Ahmedabad · BNS 103';
       c.category = 'criminal';
       c.time = 'Today';
+      if (c.messages && c.messages.length > 1 && c.messages[1].content && c.messages[1].content.indexOf('Code of Civil Procedure 1908') !== -1) {
+        c.messages[1].content = SEED_CONVERSATION_MESSAGES['c0'][1].content;
+      }
       upgradedAny = true;
     } else if (c.title === 'IBC Section 29A eligibility' || c.title.indexOf('IBC Section 29A') !== -1) {
       c.title = 'IBC § 29A Eligibility';
@@ -2399,6 +2466,13 @@ if (conversations.length === 0) {
     } else if (c.title === 'Income Tax s56(2)(x) analysis' || c.title.indexOf('Income Tax') !== -1) {
       c.title = 'Income Tax § 56(2)(x)';
       c.category = 'tax';
+      upgradedAny = true;
+    }
+    // Also upgrade if messages had CPC homicide answer
+    if (c.messages && c.messages.length > 1 && c.messages[1].content && c.messages[1].content.indexOf('Code of Civil Procedure 1908') !== -1 && c.messages[0] && c.messages[0].content && c.messages[0].content.indexOf('kill') !== -1) {
+      c.title = 'Ahmedabad · BNS 103';
+      c.category = 'criminal';
+      c.messages[1].content = SEED_CONVERSATION_MESSAGES['c0'][1].content;
       upgradedAny = true;
     }
     if (SEED_CONVERSATION_MESSAGES[c.id] && (!c.messages || c.messages.length === 0)) {
@@ -3263,6 +3337,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ── IMG2THREEJS: PROCEDURAL 3D JUDICIAL CORE ──
   initHeroLexCore();
+
+  // ── ANIMASTER LIB & SKIPER UI: INTERACTIVE ENHANCEMENTS ──
+  initAnimasterInertiaTilt();
+  initSkiperStatsCounters();
 });
 
 function initHeroLexCore() {
@@ -3423,6 +3501,108 @@ function initHeroLexCore() {
   animate();
 }
 
+// ── ANIMASTER LIB: DAMPED LERP INERTIA TILT ──
+function initAnimasterInertiaTilt() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cards = document.querySelectorAll('.case-card, .sec-card, .pc, .plat-cap-item');
+  cards.forEach(function(card) {
+    if (card._hasAnimasterTilt) return;
+    card._hasAnimasterTilt = true;
+
+    var state = {
+      targetX: 0,
+      targetY: 0,
+      currX: 0,
+      currY: 0,
+      rafId: null,
+      active: false
+    };
+
+    function update() {
+      state.currX += (state.targetX - state.currX) * 0.08;
+      state.currY += (state.targetY - state.currY) * 0.08;
+
+      card.style.transform = 'perspective(900px) rotateX(' + state.currX.toFixed(2) + 'deg) rotateY(' + state.currY.toFixed(2) + 'deg) translateY(-4px)';
+
+      if (state.active || Math.abs(state.currX) > 0.04 || Math.abs(state.currY) > 0.04) {
+        state.rafId = requestAnimationFrame(update);
+      } else {
+        card.style.transform = '';
+        state.rafId = null;
+      }
+    }
+
+    card.addEventListener('mouseenter', function() {
+      state.active = true;
+      if (!state.rafId) state.rafId = requestAnimationFrame(update);
+    });
+
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var cx = rect.width / 2;
+      var cy = rect.height / 2;
+      var maxTilt = 6.0;
+      state.targetX = -((y - cy) / cy) * maxTilt;
+      state.targetY = ((x - cx) / cx) * maxTilt;
+    });
+
+    card.addEventListener('mouseleave', function() {
+      state.active = false;
+      state.targetX = 0;
+      state.targetY = 0;
+    });
+  });
+}
+
+// ── SKIPER UI & VENGEANCE UI: KINETIC SPRING STATS COUNTER ──
+function initSkiperStatsCounters() {
+  var counters = document.querySelectorAll('.stat-num[data-target]');
+  if (!counters.length) return;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        observer.unobserve(el);
+        var target = parseFloat(el.getAttribute('data-target')) || 0;
+        var suffix = el.getAttribute('data-suffix') || '';
+        var prefix = el.getAttribute('data-prefix') || '';
+        var duration = 1600;
+        var start = performance.now();
+
+        function step(now) {
+          var elapsed = now - start;
+          var p = Math.min(elapsed / duration, 1);
+          var ease = 1 - Math.pow(1 - p, 4); // Quartic ease out
+          var val = Math.round(target * ease);
+          if (suffix === '+') {
+            el.innerHTML = val + '<sup>+</sup>';
+          } else if (suffix.indexOf('Years') !== -1) {
+            el.innerHTML = val + '<sup> ' + suffix.trim() + '</sup>';
+          } else {
+            el.textContent = prefix + val + suffix;
+          }
+          if (p < 1) {
+            requestAnimationFrame(step);
+          } else {
+            if (suffix === '+') {
+              el.innerHTML = target + '<sup>+</sup>';
+            } else if (suffix.indexOf('Years') !== -1) {
+              el.innerHTML = target + '<sup> ' + suffix.trim() + '</sup>';
+            } else {
+              el.textContent = prefix + target + suffix;
+            }
+          }
+        }
+        requestAnimationFrame(step);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  counters.forEach(function(c) { observer.observe(c); });
+}
 
 // ── HERMES GATEWAY & LAWYER DISCOVERY ENGINE ──
 var LAWYER_DIRECTORY = [
@@ -3737,6 +3917,7 @@ window.testHermesConnectionLive = async function() {
 function updateHermesBadge(isLive) {
   var dot = document.getElementById('hermes-dot');
   var txt = document.getElementById('hermes-status-text');
+  var statusBtn = document.getElementById('hermes-status-btn');
   var sDot = document.getElementById('chat-engine-dot');
   var sLbl = document.getElementById('chat-engine-label');
   var sDet = document.getElementById('chat-engine-detail');
@@ -3747,15 +3928,18 @@ function updateHermesBadge(isLive) {
   if (isLive) {
     if (dot) dot.style.background = '#4cc38a';
     if (txt) txt.textContent = is8080 ? 'Hermes: 8080 Live' : 'Hermes: Online';
+    if (statusBtn) statusBtn.title = is8080 ? 'Nous Hermes Live on Port 8080 · Click to Configure' : 'Hermes Unified Gateway Online on Port 8000 · Click to Configure';
     if (sDot) sDot.style.background = '#4cc38a';
     if (sLbl) sLbl.textContent = is8080 ? 'Nous Hermes Live' : 'Hermes Gateway: Online';
     if (sDet) sDet.textContent = is8080 ? 'Port 8080 · Llama 3.1 8B' : 'Port 8000 · Unified Skills Gateway';
   } else {
+    var isHttps = window.location.protocol === 'https:';
     if (dot) dot.style.background = '#d99b26';
     if (txt) txt.textContent = 'Hermes: Standby';
+    if (statusBtn) statusBtn.title = isHttps ? 'Hermes: Standby (GitHub Pages HTTPS · Built-in Offline Engine Active · Click to Open Local Port 8000)' : 'Hermes: Standby (Offline Legal Engine Active · Click to Configure)';
     if (sDot) sDot.style.background = '#d99b26';
     if (sLbl) sLbl.textContent = 'Hermes: Standby';
-    if (sDet) sDet.textContent = 'Running Standalone Offline Engine';
+    if (sDet) sDet.textContent = isHttps ? 'GitHub Pages · Offline Legal Engine Active' : 'Running Standalone Offline Engine';
   }
 }
 
@@ -4101,7 +4285,8 @@ window.SEED_CONVERSATION_MESSAGES = SEED_CONVERSATION_MESSAGES;
 
 <!-- =================== HERMES SETTINGS MODAL =================== -->
 <div id="hermes-modal" onclick="if(event.target===this)closeHermesSettings()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;padding:1.5rem">
-  <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;max-width:540px;width:100%;padding:2rem;position:relative">
+  <div class="border-beam-wrap" style="background:var(--dark);border:1px solid var(--border);border-radius:6px;max-width:540px;width:100%;padding:2rem;position:relative">
+    <div class="border-beam" style="--size:220;--duration:14;--color-from:#FFE699;--color-to:#C5A059"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
       <div style="display:flex;align-items:center;gap:0.5rem">
         <span style="color:var(--accent2);font-family:var(--serif);font-weight:600;font-size:1.2rem">§</span>
